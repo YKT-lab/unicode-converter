@@ -138,6 +138,10 @@ async function selectUnicodeFont(codePoint,character){
       return testUnicodeGlyph(character,family)?family:null;
     }catch(error){console.warn("Font fallback failed",family,error);return null}
   };
+  // Classify first, then select fonts. Some shared Unicode Scripts
+  // (Zyyy, Zinh) are outside the 175 named writing-system groups.
+  const scriptRange=data?unicodeRangeLookup(data.script_ranges,codePoint):null;
+  const script=scriptRange?.[2];
   const cpJapanese=(codePoint>=0x3040&&codePoint<=0x30FF)||
     (codePoint>=0x3400&&codePoint<=0x9FFF);
   if(cpJapanese){
@@ -145,10 +149,6 @@ async function selectUnicodeFont(codePoint,character){
     if(japanese)return japanese;
   }
   if(data){
-    // First classify this codepoint into its Unicode Script (175 named
-    // scripts plus the Common/Inherited shared classes).
-    const scriptRange=unicodeRangeLookup(data.script_ranges,codePoint);
-    const script=scriptRange?.[2];
     // The exact cmap index is authoritative: a script-level association
     // never means a font supports every single character of that script.
     const entry=unicodeRangeLookup(data.ranges,codePoint);
@@ -181,9 +181,8 @@ async function selectUnicodeFont(codePoint,character){
   // Unicode 18 Script -> publicly hosted Noto project lookup is secondary.
   // Source directories are leads only, not verified cmap coverage.
   if(data){
-    const sr=unicodeRangeLookup(data.script_ranges,codePoint);
-    if(sr&&sr[2]!=="Zyyy"&&sr[2]!=="Zinh"&&sr[2]!=="Zzzz"){
-      for(const family of (data.script_google_candidates[sr[2]]||[]).slice(0,2)){
+    if(script&&script!=="Zyyy"&&script!=="Zinh"&&script!=="Zzzz"){
+      for(const family of (data.script_google_candidates[script]||[]).slice(0,2)){
         const face=await tryLegacy(family,true);
         if(face)return face;
       }
