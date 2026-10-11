@@ -1,6 +1,9 @@
 const fs = require("fs");
 const {findRegisteredSource, getRegisteredEvidence} = require("./source-registry.js");
-const {categorizeEvidence, availableFieldCount, validateEditorialDescription} = require("./daily-evidence.js");
+const {
+  SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence, availableFieldCount,
+  validateEditorialDescription, hasApprovedDescription
+} = require("./daily-evidence.js");
 
 const {
   UNIHAN_URL,
@@ -1311,86 +1314,49 @@ async function generateDescription(
   research
 ) {
 
+  const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\\n");
   const prompt = [
-    "あなたは出典を厳密に扱うUnicode文字図鑑の編集者です。",
-    "確認済みの文字固有資料だけを使い、短く具体的な日本語の解説を作成してください。外部知識からの推測や創作は絶対に禁止です。",
-    "summaryは1文、usageとsupplementalInfoは各1〜2文、factsは最大2件の短い豆知識です。",
-    "usageは具体的な使用方法・意味、supplementalInfoは独立した補足情報、factsはこれらとは別の文字固有の事実としてください。",
-    "3項目で同じ情報を言い換えて埋めることを禁止します。項目ごとに下の根拠がなければ空文字列または空配列を返してください。",
-    "カタログ番号、Unicode名、コードポイント、バージョンやブロック名だけを豆知識として水増ししないでください。",
-    "実際の用例が資料にない場合、用例を作らないでください。古代文字の歴史・読みも推測しないでください。",
-    "UnihanのkDefinitionは漢字の意味、kJapaneseOn/Kunは読みです。異なる情報として扱ってください。",
-    "factsの文章は日本語にし、登録資料の事実だけを簡潔に紹介してください。",
-    "summaryは『この文字は』やUnicode名・U+番号で始めず、意味・外観から直接始めてください。",
+    "あなたは厳密な資料根拠に基づくUnicode文字図鑑の編集者です。",
+    "次の12項目を扱います: 概要（必須）と、残り11項目から最低2項目（最大3項目程度を優先）。",
+    "基本は概要1文 + 有用な2〜3項目各1〜2文。情報が確かな場合は他の項目を埋めてもよいですが、長文や水増しは禁止です。",
+    "使用可能な11項目は以下のとおり。sectionsの全キーを必ず返してください。",
+    sectionLabels,
+    "概要summaryには対象の意味や形を一文で書いてください。文字名やU+番号で始めないでください。",
+    "usageは実際の使われ方、examplesは出典に明記された具体例、pronunciationは読み・翻字、meaningは意味や表語機能、etymologyは語源・起源、historyは文字史・規格成立、structureは視覚的構成、relatedは確認済みの異体字・対応文字、cultureは史料に明記された文化的背景、unicodeInfoは単なるU+番号やバージョン以外の特記事項、triviaは他の項目に入らない興味深い事実です。",
+    "それぞれのsectionsキーには、対応する根拠のあるときだけ、簡潔な日本語を記入してください。その他は空文字列にしてください。",
+    "根拠を持つ項目を優先的に2つ以上埋めてください。根拠が一種類しかない文字は合格しないため、推測で埋めてはいけません。",
+    "同じ事実を別の項目で重複させないでください。同一情報を言い換えて項目数を稼ぐことは禁止です。",
+    "Unicode名・コードポイント・ブロック名・カタログ番号・文字追加バージョンだけでは独立した解説項目としないでください。",
+    "使用例や歴史、語源、発音の根拠がなければ書かないでください。名称だけから意味や用途を創作しないでください。",
+    "確認できる根拠は下記に列挙された文字固有情報に限ります。基本メタデータは概要用です。",
     "",
-    "対象文字:",
-    entry.character +
-      " U+" +
-      entry.codePoint,
-    "",
-    "抽選カテゴリ:",
-    entry.category,
-    "",
-    "調査タイプ:",
-    research.researchType,
-    "",
-    "基本情報:",
-    JSON.stringify(
-      research.metadata,
-      null,
-      2
-    ),
-    "",
-    "各説明欄に使用可能な根拠（欄の範囲外の事実では埋めない）:",
+    "対象文字:", entry.character + " U+" + entry.codePoint,
+    "抽選カテゴリ:", entry.category,
+    "調査タイプ:", research.researchType,
+    "基本情報:", JSON.stringify(research.metadata, null, 2),
+    "各項目の利用可能な根拠（列挙された項目以外には記入しない）:",
     JSON.stringify(research.evidence, null, 2)
-  ].join(
-    "\n"
+  ].join("\\n");
+
+  const sectionProperties = Object.fromEntries(
+    SECTION_KEYS.map(key => [key, {type:"string"}])
   );
-
-
   const baseBody = {
-    input:
-      prompt,
-
+    input: prompt,
     response_format: {
-      type:
-        "text",
-
-      mime_type:
-        "application/json",
-
+      type: "text", mime_type: "application/json",
       schema: {
-        type:
-          "object",
-
+        type: "object",
         properties: {
-          summary: {
-            type:
-              "string"
-          },
-
-          usage: {
-            type:
-              "string"
-          },
-
-          supplementalInfo: {
-            type:
-              "string"
-          },
-          facts: {type: "array", items: {type: "string"}}
+          summary: {type:"string"},
+          sections: {
+            type:"object", properties:sectionProperties, required:[...SECTION_KEYS]
+          }
         },
-
-        required: [
-          "summary",
-          "usage",
-          "supplementalInfo",
-          "facts"
-        ]
+        required:["summary","sections"]
       }
     }
   };
-
 
   let lastError =
     null;
@@ -1698,16 +1664,9 @@ async function upgradeExistingEntry(entry, sourceTexts) {
     info: {
       ...research.metadata,
       summary: valid.summary,
-      usage: valid.usage,
-      supplementalInfo: valid.supplementalInfo,
-      facts: [
-        ...research.facts,
-        ...valid.facts.map(text => ({
-          kind: "daily:fact", text,
-          source: research.registeredSourceName || "登録済みのUnicode資料",
-          strength: "strong"
-        }))
-      ],
+      descriptionSchema: 2,
+      sections: valid.sections,
+      facts: research.facts,
       sources: research.sources
     }
   };
@@ -1803,19 +1762,9 @@ async function generateAcceptedEntry(
         ...research.metadata,
 
         summary: valid.summary,
-
-        usage: valid.usage,
-
-        supplementalInfo: valid.supplementalInfo,
-
-        facts: [
-          ...research.facts,
-          ...valid.facts.map(text => ({
-            kind: "daily:fact", text,
-            source: research.registeredSourceName || "登録済みのUnicode資料",
-            strength: "strong"
-          }))
-        ],
+        descriptionSchema: 2,
+        sections: valid.sections,
+        facts: research.facts,
 
         sources:
           research.sources
@@ -1868,15 +1817,10 @@ async function main() {
     loadExistingDailyData();
 
 
-  const hasDescription = (entry) => {
-    const info = entry && entry.info;
-    if (!info || typeof info.summary !== "string" || !info.summary.trim()) return false;
-    const count = Number(Boolean(info.usage && info.usage.trim()))
-      + Number(Boolean(info.supplementalInfo && info.supplementalInfo.trim()))
-      + Number(Boolean((info.facts || []).some(f => f.kind === "daily:fact" && f.text && f.text.trim())));
-    return count >= 2 && Boolean(findRegisteredSource(parseInt(entry.codePoint, 16)));
-  };
-
+  const hasDescription = entry => Boolean(
+    entry && findRegisteredSource(parseInt(entry.codePoint,16))
+    && hasApprovedDescription(entry.info)
+  );
 
   let current;
 
@@ -1962,24 +1906,24 @@ async function main() {
     );
 
   } else {
-
-    console.log(
-      "Generating described next character..."
-    );
-
-
-    next =
-      await generateAcceptedEntry(
-        fonts,
-        sourceTexts,
-        nextDate,
-        parseInt(
-          current.codePoint,
-          16
-        )
+    // Keep an already-selected next-day glyph whenever it has enough
+    // 12-heading evidence; never shuffle tomorrow unnecessarily.
+    const sameNext = existing.next
+      && existing.next.date === nextDate
+      && existing.next.codePoint !== current.codePoint
+      && findRegisteredSource(parseInt(existing.next.codePoint, 16))
+      ? existing.next : null;
+    if (sameNext) {
+      console.log("Upgrading tomorrow's existing glyph description...");
+      next = await upgradeExistingEntry(sameNext, sourceTexts);
+    }
+    if (!next) {
+      console.log("Generating documented next character...");
+      next = await generateAcceptedEntry(
+        fonts, sourceTexts, nextDate, parseInt(current.codePoint,16)
       );
+    }
   }
-
 
   const data = {
     current,
