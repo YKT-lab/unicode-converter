@@ -6,7 +6,7 @@ The Unicode 18 font coverage builder recursively scans all supported files in `f
 
 | Directory | Purpose |
 |---|---|
-| `han/` | Han ideographs, CJK fonts, GNU Unifont Upper |
+| `han/` | Han ideographs and CJK fonts |
 | `seal/` | Unicode 18.0 Seal (small seal script) |
 | `hieroglyphs/` | Egyptian hieroglyphs |
 | `ancient/` | Cuneiform, Anatolian hieroglyphs, Linear A/B etc. |
@@ -26,7 +26,7 @@ A font can cover several scripts, so **assignment is by exact character codepoin
 
 ## Quality-first selections for uploaded fonts
 
-The latest 14 uploaded font binaries were moved from `fonts/` into `han/`, `ancient/`, `scripts/`, and `music/` without changing their bytes. The build-time ranker in `../scripts/build-unicode18-font-index.js` prefers **BabelStone Han for supplementary Han characters if its cmap contains the code point**, **Noto Serif Hentaigana** for Hentaigana, and the matching Noto specialist for other scripts (including Noto Znamenny Musical Notation and SignWriting). Unifont Upper stays last as a coverage fallback. It never assumes a font supports an entire Script property: ranking operates only on real cmap matches.
+The build-time ranker in `../scripts/build-unicode18-font-index.js` prefers **BabelStone Han for supplementary Han characters if its cmap contains the code point**, **Noto Serif Hentaigana** for Hentaigana, and dedicated Noto fonts for other scripts (including Avestan, Znamenny Musical Notation, and SignWriting). It never assumes that a font supports an entire Script property: ranking operates only on actual cmap matches.
 
 The site's existing Unicode 18 index is regenerated automatically by GitHub Actions when these files move. Source-level raster/outline, OpenType shaping, and Windows/iPhone browser rendering can still vary.
 
@@ -38,6 +38,6 @@ All formerly root-level font binaries were moved without changing blob contents.
 
 The build-time audit excludes unassigned, surrogate, control and private-use codepoints from the standard character tally. Emoji ZWJ sequences, regional-indicator flags, color rendering, GSUB/GPOS shaping and actual browser testing are separate matters. Current reports use Unicode 18.0 (172,808 encoded characters). Official UCD classification remains in `../data/unicode18_all_ranges.json`.
 
-GNU Unifont Upper is a fallback for supplementary characters; prefer specialized higher-quality fonts whenever present.
+The pixel-like GNU Unifont Upper was removed in favor of font-specific vector outlines. This reduces the number of Unicode 18 codepoints covered by on-site fonts, but the existing CSS, browser, and remote-font fallback paths remain available. The Avestan block uses `fonts/NotoSansAvestan-Regular.ttf`.
 
 GitHub Pages source: `../.github/workflows/font-coverage.yml` — publish is performed only if all tests pass.
