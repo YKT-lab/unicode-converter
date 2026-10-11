@@ -1311,7 +1311,8 @@ function sleep(
 
 async function generateDescription(
   entry,
-  research
+  research,
+  reviewContext = null
 ) {
 
   const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\n");
@@ -1326,6 +1327,9 @@ async function generateDescription(
     "それぞれのsectionsキーには、対応する根拠のあるときだけ、簡潔な日本語を記入してください。その他は空文字列にしてください。",
     "根拠が十分にある項目は3項目以上でも記入してください。根拠がある項目が2つ未満の場合のみ不採用です。裏付けのない項目は必ず空文字列にし、推測で補ってはいけません。",
     "同じ事実を別の項目で重複させないでください。同一情報を言い換えて項目数を稼ぐことは禁止です。",
+    "概要summaryも比較対象です。概要と各説明項目に同じ事実を含めないでください。たとえば概要で動物と持ち物の構図を説明したら、structureで同じ構図を言い換えて繰り返してはいけません。",
+    "概要は文字の種類や特徴を短く紹介し、具体的な用途・意味・構造は追加の2項目に譲ってください。単に短くするだけでなく、三つの説明が別々の情報を伝えるようにしてください。",
+    "完成したsummaryと追加欄を横断して事実の重複を自分で検査し、重複していれば概要を書き換えるか、別の根拠ある項目を選んでから返答してください。",
     "Unicode名・コードポイント・ブロック名・カタログ番号・文字追加バージョンだけでは独立した解説項目としないでください。",
     "使用例や歴史、語源の根拠がなければ書かないでください。読み・発音・翻字は既存の別欄に表示するため、sectionsに書かず合格数にも含めないでください。名称だけから意味や用途を創作しないでください。",
     "確認できる根拠は下記に列挙された文字固有情報に限ります。基本メタデータは概要用です。",
@@ -1335,7 +1339,13 @@ async function generateDescription(
     "調査タイプ:", research.researchType,
     "基本情報:", JSON.stringify(research.metadata, null, 2),
     "各項目の利用可能な根拠（列挙された項目以外には記入しない）:",
-    JSON.stringify(research.evidence, null, 2)
+    JSON.stringify(research.evidence, null, 2),
+    ...(reviewContext ? [
+      "これは最終編集チェックです。前回の概要と採用候補2項目をまとめて読み、同じ事実の繰り返しが無いか評価して、必要な箇所を書き直してください。",
+      "上位の概要と下位の具体的な説明が同じ構図・意味・用途を表現だけ変えて繰り返すことも重複です。",
+      "出典にない新事実を創作して埋めず、概要を短い全体像にし、詳細欄へ個別事実を振り分けてください。",
+      "前回の説明案:", JSON.stringify(reviewContext, null, 2)
+    ] : [])
   ].join("\n");
 
   const sectionProperties = Object.fromEntries(
