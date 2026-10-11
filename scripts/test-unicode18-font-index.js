@@ -64,6 +64,8 @@ for(const cp of [0x17000,0x18B00]){
 // a real alternate font without assigning individual character exceptions.
 const alternatePath="fonts/han/WenJinMinchoP3-Regular.otf";
 if(fs.existsSync(path.join(ROOT,alternatePath))){
+  assert(index.font_families.length>=101,
+    "Installed supplemental Han font must appear in the rebuilt index");
   const alternateId=index.font_families.findIndex(f=>
     f.file===alternatePath && f.family==="WenJin Mincho P3");
   assert(alternateId>=0,"Imported CJK font not indexed");
