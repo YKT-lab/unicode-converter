@@ -1686,6 +1686,33 @@ async function generateDescription(
     );
 }
 
+// Upgrade an already-chosen character without changing today's glyph.
+async function upgradeExistingEntry(entry, sourceTexts) {
+  const research = researchCharacter(sourceTexts, entry);
+  if (!research.accepted) return null;
+  const description = await generateDescription(entry, research);
+  const valid = validateEditorialDescription(description, research.evidence);
+  if (!valid) return null;
+  return {
+    ...entry,
+    info: {
+      ...research.metadata,
+      summary: valid.summary,
+      usage: valid.usage,
+      supplementalInfo: valid.supplementalInfo,
+      facts: [
+        ...research.facts,
+        ...valid.facts.map(text => ({
+          kind: "daily:fact", text,
+          source: research.registeredSourceName || "登録済みのUnicode資料",
+          strength: "strong"
+        }))
+      ],
+      sources: research.sources
+    }
+  };
+}
+
 async function generateAcceptedEntry(
   fonts,
   sourceTexts,
@@ -1893,18 +1920,19 @@ async function main() {
     );
 
   } else {
-
-    console.log(
-      "Generating described current character..."
+    // The description schema changed: keep today's existing character if
+    // possible and regenerate ONLY the explanation from trusted evidence.
+    const sameDay = [existing.current, existing.next].find(e =>
+      e && e.date === currentDate && e.codePoint && findRegisteredSource(parseInt(e.codePoint, 16))
     );
-
-
-    current =
-      await generateAcceptedEntry(
-        fonts,
-        sourceTexts,
-        currentDate
-      );
+    if (sameDay) {
+      console.log("Upgrading existing current explanation while keeping glyph...");
+      current = await upgradeExistingEntry(sameDay, sourceTexts);
+    }
+    if (!current) {
+      console.log("Generating documented current character...");
+      current = await generateAcceptedEntry(fonts, sourceTexts, currentDate);
+    }
   }
 
 
