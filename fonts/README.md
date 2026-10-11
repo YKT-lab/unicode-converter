@@ -9,8 +9,8 @@ The Unicode 18 font coverage builder recursively scans all supported files in `f
 | `han/` | Han ideographs and CJK fonts |
 | `seal/` | Unicode 18.0 Seal (small seal script) |
 | `hieroglyphs/` | Egyptian hieroglyphs |
-| `ancient/` | Cuneiform, Anatolian hieroglyphs, Linear A/B etc. |
-| `scripts/` | All other alphabetic, syllabic and language-specific writing systems |
+| `ancient/` | Historical scripts: Avestan, Brahmi, Old Turkic, Phoenician, cuneiform, Linear A/B etc. |
+| `scripts/` | Current and specialist language scripts (including Tulu Tigalari / Mallige) |\n| `east-asian/` | Tangut and Khitan Small Script dedicated outline fonts |\n| `numbers/` | Specialist numeric notation such as Ottoman Siyaq |\n| `emoji/` | Color emoji font fallback (prefer native device emoji when available) |
 | `symbols/` | Symbols, mathematics and historic computing symbols |
 | `music/` | Music symbols and attribution |
 | `phonetics/` | IPA / phonetics and attribution |
@@ -38,6 +38,14 @@ All formerly root-level font binaries were moved without changing blob contents.
 
 The build-time audit excludes unassigned, surrogate, control and private-use codepoints from the standard character tally. Emoji ZWJ sequences, regional-indicator flags, color rendering, GSUB/GPOS shaping and actual browser testing are separate matters. Current reports use Unicode 18.0 (172,808 encoded characters). Official UCD classification remains in `../data/unicode18_all_ranges.json`.
 
-The pixel-like GNU Unifont Upper was removed in favor of font-specific vector outlines. This reduces the number of Unicode 18 codepoints covered by on-site fonts, but the existing CSS, browser, and remote-font fallback paths remain available. The Avestan block uses `fonts/NotoSansAvestan-Regular.ttf`.
+The pixel-like GNU Unifont Upper was removed in favor of font-specific vector outlines. This reduces the number of Unicode 18 codepoints covered by on-site fonts, but the existing CSS, browser, and remote-font fallback paths remain available. The Avestan block uses `fonts/ancient/NotoSansAvestan-Regular.ttf`.
+
+## October 2026 font expansion
+
+55 newly uploaded fonts are sorted into purpose-based subdirectories without modifying binary contents. The index should identify **100 local fonts** and cover **168,821 Unicode 18.0 characters** after the successful rebuild. Files can support multiple scripts; script-level rankings only select fonts whose exact cmap contains the codepoint.
+
+`Mallige_Unicode_v2.ttf` is a Tulu Tigalari source; complex scripts may need browser-specific shaping tests beyond cmap coverage. `NotoColorEmoji.ttf` is a color emoji font and must not be assumed to offer smooth vector outlines; the browser normally prefers its native color emoji renderer. The dedicated Tangut and Khitan fonts are preferred over generic coverage fonts where their cmaps overlap. Some recently added Unicode 18.0 characters (such as certain Khitan Small Script codepoints) remain without a verified local glyph.
+
+Review upstream redistribution permissions and attribution for every added family before distributing the site. Noto families originate from the Noto projects; Mallige from its separate upstream project. Do not infer licenses from filenames alone.
 
 GitHub Pages source: `../.github/workflows/font-coverage.yml` — publish is performed only if all tests pass.

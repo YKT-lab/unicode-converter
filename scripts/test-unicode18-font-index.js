@@ -29,9 +29,37 @@ assert(!index.font_families.some(f =>
     f.family+" "+f.file
   )), "Removed Unifont Upper must not be published");
 const avestanFont=index.font_families.findIndex(f=>
-  f.file==="fonts/NotoSansAvestan-Regular.ttf" &&
+  f.file==="fonts/ancient/NotoSansAvestan-Regular.ttf" &&
   f.family==="Noto Sans Avestan");
 assert(avestanFont>=0,"Missing Noto Sans Avestan font");
+// All uploaded fonts are grouped by purpose; no font binaries remain
+// loose under fonts/. The exact cmap, not the destination folder, determines
+// which Unicode codepoints a font may render.
+assert(index.font_families.every(f=>/^fonts\/[^/]+\/[^/]+\.(?:ttf|otf|woff2?)$/i.test(f.file)),
+  "All audited fonts must be in a category subdirectory");
+assert(index.font_families.length===100,"Expected 100 installed font binaries");
+const specialists=[
+  ["fonts/scripts/NotoSansPahawhHmong-Regular.ttf",0x16B00],
+  ["fonts/ancient/NotoSansBrahmi-Regular.ttf",0x11000],
+  ["fonts/scripts/Mallige_Unicode_v2.ttf",0x11380],
+  ["fonts/east-asian/NotoSerifTangut-Regular.ttf",0x17000],
+  ["fonts/east-asian/NotoSerifKhitanSmallScript-Regular.ttf",0x18B00],
+  ["fonts/numbers/NotoSerifOttomanSiyaq-Regular.ttf",0x1ED01],
+  ["fonts/emoji/NotoColorEmoji.ttf",0x1F600]
+];
+for(const [file,cp] of specialists){
+  const id=index.font_families.findIndex(f=>f.file===file);
+  assert(id>=0,"New specialist font missing from index: "+file);
+  const entry=read(index.ranges,cp);
+  assert(entry&&index.combinations[entry[2]].includes(id),
+    "New specialist font does not cover U+"+cp.toString(16)+": "+file);
+}
+for(const cp of [0x17000,0x18B00]){
+  const r=read(index.ranges,cp),ids=index.combinations[r[2]];
+  const expected=cp===0x17000?"Noto Serif Tangut":"Noto Serif Khitan Small Script";
+  assert.equal(index.font_families[ids[0]].family,expected,
+    "Specialist outline should outrank generic font U+"+cp.toString(16));
+}
 assert(index.font_families.length > 0, "No published fonts");
 const {combinations, font_families:fonts}=index;
 assert(Array.isArray(combinations) && Array.isArray(fonts) && fonts.length>0);

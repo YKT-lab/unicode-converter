@@ -86,8 +86,7 @@ const explicitPreferred = {
  Zyyy:["Noto Sans Symbols 2 Local","Noto Sans Symbols","Noto Sans Math","BabelStone Pseudographica","Noto Music"],
  Zinh:["Noto Sans Phonetics","Noto Sans Symbols 2 Local"],
  Latn:["Noto Sans Phonetics"],
- Tang:["Plangothic P2"],
- Kits:["Plangothic P2"]
+ /* East Asian scripts with new specialist fonts use catalog and directory-based ranking. */
 };
 function rankId(id, script, cp) {
  const f=fonts[id], family=f.family;
@@ -113,7 +112,7 @@ function rankId(id, script, cp) {
  if (/Noto Sans Symbols 2/i.test(family)) return 450;
  if (/Noto Sans Symbols/i.test(family)) return 480;
  if (/Phonetics|Noto Music/i.test(family)) return 520;
- if (/fonts\/scripts\/|fonts\/ancient\/|fonts\/seal\/|fonts\/music\//.test(f.file))
+ if (/fonts\/(?:scripts|ancient|seal|music|east-asian|numbers|emoji)\//.test(f.file))
    return 25;
  return 600;
 }
