@@ -1,117 +1,5 @@
 {
   "current": {
-    "date": "2026-10-11",
-    "category": "kana",
-    "codePoint": "31FC",
-    "character": "ㇼ",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M719 596Q718 581 717.5 563.5Q717 546 717 525Q717 509 717 483Q717 457 717 432Q717 407 717 391Q717 317 711.5 265Q706 213 695.5 175.5Q685 138 668.5 110Q652 82 629 55Q589 9 534.5 -19.5Q480 -48 434 -64L375 -3Q432 10 484 36.5Q536 63 573 106Q596 132 609 158.5Q622 185 629.5 217Q637 249 639.5 292.5Q642 336 642 394Q642 410 642 435.5Q642 461 642 485.5Q642 510 642 525Q642 546 640.5 563.5Q639 581 638 596ZM340 590Q339 578 338 562Q337 546 337 530Q337 523 337 496Q337 469 337 432.5Q337 396 337 359Q337 322 337 293.5Q337 265 337 254Q337 239 338 221Q339 203 340 192L259 192Q260 202 261 219.5Q262 237 262 255Q262 265 262 294Q262 323 262 360Q262 397 262 433.5Q262 470 262 496.5Q262 523 262 530Q262 542 261 560Q260 578 259 590Z",
-      "viewBox": "206.2 -648.8 565.6 765.6"
-    },
-    "info": {
-      "category": "kana",
-      "unicodeName": "KATAKANA LETTER SMALL RI",
-      "block": "Katakana Phonetic Extensions",
-      "script": "Katakana",
-      "age": "3.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "カタカナ「リ」の小書き文字です。",
-      "usage": "アイヌ語やその他の言語の音声転写に用いられます。",
-      "supplementalInfo": "この文字範囲はJIS X 0213:2000に基づいて制定されました。",
-      "facts": [
-        {
-          "kind": "registered:usage",
-          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:supplementalInfo",
-          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "daily:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点や結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ],
-      "sections": {
-        "usage": "アイヌ語やその他の言語の音声転写に用いられます。",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "この文字範囲はJIS X 0213:2000に基づいて制定されました。",
-        "structure": "この範囲の小書きカタカナには、結合濁点や結合半濁点を添えて音を修飾できるものがあります。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "descriptionSchema": 3
-    }
-  },
-  "next": {
     "date": "2026-10-12",
     "category": "ancient",
     "codePoint": "13C4F",
@@ -249,6 +137,132 @@
         "trivia": ""
       },
       "descriptionSchema": 3
+    }
+  },
+  "next": {
+    "date": "2026-10-13",
+    "category": "ancient",
+    "codePoint": "13E1F",
+    "character": "𓸟",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M31 83Q31 118 50.5 143.5Q70 169 97 183L97 188Q97 201 91.5 215.5Q86 230 77.5 245Q69 260 59.5 273.5Q50 287 42 298L43 298L36 307L36 312Q36 317 38.5 323.5Q41 330 49 330L58 324L100 278Q98 300 88.5 318.5Q79 337 67 356Q55 374 45.5 392.5Q36 411 36 432L36 436Q36 440 37 441L56 441Q64 441 71.5 431.5Q79 422 85 411Q88 405 90.5 400Q93 395 97 392Q95 403 90.5 419Q86 435 80 451.5Q74 468 67.5 482.5Q61 497 57 505L58 505L46 519Q41 525 36 533Q31 541 31 550Q31 555 34.5 559.5Q38 564 43 564Q56 564 67.5 551.5Q79 539 88 525L99 508Q99 517 97 522L71 607Q67 618 53 634Q39 650 31 656L31 660Q31 669 36 671.5Q41 674 48 674Q53 674 54.5 673.5Q56 673 60 669L102 629Q102 653 96.5 672Q91 691 82 708.5Q73 726 61 742.5Q49 759 34 778L34 798L52 798L78 778L100 760Q104 756 105 756Q108 791 125 820.5Q142 850 172 870Q186 875 199.5 878Q213 881 228 881Q236 881 249.5 878.5Q263 876 275.5 870.5Q288 865 297.5 856Q307 847 307 835Q307 817 288 817Q278 817 271.5 819.5Q265 822 258 826Q245 836 232 836Q218 836 205 829.5Q192 823 182 811.5Q172 800 166 786Q160 772 160 757L160 187Q160 187 162 186Q200 175 224.5 150.5Q249 126 249 78Q248 74 246 62Q244 50 244 47Q230 13 200.5 -3Q171 -19 138 -19Q117 -19 98 -11.5Q79 -4 64 9.5Q49 23 40 41.5Q31 60 31 83ZM47 83Q47 63 55 47Q63 31 75.5 20Q88 9 104.5 3Q121 -3 139 -3Q156 -3 173 2.5Q190 8 203.5 19Q217 30 225 45.5Q233 61 233 81Q233 105 228.5 119Q224 133 216.5 140.5Q209 148 200 151.5Q191 155 181 157Q172 160 162.5 163.5Q153 167 146 173L136 173Q118 173 102 166.5Q86 160 74 148Q62 136 54.5 119.5Q47 103 47 83ZM60 298Q78 272 91 245.5Q104 219 112 186L144 190L144 757L151 791Q154 804 163 815Q172 826 184 834Q196 842 209 847Q222 852 233 852Q242 852 248.5 848.5Q255 845 261 841Q268 837 273.5 834.5Q279 832 287 832Q291 832 292 835Q288 843 279.5 849Q271 855 261.5 858.5Q252 862 242 864Q232 866 224 866Q213 866 206.5 864.5Q200 863 186 858Q183 858 181 857Q165 852 153.5 838.5Q142 825 135 808.5Q128 792 124 773.5Q120 755 119 740Q120 735 117 734.5Q114 734 111 734Q108 734 105 737L105 736L57 773L93 726L92 726Q95 723 97 718Q99 713 101 710L106 693L111 677Q111 673 111.5 663.5Q112 654 114 643Q115 632 116.5 622Q118 612 119 607Q119 601 109 601L94 615Q89 620 83 625.5Q77 631 72 636Q77 630 80.5 623Q84 616 86 611L111 526L111 523Q111 519 112 517L117 484Q117 482 115 479Q113 476 110 476Q108 476 105.5 478.5Q103 481 100 484L78 510L49 545Q49 543 49.5 542.5Q50 542 50 541L71 510Q78 499 84.5 482Q91 465 96.5 446.5Q102 428 106.5 409.5Q111 391 114 376L119 358Q119 354 115.5 353.5Q112 353 111 353L106 353Q104 356 97 365.5Q90 375 82.5 385.5Q75 396 68 405Q61 414 58 418Q56 420 54 422.5Q52 425 50 425Q51 415 59 400Q67 385 77 367Q91 342 105 312Q119 282 119 252Q119 245 111 245L109 245Q108 245 107 246ZM47 663L46 658L49 658Q51 657 54 655Q56 653 57.5 652Q59 651 60 650L59 650Q60 649 63.5 645Q67 641 72 636ZM51 310Q50 310 50 314L47 313L60 298L52 310ZM49 545L50 545Q49 546 50 546Q51 546 49 546Z",
+      "viewBox": "-41 -953 420 1044"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-13E1F",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "円の上に刻み目の付いた葉のないナツメヤシの枝を重ねて描いたエジプト聖刻文字。",
+      "descriptionSchema": 3,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "時間や季節を表す表語文字として機能する。",
+        "etymology": "",
+        "history": "",
+        "structure": "葉が落とされ複数の鋭い刻み目が付けられたナツメヤシの枝が、円の上部に載った構成をしている。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "A palm branch, stripped of leaves, with multiple sharp notches (M4A), on top of a circle.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Logogram (time/season)",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "tr",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "logogram (time/season) : tr",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "M005C",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "M-05-014",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
     }
   }
 }
