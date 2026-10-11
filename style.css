@@ -2983,3 +2983,11 @@ button:disabled {
     background-color: rgba(12, 12, 14, 0.98);
   }
 }
+
+/* Curated notes accompanying the Daily Unicode character. */
+.daily-facts-list {
+  margin: 0.35em 0 0;
+  padding-left: 1.3em;
+  line-height: 1.85;
+}
+.daily-facts-list li + li { margin-top: 0.4em; }
