@@ -2,7 +2,7 @@ const fs = require("fs");
 const {findRegisteredSource, getRegisteredEvidence} = require("./source-registry.js");
 const {
   SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence, availableFieldCount,
-  validateEditorialDescription, hasApprovedDescription
+  validateEditorialDescription, hasApprovedDescription, selectBestTwoSections
 } = require("./daily-evidence.js");
 
 const {
@@ -1816,6 +1816,18 @@ async function main() {
   const existing =
     loadExistingDailyData();
 
+  // Preserve previously chosen glyphs when a description contains more
+  // than two useful sections. Reduce their stored explanations to the best two
+  // instead of marking the glyph invalid or rerunning the random draw.
+  for (const slot of ["current", "next"]) {
+    const info = existing[slot]?.info;
+    if (!info || info.descriptionSchema !== 3 || !info.sections) continue;
+    const selected = selectBestTwoSections(
+      info.sections,
+      categorizeEvidence(info.facts || [])
+    ) || selectBestTwoSections(info.sections);
+    if (selected) info.sections = selected;
+  }
 
   const hasDescription = entry => Boolean(
     entry && findRegisteredSource(parseInt(entry.codePoint,16))
