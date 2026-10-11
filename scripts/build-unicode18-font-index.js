@@ -57,7 +57,7 @@ for (let fontId=0; fontId<actual.length; fontId++) {
  * Never assign a font just from its script name: candidate enumeration is
  * already limited to the glyphs present in the corresponding binary.
  *
- * Locally installed specialist fonts outrank GNU Unifont's pixelated glyphs.
+ * Prefer fonts with purpose-built outlines; use exact cmap data for eligibility.
  * CJK and Hentaigana need extra codepoint-specific rules because generic
  * "Hani" and "Hira" include many different typographic subrepertoires.
  */
@@ -76,7 +76,7 @@ const specializedByScript = {
   Todr: "Noto Serif Todhri"
 };
 const explicitPreferred = {
- Hani:["Noto Sans CJK JP","BabelStone Han","Plangothic P1","Plangothic P2","GNU Unifont Upper"],
+ Hani:["Noto Sans CJK JP","BabelStone Han","Plangothic P1","Plangothic P2"],
  Seal:["Kaiyuan Small Seal","LXGW Seal"],
  Egyp:["UniHieroglyphica","Egyptology Extended"],
  Xsux:["Noto Sans Cuneiform"],
@@ -91,7 +91,7 @@ const explicitPreferred = {
 };
 function rankId(id, script, cp) {
  const f=fonts[id], family=f.family;
- // A specialist contour font beats the bitmap-like GNU Unifont fallback.
+ // Prefer supplementary Han and specialized glyph outlines when available.
  if (script==="Hani" && cp>=0x20000) {
    if (family==="BabelStone Han") return -30;
    if (family==="Noto Sans CJK JP") return -20;
@@ -108,7 +108,6 @@ function rankId(id, script, cp) {
  if(index>=0) return index;
  const scriptSpecific=specialCodeToName.get(script);
  if(scriptSpecific && scriptSpecific.includes(family)) return 9;
- if (/Unifont/i.test(family)) return 990;
  if (/Noto Sans CJK/i.test(family)) return 110;
  if (/Plangothic/i.test(family)) return 350;
  if (/Noto Sans Symbols 2/i.test(family)) return 450;
