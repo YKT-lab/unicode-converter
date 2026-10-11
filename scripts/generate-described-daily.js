@@ -1662,19 +1662,40 @@ async function generateDescription(
     );
 }
 
+/*
+ * Independent editorial pass for the summary and its TWO published details.
+ * Compare all three paragraphs rather than checking section text in isolation.
+ * If the second model call is temporarily unavailable, retain an already
+ * nonrepetitive first draft; never knowingly publish a redundant draft.
+ */
+async function generateReviewedDescription(entry,research) {
+  const draft=await generateDescription(entry,research);
+  const preliminary=validateEditorialDescription(draft,research.evidence);
+  if(!preliminary)return null;
+  try {
+    const reviewed=await generateDescription(entry,research,{
+      summary:preliminary.summary,sections:preliminary.sections
+    });
+    const checked=validateEditorialDescription(reviewed,research.evidence);
+    if(checked&&!checked.needsRevision)return checked;
+  } catch(error) {
+    console.warn("Editorial overlap review unavailable: "+error.message);
+  }
+  return preliminary.needsRevision?null:preliminary;
+}
+
 // Upgrade an already-chosen character without changing today's glyph.
 async function upgradeExistingEntry(entry, sourceTexts) {
   const research = researchCharacter(sourceTexts, entry);
   if (!research.accepted) return null;
-  const description = await generateDescription(entry, research);
-  const valid = validateEditorialDescription(description, research.evidence);
-  if (!valid) return null;
+  const valid=await generateReviewedDescription(entry,research);
+  if(!valid)return null;
   return {
     ...entry,
     info: {
       ...research.metadata,
       summary: valid.summary,
-      descriptionSchema: 3,
+      descriptionSchema: 4,
       sections: valid.sections,
       facts: research.facts,
       sources: research.sources
@@ -1752,14 +1773,7 @@ async function generateAcceptedEntry(
     }
 
 
-    const description =
-      await generateDescription(
-        entry,
-        research
-      );
-
-
-    const valid = validateEditorialDescription(description, research.evidence);
+    const valid=await generateReviewedDescription(entry,research);
     if (!valid) {
       console.warn("Description lacks two distinct sourced sections for U+" + entry.codePoint);
       continue;
@@ -1772,7 +1786,7 @@ async function generateAcceptedEntry(
         ...research.metadata,
 
         summary: valid.summary,
-        descriptionSchema: 3,
+        descriptionSchema: 4,
         sections: valid.sections,
         facts: research.facts,
 
@@ -1831,11 +1845,12 @@ async function main() {
   // instead of marking the glyph invalid or rerunning the random draw.
   for (const slot of ["current", "next"]) {
     const info = existing[slot]?.info;
-    if (!info || info.descriptionSchema !== 3 || !info.sections) continue;
+    if (!info || ![3,4].includes(info.descriptionSchema) || !info.sections) continue;
     const selected = selectBestTwoSections(
       info.sections,
-      categorizeEvidence(info.facts || [])
-    ) || selectBestTwoSections(info.sections);
+      categorizeEvidence(info.facts || []),
+      info.summary
+    ) || selectBestTwoSections(info.sections,null,info.summary);
     if (selected) info.sections = selected;
   }
 
