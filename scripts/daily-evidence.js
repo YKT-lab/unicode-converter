@@ -1,15 +1,15 @@
 "use strict";
 
 /*
- * Twelve editorial headings (including the mandatory summary).
+ * Eleven editorial headings (including the mandatory summary).
  * A character qualifies when summary + at least TWO other evidence-backed,
- * nonduplicated headings are available. A code point, Unicode block or age
- * alone does not count as a researched heading.
+ * nonduplicated headings are available. Readings/transliterations appear in the existing
+ * separate field and never count as a researched heading. A code point, Unicode
+ * block or age alone does not count.
  */
 const SECTION_DEFINITIONS = Object.freeze([
   {key: "usage", label: "使われ方"},
   {key: "examples", label: "使用例"},
-  {key: "pronunciation", label: "読み方・発音"},
   {key: "meaning", label: "意味"},
   {key: "etymology", label: "由来・語源"},
   {key: "history", label: "歴史"},
@@ -23,7 +23,7 @@ const SECTION_KEYS = Object.freeze(SECTION_DEFINITIONS.map(x => x.key));
 
 function evidenceCategory(fact) {
   const kind = String(fact?.kind || "");
-  const registered = /^registered:(usage|examples|pronunciation|meaning|etymology|history|structure|related|culture|unicodeInfo|trivia)$/.exec(kind);
+  const registered = /^registered:(usage|examples|meaning|etymology|history|structure|related|culture|unicodeInfo|trivia)$/.exec(kind);
   if (registered) return registered[1];
   // Compatibility with previously reviewed registry records.
   if (kind === "registered:supplementalInfo") return "history";
@@ -33,10 +33,6 @@ function evidenceCategory(fact) {
       || /^emoji:jaName$/.test(kind) || /^smufl:glyph$/.test(kind)
       || /^historical:.*(?:Meaning|Definition|Function|Gloss|Translation|Use)$/i.test(kind))
     return "meaning";
-  if (/^unihan:japanese(?:On|Kun)$/.test(kind)
-      || /^functionValue$/.test(kind)
-      || /^historical:.*(?:Reading|Pronunciation|Phonetic|Transliteration)$/i.test(kind))
-    return "pronunciation";
   if (/^appearance$/.test(kind)
       || /^unihan:(?:totalStrokes|radicalStroke)$/.test(kind)
       || /^namesList:decomposition$/.test(kind))
@@ -61,7 +57,7 @@ function categorizeEvidence(facts) {
   for (const f of facts || []) {
     if (!f || typeof f.text !== "string" || !f.text.trim()) continue;
     const category = evidenceCategory(f);
-    if (!category) continue;
+    if (!category || !result[category]) continue;
     // One source fact may never qualify two headings.
     const key = f.text.toLowerCase().replace(/\s+/g, " ").trim();
     if (used.has(key)) continue;
@@ -104,7 +100,7 @@ function validateEditorialDescription(description, evidence) {
   return {summary, sections, fieldCount: filled.length};
 }
 function hasApprovedDescription(info) {
-  if (!info || info.descriptionSchema !== 2 || typeof info.summary !== "string"
+  if (!info || info.descriptionSchema !== 3 || typeof info.summary !== "string"
       || !info.summary.trim() || !info.sections) return false;
   return SECTION_KEYS.filter(key => typeof info.sections[key] === "string"
     && info.sections[key].trim()).length >= 2;
