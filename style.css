@@ -2957,3 +2957,29 @@ button:disabled {
 .bulk-update-button:hover { background: #0066d6; }
 .bulk-update-button:active { transform: scale(0.98); }
 .bulk-update-button[hidden], .bulk-update-status[hidden] { display: none !important; }
+
+/* =========================================
+   Site-wide hover feedback for every button
+   =========================================
+   A dark translucent layer works with light, colored, dark, and transparent
+   button backgrounds. It changes the background without fading the text.
+   Only devices with a real hover pointer use this (no sticky touch hover).
+*/
+@media (hover: hover) and (pointer: fine) {
+  button:not(:disabled):hover,
+  [role="button"]:not([aria-disabled="true"]):hover,
+  input[type="button"]:not(:disabled):hover,
+  input[type="submit"]:not(:disabled):hover,
+  input[type="reset"]:not(:disabled):hover,
+  .unicode-digit-box:hover {
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.10),
+      rgba(0, 0, 0, 0.10)
+    );
+  }
+
+  /* The scope copy button is already near-black; deepen it perceptibly. */
+  #unicodeScopeCode:hover {
+    background-color: rgba(12, 12, 14, 0.98);
+  }
+}
