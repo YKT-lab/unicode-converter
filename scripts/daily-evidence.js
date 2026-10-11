@@ -121,18 +121,22 @@ function selectBestTwoSections(sections, evidence = null, summary = "") {
     return {key, value, index, score};
   }).filter(Boolean).sort((a,b) => b.score - a.score || a.index - b.index);
 
-  const chosen = [];
-  const seen = new Set();
-  for (const candidate of ranked) {
-    const comparable = normalize(candidate.value);
-    // Repetitions are omitted rather than disqualifying a documented glyph.
-    if (!comparable || seen.has(comparable)) continue;
-    seen.add(comparable);
-    chosen.push(candidate);
-    if (chosen.length === 2) break;
+  // Score complete pairs against the overview and one another, not
+  // solely by section quality; prefer distinct information.
+  let best = null;
+  for (let i = 0; i < ranked.length; i++) {
+    for (let j = i + 1; j < ranked.length; j++) {
+      const x = ranked[i], y = ranked[j];
+      const across = textOverlap(x.value,y.value);
+      if (across >= 0.55) continue;
+      const summaryOverlap = textOverlap(summary,x.value)
+        + textOverlap(summary,y.value);
+      const score=x.score+y.score - across*90 - summaryOverlap*110;
+      if(!best||score>best.score)best={score,x,y};
+    }
   }
-  if (chosen.length < 2) return null;
-  const picked = new Map(chosen.map(x => [x.key, x.value]));
+  if(!best)return null;
+  const picked=new Map([[best.x.key,best.x.value],[best.y.key,best.y.value]]);
   return Object.fromEntries(SECTION_KEYS.map(key => [key, picked.get(key) || ""]));
 }
 
@@ -149,14 +153,16 @@ function validateEditorialDescription(description, evidence) {
     sections[key] = Array.isArray(evidence?.[key]) && evidence[key].length
       ? cleanText(raw, 260) : "";
   }
-  const selected = selectBestTwoSections(sections, evidence);
-  if (!selected) return null;
-  return {summary, sections: selected, fieldCount: 2};
+  const selected = selectBestTwoSections(sections,evidence,summary);
+  if(!selected)return null;
+  return {summary,sections:selected,fieldCount:2,
+    needsRevision:overlapsSummary(summary,selected)};
 }
 function hasApprovedDescription(info) {
-  return Boolean(info && info.descriptionSchema === 3
+  return Boolean(info && info.descriptionSchema === 4
     && typeof info.summary === "string" && info.summary.trim()
-    && selectBestTwoSections(info.sections));
+    && selectBestTwoSections(info.sections,null,info.summary)
+    && !overlapsSummary(info.summary,info.sections));
 }
 
 module.exports = {
