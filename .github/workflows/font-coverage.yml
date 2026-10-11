@@ -12,8 +12,6 @@ on:
       - "scripts/test-unicode18-font-index.js"
       - "scripts/test-font-assignment.js"
       - "scripts/test-mobile-font-outlines.js"
-      - "scripts/test-extension-j-font.js"
-      - "js/extension-j-fallback.js"
       - "scripts/test-unicode18-emoji-display.js"
       - "data/unicode18_emoji_presentation.json"
       - "js/emoji-display.js"
@@ -64,8 +62,6 @@ jobs:
           node --check scripts/test-unicode18-font-index.js
           node --check scripts/test-font-assignment.js
           node --check scripts/test-mobile-font-outlines.js
-          node --check scripts/test-extension-j-font.js
-          node --check js/extension-j-fallback.js
           node --check js/font-coverage.js
           node --check js/emoji-display.js
           node --check js/daily.js
@@ -88,8 +84,6 @@ jobs:
         run: node scripts/test-mobile-font-outlines.js
       - name: Test bulk Unicode input performance policy
         run: node scripts/test-bulk-input-policy.js
-      - name: Test CJK Extension J glyph outlines
-        run: node scripts/test-extension-j-font.js
       - name: Test Unicode 18 color emoji classification
         run: node scripts/test-unicode18-emoji-display.js
       - name: Check daily character font discovery
@@ -114,7 +108,6 @@ jobs:
           mkdir -p /tmp/unicode-font-output
           cp data/unicode18_font_cmap_audit.json /tmp/unicode-font-output/
           cp data/unicode18_font_coverage_index.json /tmp/unicode-font-output/
-          cp data/extension_j_glyph_fallback.json /tmp/unicode-font-output/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
@@ -123,7 +116,7 @@ jobs:
           git reset --hard HEAD
           git checkout --detach origin/main
           cp /tmp/unicode-font-output/* data/
-          git add data/unicode18_font_cmap_audit.json data/unicode18_font_coverage_index.json data/extension_j_glyph_fallback.json
+          git add data/unicode18_font_cmap_audit.json data/unicode18_font_coverage_index.json
           if git diff --cached --quiet; then
             echo "Coverage output already current"
           else
