@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const {findRegisteredSource,getRegisteredEvidence} = require("./source-registry.js");
 const {
   SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence, availableFieldCount,
-  validateEditorialDescription, hasApprovedDescription, selectBestTwoSections
+  validateEditorialDescription, hasApprovedDescription, selectBestTwoSections, textOverlap, overlapsSummary
 } = require("./daily-evidence.js");
 
 assert.equal(SECTION_DEFINITIONS.length + 1,11,"summary + ten researched headings");
@@ -28,12 +28,39 @@ assert.equal(chosen.fieldCount,2,"select exactly two for publication");
 assert.deepEqual(Object.keys(chosen.sections).filter(k=>chosen.sections[k]),["usage","history"],
   "prefer the two useful, independently supported sections");
 assert.ok(hasApprovedDescription({
-  descriptionSchema:3,summary:"小書きカタカナです.",sections:threeCandidates
+  descriptionSchema:4,summary:"小書きカタカナです.",sections:threeCandidates
 }),"a documented old entry with 3 sections should not become ineligible");
 assert.equal(Object.values(selectBestTwoSections(threeCandidates,evidence)).filter(Boolean).length,2);
+assert.ok(textOverlap(
+  "背中にフラゲラム（S45）を負ったアオサギ（G31）の姿で表される文字。",
+  "アオサギの背中にフラゲラムを載せた姿を表しています。"
+) > 0.33,"detect a visually repeated fact");
+const egyptianEvidence={...Object.fromEntries(SECTION_KEYS.map(k=>[k,[]])),
+  meaning:[{kind:"function",text:"Logogram god",strength:"strong"}],
+  structure:[{kind:"appearance",text:"gray heron with flagellum",strength:"strong"}]};
+const egyptianSections={...sections,
+  meaning:"「神」を表す表語文字です。",
+  structure:"アオサギの背中にフラゲラムを載せた姿を表しています。"};
+const redundantSummary="背中にフラゲラム（S45）を負ったアオサギ（G31）の姿で表される文字。";
+const flagged=validateEditorialDescription({
+  summary:redundantSummary,sections:egyptianSections
+},egyptianEvidence);
+assert.ok(flagged&&flagged.needsRevision,"overview and detail overlap triggers revision");
+assert.equal(hasApprovedDescription({
+  descriptionSchema:4,summary:redundantSummary,sections:flagged.sections
+}),false,"repetitive overview cannot be published");
+const distinctSummary="古代エジプトの象形文字の一つです。";
+const repaired=validateEditorialDescription({
+  summary:distinctSummary,sections:egyptianSections
+},egyptianEvidence);
+assert.ok(repaired&&!repaired.needsRevision,"distinct overview passes");
+assert.equal(hasApprovedDescription({
+  descriptionSchema:4,summary:distinctSummary,sections:repaired.sections
+}),true);
+assert.equal(overlapsSummary(distinctSummary,repaired.sections),false);
 assert.ok(!SECTION_KEYS.includes("pronunciation"),"pronunciation must not be counted");
 assert.equal(availableFieldCount(categorizeEvidence([{kind:"functionValue",text:"nṯr",source:"Unikemet"}])),0,"transliteration does not qualify");
-assert.ok(hasApprovedDescription({descriptionSchema:3,...valid}));
+assert.ok(hasApprovedDescription({descriptionSchema:4,...valid}));
 assert.equal(validateEditorialDescription({summary:"小書きのカタカナです。",
   sections:{...sections,usage:example.usage}},evidence),null,
   "one supported heading must fail");
