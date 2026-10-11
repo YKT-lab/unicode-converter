@@ -1314,7 +1314,7 @@ async function generateDescription(
   research
 ) {
 
-  const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\\n");
+  const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\n");
   const prompt = [
     "あなたは厳密な資料根拠に基づくUnicode文字図鑑の編集者です。",
     "次の12項目を扱います: 概要（必須）と、残り11項目から最低2項目（最大3項目程度を優先）。",
@@ -1336,7 +1336,7 @@ async function generateDescription(
     "基本情報:", JSON.stringify(research.metadata, null, 2),
     "各項目の利用可能な根拠（列挙された項目以外には記入しない）:",
     JSON.stringify(research.evidence, null, 2)
-  ].join("\\n");
+  ].join("\n");
 
   const sectionProperties = Object.fromEntries(
     SECTION_KEYS.map(key => [key, {type:"string"}])
