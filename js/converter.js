@@ -505,18 +505,6 @@ async function convertUnicode(
     }
 
 
-    // Reported Extension J characters have vetted outlines. Render their
-    // exact SVG rather than trusting PC Canvas missing-glyph heuristics.
-    if (typeof renderExtensionJFallback === "function") {
-      const usedSvg = await renderExtensionJFallback(inner, codePoint);
-      if (currentRun !== unicodeRun) return;
-      if (usedSvg) {
-        wrapper.classList.remove("loading-character");
-        await yieldToBrowser();
-        continue;
-      }
-    }
-
     // Preserve full-color native emoji instead of letting Unicode cmap
     // fallback fonts (Noto Symbols / Unifont) force monochrome glyphs.
     // This runs before the specialized black-and-white font selection.
