@@ -95,7 +95,21 @@
           "name": "Unicode NamesList",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
         }
-      ]
+      ],
+      "sections": {
+        "usage": "アイヌ語やその他の言語の音声転写に用いられます。",
+        "examples": "",
+        "pronunciation": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "この文字範囲はJIS X 0213:2000に基づいて制定されました。",
+        "structure": "この範囲の小書きカタカナには、結合濁点や結合半濁点を添えて音を修飾できるものがあります。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "descriptionSchema": 2
     }
   },
   "next": {
@@ -222,7 +236,21 @@
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
-      ]
+      ],
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "pronunciation": "表語文字として記録された翻字は「nṯr」です。",
+        "meaning": "「神（god）」を表す表語文字（logogram）として用いられる。",
+        "etymology": "",
+        "history": "",
+        "structure": "アオサギの背中にフラゲラムを載せた姿を表しています。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "descriptionSchema": 2
     }
   }
 }
