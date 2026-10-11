@@ -832,6 +832,18 @@ unicodeDigitBoxes.addEventListener(
     }
 
 
+    // A physical keyboard can explicitly confirm the single codepoint.
+    // Hex digits are already previewed as they are typed.
+    if (
+      key === "Enter" &&
+      !event.isComposing &&
+      event.keyCode !== 229
+    ) {
+      event.preventDefault();
+      if (!event.repeat) updateSingleUnicodePreview();
+      return;
+    }
+
     if (
       key.length ===
       1
@@ -924,6 +936,15 @@ charInput.addEventListener(
   }
 );
 
+// Enter confirms the conversion; Shift+Enter inserts a real newline.
+// Never intercept the Enter used to finalize Japanese IME composition.
+charInput.addEventListener("keydown", event => {
+  if (event.key !== "Enter" || event.shiftKey || event.isComposing ||
+      event.keyCode === 229 || event.altKey) return;
+  event.preventDefault();
+  if (!event.repeat) convertCharacters();
+});
+
 
 /* =========================================
    Bulk Unicode input
@@ -1004,11 +1025,13 @@ unicodeInput.addEventListener("input", () => {
   }, BULK_AUTO_RENDER_DELAY_MS);
 });
 applyBulkUnicodeButton.addEventListener("click", applyBulkUnicodeNow);
+// Plain Enter confirms a batch (also supports Ctrl/Command+Enter).
+// Shift+Enter deliberately remains available for multiline input.
 unicodeInput.addEventListener("keydown", event => {
-  if (!event.isComposing && event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
-    event.preventDefault();
-    applyBulkUnicodeNow();
-  }
+  if (event.key !== "Enter" || event.shiftKey || event.isComposing ||
+      bulkInputComposing || event.keyCode === 229 || event.altKey) return;
+  event.preventDefault();
+  if (!event.repeat) applyBulkUnicodeNow();
 });
 
 /* =========================================
@@ -1188,6 +1211,14 @@ randomCustomCount.addEventListener(
   }
 );
 
+
+// Enter from the custom amount behaves exactly like clicking 生成.
+randomCustomCount.addEventListener("keydown", event => {
+  if (event.key !== "Enter" || event.isComposing ||
+      event.keyCode === 229 || event.altKey || event.shiftKey) return;
+  event.preventDefault();
+  if (!event.repeat) generateRandomButton.click();
+});
 
 generateRandomButton.addEventListener(
   "click",

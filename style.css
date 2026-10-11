@@ -1242,7 +1242,7 @@ button:disabled {
   color: #777;
   font-size: 11px;
   line-height: 1.5;
-  text-align: left;
+  text-align: right;
 }
 
 /* =========================================
@@ -2321,17 +2321,39 @@ button:disabled {
 }
 
 
+/* A clear action should look like a button even without hover. */
 .compact-clear-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
   margin-top: 8px;
-
-  padding:
-    6px 10px;
-
-  background: transparent;
-
-  color: #777;
-
+  padding: 7px 14px;
+  border: 1px solid #d2d2d7;
+  border-radius: 8px;
+  background: #f2f2f5;
+  color: #48484f;
   font-size: 12px;
+  font-weight: 650;
+  transition: background-color 0.15s, border-color 0.15s,
+              box-shadow 0.15s, transform 0.05s;
+}
+
+.compact-clear-button:hover:not(:disabled) {
+  background: #e6e6eb;
+  border-color: #aaaab4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.09);
+}
+
+.compact-clear-button:focus-visible,
+.unicode-hex-keypad [data-hex-action="clear"]:focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 2px;
+}
+
+.unicode-hex-keypad [data-hex-action="clear"]:hover:not(:disabled) {
+  background: #e0e0e6;
+  border-color: #aaaab4;
 }
 
 
