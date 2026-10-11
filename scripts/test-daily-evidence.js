@@ -19,6 +19,14 @@ const example={...sections,usage:"アイヌ語などの転写に用いられま�
   history:"この範囲はJIS X 0213:2000 に基づきます。"};
 const valid=validateEditorialDescription({summary:"小書きのカタカナです。",sections:example},evidence);
 assert.equal(valid.fieldCount,2);
+assert.equal(validateEditorialDescription({
+  summary:"小書きカタカナです。",
+  sections:{...example,structure:"字形が小さく書かれます。"}
+},evidence),null,"three explanatory headings must be rejected");
+assert.equal(hasApprovedDescription({
+  descriptionSchema:3,summary:"小書きカタカナです。",
+  sections:{...example,structure:"字形が小さく書かれます。"}
+}),false,"three pre-existing headings must be regenerated");
 assert.ok(!SECTION_KEYS.includes("pronunciation"),"pronunciation must not be counted");
 assert.equal(availableFieldCount(categorizeEvidence([{kind:"functionValue",text:"nṯr",source:"Unikemet"}])),0,"transliteration does not qualify");
 assert.ok(hasApprovedDescription({descriptionSchema:3,...valid}));
@@ -36,4 +44,4 @@ assert.equal(availableFieldCount(categorizeEvidence([
 ])),1);
 assert.equal(hasApprovedDescription({summary:"文字",usage:"用法",supplementalInfo:"補足"}),false,
   "legacy schema must be regenerated");
-console.log("11-heading source gate excluding pronunciation, 2-of-10 minimum: OK");
+console.log("11 headings; exactly 2 of 10 explanatory fields: OK");
