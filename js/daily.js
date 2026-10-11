@@ -792,7 +792,6 @@ const dailyDetails = document.getElementById("dailyDetails");
 const DAILY_SECTION_HEADINGS = [
   ["usage","使われ方"],
   ["examples","使用例"],
-  ["pronunciation","読み方・発音"],
   ["meaning","意味"],
   ["etymology","由来・語源"],
   ["history","歴史"],
@@ -805,7 +804,7 @@ const DAILY_SECTION_HEADINGS = [
 
 function renderDailyDetails(info) {
   dailyDetails.replaceChildren();
-  const sections = info.descriptionSchema === 2 && info.sections
+  const sections = info.descriptionSchema >= 2 && info.sections
     ? info.sections
     : { // Legacy JSON remains readable during the next regeneration.
         usage: info.usage || "",
