@@ -1,4 +1,6 @@
 const fs = require("fs");
+const {findRegisteredSource, getRegisteredEvidence} = require("./source-registry.js");
+const {categorizeEvidence, availableFieldCount, validateEditorialDescription} = require("./daily-evidence.js");
 
 const {
   UNIHAN_URL,
@@ -565,6 +567,7 @@ function researchCharacter(
       16
     );
 
+  const registeredSource = findRegisteredSource(codePoint);
 
   const profile =
     buildCommonProfile(
@@ -867,6 +870,17 @@ function researchCharacter(
   }
 
 
+  // Only facts backed by this registered range and its data providers
+  // can qualify the three editorial sections.
+  for (const item of getRegisteredEvidence(registeredSource, {
+    unihan, unikemet, emoji: emojiProfile, music: musicProfile,
+    historical: historicalProfile, namesList
+  })) {
+    addFact(item.kind, item.text, item.source, item.strength);
+  }
+
+  const evidence = categorizeEvidence(facts);
+
   const strongFacts =
     facts.filter(
       (
@@ -943,255 +957,11 @@ function researchCharacter(
     );
 
 
-  let accepted =
-    false;
-
-
-  let researchType =
-    "general";
-
-
-  if (
-    hasIdentity
-    &&
-    isHan
-  ) {
-
-    researchType =
-      "han";
-
-
-    accepted =
-      unihanFacts.length >
-        0;
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "emoji"
-  ) {
-
-    researchType =
-      "emoji";
-
-
-    accepted =
-      Boolean(
-        emojiProfile
-        &&
-        (
-          emojiProfile.shortName
-          ||
-          emojiProfile.keywords.length >
-            0
-        )
-      )
-      ||
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "math"
-  ) {
-
-    researchType =
-      "math";
-
-
-    accepted =
-      Boolean(
-        mathProfile
-        &&
-        mathProfile.isMath
-      )
-      ||
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "arrows"
-  ) {
-
-    researchType =
-      "arrows";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "legacy"
-  ) {
-
-    researchType =
-      "legacy";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "punctuation"
-  ) {
-
-    researchType =
-      "punctuation";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "symbol"
-  ) {
-
-    researchType =
-      "symbol";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "kana"
-  ) {
-
-    researchType =
-      "kana";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "number"
-  ) {
-
-    researchType =
-      "number";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "music"
-  ) {
-
-    researchType =
-      "music";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "phonetics"
-  ) {
-
-    researchType =
-      "phonetics";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-    &&
-    category ===
-      "ancient"
-  ) {
-
-    researchType =
-      historicalProfile
-        ? "historical"
-        : isEgyptian
-          ? "egyptian"
-          : "ancient";
-
-
-    accepted =
-      historicalProfile
-        ? strongFacts.length >=
-            1
-        : isEgyptian
-          ? strongFacts.length >=
-              2
-          : Boolean(
-              unicodeName
-            );
-
-  } else if (
-    hasIdentity
-    &&
-    isSymbolLike
-  ) {
-
-    researchType =
-      "symbol";
-
-
-    accepted =
-      Boolean(
-        unicodeName
-      );
-
-  } else if (
-    hasIdentity
-  ) {
-
-    accepted =
-      strongFacts.length >=
-        2;
-  }
-
+  // A Unicode name or source catalog number alone is never sufficient.
+  const researchType = registeredSource ? registeredSource.id : "unregistered";
+  const accepted = Boolean(
+    hasIdentity && registeredSource && availableFieldCount(evidence) >= 2
+  );
 
   const sources = [
     {
@@ -1243,6 +1013,10 @@ function researchCharacter(
     }
   ];
 
+
+  if (registeredSource) {
+    sources.unshift({name: registeredSource.name, url: registeredSource.url});
+  }
 
   if (
     Object.keys(
@@ -1498,6 +1272,9 @@ function researchCharacter(
 
     facts,
 
+    evidence,
+    registeredSourceName: registeredSource && registeredSource.name,
+
     sources,
 
     diagnostics: {
@@ -1535,29 +1312,16 @@ async function generateDescription(
 ) {
 
   const prompt = [
-    "あなたはUnicode文字図鑑の編集者です。",
-    "以下のUnicode公式資料から確認済みの事実だけを使って、日本語の短い解説を書いてください。",
-    "資料にない事実を補わないでください。推測は禁止です。",
-    "同じ事実を言い換えて水増ししないでください。",
-    "summaryは1〜2文、usageは0〜1文、supplementalInfoは必要な場合だけ1文程度にしてください。",
-    "summaryは対象文字・U+XXXX・Unicode名・「この文字は」などを主語にせず、見た目や意味の説明から直接始めてください。たとえば「横向きの角を持つ雄羊の頭をした蛇を表します。」のように書いてください。",
-    "usageには根拠のある用途・機能が確認できる場合だけ書き、資料に用途がなければ空文字列にしてください。",
-    "UnihanのkDefinitionは漢字の意味、kJapaneseOnは日本語の音読み、kJapaneseKunは日本語の訓読みです。漢字ではこれらをsummaryに自然にまとめてください。",
-    "漢字ではkTotalStrokesは総画数、kRSUnicodeはUnicodeの部首・残画情報です。これらは補足として使えます。",
-    "Unihanの各Variantプロパティは異体関係を表します。資料に明示された関係だけを書き、字形差の理由や歴史を推測しないでください。",
-    "kPrimaryNumeric・kAccountingNumeric・kOtherNumericがある場合は、その文字にUnicodeが与えた数値情報として扱ってください。",
-    "kIRG_*SourceはIRG出典識別子です。一般向け説明に必要な場合だけ補足し、意味や読みをそこから推測しないでください。",
-    "記号ではUnicodeの正式名称を、その記号の形や種類を説明する根拠として使えます。ただし正式名称から実際の用途を推測しないでください。",
-    "かなではUnicode名と表示文字から、ひらがな・カタカナのどの文字かを簡潔に説明してください。資料にない語源や歴史は足さないでください。",
-    "数字ではUnicode名から確認できる数字・数値表現だけを説明し、用途を推測しないでください。",
-    "音楽記号ではUnicode名に加えてSMuFLのglyph descriptionとclassがある場合、それらを専門資料として優先してください。ただし資料にない楽典上の追加情報は補わないでください。",
-    "EmojiではUnicode Emoji propertyとCLDR日本語annotationsがある場合、日本語short nameとkeywordsを根拠として使ってください。keywordsから新しい意味や用途を推測しないでください。",
-    "歴史文字では各Unicode source fileに明記された読み・出典・数値・分類情報だけを使い、資料にない語源や歴史的背景を補わないでください。",
-    "数学・一般記号ではUnicode Math property、NamesList、BidiBrackets、BidiMirroringを根拠にできます。括弧の対応関係やミラー関係は説明できますが、用途を名前だけから推測しないでください。",
-    "発音・転写文字ではUnicode名とNamesList注釈にある情報だけを使い、具体的な発音値を資料なしで推測しないでください。",
-    "エジプト文字の転写はfactsのfunctionValueから別欄に表示するため、usageには混ぜないでください。",
-    "supplementalInfoは本文を理解する助けになる追加情報だけにしてください。",
-    "カタログ番号・分類番号・Unicode名・コードポイント・ブロック名・Unicode追加バージョンだけしか材料がない場合、supplementalInfoは必ず空文字列にしてください。",
+    "あなたは出典を厳密に扱うUnicode文字図鑑の編集者です。",
+    "確認済みの文字固有資料だけを使い、短く具体的な日本語の解説を作成してください。外部知識からの推測や創作は絶対に禁止です。",
+    "summaryは1文、usageとsupplementalInfoは各1〜2文、factsは最大2件の短い豆知識です。",
+    "usageは具体的な使用方法・意味、supplementalInfoは独立した補足情報、factsはこれらとは別の文字固有の事実としてください。",
+    "3項目で同じ情報を言い換えて埋めることを禁止します。項目ごとに下の根拠がなければ空文字列または空配列を返してください。",
+    "カタログ番号、Unicode名、コードポイント、バージョンやブロック名だけを豆知識として水増ししないでください。",
+    "実際の用例が資料にない場合、用例を作らないでください。古代文字の歴史・読みも推測しないでください。",
+    "UnihanのkDefinitionは漢字の意味、kJapaneseOn/Kunは読みです。異なる情報として扱ってください。",
+    "factsの文章は日本語にし、登録資料の事実だけを簡潔に紹介してください。",
+    "summaryは『この文字は』やUnicode名・U+番号で始めず、意味・外観から直接始めてください。",
     "",
     "対象文字:",
     entry.character +
@@ -1577,12 +1341,8 @@ async function generateDescription(
       2
     ),
     "",
-    "確認済みの文字固有情報:",
-    JSON.stringify(
-      research.facts,
-      null,
-      2
-    )
+    "各説明欄に使用可能な根拠（欄の範囲外の事実では埋めない）:",
+    JSON.stringify(research.evidence, null, 2)
   ].join(
     "\n"
   );
@@ -1617,13 +1377,15 @@ async function generateDescription(
           supplementalInfo: {
             type:
               "string"
-          }
+          },
+          facts: {type: "array", items: {type: "string"}}
         },
 
         required: [
           "summary",
           "usage",
-          "supplementalInfo"
+          "supplementalInfo",
+          "facts"
         ]
       }
     }
@@ -1933,19 +1695,7 @@ async function generateAcceptedEntry(
 ) {
 
   const MAX_RESEARCH_ATTEMPTS =
-    60;
-
-
-  const category =
-    pickDailyCategory(
-      fonts
-    );
-
-
-  console.log(
-    "Selected daily category: " +
-    category
-  );
+    500;
 
 
   for (
@@ -1955,6 +1705,8 @@ async function generateAcceptedEntry(
     attempt++
   ) {
 
+    // Re-pick the category as well as the code point upon rejection.
+    const category = pickDailyCategory(fonts);
     const entry =
       generateEntry(
         fonts,
@@ -2011,29 +1763,11 @@ async function generateAcceptedEntry(
       );
 
 
-    const supplementalKinds =
-      new Set(
-        [
-          "namesList:alias",
-          "namesList:formalAlias",
-          "namesList:notice",
-          "namesList:crossReference",
-          "namesList:decomposition",
-          "namesList:variation"
-        ]
-      );
-
-
-    const hasSupplementalFacts =
-      research.facts.some(
-        (
-          fact
-        ) =>
-          supplementalKinds.has(
-            fact.kind
-          )
-      );
-
+    const valid = validateEditorialDescription(description, research.evidence);
+    if (!valid) {
+      console.warn("Description failed two-of-three quality gate for U+" + entry.codePoint);
+      continue;
+    }
 
     return {
       ...entry,
@@ -2041,19 +1775,20 @@ async function generateAcceptedEntry(
       info: {
         ...research.metadata,
 
-        summary:
-          description.summary,
+        summary: valid.summary,
 
-        usage:
-          description.usage,
+        usage: valid.usage,
 
-        supplementalInfo:
-          hasSupplementalFacts
-            ? description.supplementalInfo
-            : "",
+        supplementalInfo: valid.supplementalInfo,
 
-        facts:
-          research.facts,
+        facts: [
+          ...research.facts,
+          ...valid.facts.map(text => ({
+            kind: "daily:fact", text,
+            source: research.registeredSourceName || "登録済みのUnicode資料",
+            strength: "strong"
+          }))
+        ],
 
         sources:
           research.sources
@@ -2106,20 +1841,13 @@ async function main() {
     loadExistingDailyData();
 
 
-  const hasDescription = (
-    entry
-  ) => {
-
-    return Boolean(
-      entry
-      &&
-      entry.info
-      &&
-      typeof entry.info.summary ===
-        "string"
-      &&
-      entry.info.summary.trim()
-    );
+  const hasDescription = (entry) => {
+    const info = entry && entry.info;
+    if (!info || typeof info.summary !== "string" || !info.summary.trim()) return false;
+    const count = Number(Boolean(info.usage && info.usage.trim()))
+      + Number(Boolean(info.supplementalInfo && info.supplementalInfo.trim()))
+      + Number(Boolean((info.facts || []).some(f => f.kind === "daily:fact" && f.text && f.text.trim())));
+    return count >= 2 && Boolean(findRegisteredSource(parseInt(entry.codePoint, 16)));
   };
 
 
