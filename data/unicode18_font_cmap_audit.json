@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "unicode_version": "18.0.0",
-  "generated_at_utc": "2026-10-11T00:38:02.433Z",
+  "generated_at_utc": "2026-10-11T00:38:49.119Z",
   "meaning": "CMAP mappings in the locally inspected font binaries only; NOT tested browser rendering or correct glyph shapes.",
   "method": "Read actual fontkit characterSet from each binary, intersect with assigned Unicode 18.0 Script + General_Category, union by Script.",
   "excluded_categories": [
