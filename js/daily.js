@@ -825,6 +825,8 @@ function renderDailyDetails(info) {
     body.textContent = value.trim();
     block.append(heading,body);
     dailyDetails.appendChild(block);
+    // The public card must never display more than two additional headings.
+    if (dailyDetails.childElementCount === 2) break;
   }
 }
 
