@@ -1155,6 +1155,8 @@ const categoryPoolCache =
   new WeakMap();
 
 
+const {findRegisteredSource} = require("./source-registry.js");
+
 function getCategoryPools(
   fonts
 ) {
@@ -1194,6 +1196,9 @@ function getCategoryPools(
       const codePoint
       of fontRecord.candidates
     ) {
+
+      // A documented Unicode range is required for daily draws.
+      if (!findRegisteredSource(codePoint)) continue;
 
       const category =
         getDailyCategory(
