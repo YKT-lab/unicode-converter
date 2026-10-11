@@ -2,7 +2,7 @@
 
 /*
  * Eleven editorial headings (including the mandatory summary).
- * A character qualifies when summary + at least TWO other evidence-backed,
+ * A character qualifies when summary + EXACTLY TWO evidence-backed,
  * nonduplicated headings are available. Readings/transliterations appear in the existing
  * separate field and never count as a researched heading. A code point, Unicode
  * block or age alone does not count.
@@ -93,7 +93,7 @@ function validateEditorialDescription(description, evidence) {
       ? cleanText(raw, 260) : "";
   }
   const filled = SECTION_KEYS.map(k => sections[k]).filter(Boolean);
-  if (filled.length < 2) return null;
+  if (filled.length !== 2) return null;
   // Prevent verbatim/format-only repetitions from passing two slots.
   const normalized = filled.map(normalize);
   if (new Set(normalized).size !== normalized.length) return null;
@@ -103,7 +103,7 @@ function hasApprovedDescription(info) {
   if (!info || info.descriptionSchema !== 3 || typeof info.summary !== "string"
       || !info.summary.trim() || !info.sections) return false;
   return SECTION_KEYS.filter(key => typeof info.sections[key] === "string"
-    && info.sections[key].trim()).length >= 2;
+    && info.sections[key].trim()).length === 2;
 }
 
 module.exports = {
