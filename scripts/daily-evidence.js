@@ -2,8 +2,9 @@
 
 /*
  * Eleven editorial headings (including the mandatory summary).
- * A character qualifies when summary + EXACTLY TWO evidence-backed,
- * nonduplicated headings are available. Readings/transliterations appear in the existing
+ * A character qualifies when summary + AT LEAST TWO evidence-backed,
+ * nonduplicated headings are available. Publish exactly the best two.
+ * Readings/transliterations appear in the existing
  * separate field and never count as a researched heading. A code point, Unicode
  * block or age alone does not count.
  */
@@ -64,6 +65,7 @@ function categorizeEvidence(facts) {
     used.add(key);
     result[category].push({
       kind: f.kind, text: f.text.trim(), source: f.source,
+      strength: f.strength || null,
       sourceUrl: f.sourceUrl || null
     });
   }
@@ -79,6 +81,48 @@ function cleanText(value, max = 240) {
 function normalize(text) {
   return text.replace(/[\p{P}\p{S}\s]+/gu, "").toLowerCase();
 }
+/*
+ * Always keep exactly two headings, even when Gemini finds three or more.
+ * Favor concrete meanings, examples and uses, then context over metadata.
+ * Evidence strength and specificity are tie-breakers, not substitute facts.
+ * The choice is deterministic, so today's glyph remains stable.
+ */
+const SECTION_PRIORITY = Object.freeze({
+  examples: 12, usage: 11, meaning: 11, etymology: 9,
+  history: 9, culture: 8, structure: 8, related: 7,
+  trivia: 5, unicodeInfo: 4
+});
+
+function selectBestTwoSections(sections, evidence = null) {
+  if (!sections || typeof sections !== "object" || Array.isArray(sections)) return null;
+  const ranked = SECTION_KEYS.map((key, index) => {
+    const value = cleanText(sections[key], 260);
+    if (!value) return null;
+    const notes = Array.isArray(evidence?.[key]) ? evidence[key] : [];
+    if (evidence && notes.length === 0) return null;
+    const hasStrong = notes.some(fact => fact.strength === "strong");
+    const score = (SECTION_PRIORITY[key] || 0) * 10
+      + Math.min(notes.length, 3) * 2
+      + (hasStrong ? 2 : 0)
+      + Math.min(value.length, 160) / 160;
+    return {key, value, index, score};
+  }).filter(Boolean).sort((a,b) => b.score - a.score || a.index - b.index);
+
+  const chosen = [];
+  const seen = new Set();
+  for (const candidate of ranked) {
+    const comparable = normalize(candidate.value);
+    // Repetitions are omitted rather than disqualifying a documented glyph.
+    if (!comparable || seen.has(comparable)) continue;
+    seen.add(comparable);
+    chosen.push(candidate);
+    if (chosen.length === 2) break;
+  }
+  if (chosen.length < 2) return null;
+  const picked = new Map(chosen.map(x => [x.key, x.value]));
+  return Object.fromEntries(SECTION_KEYS.map(key => [key, picked.get(key) || ""]));
+}
+
 function validateEditorialDescription(description, evidence) {
   if (!description || typeof description !== "object") return null;
   const summary = cleanText(description.summary, 240);
@@ -88,25 +132,21 @@ function validateEditorialDescription(description, evidence) {
   for (const key of SECTION_KEYS) {
     const raw = description.sections[key];
     if (typeof raw !== "string" || raw.trim().length > 260) return null;
-    // Refuse facts written without registered field-specific evidence.
+    // Do not count claims without registered field-specific evidence.
     sections[key] = Array.isArray(evidence?.[key]) && evidence[key].length
       ? cleanText(raw, 260) : "";
   }
-  const filled = SECTION_KEYS.map(k => sections[k]).filter(Boolean);
-  if (filled.length !== 2) return null;
-  // Prevent verbatim/format-only repetitions from passing two slots.
-  const normalized = filled.map(normalize);
-  if (new Set(normalized).size !== normalized.length) return null;
-  return {summary, sections, fieldCount: filled.length};
+  const selected = selectBestTwoSections(sections, evidence);
+  if (!selected) return null;
+  return {summary, sections: selected, fieldCount: 2};
 }
 function hasApprovedDescription(info) {
-  if (!info || info.descriptionSchema !== 3 || typeof info.summary !== "string"
-      || !info.summary.trim() || !info.sections) return false;
-  return SECTION_KEYS.filter(key => typeof info.sections[key] === "string"
-    && info.sections[key].trim()).length === 2;
+  return Boolean(info && info.descriptionSchema === 3
+    && typeof info.summary === "string" && info.summary.trim()
+    && selectBestTwoSections(info.sections));
 }
 
 module.exports = {
   SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence,
-  availableFieldCount, validateEditorialDescription, hasApprovedDescription
+  availableFieldCount, selectBestTwoSections, validateEditorialDescription, hasApprovedDescription
 };
