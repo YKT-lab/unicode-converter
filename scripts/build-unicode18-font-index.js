@@ -185,6 +185,44 @@ for (const s of catalog.scripts) {
   if (names.length) scriptGoogleCandidates[s.script] = [...new Set(names)].slice(0, 3);
 }
 
+/*
+ * Route characters by their Unicode 18 Script before consulting the exact
+ * codepoint cmap. The 175 named Script values each receive a list of fonts
+ * that are ACTUALLY installed and have at least one matching cmap entry.
+ * Common (Zyyy) and Inherited (Zinh) are additional shared Script classes.
+ *
+ * The catalog is for family preferences/research, never proof of coverage.
+ * At display time the individual codepoint still has to occur in the
+ * compressed cmap combination, so a partial-script font cannot lie.
+ */
+const namedScriptCodes = catalog.scripts.map(item=>item.script);
+const catalogPreference = new Map(catalog.scripts.map(item=>[
+  item.script,item.font_candidates.map(font=>font.family)
+]));
+const scriptFontList = new Map(
+  [...namedScriptCodes,"Zyyy","Zinh"].map(script=>[script,[]])
+);
+for(let id=0;id<actual.length;id++){
+  for(const [script,coverage] of Object.entries(actual[id].per_script)){
+    if(!coverage.codepoint_ranges.length)continue;
+    if(!scriptFontList.has(script))scriptFontList.set(script,[]);
+    const start=parseInt(coverage.codepoint_ranges[0].start,16);
+    const preference=catalogPreference.get(script)||[];
+    const catalogOrder=preference.indexOf(fonts[id].family);
+    scriptFontList.get(script).push({
+      id,
+      rank:rankId(id,script,start),
+      catalogOrder:catalogOrder<0?Number.MAX_SAFE_INTEGER:catalogOrder
+    });
+  }
+}
+const scriptFontCandidates={};
+for(const [script,items] of scriptFontList){
+  items.sort((a,b)=>a.rank-b.rank ||
+    a.catalogOrder-b.catalogOrder || a.id-b.id);
+  scriptFontCandidates[script]=items.map(item=>item.id);
+}
+
 const result = {
   schema_version: 2,
   unicode_version: audit.unicode_version,
@@ -195,6 +233,7 @@ const result = {
   font_families: fonts,
   combinations: combos,
   script_ranges: scriptRanges,
+  script_font_candidates: scriptFontCandidates,
   script_google_candidates: scriptGoogleCandidates,
   ranges
 };
