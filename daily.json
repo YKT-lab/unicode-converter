@@ -99,7 +99,6 @@
       "sections": {
         "usage": "アイヌ語やその他の言語の音声転写に用いられます。",
         "examples": "",
-        "pronunciation": "",
         "meaning": "",
         "etymology": "",
         "history": "この文字範囲はJIS X 0213:2000に基づいて制定されました。",
@@ -109,7 +108,7 @@
         "unicodeInfo": "",
         "trivia": ""
       },
-      "descriptionSchema": 2
+      "descriptionSchema": 3
     }
   },
   "next": {
@@ -240,7 +239,6 @@
       "sections": {
         "usage": "",
         "examples": "",
-        "pronunciation": "表語文字として記録された翻字は「nṯr」です。",
         "meaning": "「神（god）」を表す表語文字（logogram）として用いられる。",
         "etymology": "",
         "history": "",
@@ -250,7 +248,7 @@
         "unicodeInfo": "",
         "trivia": ""
       },
-      "descriptionSchema": 2
+      "descriptionSchema": 3
     }
   }
 }
