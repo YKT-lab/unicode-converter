@@ -788,8 +788,46 @@ function renderDailyLinguisticMeta(
     );
 }
 
-const dailyFactsSection = document.getElementById("dailyFactsSection");
-const dailyFacts = document.getElementById("dailyFacts");
+const dailyDetails = document.getElementById("dailyDetails");
+const DAILY_SECTION_HEADINGS = [
+  ["usage","使われ方"],
+  ["examples","使用例"],
+  ["pronunciation","読み方・発音"],
+  ["meaning","意味"],
+  ["etymology","由来・語源"],
+  ["history","歴史"],
+  ["structure","字形・構造"],
+  ["related","関連文字"],
+  ["culture","文化的背景"],
+  ["unicodeInfo","Unicode情報"],
+  ["trivia","豆知識"]
+];
+
+function renderDailyDetails(info) {
+  dailyDetails.replaceChildren();
+  const sections = info.descriptionSchema === 2 && info.sections
+    ? info.sections
+    : { // Legacy JSON remains readable during the next regeneration.
+        usage: info.usage || "",
+        history: info.supplementalInfo || "",
+        trivia: Array.isArray(info.facts)
+          ? info.facts.filter(f => f.kind === "daily:fact" && f.text)
+              .map(f => f.text).join(" ") : ""
+      };
+  for (const [key,label] of DAILY_SECTION_HEADINGS) {
+    const value = sections[key];
+    if (typeof value !== "string" || !value.trim()) continue;
+    const block = document.createElement("div");
+    block.className = "daily-info-section";
+    const heading = document.createElement("div");
+    heading.className = "daily-info-heading";
+    heading.textContent = label;
+    const body = document.createElement("p");
+    body.textContent = value.trim();
+    block.append(heading,body);
+    dailyDetails.appendChild(block);
+  }
+}
 
 function resetDailyInfo() {
 
@@ -808,27 +846,8 @@ function resetDailyInfo() {
   dailySummary.replaceChildren();
 
 
-  dailyUsageSection.hidden =
-    true;
-
-
-  dailyUsage.textContent =
-    "";
-
-
+  dailyDetails.replaceChildren();
   resetDailyLinguisticMeta();
-
-
-  dailySupplementSection.hidden =
-    true;
-
-
-  dailySupplement.textContent =
-    "";
-
-
-  dailyFactsSection.hidden = true;
-  dailyFacts.replaceChildren();
 
   dailySources.hidden =
     true;
@@ -896,54 +915,8 @@ function renderDailyInfo(
     false;
 
 
-  if (
-    typeof info.usage ===
-      "string"
-    &&
-    info.usage.trim()
-  ) {
-
-    dailyUsage.textContent =
-      info.usage.trim();
-
-
-    dailyUsageSection.hidden =
-      false;
-  }
-
-
-  renderDailyLinguisticMeta(
-    info
-  );
-
-
-  if (
-    typeof info.supplementalInfo ===
-      "string"
-    &&
-    info.supplementalInfo.trim()
-  ) {
-
-    dailySupplement.textContent =
-      info.supplementalInfo.trim();
-
-
-    dailySupplementSection.hidden =
-      false;
-  }
-
-
-  // Display only curated editorial facts, not raw Unicode property data.
-  const curatedFacts = Array.isArray(info.facts)
-    ? info.facts.filter(item => item && item.kind === "daily:fact"
-        && typeof item.text === "string" && item.text.trim())
-    : [];
-  for (const fact of curatedFacts.slice(0, 2)) {
-    const li = document.createElement("li");
-    li.textContent = fact.text.trim();
-    dailyFacts.appendChild(li);
-  }
-  dailyFactsSection.hidden = dailyFacts.children.length === 0;
+  renderDailyDetails(info);
+  renderDailyLinguisticMeta(info);
 
   if (
     Array.isArray(
