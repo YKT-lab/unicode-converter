@@ -23,7 +23,9 @@ function getUnicodeCoverageIndex(){
       .then(data=>{
         if(data.schema_version!==2||data.unicode_version!=="18.0.0"||
           !Array.isArray(data.font_families)||!Array.isArray(data.combinations)||
-          !Array.isArray(data.ranges)||!Array.isArray(data.script_ranges))
+          !Array.isArray(data.ranges)||!Array.isArray(data.script_ranges)||
+          (data.script_font_candidates!==undefined&&
+           (!data.script_font_candidates||typeof data.script_font_candidates!=="object")))
           throw Error("Unsupported Unicode font index version");
         unicodeCoverageState.data=data;
         return data;
@@ -143,10 +145,29 @@ async function selectUnicodeFont(codePoint,character){
     if(japanese)return japanese;
   }
   if(data){
+    // First classify this codepoint into its Unicode Script (175 named
+    // scripts plus the Common/Inherited shared classes).
+    const scriptRange=unicodeRangeLookup(data.script_ranges,codePoint);
+    const script=scriptRange?.[2];
+    // The exact cmap index is authoritative: a script-level association
+    // never means a font supports every single character of that script.
     const entry=unicodeRangeLookup(data.ranges,codePoint);
     if(entry){
-      const ids=data.combinations[entry[2]]||[];
-      for(const id of ids){
+      const coveredIds=data.combinations[entry[2]]||[];
+      const covered=new Set(coveredIds);
+      const scriptIds=data.script_font_candidates?.[script]||[];
+      const selected=new Set();
+      // Try the matching script's actual, ordered local fonts first.
+      for(const id of scriptIds){
+        if(!covered.has(id)||selected.has(id))continue;
+        selected.add(id);
+        const face=await loadAuditedUnicodeFont(id,data.font_families[id]);
+        if(face&&(isVerifiedSpecialistSelection(codePoint,face)||testUnicodeGlyph(character,face)))return face;
+      }
+      // Backward compatibility and coverage for fonts that belong to more
+      // than one script, or when the deployed index has not been rebuilt yet.
+      for(const id of coveredIds){
+        if(selected.has(id))continue;
         const face=await loadAuditedUnicodeFont(id,data.font_families[id]);
         if(face&&(isVerifiedSpecialistSelection(codePoint,face)||testUnicodeGlyph(character,face)))return face;
       }
