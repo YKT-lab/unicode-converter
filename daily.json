@@ -37,7 +37,7 @@
         "simpleLowercase": null,
         "simpleTitlecase": null
       },
-      "summary": "背中にフラゲラム（S45）を負ったアオサギ（G31）の姿で表される文字。",
+      "summary": "古代エジプトの象形文字の一つです。",
       "usage": "「神（god）」を表す表語文字（logogram）として用いられる。",
       "supplementalInfo": "",
       "facts": [
@@ -136,7 +136,7 @@
         "unicodeInfo": "",
         "trivia": ""
       },
-      "descriptionSchema": 3
+      "descriptionSchema": 4
     }
   },
   "next": {
@@ -177,8 +177,8 @@
         "simpleLowercase": null,
         "simpleTitlecase": null
       },
-      "summary": "円の上に刻み目の付いた葉のないナツメヤシの枝を重ねて描いたエジプト聖刻文字。",
-      "descriptionSchema": 3,
+      "summary": "古代エジプトの文字体系に属する象形文字です。",
+      "descriptionSchema": 4,
       "sections": {
         "usage": "",
         "examples": "",
