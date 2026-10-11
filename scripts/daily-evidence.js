@@ -93,7 +93,20 @@ const SECTION_PRIORITY = Object.freeze({
   trivia: 5, unicodeInfo: 4
 });
 
-function selectBestTwoSections(sections, evidence = null) {
+function textOverlap(left,right) {
+  const a=normalize(String(left||"")), b=normalize(String(right||""));
+  if(!a||!b)return 0;
+  if(a===b||a.includes(b)||b.includes(a))return 1;
+  const grams=value=>new Set(Array.from({length:Math.max(0,value.length-1)},(_,i)=>value.slice(i,i+2)));
+  const one=grams(a),two=grams(b);
+  if(!one.size||!two.size)return 0;
+  const common=[...one].filter(x=>two.has(x)).length;
+  return 2*common/(one.size+two.size);
+}
+const overlapsSummary=(summary,sections)=>SECTION_KEYS.some(key=>
+  sections?.[key]&&textOverlap(summary,sections[key])>=0.33
+);
+function selectBestTwoSections(sections, evidence = null, summary = "") {
   if (!sections || typeof sections !== "object" || Array.isArray(sections)) return null;
   const ranked = SECTION_KEYS.map((key, index) => {
     const value = cleanText(sections[key], 260);
@@ -148,5 +161,6 @@ function hasApprovedDescription(info) {
 
 module.exports = {
   SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence,
-  availableFieldCount, selectBestTwoSections, validateEditorialDescription, hasApprovedDescription
+  availableFieldCount, textOverlap, overlapsSummary, selectBestTwoSections,
+  validateEditorialDescription, hasApprovedDescription
 };
