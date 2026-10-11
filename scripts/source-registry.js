@@ -3,7 +3,7 @@
 /*
  * Reviewed first-party documentation registry for Daily Unicode.
  * An entry makes a code-point range eligible for RESEARCH, never
- * automatically acceptable. The 2-of-3 content check happens later.
+ * automatically acceptable. Two distinct evidence-backed sections among ten are required.
  *
  * Add new ranges only after verifying that the cited resource really
  * documents that range. Narrow ranges override broad categories.
