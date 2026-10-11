@@ -3,7 +3,7 @@ const assert = require("node:assert/strict");
 const {findRegisteredSource,getRegisteredEvidence} = require("./source-registry.js");
 const {
   SECTION_DEFINITIONS, SECTION_KEYS, categorizeEvidence, availableFieldCount,
-  validateEditorialDescription, hasApprovedDescription
+  validateEditorialDescription, hasApprovedDescription, selectBestTwoSections
 } = require("./daily-evidence.js");
 
 assert.equal(SECTION_DEFINITIONS.length + 1,11,"summary + ten researched headings");
@@ -19,14 +19,18 @@ const example={...sections,usage:"アイヌ語などの転写に用いられま�
   history:"この範囲はJIS X 0213:2000 に基づきます。"};
 const valid=validateEditorialDescription({summary:"小書きのカタカナです。",sections:example},evidence);
 assert.equal(valid.fieldCount,2);
-assert.equal(validateEditorialDescription({
-  summary:"小書きカタカナです。",
-  sections:{...example,structure:"字形が小さく書かれます。"}
-},evidence),null,"three explanatory headings must be rejected");
-assert.equal(hasApprovedDescription({
-  descriptionSchema:3,summary:"小書きカタカナです。",
-  sections:{...example,structure:"字形が小さく書かれます。"}
-}),false,"three pre-existing headings must be regenerated");
+const threeCandidates = {...example,structure:"濁点を加えることもできます。"};
+const chosen = validateEditorialDescription({
+  summary:"小書きカタカナです。", sections:threeCandidates
+},evidence);
+assert.ok(chosen,"three documented sections should be accepted, not rejected");
+assert.equal(chosen.fieldCount,2,"select exactly two for publication");
+assert.deepEqual(Object.keys(chosen.sections).filter(k=>chosen.sections[k]),["usage","history"],
+  "prefer the two useful, independently supported sections");
+assert.ok(hasApprovedDescription({
+  descriptionSchema:3,summary:"小書きカタカナです.",sections:threeCandidates
+}),"a documented old entry with 3 sections should not become ineligible");
+assert.equal(Object.values(selectBestTwoSections(threeCandidates,evidence)).filter(Boolean).length,2);
 assert.ok(!SECTION_KEYS.includes("pronunciation"),"pronunciation must not be counted");
 assert.equal(availableFieldCount(categorizeEvidence([{kind:"functionValue",text:"nṯr",source:"Unikemet"}])),0,"transliteration does not qualify");
 assert.ok(hasApprovedDescription({descriptionSchema:3,...valid}));
@@ -44,4 +48,4 @@ assert.equal(availableFieldCount(categorizeEvidence([
 ])),1);
 assert.equal(hasApprovedDescription({summary:"文字",usage:"用法",supplementalInfo:"補足"}),false,
   "legacy schema must be regenerated");
-console.log("11 headings; exactly 2 of 10 explanatory fields: OK");
+console.log("11 headings: 2+ supported candidates accepted, best 2 retained: OK");
