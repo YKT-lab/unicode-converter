@@ -7,6 +7,7 @@ const index = JSON.parse(fs.readFileSync(path.join(ROOT, "data/unicode18_font_co
 const all = JSON.parse(fs.readFileSync(path.join(ROOT, "data/unicode18_all_ranges.json")));
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "data/unicode18_font_audit_manifest.json")));
 const audit = JSON.parse(fs.readFileSync(path.join(ROOT, "data/unicode18_font_cmap_audit.json")));
+const catalog = JSON.parse(fs.readFileSync(path.join(ROOT, "data/unicode18_font_candidates_175.json")));
 const read = (intervals, codePoint) => {
   let lo = 0, hi = intervals.length - 1;
   while (lo <= hi) {
@@ -42,6 +43,39 @@ for(const [name, intervals] of [["cmap",index.ranges],["script",index.script_ran
   if(name==="cmap")assert(Number.isInteger(rg[2])&&rg[2]>0&&rg[2]<combinations.length);
  }
 }
+// The codepoint-to-font resolution is now routed through the 175 named
+// Unicode scripts and the Common/Inherited shared script classes.
+assert.strictEqual(catalog.scripts.length,175);
+assert(index.script_font_candidates && typeof index.script_font_candidates==="object",
+  "Missing Unicode Script font candidate groups");
+const allScripts=[...catalog.scripts.map(item=>item.script),"Zyyy","Zinh"];
+assert.strictEqual(new Set(allScripts).size,177);
+for(const script of allScripts){
+  const ids=index.script_font_candidates[script];
+  assert(Array.isArray(ids),"Missing script group: "+script);
+  assert.strictEqual(new Set(ids).size,ids.length,"Duplicate script font: "+script);
+  for(const id of ids){
+    assert(Number.isInteger(id)&&id>=0&&id<fonts.length,
+      "Invalid script font id: "+script);
+    const file=fonts[id].file;
+    const audited=audit.font_sources.find(source=>source.file===file);
+    assert(audited?.per_script[script]?.count>0,
+      "Script group font without audited cmap coverage: "+script+" / "+file);
+  }
+}
+const scriptCandidatesFor=(cp)=>{
+  const sr=read(index.script_ranges,cp);
+  const cr=read(index.ranges,cp);
+  const eligible=new Set(cr?combinations[cr[2]]:[]);
+  const candidates=sr?(index.script_font_candidates[sr[2]]||[]):[];
+  return candidates.filter(id=>eligible.has(id));
+};
+assert(scriptCandidatesFor(0x0041).length>0);
+assert(scriptCandidatesFor(0x31FC).length>0);
+assert(scriptCandidatesFor(0x32634).length>0);
+assert(scriptCandidatesFor(0x0378).length===0);
+assert(scriptCandidatesFor(0x20000).every(id=>
+  combinations[read(index.ranges,0x20000)[2]].includes(id)));
 assert.strictEqual(read(index.script_ranges, 0x0041)[2], "Latn");
 assert.strictEqual(read(index.script_ranges, 0x4E00)[2], "Hani");
 assert.strictEqual(read(index.script_ranges, 0x1E900)[2], "Adlm");
