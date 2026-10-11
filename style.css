@@ -782,7 +782,8 @@ button:disabled {
 }
 
 
-.daily-info-section + .daily-info-section {
+.daily-info-section + .daily-info-section,
+.daily-info-section + #dailyDetails {
   margin-top: 18px;
 }
 
@@ -1942,7 +1943,8 @@ button:disabled {
 }
 
 
-.daily-info-section + .daily-info-section {
+.daily-info-section + .daily-info-section,
+.daily-info-section + #dailyDetails {
   margin-top: 20px;
 }
 
@@ -2055,7 +2057,8 @@ button:disabled {
   }
 
 
-  .daily-info-section + .daily-info-section {
+  .daily-info-section + .daily-info-section,
+.daily-info-section + #dailyDetails {
     margin-top: 15px;
   }
 
