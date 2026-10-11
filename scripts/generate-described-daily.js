@@ -1317,17 +1317,17 @@ async function generateDescription(
   const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\n");
   const prompt = [
     "あなたは厳密な資料根拠に基づくUnicode文字図鑑の編集者です。",
-    "次の12項目を扱います: 概要（必須）と、残り11項目から最低2項目（最大3項目程度を優先）。",
+    "次の11項目を扱います: 概要（必須）と、残り10項目から最低2項目（最大3項目程度を優先）。",
     "基本は概要1文 + 有用な2〜3項目各1〜2文。情報が確かな場合は他の項目を埋めてもよいですが、長文や水増しは禁止です。",
-    "使用可能な11項目は以下のとおり。sectionsの全キーを必ず返してください。",
+    "使用可能な10項目は以下のとおり。sectionsの全キーを必ず返してください。",
     sectionLabels,
     "概要summaryには対象の意味や形を一文で書いてください。文字名やU+番号で始めないでください。",
-    "usageは実際の使われ方、examplesは出典に明記された具体例、pronunciationは読み・翻字、meaningは意味や表語機能、etymologyは語源・起源、historyは文字史・規格成立、structureは視覚的構成、relatedは確認済みの異体字・対応文字、cultureは史料に明記された文化的背景、unicodeInfoは単なるU+番号やバージョン以外の特記事項、triviaは他の項目に入らない興味深い事実です。",
+    "usageは実際の使われ方、examplesは出典に明記された具体例、meaningは意味や表語機能、etymologyは語源・起源、historyは文字史・規格成立、structureは視覚的構成、relatedは確認済みの異体字・対応文字、cultureは史料に明記された文化的背景、unicodeInfoは単なるU+番号やバージョン以外の特記事項、triviaは他の項目に入らない興味深い事実です。",
     "それぞれのsectionsキーには、対応する根拠のあるときだけ、簡潔な日本語を記入してください。その他は空文字列にしてください。",
     "根拠を持つ項目を優先的に2つ以上埋めてください。根拠が一種類しかない文字は合格しないため、推測で埋めてはいけません。",
     "同じ事実を別の項目で重複させないでください。同一情報を言い換えて項目数を稼ぐことは禁止です。",
     "Unicode名・コードポイント・ブロック名・カタログ番号・文字追加バージョンだけでは独立した解説項目としないでください。",
-    "使用例や歴史、語源、発音の根拠がなければ書かないでください。名称だけから意味や用途を創作しないでください。",
+    "使用例や歴史、語源の根拠がなければ書かないでください。読み・発音・翻字は既存の別欄に表示するため、sectionsに書かず合格数にも含めないでください。名称だけから意味や用途を創作しないでください。",
     "確認できる根拠は下記に列挙された文字固有情報に限ります。基本メタデータは概要用です。",
     "",
     "対象文字:", entry.character + " U+" + entry.codePoint,
@@ -1664,7 +1664,7 @@ async function upgradeExistingEntry(entry, sourceTexts) {
     info: {
       ...research.metadata,
       summary: valid.summary,
-      descriptionSchema: 2,
+      descriptionSchema: 3,
       sections: valid.sections,
       facts: research.facts,
       sources: research.sources
@@ -1762,7 +1762,7 @@ async function generateAcceptedEntry(
         ...research.metadata,
 
         summary: valid.summary,
-        descriptionSchema: 2,
+        descriptionSchema: 3,
         sections: valid.sections,
         facts: research.facts,
 
@@ -1907,7 +1907,7 @@ async function main() {
 
   } else {
     // Keep an already-selected next-day glyph whenever it has enough
-    // 12-heading evidence; never shuffle tomorrow unnecessarily.
+    // 11-heading evidence (readings displayed separately); keep tomorrow's glyph.
     const sameNext = existing.next
       && existing.next.date === nextDate
       && existing.next.codePoint !== current.codePoint
