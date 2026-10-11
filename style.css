@@ -427,6 +427,29 @@ input:focus {
 }
 
 
+/*
+ * Unicode inspection uses a fixed left-to-right layout, even for
+ * right-to-left scripts. Keep each rendered codepoint isolated so the
+ * Unicode bidi algorithm cannot reorder neighboring glyph cards.
+ * Do not apply bidi-override to the glyph text itself: it can distort
+ * natural script behavior.
+ */
+#charInput,
+#unicodeInput,
+#unicodeOutput,
+#charOutput {
+  direction: ltr;
+  text-align: left;
+}
+
+#charOutput .character-span,
+#charOutput .character-status,
+#charOutput .invalid-unicode {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+
 /* =========================================
    Character wrapper
 ========================================= */
