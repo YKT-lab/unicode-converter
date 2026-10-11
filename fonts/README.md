@@ -48,4 +48,19 @@ The pixel-like GNU Unifont Upper was removed in favor of font-specific vector ou
 
 Review upstream redistribution permissions and attribution for every added family before distributing the site. Noto families originate from the Noto projects; Mallige from its separate upstream project. Do not infer licenses from filenames alone.
 
+## Supplementary CJK Extension J font
+
+The `fonts/han/WenJinMinchoP3-Regular.otf` alternate is imported from
+[WenJin Mincho](https://github.com/takushun-wu/WenJinMincho) under SIL OFL 1.1.
+It is downloaded from a revision-pinned upstream path and verified against
+a fixed Git blob SHA, actual Unicode coverage, and 19 real glyph outlines.
+The upstream license is preserved alongside the font. The reusable importer
+is `../scripts/import-verified-fonts.js`, configured by
+`../data/verified_font_imports.json`.
+
+The font index still uses real cmap matches, not hard-coded support for the
+19 example characters. Plangothic P2 remains available; WenJin Mincho is a
+separate family so desktop Canvas may succeed where another font fails.
+Unicode coverage is not a substitute for actual browser visual testing.
+
 GitHub Pages source: `../.github/workflows/font-coverage.yml` — publish is performed only if all tests pass.

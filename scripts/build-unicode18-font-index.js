@@ -96,6 +96,7 @@ function rankId(id, script, cp) {
    if (family==="Noto Sans CJK JP") return -20;
    if (family==="Plangothic P1") return -10;
    if (family==="Plangothic P2") return -9;
+   if (cp>=0x323B0 && cp<=0x33479 && family==="WenJin Mincho P3") return -8;
  }
  if (cp>=0x1B000 && cp<=0x1B12F && family==="Noto Serif Hentaigana")
    return -50;

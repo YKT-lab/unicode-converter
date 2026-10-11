@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "upstream_repository": "takushun-wu/WenJinMincho",
+      "revision": "181c3a00be4c9827eeb18bda98804e8409d886d3",
+      "upstream_font": "otf/WenJinMinchoP3-Regular.otf",
+      "blob_sha1": "0ee6844067def5cddf3a142e7c9baa237bef9ca9",
+      "destination": "fonts/han/WenJinMinchoP3-Regular.otf",
+      "upstream_license": "LICENSE.md",
+      "destination_license": "fonts/han/LICENSE-WenJinMincho.md",
+      "unicode_range": [
+        "323B0",
+        "33479"
+      ],
+      "min_glyphs_in_range": 3500,
+      "verify_glyphs": [
+        "332D3",
+        "32634",
+        "324D7",
+        "328CB",
+        "32E35",
+        "32A24",
+        "32808",
+        "3339C",
+        "3331D",
+        "32700",
+        "325F0",
+        "32AA9",
+        "32CBA",
+        "32E9F",
+        "32A93",
+        "32DAE",
+        "32BA3",
+        "33163",
+        "331CF"
+      ]
+    }
+  ]
+}

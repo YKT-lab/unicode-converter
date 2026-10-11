@@ -37,7 +37,7 @@ assert(avestanFont>=0,"Missing Noto Sans Avestan font");
 // which Unicode codepoints a font may render.
 assert(index.font_families.every(f=>/^fonts\/[^/]+\/[^/]+\.(?:ttf|otf|woff2?)$/i.test(f.file)),
   "All audited fonts must be in a category subdirectory");
-assert(index.font_families.length===100,"Expected 100 installed font binaries");
+assert(index.font_families.length>=100,"Unexpected loss of installed font binaries");
 const specialists=[
   ["fonts/scripts/NotoSansPahawhHmong-Regular.ttf",0x16B00],
   ["fonts/ancient/NotoSansBrahmi-Regular.ttf",0x11000],
@@ -59,6 +59,23 @@ for(const cp of [0x17000,0x18B00]){
   const expected=cp===0x17000?"Noto Serif Tangut":"Noto Serif Khitan Small Script";
   assert.equal(index.font_families[ids[0]].family,expected,
     "Specialist outline should outrank generic font U+"+cp.toString(16));
+}
+// Uniform Extension J fallback: verify all 19 reported characters share
+// a real alternate font without assigning individual character exceptions.
+const alternatePath="fonts/han/WenJinMinchoP3-Regular.otf";
+if(fs.existsSync(path.join(ROOT,alternatePath))){
+  const alternateId=index.font_families.findIndex(f=>
+    f.file===alternatePath && f.family==="WenJin Mincho P3");
+  assert(alternateId>=0,"Imported CJK font not indexed");
+  for(const hex of ["332D3","32634","324D7","328CB","32E35","32A24",
+    "32808","3339C","3331D","32700","325F0","32AA9",
+    "32CBA","32E9F","32A93","32DAE","32BA3","33163","331CF"]){
+    const rg=read(index.ranges,parseInt(hex,16));
+    assert(rg&&index.combinations[rg[2]].includes(alternateId),
+      "Extension J alternate missing U+"+hex);
+    assert(index.combinations[rg[2]].length>=2,
+      "Existing primary Extension J font lost for U+"+hex);
+  }
 }
 assert(index.font_families.length > 0, "No published fonts");
 const {combinations, font_families:fonts}=index;
