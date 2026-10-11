@@ -22,6 +22,16 @@ assert.strictEqual(index.schema_version, 2);
 assert.strictEqual(index.unicode_version, "18.0.0");
 assert.strictEqual(index.total_assigned_unicode18, 172808);
 assert.strictEqual(all.counts.encoded_characters, 172808);
+// Removed pixel-outline fallback must stay absent from deployed font coverage.
+// The dedicated Noto Avestan font should cover the full encoded Avestan block.
+assert(!index.font_families.some(f =>
+  /(?:^GNU Unifont Upper$|(?:^|\/)unifont_upper[^/]*\.(?:otf|ttf|woff2?))/i.test(
+    f.family+" "+f.file
+  )), "Removed Unifont Upper must not be published");
+const avestanFont=index.font_families.findIndex(f=>
+  f.file==="fonts/NotoSansAvestan-Regular.ttf" &&
+  f.family==="Noto Sans Avestan");
+assert(avestanFont>=0,"Missing Noto Sans Avestan font");
 assert(index.font_families.length > 0, "No published fonts");
 const {combinations, font_families:fonts}=index;
 assert(Array.isArray(combinations) && Array.isArray(fonts) && fonts.length>0);
@@ -76,6 +86,19 @@ assert(scriptCandidatesFor(0x32634).length>0);
 assert(scriptCandidatesFor(0x0378).length===0);
 assert(scriptCandidatesFor(0x20000).every(id=>
   combinations[read(index.ranges,0x20000)[2]].includes(id)));
+assert.strictEqual(read(index.script_ranges, 0x10B26)[2],"Avst");
+for(const range of all.ranges){
+  if(range.script!=="Avst" || ["Cn","Cc","Co","Cs"].includes(range.category))
+    continue;
+  for(let cp=parseInt(range.start,16);cp<=parseInt(range.end,16);cp++){
+    const candidate=read(index.ranges,cp);
+    assert(candidate && combinations[candidate[2]].includes(avestanFont),
+      "Avestan character lacks smooth Noto font U+"+cp.toString(16).toUpperCase());
+    const scriptFonts=index.script_font_candidates.Avst;
+    assert(Array.isArray(scriptFonts)&&scriptFonts[0]===avestanFont,
+      "Avestan script must rank Noto Sans Avestan first");
+  }
+}
 assert.strictEqual(read(index.script_ranges, 0x0041)[2], "Latn");
 assert.strictEqual(read(index.script_ranges, 0x4E00)[2], "Hani");
 assert.strictEqual(read(index.script_ranges, 0x1E900)[2], "Adlm");
