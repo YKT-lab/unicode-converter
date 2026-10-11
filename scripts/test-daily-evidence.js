@@ -6,8 +6,8 @@ const {
   validateEditorialDescription, hasApprovedDescription
 } = require("./daily-evidence.js");
 
-assert.equal(SECTION_DEFINITIONS.length + 1,12,"summary + eleven researched headings");
-assert.equal(new Set(SECTION_KEYS).size,11,"headings must be distinct");
+assert.equal(SECTION_DEFINITIONS.length + 1,11,"summary + ten researched headings");
+assert.equal(new Set(SECTION_KEYS).size,10,"headings must be distinct");
 assert.equal(findRegisteredSource(0x0041),null,"unregistered ranges excluded");
 const kana=findRegisteredSource(0x31FC);
 assert.equal(kana.id,"katakana-phonetic-extensions");
@@ -19,7 +19,9 @@ const example={...sections,usage:"アイヌ語などの転写に用いられま�
   history:"この範囲はJIS X 0213:2000 に基づきます。"};
 const valid=validateEditorialDescription({summary:"小書きのカタカナです。",sections:example},evidence);
 assert.equal(valid.fieldCount,2);
-assert.ok(hasApprovedDescription({descriptionSchema:2,...valid}));
+assert.ok(!SECTION_KEYS.includes("pronunciation"),"pronunciation must not be counted");
+assert.equal(availableFieldCount(categorizeEvidence([{kind:"functionValue",text:"nṯr",source:"Unikemet"}])),0,"transliteration does not qualify");
+assert.ok(hasApprovedDescription({descriptionSchema:3,...valid}));
 assert.equal(validateEditorialDescription({summary:"小書きのカタカナです。",
   sections:{...sections,usage:example.usage}},evidence),null,
   "one supported heading must fail");
@@ -34,4 +36,4 @@ assert.equal(availableFieldCount(categorizeEvidence([
 ])),1);
 assert.equal(hasApprovedDescription({summary:"文字",usage:"用法",supplementalInfo:"補足"}),false,
   "legacy schema must be regenerated");
-console.log("12-heading source gate and 2-of-11 minimum: OK");
+console.log("11-heading source gate excluding pronunciation, 2-of-10 minimum: OK");
