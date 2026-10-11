@@ -788,6 +788,9 @@ function renderDailyLinguisticMeta(
     );
 }
 
+const dailyFactsSection = document.getElementById("dailyFactsSection");
+const dailyFacts = document.getElementById("dailyFacts");
+
 function resetDailyInfo() {
 
   dailyName.hidden =
@@ -823,6 +826,9 @@ function resetDailyInfo() {
   dailySupplement.textContent =
     "";
 
+
+  dailyFactsSection.hidden = true;
+  dailyFacts.replaceChildren();
 
   dailySources.hidden =
     true;
@@ -926,6 +932,18 @@ function renderDailyInfo(
       false;
   }
 
+
+  // Display only curated editorial facts, not raw Unicode property data.
+  const curatedFacts = Array.isArray(info.facts)
+    ? info.facts.filter(item => item && item.kind === "daily:fact"
+        && typeof item.text === "string" && item.text.trim())
+    : [];
+  for (const fact of curatedFacts.slice(0, 2)) {
+    const li = document.createElement("li");
+    li.textContent = fact.text.trim();
+    dailyFacts.appendChild(li);
+  }
+  dailyFactsSection.hidden = dailyFacts.children.length === 0;
 
   if (
     Array.isArray(
