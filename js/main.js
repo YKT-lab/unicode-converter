@@ -288,7 +288,7 @@ function setBulkInputExpanded(
 
   toggleUnicodeView.textContent =
     expanded
-      ? "元に戻す"
+      ? "閉じる"
       : "全表示";
 
 
