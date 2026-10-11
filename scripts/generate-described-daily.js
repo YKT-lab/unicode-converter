@@ -1317,14 +1317,14 @@ async function generateDescription(
   const sectionLabels = SECTION_DEFINITIONS.map(x => x.key + " = " + x.label).join("\n");
   const prompt = [
     "あなたは厳密な資料根拠に基づくUnicode文字図鑑の編集者です。",
-    "次の11項目を扱います。概要（必須）に加え、残り10項目から、根拠の独立したちょうど2項目を選んでください。",
-    "必ず概要1文＋説明2項目だけ、各1〜2文としてください。他の8項目は根拠があっても必ず空文字列にしてください。説明を長くしたり水増ししたりしないでください。",
+    "次の11項目を調査します。概要（必須）に加え、残り10項目のうち確かな根拠がある項目をできるだけ多く洗い出してください。",
+    "概要は1文、各説明項目は1〜2文としてください。根拠が3項目以上見つかる場合もすべて返してください。公開時に、確認済みの項目から有用な2つだけを自動選出します。",
     "使用可能な10項目は以下のとおり。sectionsの全キーを必ず返してください。",
     sectionLabels,
     "概要summaryには対象の意味や形を一文で書いてください。文字名やU+番号で始めないでください。",
     "usageは実際の使われ方、examplesは出典に明記された具体例、meaningは意味や表語機能、etymologyは語源・起源、historyは文字史・規格成立、structureは視覚的構成、relatedは確認済みの異体字・対応文字、cultureは史料に明記された文化的背景、unicodeInfoは単なるU+番号やバージョン以外の特記事項、triviaは他の項目に入らない興味深い事実です。",
     "それぞれのsectionsキーには、対応する根拠のあるときだけ、簡潔な日本語を記入してください。その他は空文字列にしてください。",
-    "根拠がある項目から最も有用で異なる2つだけを選んで記入してください。1項目以下、または3項目以上を記入すると不合格です。推測で埋めてはいけません。",
+    "根拠が十分にある項目は3項目以上でも記入してください。根拠がある項目が2つ未満の場合のみ不採用です。裏付けのない項目は必ず空文字列にし、推測で補ってはいけません。",
     "同じ事実を別の項目で重複させないでください。同一情報を言い換えて項目数を稼ぐことは禁止です。",
     "Unicode名・コードポイント・ブロック名・カタログ番号・文字追加バージョンだけでは独立した解説項目としないでください。",
     "使用例や歴史、語源の根拠がなければ書かないでください。読み・発音・翻字は既存の別欄に表示するため、sectionsに書かず合格数にも含めないでください。名称だけから意味や用途を創作しないでください。",
@@ -1751,7 +1751,7 @@ async function generateAcceptedEntry(
 
     const valid = validateEditorialDescription(description, research.evidence);
     if (!valid) {
-      console.warn("Description failed two-of-three quality gate for U+" + entry.codePoint);
+      console.warn("Description lacks two distinct sourced sections for U+" + entry.codePoint);
       continue;
     }
 
