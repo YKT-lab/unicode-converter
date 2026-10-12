@@ -2994,3 +2994,12 @@ button:disabled {
   line-height: 1.85;
 }
 .daily-facts-list li + li { margin-top: 0.4em; }
+
+/* Scope can display a full grapheme cluster such as a ZWJ emoji.
+   Keep its multi-code-point label readable on narrow screens. */
+#unicodeScopeCode {
+  max-width: min(360px, calc(100vw - 16px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
