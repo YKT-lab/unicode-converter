@@ -1,65 +1,290 @@
 "use strict";
-/* Emoji 18.0 RGI builder: all choices come directly from the official catalogue. */
+/* Unicode Emoji 18.0 RGI builder.
+ * The official data defines every allowed result; UI only selects prefixes.
+ */
 (() => {
-const $=id=>document.getElementById(id),root=$("emoji-builder");if(!root)return;
-const category=$("emoji-builder-category"),slots=$("emoji-builder-slots"),choices=$("emoji-builder-choices"),out=$("emoji-builder-output"),status=$("emoji-builder-status"),search=$("emoji-builder-search"),more=$("emoji-builder-more"),codes=$("emoji-builder-codes"),copy=$("emoji-builder-copy"),count=$("emoji-builder-count");
-const groups=[["all","すべて"],["role","人物・職業"],["family","家族・カップル"],["gendered","人物・動作"],["hair","髪型"],["other","その他の接合"],["modifier","肌の色"],["flag","国旗"],["tag","地域旗"],["keycap","キーキャップ"]];
-const groupNames=Object.fromEntries(groups);
-const skip=new Set([0x200D,0xFE0F,0x20E3]);
-const renderCode=cp=>"U+"+cp.toString(16).toUpperCase().padStart(4,"0");
-const grapheme=code=>code.map(cp=>String.fromCodePoint(cp)).join("");
-const rowText=(code)=>code.map(renderCode).join(" + ");
-let all=[],current=[],stages=[],selected=[],active=0,shown=36;
-function text(tag,name,value){const e=document.createElement(tag);if(name)e.className=name;e.textContent=value;return e;}
-function slotTokens(p){const a=p.split(" ").map(x=>parseInt(x,16)),tokens=[];let chunk=[];for(const cp of a){if(cp===0x200D){if(chunk.length){tokens.push(chunk);chunk=[];}}else if(!skip.has(cp)&&cp<0xE0000){if(cp>=0x1F3FB&&cp<=0x1F3FF&&chunk.length)chunk.push(cp);else{if(chunk.length)tokens.push(chunk);chunk=[cp];}}else if(cp===0x20E3){/* attach keycap to the preceding character */}else if(cp>=0xE0000){/* tags remain in source for exact reproduction */}}
-if(chunk.length)tokens.push(chunk);
-return tokens.map(x=>x.join("-"));}
-function tokenize(e){const cp=e[0].split(" ").map(x=>parseInt(x,16));const g=e[1];
-if(g==="tag")return [e[0]]; // Hidden tag letters are presented as one named region.
-if(g==="keycap")return [e[0]];
-const chunks=[];let current=[];for(const n of cp){if(n===0x200D){if(current.length)chunks.push(current);current=[];}else if(n===0xFE0F){if(current.length)current.push(n);}else if(n===0x20E3){if(current.length)current.push(n);}else if(n>=0x1F3FB&&n<=0x1F3FF){if(current.length)chunks.push(current);current=[n];}else if(current.length){chunks.push(current);current=[n];}else current=[n];}
-if(current.length)chunks.push(current);
-return chunks.map(chunk=>chunk.map(renderCode).map(x=>x.slice(2)).join(" "));}
-function matches(e){return selected.every((value,i)=>e.tokens[i]===value);}
-function candidates(){return current.filter(matches);}
-function rebuild(){const valid=candidates();if(!valid.length){selected=[];active=0;return rebuild();}
-stages=[];const max=Math.max(1,...valid.map(e=>e.tokens.length));
-for(let i=0;i<max;i++){const u=[...new Set(valid.map(e=>e.tokens[i]).filter(Boolean))];stages.push(u);}
-if(active>=max)active=max-1;
-slots.replaceChildren();
-for(let i=0;i<max;i++){const holder=document.createElement("button");holder.type="button";holder.className="emoji-builder-slot"+(i===active?" active":"");const val=selected[i];
-holder.append(text("span","emoji-builder-slot-glyph",val?grapheme(val.split(" ").map(s=>parseInt(s,16))):"＋"));
-holder.append(text("span","emoji-builder-slot-label",val&&/^1F3F[B-F]$/.test(val)?"肌の色":val?"素材 "+(i+1):"選択 "+(i+1)));
-holder.addEventListener("click",()=>{active=i;shown=36;search.value="";rebuild()});
-slots.append(holder);if(i<max-1)slots.append(text("span","emoji-builder-plus","+"));}
-const complete=valid.filter(e=>e.tokens.length===selected.length);
-const exact=selected.length?complete[0]:null;
-out.textContent=exact?exact.glyph:"—";codes.textContent=exact?rowText(exact.cps):"";
-copy.disabled=!exact;
-status.textContent=exact?(complete.length===1?"完成：Unicode公式RGI絵文字":"完成候補 "+complete.length+" 件"):"左から素材を選んでください";
-count.textContent=valid.length+" 件の候補";
-renderChoices(valid);
-}
-function renderChoices(valid){choices.replaceChildren();
-const index=active,base=valid.filter(e=>e.tokens[index]);const opts=new Map();for(const e of base){const token=e.tokens[index];if(!opts.has(token))opts.set(token,{token,sample:e});}
-const q=search.value.trim().toLocaleLowerCase();let shownItems=[...opts.values()].filter(x=>!q||x.sample[2].toLocaleLowerCase().includes(q)||x.token.toLowerCase().includes(q)||grapheme(x.token.split(" ").map(s=>parseInt(s,16))).includes(q));shownItems=shownItems.slice(0,shown);
-for(const item of shownItems){const b=document.createElement("button");b.type="button";b.className="emoji-builder-option";b.title=item.sample[2]||item.token;
-b.append(text("span","emoji-builder-option-glyph",grapheme(item.token.split(" ").map(s=>parseInt(s,16)))));
-b.append(text("span","emoji-builder-option-code",item.token.split(" ").map(s=>"U+"+s).join(" ")));
-b.addEventListener("click",()=>{selected=selected.slice(0,index);selected[index]=item.token;active=index+1;shown=36;search.value="";rebuild()});choices.append(b);}
-const total=[...opts.values()].filter(x=>!q||x.sample[2].toLowerCase().includes(q)||x.token.toLowerCase().includes(q)||grapheme(x.token.split(" ").map(s=>parseInt(s,16))).includes(q)).length;
-more.hidden=shownItems.length>=total;
-if(!total)choices.append(text("p","page-muted","該当する素材がありません。"));
-}
-function setGroup(){const g=category.value;selected=[];active=0;shown=36;search.value="";current=all.filter(x=>g==="all"?x[1]!=="basic":x[1]===g);rebuild();}
-category.addEventListener("change",setGroup);
-search.addEventListener("input",()=>{shown=36;renderChoices(candidates())});
-more.addEventListener("click",()=>{shown+=72;renderChoices(candidates())});
-copy.addEventListener("click",async()=>{const complete=candidates().find(e=>e.tokens.length===selected.length);if(!complete)return;try{await navigator.clipboard.writeText(complete.glyph);copy.textContent="コピーしました";setTimeout(()=>copy.textContent="絵文字をコピー",1500);}catch(e){status.textContent="コピーできませんでした。表示された文字を選択してコピーしてください。";}});
-fetch("../data/unicode18_emoji_rgi_sequences.json").then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(data=>{
-if(data.unicode_version!=="18.0"||data.count!==3972||!Array.isArray(data.entries)||data.entries.length!==3972)throw Error("絵文字データの形式が不正です");
-all=data.entries.map(x=>{const cps=x[0].split(" ").map(n=>parseInt(n,16));const e=[x[0],x[1],x[2],grapheme(cps)];return {raw:x[0],group:x[1],name:x[2],glyph:e[3],cps,tokens:tokenize(x)};});
-for(const [key,label]of groups){if(key!=="all"&&!all.some(e=>e.group===key))continue;const opt=document.createElement("option");opt.value=key;opt.textContent=label;category.append(opt);}
-category.value="role";root.hidden=false;setGroup();
-}).catch(e=>{root.hidden=false;status.textContent="データを読み込めませんでした: "+e.message;});
+  const byId = id => document.getElementById(id);
+  const root = byId("emoji-builder");
+  if (!root) return;
+
+  const picker = byId("emoji-builder-category");
+  const categoryList = byId("emoji-builder-category-list");
+  const categoryLabel = byId("emoji-builder-category-label");
+  const slots = byId("emoji-builder-slots");
+  const choices = byId("emoji-builder-choices");
+  const output = byId("emoji-builder-output");
+  const status = byId("emoji-builder-status");
+  const search = byId("emoji-builder-search");
+  const more = byId("emoji-builder-more");
+  const codes = byId("emoji-builder-codes");
+  const copy = byId("emoji-builder-copy");
+  const count = byId("emoji-builder-count");
+
+  const groups = [
+    ["all", "すべての組み合わせ"],
+    ["role", "人物・職業"],
+    ["family", "家族・カップル"],
+    ["gendered", "人物・動作"],
+    ["hair", "髪型"],
+    ["modifier", "肌の色"],
+    ["flag", "国旗"],
+    ["tag", "地域旗"],
+    ["keycap", "キーキャップ"],
+    ["other", "その他の接合"]
+  ];
+  const groupNames = Object.fromEntries(groups);
+  const toneLabels = {
+    0x1F3FB: "明るい肌",
+    0x1F3FC: "やや明るい肌",
+    0x1F3FD: "中間の肌",
+    0x1F3FE: "やや濃い肌",
+    0x1F3FF: "濃い肌"
+  };
+  const familiarNames = {
+    0x1F9D1: "人物", 0x1F468: "男性", 0x1F469: "女性",
+    0x1F466: "男の子", 0x1F467: "女の子", 0x1F476: "赤ちゃん",
+    0x1F4BB: "パソコン", 0x1F52C: "顕微鏡", 0x1F680: "ロケット",
+    0x1F373: "料理", 0x1F3EB: "学校", 0x2695: "医療",
+    0x2696: "法律", 0x1F33E: "農業", 0x1F527: "工具",
+    0x1F3A8: "芸術", 0x1F692: "消防車", 0x1F691: "救急車",
+    0x2640: "女性", 0x2642: "男性", 0x27A1: "右向き",
+    0x1F9B0: "赤毛", 0x1F9B1: "巻き毛", 0x1F9B2: "坊主頭", 0x1F9B3: "白髪",
+    0x2764: "ハート", 0x1F48B: "キス", 0x1F9AF: "白杖",
+    0x1F9BD: "車いす", 0x1F9BC: "電動車いす", 0x1F9B1: "巻き毛"
+  };
+  const flagTags = {"GB-ENG":"イングランド","GB-SCT":"スコットランド","GB-WLS":"ウェールズ"};
+  const hex = cp => "U+" + cp.toString(16).toUpperCase().padStart(4, "0");
+  const character = cps => String.fromCodePoint(...cps);
+  const codePoints = raw => raw.split(" ").map(s => parseInt(s, 16));
+  const toHexLine = cps => cps.map(hex).join(" + ");
+  const isTone = cp => cp >= 0x1F3FB && cp <= 0x1F3FF;
+  let displayNames = null;
+  try {
+    if (Intl.DisplayNames) displayNames = new Intl.DisplayNames(["ja"], {type:"region"});
+  } catch (_) { /* Some browsers do not implement Intl.DisplayNames. */ }
+
+  function node(tag, className, content) {
+    const element = document.createElement(tag);
+    if (className) element.className = className;
+    if (content != null) element.textContent = content;
+    return element;
+  }
+  function tokenize(entry) {
+    const cps = entry.cps;
+    // A country or regional flag should be selected by its complete name.
+    if (entry.group === "flag" || entry.group === "tag" || entry.group === "keycap") {
+      return [entry.raw];
+    }
+    // Ignore joining controls in the UI but preserve them in the final result.
+    // Skin tones become separate selectable attributes, including on both people.
+    const chunks = [];
+    let part = [];
+    const push = () => { if (part.length) chunks.push(part); part = []; };
+    for (const cp of cps) {
+      if (cp === 0x200D) push();
+      else if (isTone(cp)) { push(); chunks.push([cp]); }
+      else if (cp === 0xFE0F || cp === 0x20E3) {
+        if (part.length) part.push(cp);
+      } else {
+        push();
+        part.push(cp);
+      }
+    }
+    push();
+    return chunks.map(chunk => chunk.map(cp => cp.toString(16).toUpperCase()).join(" "));
+  }
+  function flagName(entry) {
+    if (entry.group === "tag") {
+      const name = entry.name.toLowerCase();
+      for (const [code,label] of Object.entries(flagTags)) {
+        if (name.includes(code.split("-")[1].toLowerCase())) return label;
+      }
+      if (name.includes("england")) return "イングランド";
+      if (name.includes("scotland")) return "スコットランド";
+      if (name.includes("wales")) return "ウェールズ";
+    }
+    if (entry.group !== "flag") return null;
+    const [a,b] = entry.cps;
+    if (a < 0x1F1E6 || a > 0x1F1FF || b < 0x1F1E6 || b > 0x1F1FF) return null;
+    const region = String.fromCharCode(65+a-0x1F1E6,65+b-0x1F1E6);
+    try { return displayNames?.of(region) || region; }
+    catch (_) { return region; }
+  }
+  function tokenInfo(token, sample) {
+    const cps = codePoints(token);
+    const glyph = character(cps);
+    if (sample.group === "flag" || sample.group === "tag") {
+      return {glyph: sample.glyph, label: flagName(sample) || sample.name, searchText: sample.name};
+    }
+    if (sample.group === "keycap") return {glyph: sample.glyph, label:"キーキャップ", searchText:sample.name};
+    if (cps.length === 1 && isTone(cps[0])) {
+      return {glyph:"●", label:toneLabels[cps[0]], tone:cps[0]};
+    }
+    const label = familiarNames[cps[0]] || (cps.length===1 ? hex(cps[0]) : "絵文字");
+    return {glyph, label, searchText:sample.name};
+  }
+
+  let all = [], current = [], selected = [], active = 0, shown = 36;
+  let group = "role";
+  const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
+  const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
+  function stepLabel(index, options) {
+    if (group === "flag") return "国・地域";
+    if (group === "tag") return "地域";
+    if (group === "keycap") return "数字・記号";
+    if (group === "modifier" && index === 0) return "基本の絵文字";
+    if (options.length && options.every(token => {
+      const parts = token.split(" ");
+      return parts.length === 1 && isTone(parseInt(parts[0], 16));
+    })) return "肌の色";
+    if (options.length && options.every(token => ["2640 FE0F","2642 FE0F"].includes(token))) return "性別";
+    if (group === "hair" && index > 0) return "髪型";
+    if (group === "family") return "人物・素材 " + (index+1);
+    if (index === 0) return "基本の絵文字";
+    if (group === "role") return "職業・属性";
+    return "追加する素材";
+  }
+  function buildOptions(prefix, index) {
+    const map = new Map();
+    for (const entry of candidates(prefix)) {
+      const token = entry.tokens[index];
+      if (!token) continue;
+      if (!map.has(token)) {
+        map.set(token, {token, sample:entry, names:[entry.name]});
+      } else {
+        map.get(token).names.push(entry.name);
+      }
+    }
+    return [...map.values()];
+  }
+  function chooseCategory(next) {
+    group = next;
+    selected = [];
+    active = 0;
+    shown = 36;
+    search.value = "";
+    current = all.filter(entry => group === "all" ? entry.group !== "basic" : entry.group === group);
+    categoryLabel.textContent = groupNames[group];
+    picker.open = false;
+    render();
+  }
+  function render() {
+    const matching = candidates(selected);
+    if (!matching.length) {
+      // Defensive recovery; no recursive rendering on missing data.
+      selected = [];
+      active = 0;
+    }
+    const valid = candidates(selected);
+    const finished = valid.find(entry => entry.tokens.length === selected.length) || null;
+    const extendable = valid.some(entry => entry.tokens.length > selected.length);
+    const size = selected.length + (extendable ? 1 : 0);
+    if (active >= size) active = Math.max(0,size-1);
+
+    slots.replaceChildren();
+    for (let i=0; i<size; i++) {
+      const prefix = selected.slice(0,i);
+      const options = buildOptions(prefix,i).map(x=>x.token);
+      const label = stepLabel(i, options);
+      const token = selected[i];
+      const button = node("button","emoji-builder-slot"+(i===active?" active":""),"");
+      button.type = "button";
+      button.setAttribute("aria-label", label + (token ? "、変更" : "、選択"));
+      const sample = buildOptions(prefix,i).find(x=>x.token===token)?.sample;
+      const info = token ? tokenInfo(token,sample) : null;
+      const glyph = node("span","emoji-builder-slot-glyph",info?info.glyph:"＋");
+      if (info?.tone) glyph.classList.add("emoji-builder-tone-" + info.tone.toString(16));
+      button.append(glyph,node("span","emoji-builder-slot-label",label));
+      button.addEventListener("click",()=>{active=i;shown=36;search.value="";render();});
+      slots.append(button);
+      if(i<size-1)slots.append(node("span","emoji-builder-plus","+"));
+    }
+    output.textContent = finished ? finished.glyph : "—";
+    codes.textContent = finished ? toHexLine(finished.cps) : "";
+    copy.disabled = !finished;
+    status.textContent = finished ? "完成：Unicode公式の絵文字" : "左から素材を選んでください";
+    count.textContent = valid.length + "種類の完成候補";
+    renderChoices();
+  }
+  function renderChoices() {
+    choices.replaceChildren();
+    const prefix = selected.slice(0,active);
+    const options = buildOptions(prefix,active);
+    const query = search.value.trim().toLocaleLowerCase("ja");
+    const visible = options.filter(item=>{
+      const info = tokenInfo(item.token,item.sample);
+      return !query || info.label.toLocaleLowerCase("ja").includes(query)
+        || (info.searchText || "").toLocaleLowerCase().includes(query)
+        || item.token.toLowerCase().includes(query)
+        || info.glyph.includes(query)
+        || item.names.some(name=>name.toLocaleLowerCase().includes(query));
+    });
+    for(const item of visible.slice(0,shown)) {
+      const info = tokenInfo(item.token,item.sample);
+      const button = node("button","emoji-builder-option","");
+      button.type = "button";
+      button.title = info.label + (item.sample.name ? " / "+item.sample.name : "");
+      button.setAttribute("aria-label",info.label);
+      const glyph = node("span","emoji-builder-option-glyph",info.glyph);
+      if(info.tone)glyph.classList.add("emoji-builder-tone-"+info.tone.toString(16));
+      button.append(glyph,node("span","emoji-builder-option-name",info.label));
+      button.addEventListener("click",()=>{
+        selected = [...prefix,item.token];
+        const following = candidates(selected).some(entry=>entry.tokens.length>selected.length);
+        active = following ? selected.length : Math.max(0,selected.length-1);
+        shown=36;
+        search.value="";
+        render();
+      });
+      choices.append(button);
+    }
+    count.textContent = candidates(selected).length + "種類の完成候補 / 選べる素材 " + visible.length + "件";
+    more.hidden = shown>=visible.length;
+    if(!visible.length)choices.append(node("p","page-muted","候補がありません。検索語や前の□を変更してください。"));
+  }
+  categoryList.replaceChildren();
+  for(const [value,label] of groups) {
+    const button = node("button","emoji-builder-category-option",label);
+    button.type="button";
+    button.addEventListener("click",()=>chooseCategory(value));
+    categoryList.append(button);
+  }
+  document.addEventListener("click",event=>{
+    if(picker.open && !picker.contains(event.target))picker.open=false;
+  });
+  picker.addEventListener("keydown",event=>{
+    if(event.key==="Escape"){picker.open=false;picker.querySelector("summary")?.focus();}
+  });
+  search.addEventListener("input",()=>{shown=36;renderChoices();});
+  more.addEventListener("click",()=>{shown+=72;renderChoices();});
+  copy.addEventListener("click",async()=>{
+    const entry=candidates(selected).find(x=>x.tokens.length===selected.length);
+    if(!entry)return;
+    try {
+      await navigator.clipboard.writeText(entry.glyph);
+      const original="絵文字をコピー";
+      copy.textContent="コピーしました";
+      setTimeout(()=>{copy.textContent=original;},1400);
+    }catch(_) {status.textContent="コピーできませんでした。生成結果を選択してコピーしてください。";}
+  });
+  fetch("../data/unicode18_emoji_rgi_sequences.json")
+    .then(response=>{if(!response.ok)throw Error("HTTP "+response.status);return response.json();})
+    .then(data=>{
+      if(data.unicode_version!=="18.0" || data.count!==3972 ||
+         !Array.isArray(data.entries) || data.entries.length!==3972) {
+        throw Error("Unicode 18.0の公式データを検証できませんでした");
+      }
+      all=data.entries.map(row=>{
+        const cps=codePoints(row[0]);
+        const entry={raw:row[0],group:row[1],name:row[2],cps,glyph:character(cps)};
+        entry.tokens=tokenize(entry);
+        return entry;
+      });
+      root.hidden=false;
+      chooseCategory("role");
+    })
+    .catch(error=>{
+      root.hidden=false;
+      status.textContent="絵文字データを読み込めませんでした: "+error.message;
+    });
 })();
