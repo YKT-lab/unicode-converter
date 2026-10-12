@@ -676,6 +676,8 @@ function showUnicodeScope(
   // on-screen size even when the document itself is pinch-zoomed.
   const zoom = visual ? Math.max(1,visual.scale || 1) : 1;
   unicodeScope.style.setProperty("--scope-inverse-scale",String(1 / zoom));
+  unicodeScope.style.setProperty("--scope-intro-scale",String(0.72 / zoom));
+  unicodeScope.style.setProperty("--scope-active-scale",String(0.94 / zoom));
 
   const glyphX = rect.left + scrollX + rect.width / 2;
   const glyphY = rect.top + scrollY + rect.height / 2;
