@@ -18,6 +18,7 @@
   const count = $("emoji-builder-count");
   const codes = $("emoji-builder-codes");
   const copy = $("emoji-builder-copy");
+  const removeLast = $("emoji-builder-remove-last");
   const more = $("emoji-builder-more");
 
   const categories = [
@@ -60,6 +61,7 @@
   let resultLabels={cldr_names:{},english_fallback:{}};
   let currentCategory="person";
   let entries=[],current=[],selected=[],active=0,shown=36;
+  const basicEmoji = new Map();
 
   function categoryFor(entry) {
     if(entry.group==="flag" || entry.group==="keycap")return entry.group;
@@ -107,6 +109,34 @@
     return {glyph:String.fromCodePoint(cp),name};
   }
   const begins=(tokens,prefix)=>prefix.every((x,i)=>tokens[i]===x);
+  // A visual component is user-editable only if it is an actual Unicode
+  // codepoint. Routing markers are intentionally never shown or deleted.
+  const isRealToken=token=>/^[0-9A-F]+$/.test(token);
+  function basePreview(){
+    const first=selected.find(isRealToken);
+    if(!first)return null;
+    const cp=parseInt(first,16);
+    const cps=basicEmoji.get(first)||[cp];
+    const letter=cp>=0x1F1E6&&cp<=0x1F1FF
+      ? String.fromCharCode(65+cp-0x1F1E6) : null;
+    const name=letter?"地域指示記号 "+letter:(labels.component_names[first]||"基本の絵文字");
+    const editable=selected.filter(isRealToken).length===1;
+    return {emoji:glyph(cps),cps,name,editable};
+  }
+  function removeLastComponent(){
+    let at=-1;
+    for(let i=selected.length-1;i>=0;i--){
+      if(isRealToken(selected[i])){at=i;break;}
+    }
+    if(at<0)return;
+    selected=selected.slice(0,at);
+    // This marker is navigation-only; a skin-tone choice is no longer
+    // active after the selected tone has been deleted.
+    while(selected[selected.length-1]==="NO_DETAIL")selected.pop();
+    active=selected.length;
+    shown=36;
+    render();
+  }
   const matching=prefix=>current.filter(e=>begins(e.path,prefix));
   function optionsAt(prefix,index) {
     const seen=new Map();
@@ -191,16 +221,21 @@
       slots.append(button);
       if(position<visibleIndices.length-1)slots.append(node("span","emoji-builder-plus","+"));
     }
-    result.textContent=exact?exact.emoji:"—";
+    const base=exact?null:basePreview();
+    const previewCps=exact?.cps || base?.cps || [];
+    result.textContent=exact?.emoji || base?.emoji || "—";
     const cldrName=exact?resultLabels.cldr_names[exact.raw]:null;
     const englishName=exact?resultLabels.english_fallback[exact.raw]:null;
-    resultName.textContent=cldrName || (englishName ? englishName+"（英語名）" : "");
-    resultName.hidden=!exact;
-    codes.textContent=exact?exact.cps.map(n=>"U+"+n.toString(16).toUpperCase().padStart(4,"0")).join(" + "):"";
-    copy.disabled=!exact;
+    resultName.textContent=exact
+      ? (cldrName || (englishName ? englishName+"（英語名）" : ""))
+      : (base?.name || "");
+    resultName.hidden=!exact&&!base;
+    codes.textContent=previewCps.map(n=>"U+"+n.toString(16).toUpperCase().padStart(4,"0")).join(" + ");
+    copy.disabled=!(exact || base?.editable);
+    removeLast.disabled=!selected.some(isRealToken);
     status.textContent=exact
       ? (extendsFurther?"完成。さらに属性を追加できます":"完成：Unicode公式の絵文字")
-      : "上から素材を選んでください";
+      : base ? "組み立て中：基本の絵文字を表示しています" : "上から素材を選んでください";
     renderOptions();
   }
   function renderOptions(){
@@ -248,11 +283,14 @@
     if(e.key==="Escape"){categoryPicker.open=false;categoryPicker.querySelector("summary")?.focus();}
   });
   more.addEventListener("click",()=>{shown+=72;renderOptions();});
+  removeLast.addEventListener("click",removeLastComponent);
   copy.addEventListener("click",async()=>{
     const exact=matching(selected).find(e=>e.path.length===selected.length);
-    if(!exact)return;
+    const base=exact?null:basePreview();
+    const text=exact?.emoji || (base?.editable?base.emoji:null);
+    if(!text)return;
     try{
-      await navigator.clipboard.writeText(exact.emoji);
+      await navigator.clipboard.writeText(text);
       copy.textContent="コピーしました";
       setTimeout(()=>{copy.textContent="絵文字をコピー";},1400);
     }catch(_){status.textContent="コピーできませんでした。表示文字を選択してコピーしてください。";}
@@ -271,6 +309,15 @@
         throw Error("CLDR名称データを検証できませんでした");
       labels=names;
       resultLabels=resultNames;
+      basicEmoji.clear();
+      for(const [raw,type] of data.entries){
+        if(type!=="basic")continue;
+        const cps=codepoints(raw);
+        const id=toHex(cps[0]);
+        // Prefer an official emoji-presentation form when a VS16 variant
+        // exists; retain a plain scalar otherwise.
+        if(!basicEmoji.has(id) || cps.includes(0xFE0F))basicEmoji.set(id,cps);
+      }
       entries=data.entries
         .filter(row=>row[1]!=="basic" && row[1]!=="tag")
         .map(row=>{
