@@ -725,6 +725,7 @@ function showUnicodeScope(
   );
 
 
+  unicodeScopeCode.style.left = "0px";
   unicodeScope
     .classList
     .add(
@@ -737,6 +738,18 @@ function showUnicodeScope(
       "aria-hidden",
       "false"
     );
+
+  // Center the code label without letting long joined-emoji sequences
+  // leave the viewport (the ring itself still tracks the touched glyph).
+  const labelRect = unicodeScopeCode.getBoundingClientRect();
+  const margin = 8;
+  let shift = 0;
+  if (labelRect.left < margin) {
+    shift = margin - labelRect.left;
+  } else if (labelRect.right > window.innerWidth - margin) {
+    shift = window.innerWidth - margin - labelRect.right;
+  }
+  unicodeScopeCode.style.left = shift + "px";
 
 
   requestAnimationFrame(
