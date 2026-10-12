@@ -19,12 +19,12 @@
 </header>
 <nav class="site-nav" aria-label="サイト内メニュー"><a href="../">トップページ</a><a href="../about/">Unicodeとは</a><a href="../emoji/" aria-current="page">絵文字</a><a href="../unicode/">Unicode一覧</a><a href="../news/">News</a></nav>
 </div>
-<section class="page-intro"><p class="page-eyebrow">EMOJI</p><h1 class="page-title">絵文字</h1><p class="page-lead">1つの絵文字が、複数のUnicodeコードポイントで作られていることがあります。組み合わせの仕組みを調べてみよう。</p></section>
+<section class="page-intro"><p class="page-eyebrow">EMOJI</p><h1 class="page-title">絵文字</h1><p class="page-lead">複数のUnicodeコードポイントを組み合わせて、絵文字を作ってみよう。</p></section>
 <section class="page-card" id="emoji-builder" hidden>
 <h2>絵文字を組み立てる</h2>
 <p>カテゴリーを選び、基本となる絵文字から順番に素材や属性を追加します。旗などは枠を選んでから種類を指定できます。</p>
 <div class="emoji-builder-head"><span class="emoji-builder-category-label">カテゴリー</span><details class="emoji-builder-category-picker" id="emoji-builder-category"><summary class="page-input emoji-builder-category-summary"><span id="emoji-builder-category-label">読み込み中…</span><span aria-hidden="true">⌄</span></summary><div id="emoji-builder-category-list" class="emoji-builder-category-list"></div></details></div>
-<div class="emoji-builder-slots" id="emoji-builder-slots" role="group" aria-label="素材を左から選択"></div>
+<div class="emoji-builder-slots" id="emoji-builder-slots" role="group" aria-label="上から素材を選択"></div>
 <div class="emoji-builder-options-head"><label for="emoji-builder-search">選択できる素材</label><span id="emoji-builder-count" class="page-muted"></span></div>
 <input id="emoji-builder-search" class="page-input" type="search" placeholder="候補を検索（英語名・Unicodeコード・絵文字）" aria-label="絵文字素材を検索">
 <div class="emoji-builder-choices" id="emoji-builder-choices"></div>
@@ -32,18 +32,9 @@
 <div class="emoji-builder-result"><div><p class="page-muted">生成結果</p><div class="emoji-builder-output" id="emoji-builder-output" aria-live="polite">—</div><p class="page-muted" id="emoji-builder-codes"></p><p class="page-muted" id="emoji-builder-status" role="status">読み込み中…</p></div><button type="button" class="page-button primary" id="emoji-builder-copy" disabled>絵文字をコピー</button></div>
 <p class="page-muted">Unicode Emoji 18.0の公式RGIシーケンスに対応。ZWJ・VS16などは自動挿入します。表示結果は端末によって異なります。</p>
 </section>
-<section class="page-card"><h2>絵文字の構成を調べる</h2><p>絵文字を入力して「解析」を押すと、構成するUnicodeコードポイントを順番に表示します。</p>
-<div class="page-tool-row"><input id="emoji-sequence-input" class="page-input" type="text" value="👩‍💻" maxlength="160" aria-label="解析したい絵文字を入力" placeholder="例：👩‍💻、🇯🇵、👍🏽"><button class="page-button primary" type="button" id="emoji-sequence-analyze">解析</button></div>
-<div class="page-samples" aria-label="絵文字の例"><button class="page-button" type="button" data-emoji-sample="👩‍💻" aria-label="職業絵文字の例">👩‍💻</button><button class="page-button" type="button" data-emoji-sample="🇯🇵" aria-label="国旗の例">🇯🇵</button><button class="page-button" type="button" data-emoji-sample="👍🏽" aria-label="肌の色の例">👍🏽</button><button class="page-button" type="button" data-emoji-sample="1️⃣" aria-label="キーキャップの例">1️⃣</button><button class="page-button" type="button" data-emoji-sample="❤️" aria-label="表示セレクターの例">❤️</button></div>
-<div id="emoji-sequence-results" class="page-result" aria-live="polite"></div><p class="page-muted">入力の区切りは端末の書記素認識に従います。これは構成コードポイントの解析であり、Unicode公式の絵文字シーケンスとして登録済みかどうかを判定するものではありません。</p></section>
-<section class="page-grid"><article class="page-card"><h2>国旗</h2><div class="page-demo-emoji">🇯🇵 🇫🇷 🇨🇦</div><p>地域指示記号を2つ組み合わせることで国旗になることがあります。</p></article>
-<article class="page-card"><h2>職業や家族</h2><div class="page-demo-emoji">👩‍💻 🧑‍🚀</div><p>ゼロ幅接合子（ZWJ、U+200D）が絵文字同士を結合する場合があります。</p></article>
-<article class="page-card"><h2>肌の色</h2><div class="page-demo-emoji">👍 👍🏽 👍🏿</div><p>対応する絵文字に肌の色修飾子を付けて表現します。</p></article>
-<article class="page-card"><h2>キーキャップ</h2><div class="page-demo-emoji">1️⃣ 2️⃣ #️⃣</div><p>数字・記号と結合キーキャップ記号を組み合わせて表します。</p></article></section>
 <section class="page-card"><h2>公式資料</h2><p>絵文字として正式に規定された組み合わせの一覧は、Unicode Consortiumが公開しています。</p><p><a href="https://www.unicode.org/reports/tr51/" target="_blank" rel="noopener noreferrer">Unicode Technical Standard #51 ↗</a></p><p><a href="https://www.unicode.org/emoji/charts-18.0/" target="_blank" rel="noopener noreferrer">Unicode Emoji 18.0 Charts ↗</a></p></section>
 <p class="page-home-link"><a href="../">← トップページに戻る</a></p>
 </main>
-<script src="../js/site-pages.js?v=20261012-1" defer></script>
-<script src="../js/emoji-builder.js?v=20261012-country-flags6" defer></script>
+<script src="../js/emoji-builder.js?v=20261012-builder-clean7" defer></script>
 </body>
 </html>
