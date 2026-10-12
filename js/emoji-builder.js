@@ -1,293 +1,269 @@
 "use strict";
-/* Unicode Emoji 18.0 RGI builder.
- * The official data defines every allowed result; UI only selects prefixes.
+/* Unicode Emoji 18.0 compositional builder.
+ * Meaningful categories and UI order are independent from Unicode codepoint order.
+ * The original RGI dataset remains the sole authority for complete results.
  */
 (() => {
-  const byId = id => document.getElementById(id);
-  const root = byId("emoji-builder");
+  const $ = id => document.getElementById(id);
+  const root = $("emoji-builder");
   if (!root) return;
+  const categoryPicker = $("emoji-builder-category");
+  const categoryList = $("emoji-builder-category-list");
+  const categoryText = $("emoji-builder-category-label");
+  const slots = $("emoji-builder-slots");
+  const choices = $("emoji-builder-choices");
+  const result = $("emoji-builder-output");
+  const status = $("emoji-builder-status");
+  const count = $("emoji-builder-count");
+  const codes = $("emoji-builder-codes");
+  const copy = $("emoji-builder-copy");
+  const more = $("emoji-builder-more");
 
-  const picker = byId("emoji-builder-category");
-  const categoryList = byId("emoji-builder-category-list");
-  const categoryLabel = byId("emoji-builder-category-label");
-  const slots = byId("emoji-builder-slots");
-  const choices = byId("emoji-builder-choices");
-  const output = byId("emoji-builder-output");
-  const status = byId("emoji-builder-status");
-  const more = byId("emoji-builder-more");
-  const codes = byId("emoji-builder-codes");
-  const copy = byId("emoji-builder-copy");
-  const count = byId("emoji-builder-count");
-
-  const groups = [
-    ["all", "すべての組み合わせ"],
-    ["role", "人物・職業"],
-    ["family", "家族・カップル"],
-    ["gendered", "人物・動作"],
-    ["hair", "髪型"],
-    ["modifier", "肌の色"],
-    ["flag", "国旗"],
-    ["keycap", "キーキャップ"],
-    ["other", "その他の接合"]
+  const categories = [
+    ["person","人物・身体"],
+    ["action","動作・スポーツ"],
+    ["multi","複数人・関係"],
+    ["face","顔・感情"],
+    ["nature","動物・自然"],
+    ["symbol","物・記号"],
+    ["flag","国旗"],
+    ["keycap","キーキャップ"]
   ];
-  const groupNames = Object.fromEntries(groups);
-  const toneLabels = {
-    0x1F3FB: "明るい肌",
-    0x1F3FC: "やや明るい肌",
-    0x1F3FD: "中間の肌",
-    0x1F3FE: "やや濃い肌",
-    0x1F3FF: "濃い肌"
+  const titles = Object.fromEntries(categories);
+  // These base-emoji sets describe the UI's subject matter, not Unicode's
+  // technical ZWJ file headings (Role/Gendered/Other).
+  const set = words => new Set(words.split(/\s+/).filter(Boolean));
+  const actionBases = set("26F9 1F3C2 1F3C3 1F3C4 1F3C7 1F3CA 1F3CB 1F3CC 1F481 1F483 1F486 1F487 1F574 1F57A 1F645 1F646 1F647 1F64B 1F64D 1F64E 1F6A3 1F6B4 1F6B5 1F6B6 1F6C0 1F6CC 1F926 1F937 1F938 1F939 1F93D 1F93E 1F9CD 1F9CE 1F9D6 1F9D7 1F9D8");
+  const multiBases = set("1F46B 1F46C 1F46D 1F46F 1F48F 1F491 1F91D 1F93C 1FAF1");
+  const faceBases = set("1F441 1F62E 1F635 1F636 1F642");
+  const natureBases = set("1F344 1F34B 1F408 1F415 1F426 1F43B");
+  const symbolBases = set("26D3 2764 1F3F3 1F3F4");
+  const tones = {
+    "1F3FB":"明るい肌",
+    "1F3FC":"やや明るい肌",
+    "1F3FD":"中間の肌",
+    "1F3FE":"やや濃い肌",
+    "1F3FF":"濃い肌"
   };
-  const familiarNames = {
-    0x1F9D1: "人物", 0x1F468: "男性", 0x1F469: "女性",
-    0x1F466: "男の子", 0x1F467: "女の子", 0x1F476: "赤ちゃん",
-    0x1F4BB: "パソコン", 0x1F52C: "顕微鏡", 0x1F680: "ロケット",
-    0x1F373: "料理", 0x1F3EB: "学校", 0x2695: "医療",
-    0x2696: "法律", 0x1F33E: "農業", 0x1F527: "工具",
-    0x1F3A8: "芸術", 0x1F692: "消防車", 0x1F691: "救急車",
-    0x2640: "女性", 0x2642: "男性", 0x27A1: "右向き",
-    0x1F9B0: "赤毛", 0x1F9B1: "巻き毛", 0x1F9B2: "坊主頭", 0x1F9B3: "白髪",
-    0x2764: "ハート", 0x1F48B: "キス", 0x1F9AF: "白杖",
-    0x1F9BD: "車いす", 0x1F9BC: "電動車いす", 0x1F9B1: "巻き毛"
+  const toHex = n => n.toString(16).toUpperCase();
+  const codepoints = raw => raw.split(" ").map(n => parseInt(n,16));
+  const glyph = cps => String.fromCodePoint(...cps);
+  const isTone = n => n>=0x1F3FB && n<=0x1F3FF;
+  const node = (tag,className,label) => {
+    const el = document.createElement(tag);
+    if(className)el.className=className;
+    if(label!=null)el.textContent=label;
+    return el;
   };
-  const hex = cp => "U+" + cp.toString(16).toUpperCase().padStart(4, "0");
-  const character = cps => String.fromCodePoint(...cps);
-  const codePoints = raw => raw.split(" ").map(s => parseInt(s, 16));
-  const toHexLine = cps => cps.map(hex).join(" + ");
-  const isTone = cp => cp >= 0x1F3FB && cp <= 0x1F3FF;
-  let nameData = {component_names:{},flag_regions:{}};
-  let displayNames = null;
-  try {
-    if (Intl.DisplayNames) displayNames = new Intl.DisplayNames(["ja"], {type:"region"});
-  } catch (_) { /* Some browsers do not implement Intl.DisplayNames. */ }
+  let labels={component_names:{},flag_regions:{}};
+  let currentCategory="person";
+  let entries=[],current=[],selected=[],active=0,shown=36;
 
-  function node(tag, className, content) {
-    const element = document.createElement(tag);
-    if (className) element.className = className;
-    if (content != null) element.textContent = content;
-    return element;
+  function categoryFor(entry) {
+    if(entry.group==="flag" || entry.group==="keycap")return entry.group;
+    const base=toHex(entry.cps[0]);
+    if(entry.group==="family" || multiBases.has(base) ||
+      /^(people|men|women) (wrestling|with bunny ears)/i.test(entry.name)) return "multi";
+    if(faceBases.has(base))return "face";
+    if(natureBases.has(base))return "nature";
+    if(symbolBases.has(base))return "symbol";
+    if(actionBases.has(base) || /ballet dancer/i.test(entry.name))return "action";
+    return "person";
   }
-  function tokenize(entry) {
-    const cps = entry.cps;
-    // Only two-letter Regional Indicator country flags belong in this builder.
-    // Unicode tag-based subdivision flags remain documented in the source dataset.
-    if (entry.group === "flag") return ["FLAG_COUNTRY",entry.cps[0].toString(16).toUpperCase(),entry.cps[1].toString(16).toUpperCase()];
-    // UI presents the actual combining enclosing keycap, not the completed emoji.
-    if (entry.group === "keycap") return ["KEYCAP_MARK",entry.raw];
-    // Ignore joining controls in the UI but preserve them in the final result.
-    // Skin tones become separate selectable attributes, including on both people.
-    const chunks = [];
-    let part = [];
-    const push = () => { if (part.length) chunks.push(part); part = []; };
-    for (const cp of cps) {
-      if (cp === 0x200D) push();
-      else if (isTone(cp)) { push(); chunks.push([cp]); }
-      else if (cp === 0xFE0F || cp === 0x20E3) {
-        if (part.length) part.push(cp);
-      } else {
-        push();
-        part.push(cp);
-      }
-    }
-    push();
-    return chunks.map(chunk => chunk.map(cp => cp.toString(16).toUpperCase()).join(" "));
+  function buildPath(entry) {
+    const cps=entry.cps;
+    if(entry.group==="flag")return ["FLAG_COUNTRY",toHex(cps[0]),toHex(cps[1])];
+    if(entry.group==="keycap")return ["KEYCAP_MARK",toHex(cps[0])];
+    const base=toHex(cps[0]);
+    const extras=cps.slice(1).filter(n=>n!==0x200D && n!==0xFE0F && n!==0x20E3 && !isTone(n)).map(toHex);
+    const skin=cps.filter(isTone).map(toHex);
+    // Attribute choice is last even when its Unicode codepoint occurs earlier.
+    // NO_DETAIL makes a skin-tone-only variant an explicit, unambiguous route.
+    return [base,...(extras.length?extras:skin.length?["NO_DETAIL"]:[]),...skin];
   }
-  function flagName(entry) {
-    if (entry.group !== "flag") return null;
-    const [a,b] = entry.cps;
-    if (a < 0x1F1E6 || a > 0x1F1FF || b < 0x1F1E6 || b > 0x1F1FF) return null;
-    const region = String.fromCharCode(65+a-0x1F1E6,65+b-0x1F1E6);
-    try { return nameData.flag_regions[region] || displayNames?.of(region) || region; }
-    catch (_) { return region; }
+  function regionName(entry) {
+    if(entry.group!=="flag")return "";
+    const code=String.fromCharCode(...entry.cps.map(cp=>65+cp-0x1F1E6));
+    return labels.flag_regions[code] || code;
   }
-  function tokenInfo(token, sample) {
-    if (token === "FLAG_COUNTRY") return {glyph:"🇦 + 🇧",label:"国旗",parts:true};
-    if (sample.group === "flag" && /^1F1(?:E[6-9A-F]|F[0-9A-F])$/.test(token)) {
-      const cp = parseInt(token,16);
-      const letter = String.fromCharCode(cp - 0x1F1E6 + 65);
-      return {glyph:String.fromCodePoint(cp),label:letter,searchText:letter+" "+sample.name};
+  function tokenInfo(token,entry) {
+    if(token==="FLAG_COUNTRY")return {glyph:"🇦 + 🇧",name:"地域指示記号",wide:true};
+    if(token==="KEYCAP_MARK")return {glyph:"\u20E3",name:"キーキャップ結合記号",combining:true};
+    if(token==="NO_DETAIL")return {glyph:"＋",name:"肌の色だけを変更"};
+    const cp=parseInt(token,16);
+    if(token in tones)return {glyph:"●",name:tones[token],tone:token.toLowerCase()};
+    if(cp>=0x1F1E6 && cp<=0x1F1FF && entry.group==="flag") {
+      const letter=String.fromCharCode(65+cp-0x1F1E6);
+      return {glyph:String.fromCodePoint(cp),name:letter};
     }
-    if (token === "KEYCAP_MARK") return {glyph:"\u20E3",label:"キーキャップ結合記号",combining:true};
-    const cps = codePoints(token);
-    const glyph = character(cps);
-    if (sample.group === "flag") {
-      return {
-        glyph: sample.cps.map(cp=>String.fromCodePoint(cp)).join(" + "),
-        parts: true,
-        label: flagName(sample) || sample.name,
-        searchText: sample.name
-      };
+    if(entry.group==="keycap") {
+      const name=cp===0x23?"シャープ":cp===0x2A?"アスタリスク":String.fromCodePoint(cp);
+      return {glyph:String.fromCodePoint(cp),name};
     }
-    if (sample.group === "keycap") {
-      const n=sample.cps[0];
-      const name=n===0x23?"シャープ":n===0x2A?"アスタリスク":n>=0x30&&n<=0x39?String.fromCharCode(n):"キーキャップ";
-      return {glyph: String.fromCodePoint(n),label:name,searchText:sample.name};
-    }
-    if (cps.length === 1 && isTone(cps[0])) {
-      return {glyph:"●", label:toneLabels[cps[0]], tone:cps[0]};
-    }
-    const label = nameData.component_names[cps[0]?.toString(16).toUpperCase()] || familiarNames[cps[0]] || sample.name || "絵文字";
-    return {glyph, label, searchText:sample.name};
+    const name=labels.component_names[token] || entry.name || token;
+    if(cp===0x1F430 && entry.category==="multi")return {glyph:String.fromCodePoint(cp),name:"ウサギの耳"};
+    return {glyph:String.fromCodePoint(cp),name};
   }
-
-  let all = [], current = [], selected = [], active = 0, shown = 36;
-  let group = "all";
-  const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
-  const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
-  function stepLabel(index, options) {
-    if (group === "flag") return index === 0 ? "国旗" : index === 1 ? "1文字目" : "2文字目";
-    if (group === "keycap") return index === 0 ? "結合記号" : "数字・記号";
-    if (selected[0] === "FLAG_COUNTRY") return index === 1 ? "1文字目" : "2文字目";
-    if (index === 1 && selected[0] === "KEYCAP_MARK") return "数字・記号";
-    if (group === "modifier" && index === 0) return "基本の絵文字";
-    if (options.length && options.every(token => {
-      const parts = token.split(" ");
-      return parts.length === 1 && isTone(parseInt(parts[0], 16));
-    })) return "肌の色";
-    if (options.length && options.every(token => ["2640 FE0F","2642 FE0F"].includes(token))) return "性別";
-    if (group === "hair" && index > 0) return "髪型";
-    if (group === "family") return "人物・素材 " + (index+1);
-    if (index === 0) return "基本の絵文字";
-    if (group === "role") return "職業・属性";
+  const begins=(tokens,prefix)=>prefix.every((x,i)=>tokens[i]===x);
+  const matching=prefix=>current.filter(e=>begins(e.path,prefix));
+  function optionsAt(prefix,index) {
+    const seen=new Map();
+    for(const item of matching(prefix)){
+      const value=item.path[index];
+      if(value!=null && !seen.has(value))seen.set(value,{token:value,entry:item});
+    }
+    return [...seen.values()];
+  }
+  function stepTitle(index,available){
+    if(currentCategory==="flag")return index===0?"国旗":index===1?"1文字目":"2文字目";
+    if(currentCategory==="keycap")return index===0?"結合記号":"数字・記号";
+    if(index===0)return "基本の絵文字";
+    if(available.length && available.every(item=>item.token in tones))return "肌の色";
+    if(available.length && available.every(item=>["2640","2642"].includes(item.token)))return "性別";
+    if(available.length && available.every(item=>["1F9B0","1F9B1","1F9B2","1F9B3"].includes(item.token)))return "髪型";
+    if(available.length && available.every(item=>item.token==="27A1"))return "向き";
+    if(currentCategory==="person")return "職業・特徴";
+    if(currentCategory==="action")return "動作・性別・向き";
+    if(currentCategory==="multi")return "人物・関係";
     return "追加する素材";
   }
-  function buildOptions(prefix, index) {
-    const map = new Map();
-    for (const entry of candidates(prefix)) {
-      const token = entry.tokens[index];
-      if (!token) continue;
-      if (!map.has(token)) {
-        map.set(token, {token, sample:entry, names:[entry.name]});
-      } else {
-        map.get(token).names.push(entry.name);
-      }
+  // Skip fixed-only selections (e.g. the flag starter and tone-only placeholder)
+  // while still showing them in the sequence of chosen material slots.
+  function skipFixed() {
+    for(let i=0;i<8;i++){
+      const options=optionsAt(selected,selected.length);
+      if(options.length!==1)break;
+      const only=options[0].token;
+      if(!["FLAG_COUNTRY","KEYCAP_MARK","NO_DETAIL"].includes(only))break;
+      selected.push(only);
     }
-    return [...map.values()];
   }
-  function chooseCategory(next) {
-    group = next;
-    selected = [];
-    active = 0;
-    shown = 36;
-    current = all.filter(entry => group === "all" ? entry.group !== "basic" : entry.group === group);
-    categoryLabel.textContent = groupNames[group];
-    picker.open = false;
+  function chooseCategory(key){
+    currentCategory=key;
+    current=entries.filter(e=>e.category===key);
+    selected=[];
+    active=0;
+    shown=36;
+    categoryText.textContent=titles[key];
+    categoryPicker.open=false;
+    skipFixed();
+    active=selected.length;
     render();
   }
-  function render() {
-    const matching = candidates(selected);
-    if (!matching.length) {
-      // Defensive recovery; no recursive rendering on missing data.
-      selected = [];
-      active = 0;
-    }
-    const valid = candidates(selected);
-    const finished = valid.find(entry => entry.tokens.length === selected.length) || null;
-    const extendable = valid.some(entry => entry.tokens.length > selected.length);
-    const size = selected.length + (extendable ? 1 : 0);
-    if (active >= size) active = Math.max(0,size-1);
-
+  function render(){
+    const valid=matching(selected);
+    const exact=valid.find(e=>e.path.length===selected.length);
+    const extendsFurther=valid.some(e=>e.path.length>selected.length);
+    const slotsCount=selected.length+(extendsFurther?1:0);
+    if(active>=slotsCount)active=Math.max(0,slotsCount-1);
     slots.replaceChildren();
-    for (let i=0; i<size; i++) {
-      const prefix = selected.slice(0,i);
-      const options = buildOptions(prefix,i).map(x=>x.token);
-      const label = stepLabel(i, options);
-      const token = selected[i];
-      const button = node("button","emoji-builder-slot"+(i===active?" active":""),"");
-      button.type = "button";
-      button.setAttribute("aria-label", label + (token ? "、変更" : "、選択"));
-      const sample = buildOptions(prefix,i).find(x=>x.token===token)?.sample;
-      const info = token ? tokenInfo(token,sample) : null;
-      const glyph = node("span","emoji-builder-slot-glyph",info?info.glyph:"＋");
-      if (info?.tone) glyph.classList.add("emoji-builder-tone-" + info.tone.toString(16));
-      if (info?.combining) glyph.classList.add("emoji-builder-combining-mark");
-      if (info?.parts) glyph.classList.add("emoji-builder-flag-parts");
-      button.append(glyph,node("span","emoji-builder-slot-label",label));
-      button.addEventListener("click",()=>{active=i;shown=36;render();});
-      slots.append(button);
-      if(i<size-1)slots.append(node("span","emoji-builder-plus","+"));
-    }
-    output.textContent = finished ? finished.glyph : "—";
-    codes.textContent = finished ? toHexLine(finished.cps) : "";
-    copy.disabled = !finished;
-    status.textContent = finished ? "完成：Unicode公式の絵文字" : "上から素材を選んでください";
-    count.textContent = valid.length + "種類の完成候補";
-    renderChoices();
-  }
-  function renderChoices() {
-    choices.replaceChildren();
-    const prefix = selected.slice(0,active);
-    const options = buildOptions(prefix,active);
-    const visible = options;
-    for(const item of visible.slice(0,shown)) {
-      const info = tokenInfo(item.token,item.sample);
-      const button = node("button","emoji-builder-option","");
-      button.type = "button";
-      button.title = info.label + (item.sample.name ? " / "+item.sample.name : "");
-      button.setAttribute("aria-label",info.label);
-      const glyph = node("span","emoji-builder-option-glyph",info.glyph);
-      if(info.tone)glyph.classList.add("emoji-builder-tone-"+info.tone.toString(16));
-      if(info.combining)glyph.classList.add("emoji-builder-combining-mark");
-      if(info.parts)glyph.classList.add("emoji-builder-flag-parts");
-      button.append(glyph,node("span","emoji-builder-option-name",info.label));
+    for(let i=0;i<slotsCount;i++){
+      const prefix=selected.slice(0,i);
+      const opts=optionsAt(prefix,i);
+      const title=stepTitle(i,opts);
+      const chosen=selected[i];
+      const sample=opts.find(o=>o.token===chosen);
+      const info=sample?tokenInfo(sample.token,sample.entry):null;
+      const button=node("button","emoji-builder-slot"+(active===i?" active":""),null);
+      button.type="button";
+      button.setAttribute("aria-label",title+(chosen?"、変更":"、選択"));
+      const large=node("span","emoji-builder-slot-glyph",info?.glyph||"＋");
+      if(info?.tone)large.classList.add("emoji-builder-tone-"+info.tone);
+      if(info?.combining)large.classList.add("emoji-builder-combining-mark");
+      if(info?.wide)large.classList.add("emoji-builder-flag-parts");
+      button.append(large,node("span","emoji-builder-slot-label",title));
       button.addEventListener("click",()=>{
-        selected = [...prefix,item.token];
-        const following = candidates(selected).some(entry=>entry.tokens.length>selected.length);
-        active = following ? selected.length : Math.max(0,selected.length-1);
+        active=i;
+        shown=36;
+        render();
+      });
+      slots.append(button);
+      if(i<slotsCount-1)slots.append(node("span","emoji-builder-plus","+"));
+    }
+    result.textContent=exact?exact.emoji:"—";
+    codes.textContent=exact?exact.cps.map(n=>"U+"+n.toString(16).toUpperCase().padStart(4,"0")).join(" + "):"";
+    copy.disabled=!exact;
+    status.textContent=exact
+      ? (extendsFurther?"完成。さらに属性を追加できます":"完成：Unicode公式の絵文字")
+      : "上から素材を選んでください";
+    renderOptions();
+  }
+  function renderOptions(){
+    const opts=optionsAt(selected.slice(0,active),active);
+    choices.replaceChildren();
+    for(const item of opts.slice(0,shown)){
+      const info=tokenInfo(item.token,item.entry);
+      const button=node("button","emoji-builder-option",null);
+      button.type="button";
+      button.title=info.name;
+      button.setAttribute("aria-label",info.name);
+      const symbol=node("span","emoji-builder-option-glyph",info.glyph);
+      if(info.tone)symbol.classList.add("emoji-builder-tone-"+info.tone);
+      if(info.combining)symbol.classList.add("emoji-builder-combining-mark");
+      if(info.wide)symbol.classList.add("emoji-builder-flag-parts");
+      button.append(symbol,node("span","emoji-builder-option-name",info.name));
+      button.addEventListener("click",()=>{
+        selected=[...selected.slice(0,active),item.token];
+        skipFixed();
+        active=selected.length;
         shown=36;
         render();
       });
       choices.append(button);
     }
-    count.textContent = candidates(selected).length + "種類の完成候補 / 選べる素材 " + visible.length + "件";
-    more.hidden = shown>=visible.length;
-    if(!visible.length)choices.append(node("p","page-muted","候補がありません。前の□を変更してください。"));
+    count.textContent=matching(selected).length+"種類の完成候補 / 選べる素材 "+opts.length+"件";
+    more.hidden=shown>=opts.length;
+    if(!opts.length){
+      choices.append(node("p","page-muted",matching(selected).some(e=>e.path.length===selected.length)
+        ? "この組み合わせは完成しています。前の素材を押すと選び直せます。"
+        : "候補がありません。前の素材を変更してください。"));
+    }
   }
   categoryList.replaceChildren();
-  for(const [value,label] of groups) {
-    const button = node("button","emoji-builder-category-option",label);
+  for(const [key,name]of categories){
+    const button=node("button","emoji-builder-category-option",name);
     button.type="button";
-    button.addEventListener("click",()=>chooseCategory(value));
+    button.addEventListener("click",()=>chooseCategory(key));
     categoryList.append(button);
   }
-  document.addEventListener("click",event=>{
-    if(picker.open && !picker.contains(event.target))picker.open=false;
+  document.addEventListener("click",e=>{
+    if(categoryPicker.open&&!categoryPicker.contains(e.target))categoryPicker.open=false;
   });
-  picker.addEventListener("keydown",event=>{
-    if(event.key==="Escape"){picker.open=false;picker.querySelector("summary")?.focus();}
+  categoryPicker.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){categoryPicker.open=false;categoryPicker.querySelector("summary")?.focus();}
   });
-  more.addEventListener("click",()=>{shown+=72;renderChoices();});
+  more.addEventListener("click",()=>{shown+=72;renderOptions();});
   copy.addEventListener("click",async()=>{
-    const entry=candidates(selected).find(x=>x.tokens.length===selected.length);
-    if(!entry)return;
-    try {
-      await navigator.clipboard.writeText(entry.glyph);
-      const original="絵文字をコピー";
+    const exact=matching(selected).find(e=>e.path.length===selected.length);
+    if(!exact)return;
+    try{
+      await navigator.clipboard.writeText(exact.emoji);
       copy.textContent="コピーしました";
-      setTimeout(()=>{copy.textContent=original;},1400);
-    }catch(_) {status.textContent="コピーできませんでした。生成結果を選択してコピーしてください。";}
+      setTimeout(()=>{copy.textContent="絵文字をコピー";},1400);
+    }catch(_){status.textContent="コピーできませんでした。表示文字を選択してコピーしてください。";}
   });
-  Promise.all(["../data/unicode18_emoji_rgi_sequences.json","../data/unicode18_emoji_builder_names_ja.json"].map(url=>fetch(url).then(response=>{if(!response.ok)throw Error("HTTP "+response.status);return response.json();})))
-    .then(([data,labels])=>{
-      if (!labels.component_names || !labels.flag_regions) throw Error("日本語名が読み込めません");
-      nameData=labels;
-      if(data.unicode_version!=="18.0" || data.count!==3972 ||
-         !Array.isArray(data.entries) || data.entries.length!==3972) {
-        throw Error("Unicode 18.0の公式データを検証できませんでした");
-      }
-      // Preserve the official 3,972-entry source file. Exclude only the three
-      // tag-based subdivision flags from the interactive composition builder.
-      all=data.entries.filter(row=>row[1]!=="tag").map(row=>{
-        const cps=codePoints(row[0]);
-        const entry={raw:row[0],group:row[1],name:row[2],cps,glyph:character(cps)};
-        entry.tokens=tokenize(entry);
-        return entry;
-      });
+  Promise.all([
+    "../data/unicode18_emoji_rgi_sequences.json",
+    "../data/unicode18_emoji_builder_names_ja.json"
+  ].map(url=>fetch(url).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();})))
+    .then(([data,names])=>{
+      if(data.unicode_version!=="18.0" || data.entries?.length!==3972 ||
+        !names.component_names || !names.flag_regions)throw Error("絵文字データを検証できませんでした");
+      labels=names;
+      entries=data.entries
+        .filter(row=>row[1]!=="basic" && row[1]!=="tag")
+        .map(row=>{
+          const item={raw:row[0],group:row[1],name:row[2],cps:codepoints(row[0])};
+          item.emoji=glyph(item.cps);
+          item.category=categoryFor(item);
+          item.path=buildPath(item);
+          return item;
+        });
+      const paths=new Set(entries.map(e=>e.category+"|"+e.path.join("|")));
+      if(entries.length!==2560 || paths.size!==2560 ||
+        categories.some(([key])=>!entries.some(e=>e.category===key)))throw Error("絵文字の分類データに不整合があります");
       root.hidden=false;
-      chooseCategory("all");
+      chooseCategory("person");
     })
-    .catch(error=>{
-      root.hidden=false;
-      status.textContent="絵文字データを読み込めませんでした: "+error.message;
-    });
+    .catch(error=>{root.hidden=false;status.textContent="読み込みに失敗しました: "+error.message;});
 })();
