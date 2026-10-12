@@ -80,11 +80,12 @@ main > #dailyCharacterBox {
   background: transparent !important;
   box-shadow: none !important;
 }
+/* Keep only the featured character inside a subtle rectangular frame. */
 .daily-character-frame {
-  padding: 12px 5px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
+  padding: 12px 8px;
+  border: 1px solid #d9dde5;
+  border-radius: 12px;
+  background: #fafbfc;
 }
 .daily-layout { align-items: start; }
 .daily-character-panel { padding-top: 2px; }
@@ -147,7 +148,7 @@ main > #dailyCharacterBox {
   main > #dailyCharacterBox { padding: 11px 0 26px; }
   main > .box.converter-box { padding: 24px 0 28px; }
   .daily-layout { gap: 12px; }
-  .daily-character-frame { padding: 7px 0; }
+  .daily-character-frame { padding: 10px 7px; }
   #dailyInfo { padding: 0 !important; }
 }
 @media (max-width: 520px) {
