@@ -72,8 +72,11 @@
   function tokenize(entry) {
     const cps = entry.cps;
     // A country or regional flag should be selected by its complete name.
-    if (entry.group === "flag" || entry.group === "tag") return ["FLAG_FRAME",entry.raw];
-    if (entry.group === "keycap") return ["KEYCAP_FRAME",entry.raw];
+    // Flag types use different encodings: regional-indicator pairs vs. black-flag tag sequences.
+    if (entry.group === "flag") return ["FLAG_COUNTRY",entry.raw];
+    if (entry.group === "tag") return ["FLAG_REGION",entry.raw];
+    // UI presents the actual combining enclosing keycap, not the completed emoji.
+    if (entry.group === "keycap") return ["KEYCAP_MARK",entry.raw];
     // Ignore joining controls in the UI but preserve them in the final result.
     // Skin tones become separate selectable attributes, including on both people.
     const chunks = [];
@@ -110,17 +113,25 @@
     catch (_) { return region; }
   }
   function tokenInfo(token, sample) {
-    if (token === "FLAG_FRAME") return {glyph:"🏳️",label:"旗"};
-    if (token === "KEYCAP_FRAME") return {glyph:"🔢",label:"キーキャップ"};
+    if (token === "FLAG_COUNTRY") return {glyph:"🇯 + 🇵",label:"国旗",parts:true};
+    if (token === "FLAG_REGION") return {glyph:"🏴",label:"地域旗"};
+    if (token === "KEYCAP_MARK") return {glyph:"\u20E3",label:"キーキャップ結合記号",combining:true};
     const cps = codePoints(token);
     const glyph = character(cps);
     if (sample.group === "flag" || sample.group === "tag") {
-      return {glyph: sample.glyph, label: flagName(sample) || sample.name, searchText: sample.name};
+      const country = sample.group === "flag";
+      return {
+        // Show the unjoined material here; the finished flag belongs in the result panel.
+        glyph: country ? sample.cps.map(cp=>String.fromCodePoint(cp)).join(" + ") : "🏴",
+        parts: country,
+        label: flagName(sample) || sample.name,
+        searchText: sample.name
+      };
     }
     if (sample.group === "keycap") {
       const n=sample.cps[0];
       const name=n===0x23?"シャープ":n===0x2A?"アスタリスク":n>=0x30&&n<=0x39?String.fromCharCode(n):"キーキャップ";
-      return {glyph: sample.glyph,label:name,searchText:sample.name};
+      return {glyph: String.fromCodePoint(n),label:name,searchText:sample.name};
     }
     if (cps.length === 1 && isTone(cps[0])) {
       return {glyph:"●", label:toneLabels[cps[0]], tone:cps[0]};
@@ -130,12 +141,14 @@
   }
 
   let all = [], current = [], selected = [], active = 0, shown = 36;
-  let group = "role";
+  let group = "all";
   const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
   const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
   function stepLabel(index, options) {
-    if (group === "flag") return index === 0 ? "旗" : "国・地域";
-    if (group === "keycap") return index === 0 ? "キーキャップ" : "数字・記号";
+    if (group === "flag") return index === 0 ? "旗の種類" : "国・地域";
+    if (group === "keycap") return index === 0 ? "結合記号" : "数字・記号";
+    if (index === 1 && selected[0]?.startsWith("FLAG_")) return "国・地域";
+    if (index === 1 && selected[0] === "KEYCAP_MARK") return "数字・記号";
     if (group === "modifier" && index === 0) return "基本の絵文字";
     if (options.length && options.every(token => {
       const parts = token.split(" ");
@@ -198,6 +211,8 @@
       const info = token ? tokenInfo(token,sample) : null;
       const glyph = node("span","emoji-builder-slot-glyph",info?info.glyph:"＋");
       if (info?.tone) glyph.classList.add("emoji-builder-tone-" + info.tone.toString(16));
+      if (info?.combining) glyph.classList.add("emoji-builder-combining-mark");
+      if (info?.parts) glyph.classList.add("emoji-builder-flag-parts");
       button.append(glyph,node("span","emoji-builder-slot-label",label));
       button.addEventListener("click",()=>{active=i;shown=36;search.value="";render();});
       slots.append(button);
@@ -231,6 +246,8 @@
       button.setAttribute("aria-label",info.label);
       const glyph = node("span","emoji-builder-option-glyph",info.glyph);
       if(info.tone)glyph.classList.add("emoji-builder-tone-"+info.tone.toString(16));
+      if(info.combining)glyph.classList.add("emoji-builder-combining-mark");
+      if(info.parts)glyph.classList.add("emoji-builder-flag-parts");
       button.append(glyph,node("span","emoji-builder-option-name",info.label));
       button.addEventListener("click",()=>{
         selected = [...prefix,item.token];
@@ -286,7 +303,7 @@
         return entry;
       });
       root.hidden=false;
-      chooseCategory("role");
+      chooseCategory("all");
     })
     .catch(error=>{
       root.hidden=false;
