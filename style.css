@@ -1381,6 +1381,8 @@ button:disabled {
 #unicodeScope {
   --code-top: 46px;
   --scope-inverse-scale: 1;
+  --scope-intro-scale: 0.72;
+  --scope-active-scale: 0.94;
 
   position: absolute;
 
@@ -1587,7 +1589,7 @@ button:disabled {
 #unicodeScopeCode:active {
   transform:
     translateX(-50%)
-    scale(calc(var(--scope-inverse-scale) * 0.94));
+    scale(var(--scope-active-scale));
 }
 
 
@@ -1602,7 +1604,7 @@ button:disabled {
 
     transform:
       translate(-50%, -50%)
-      scale(calc(var(--scope-inverse-scale) * 0.72));
+      scale(var(--scope-intro-scale));
   }
 
 
