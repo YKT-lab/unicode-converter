@@ -79,35 +79,21 @@ function getCharacterPieces(
     [];
 
 
-  let utf16Index =
-    0;
-
-
-  for (
-    const character
-    of text
-  ) {
-
-    const start =
-      utf16Index;
-
-
-    utf16Index +=
-      character.length;
-
-
-    pieces.push(
-      {
-        character,
-
-        start,
-
-        end:
-          utf16Index
-      }
-    );
+  // Treat complete grapheme clusters (including joined emoji) as one
+  // selectable unit. Range offsets remain UTF-16 positions.
+  if (typeof Intl.Segmenter === "function") {
+    const segmenter = new Intl.Segmenter(undefined,{granularity:"grapheme"});
+    for (const {segment,index} of segmenter.segment(text)) {
+      pieces.push({character:segment,start:index,end:index+segment.length});
+    }
+  } else {
+    let utf16Index=0;
+    for(const character of text){
+      const start=utf16Index;
+      utf16Index+=character.length;
+      pieces.push({character,start,end:utf16Index});
+    }
   }
-
 
   return pieces;
 }
@@ -614,26 +600,10 @@ function showUnicodeScope(
     result.character;
 
 
-  const codePoint =
-    character
-      .codePointAt(
-        0
-      );
-
-
-  const code =
-    "U+"
-    +
-    codePoint
-      .toString(
-        16
-      )
-      .toUpperCase()
-      .padStart(
-        4,
-        "0"
-      );
-
+  // Show every code point in a joined emoji while preserving the glyph.
+  const code=Array.from(character,part=>
+    "U+"+part.codePointAt(0).toString(16).toUpperCase().padStart(4,"0")
+  ).join(" + ");
 
   currentScopeCharacter =
     character;
@@ -1083,31 +1053,26 @@ document.addEventListener(
 
 
     /*
-      今日の一文字はSVGなので
-      Unicode Scope対象外にする
+      The Daily character may be drawn from an SVG outline. It has no
+      selectable text node, so use its actual Unicode code-point label.
     */
-
-    if (
-      event.target.closest(
-        "#dailyCharacter"
-      )
-    ) {
+    const daily = event.target.closest("#dailyCharacter");
+    if(daily){
+      const codeText=document.getElementById("dailyCode")?.textContent||"";
+      const match=codeText.match(/U\\+([0-9A-Fa-f]{4,6})/);
+      if(!match)return;
+      const codePoint=parseInt(match[1],16);
+      if(codePoint>0x10FFFF || (codePoint>=0xD800&&codePoint<=0xDFFF))return;
+      const character=String.fromCodePoint(codePoint);
+      const rect=daily.getBoundingClientRect();
+      showUnicodeScope({character,rect,textNode:{parentElement:daily}});
       return;
     }
 
-
-    /*
-      UI部品
-    */
-
-    if (
-      event.target.closest(
-        "button, a, input, textarea, select, option, summary, label, [role='button'], [role='group'], .unicode-scope-excluded"
-      )
-    ) {
-      return;
-    }
-
+    // Keep navigation, form editing and buttons working normally.
+    // Plain text in ordinary divs/spans, including former excluded groups,
+    // remains eligible for Scope across every page.
+    if(event.target.closest("button, a, input, textarea, select, option, summary, label, [role='button'], [contenteditable='true']"))return;
 
     const result =
       getCharacterFromPoint(
