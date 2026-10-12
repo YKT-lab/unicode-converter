@@ -1,0 +1,167 @@
+/* Site-wide flat design. Loaded AFTER style.css and pages.css on all pages.
+   The original component CSS remains intact; only presentation is overridden. */
+:root { --site-topbar-height: 132px; --content-divider: #e7e9ed; }
+html { scroll-padding-top: calc(var(--site-topbar-height) + 18px); }
+body {
+  background: #fff;
+  padding-top: calc(var(--site-topbar-height) + 21px) !important;
+}
+.site-topbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  box-sizing: border-box;
+  padding: 9px max(12px, env(safe-area-inset-right)) 7px max(12px, env(safe-area-inset-left));
+  background: rgba(255,255,255,.97);
+  border-bottom: 1px solid var(--content-divider);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.site-topbar .site-header {
+  max-width: 760px;
+  margin: 0 auto 4px !important;
+}
+.site-topbar .site-logo-link { margin-inline: auto; }
+.site-topbar .site-nav {
+  width: min(100%, 760px);
+  max-width: 760px;
+  box-sizing: border-box;
+  margin: 0 auto !important;
+  padding: 2px 0 !important;
+  gap: clamp(5px, 1.1vw, 15px);
+  justify-content: center;
+  background: transparent;
+}
+.site-topbar .site-nav a {
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  padding: 10px 7px 8px;
+  color: #646a73;
+  font-size: 12.5px;
+  font-weight: 600;
+}
+.site-topbar .site-nav a:hover { background: transparent; color: #22262e; }
+.site-topbar .site-nav a[aria-current="page"] {
+  background: transparent;
+  border-bottom-color: #27354c;
+  color: #1c293e;
+  font-weight: 720;
+}
+.site-topbar .site-nav a[aria-current="page"]:hover { background: transparent; }
+.site-topbar .site-nav a:focus-visible { outline-offset: -2px; }
+
+/* Main page: document sections, not floating cards. */
+main { max-width: 760px; }
+main > .box.converter-box,
+main > #dailyCharacterBox {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 24px 0 28px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: left;
+}
+main > .box.converter-box {
+  border-top: 1px solid var(--content-divider);
+}
+main > #dailyCharacterBox {
+  border: 0;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+#dailyInfo {
+  margin: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.daily-character-frame {
+  padding: 12px 5px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.daily-layout { align-items: start; }
+.daily-character-panel { padding-top: 2px; }
+#dailyTitle { margin-bottom: 21px; }
+.font-credit {
+  border-top: 1px solid var(--content-divider);
+  padding: 22px 0 12px;
+  margin: 8px 0 0;
+}
+
+/* Secondary pages: typographic sections separated by a hairline. */
+.page-intro { margin: 17px 0 26px; }
+.page-card {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+  border-top: 1px solid var(--content-divider);
+  padding: 25px 0 27px;
+  margin: 0;
+}
+.page-card h2 { margin-bottom: 11px; }
+.page-grid {
+  column-gap: 28px;
+  row-gap: 0;
+  margin: 0;
+}
+.page-grid .page-card { margin: 0; }
+.page-stat { letter-spacing: -.025em; }
+.page-result {
+  background: transparent;
+  border-top: 1px solid var(--content-divider);
+  border-bottom: 1px solid var(--content-divider);
+  border-radius: 0;
+  padding: 15px 0;
+}
+.page-result-group { border-color: var(--content-divider); }
+.page-result-codes code { background: #f4f5f7; }
+.page-script-grid {
+  column-gap: 26px;
+  row-gap: 0;
+  margin-top: 10px;
+}
+.page-script {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--content-divider);
+  border-radius: 0;
+  padding: 16px 1px;
+}
+.page-home-link {
+  border-top: 1px solid var(--content-divider);
+  padding-top: 25px;
+  margin-top: 12px;
+}
+.page-samples .page-button { background: #f2f3f5; }
+.page-samples .page-button:hover { background: #e4e8ef; }
+/* Inputs and their digit boxes remain bounded: these are controls, not content cards. */
+@media (max-width: 620px) {
+  main > #dailyCharacterBox { padding: 11px 0 26px; }
+  main > .box.converter-box { padding: 24px 0 28px; }
+  .daily-layout { gap: 12px; }
+  .daily-character-frame { padding: 7px 0; }
+  #dailyInfo { padding: 0 !important; }
+}
+@media (max-width: 520px) {
+  :root { --site-topbar-height: 109px; }
+  .site-topbar { padding: 6px 11px 6px; }
+  .site-topbar .site-header { margin-bottom: 4px !important; }
+  .site-topbar .site-nav {
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 2px 0 1px !important;
+  }
+  .site-topbar .site-nav a { padding: 9px 5px 8px; font-size: 12px; }
+  main > .box.converter-box { padding: 22px 0 26px !important; }
+  .page-grid, .page-script-grid { grid-template-columns: 1fr; }
+  .page-intro { margin-top: 11px; }
+  .page-card { padding: 24px 0; }
+}
