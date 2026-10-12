@@ -659,98 +659,56 @@ function showUnicodeScope(
   }
 
 
-  const rect =
-    result.rect;
+  const rect = result.rect;
+  // Absolute document coordinates track the underlying glyph even after
+  // iOS Safari pinch zoom. A fixed overlay anchored to the layout viewport
+  // drifts as the visual viewport pans inside it.
+  const scrollX = window.scrollX || 0;
+  const scrollY = window.scrollY || 0;
+  const visual = window.visualViewport;
+  const viewLeft = visual ? visual.pageLeft : scrollX;
+  const viewTop = visual ? visual.pageTop : scrollY;
+  const viewWidth = visual ? visual.width : window.innerWidth;
+  const viewHeight = visual ? visual.height : window.innerHeight;
+  const viewRight = viewLeft + viewWidth;
+  const viewBottom = viewTop + viewHeight;
 
+  const glyphX = rect.left + scrollX + rect.width / 2;
+  const glyphY = rect.top + scrollY + rect.height / 2;
+  const ringInset = Math.min(38,viewWidth / 2);
+  const minX = viewLeft + ringInset;
+  const maxX = viewRight - ringInset;
+  const centerX = Math.max(minX,Math.min(maxX,glyphX));
+  const centerY = Math.max(viewTop + ringInset,Math.min(viewBottom - ringInset,glyphY));
 
-  let centerX =
-    rect.left +
-    rect.width /
-    2;
-
-
-  let centerY =
-    rect.top +
-    rect.height /
-    2;
-
-
-  centerX =
-    Math.max(
-      38,
-      Math.min(
-        window.innerWidth -
-        38,
-        centerX
-      )
-    );
-
-
-  centerY =
-    Math.max(
-      38,
-      centerY
-    );
-
-
-  unicodeScope.style.left =
-    centerX +
-    "px";
-
-
-  unicodeScope.style.top =
-    centerY +
-    "px";
-
-
-  let codeTop =
-    46;
-
-
-  if (
-    centerY +
-    100 >
-    window.innerHeight
-  ) {
-
-    codeTop =
-      -56;
-  }
-
-
+  unicodeScope.style.left = centerX + "px";
+  unicodeScope.style.top = centerY + "px";
   unicodeScope.style.setProperty(
     "--code-top",
-    codeTop +
-    "px"
+    centerY + 100 > viewBottom ? "-56px" : "46px"
   );
 
-
+  // Keep the complete code sequence on a single horizontal line.
+  // Very long joined emoji can be scrolled sideways inside the label.
+  unicodeScopeCode.style.maxWidth = Math.max(24,viewWidth - 16) + "px";
   unicodeScopeCode.style.left = "0px";
-  unicodeScope
-    .classList
-    .add(
-      "visible"
-    );
 
+  unicodeScope.classList.add("visible");
+  unicodeScope.setAttribute("aria-hidden","false");
 
-  unicodeScope
-    .setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-  // Center the code label without letting long joined-emoji sequences
-  // leave the viewport (the ring itself still tracks the touched glyph).
+  // BoundingClientRect is in layout-viewport coordinates, whereas the
+  // visible window on a pinch-zoomed page starts at visual.offsetLeft.
   const labelRect = unicodeScopeCode.getBoundingClientRect();
-  const margin = 8;
+  const leftEdge = visual ? visual.offsetLeft : 0;
+  const rightEdge = leftEdge + viewWidth;
+  const margin = Math.min(8,viewWidth / 8);
   let shift = 0;
-  if (labelRect.left < margin) {
-    shift = margin - labelRect.left;
-  } else if (labelRect.right > window.innerWidth - margin) {
-    shift = window.innerWidth - margin - labelRect.right;
+  if (labelRect.left < leftEdge + margin) {
+    shift = leftEdge + margin - labelRect.left;
+  } else if (labelRect.right > rightEdge - margin) {
+    shift = rightEdge - margin - labelRect.right;
   }
   unicodeScopeCode.style.left = shift + "px";
-
 
   requestAnimationFrame(
     () => {
@@ -1178,3 +1136,11 @@ window.addEventListener(
   "resize",
   hideUnicodeScope
 );
+
+// On iOS Safari pinch-zoom and pan operate on the visual viewport, which
+// may change without a window scroll or resize event. Dismiss stale scopes
+// until the next tap recomputes the correct geometry.
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("scroll",hideUnicodeScope,{passive:true});
+  window.visualViewport.addEventListener("resize",hideUnicodeScope,{passive:true});
+}
