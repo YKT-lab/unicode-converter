@@ -14,7 +14,6 @@
   const choices = byId("emoji-builder-choices");
   const output = byId("emoji-builder-output");
   const status = byId("emoji-builder-status");
-  const search = byId("emoji-builder-search");
   const more = byId("emoji-builder-more");
   const codes = byId("emoji-builder-codes");
   const copy = byId("emoji-builder-copy");
@@ -170,7 +169,6 @@
     selected = [];
     active = 0;
     shown = 36;
-    search.value = "";
     current = all.filter(entry => group === "all" ? entry.group !== "basic" : entry.group === group);
     categoryLabel.textContent = groupNames[group];
     picker.open = false;
@@ -205,7 +203,7 @@
       if (info?.combining) glyph.classList.add("emoji-builder-combining-mark");
       if (info?.parts) glyph.classList.add("emoji-builder-flag-parts");
       button.append(glyph,node("span","emoji-builder-slot-label",label));
-      button.addEventListener("click",()=>{active=i;shown=36;search.value="";render();});
+      button.addEventListener("click",()=>{active=i;shown=36;render();});
       slots.append(button);
       if(i<size-1)slots.append(node("span","emoji-builder-plus","+"));
     }
@@ -220,15 +218,7 @@
     choices.replaceChildren();
     const prefix = selected.slice(0,active);
     const options = buildOptions(prefix,active);
-    const query = search.value.trim().toLocaleLowerCase("ja");
-    const visible = options.filter(item=>{
-      const info = tokenInfo(item.token,item.sample);
-      return !query || info.label.toLocaleLowerCase("ja").includes(query)
-        || (info.searchText || "").toLocaleLowerCase().includes(query)
-        || item.token.toLowerCase().includes(query)
-        || info.glyph.includes(query)
-        || item.names.some(name=>name.toLocaleLowerCase().includes(query));
-    });
+    const visible = options;
     for(const item of visible.slice(0,shown)) {
       const info = tokenInfo(item.token,item.sample);
       const button = node("button","emoji-builder-option","");
@@ -245,14 +235,13 @@
         const following = candidates(selected).some(entry=>entry.tokens.length>selected.length);
         active = following ? selected.length : Math.max(0,selected.length-1);
         shown=36;
-        search.value="";
         render();
       });
       choices.append(button);
     }
     count.textContent = candidates(selected).length + "種類の完成候補 / 選べる素材 " + visible.length + "件";
     more.hidden = shown>=visible.length;
-    if(!visible.length)choices.append(node("p","page-muted","候補がありません。検索語や前の□を変更してください。"));
+    if(!visible.length)choices.append(node("p","page-muted","候補がありません。前の□を変更してください。"));
   }
   categoryList.replaceChildren();
   for(const [value,label] of groups) {
@@ -267,7 +256,6 @@
   picker.addEventListener("keydown",event=>{
     if(event.key==="Escape"){picker.open=false;picker.querySelector("summary")?.focus();}
   });
-  search.addEventListener("input",()=>{shown=36;renderChoices();});
   more.addEventListener("click",()=>{shown+=72;renderChoices();});
   copy.addEventListener("click",async()=>{
     const entry=candidates(selected).find(x=>x.tokens.length===selected.length);
