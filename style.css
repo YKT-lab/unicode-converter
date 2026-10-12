@@ -3003,3 +3003,12 @@ button:disabled {
   overflow-wrap: anywhere;
   text-align: center;
 }
+
+
+/* Site-wide: prevent accidental double-tap zoom while keeping native
+   scrolling, text selection/long press, and two-finger pinch zoom. */
+html,
+body,
+body * {
+  touch-action: manipulation;
+}
