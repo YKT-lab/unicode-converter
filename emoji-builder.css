@@ -54,3 +54,14 @@
   white-space: nowrap;
   letter-spacing: 0;
 }
+
+/* CLDR short name for the completed Unicode emoji sequence. */
+.emoji-builder-result-name {
+  margin: 0 0 10px;
+  color: #26344a;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.emoji-builder-result-name[hidden] { display: none; }
