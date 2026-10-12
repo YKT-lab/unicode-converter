@@ -39,3 +39,18 @@
 .emoji-builder-tone-1f3fe {color:#93613f}
 .emoji-builder-tone-1f3ff {color:#543627}
 @media(max-width:520px){.emoji-builder-category-picker {width:100%}.emoji-builder-category-list {max-height:205px}}
+
+/* Keep components visually separate rather than precomposing the resulting glyph. */
+.emoji-builder-combining-mark {
+  font-family: "Segoe UI Symbol","Noto Sans Symbols 2",sans-serif !important;
+  font-size: 32px;
+  line-height: 1.4;
+  display: inline-block;
+  min-width: 1.4em;
+  text-align: center;
+}
+.emoji-builder-flag-parts {
+  font-size: 15px !important;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
