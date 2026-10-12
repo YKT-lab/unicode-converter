@@ -212,7 +212,7 @@
     output.textContent = finished ? finished.glyph : "—";
     codes.textContent = finished ? toHexLine(finished.cps) : "";
     copy.disabled = !finished;
-    status.textContent = finished ? "完成：Unicode公式の絵文字" : "左から素材を選んでください";
+    status.textContent = finished ? "完成：Unicode公式の絵文字" : "上から素材を選んでください";
     count.textContent = valid.length + "種類の完成候補";
     renderChoices();
   }
