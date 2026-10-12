@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="文字が四角形になる理由や、Unicodeとフォントの違いを解説します。">
+<title>このサイトで表示できない文字 | Unicode Converter</title>
+<link rel="stylesheet" href="../../style.css?v=20261012-zoom-scope16">
+<link rel="stylesheet" href="../../pages.css?v=20261012-1">
+<link rel="stylesheet" href="../../layout.css?v=20261012-shared-header2">
+<link rel="stylesheet" href="../../news.css?v=20261012-news1">
+<script src="../../js/site-header.js?v=20261012-shared-header2" defer></script>
+</head>
+<body>
+<main>
+<div class="site-topbar">
+<header class="site-header unicode-scope-excluded">
+<a class="site-logo-link" href="../../" aria-label="トップページに戻る"><img class="site-logo" src="../../logo.png" alt="Unicode Converter" draggable="false"></a>
+</header>
+<nav class="site-nav" aria-label="サイト内メニュー"><a href="../../">トップページ</a><a href="../../about/">Unicodeとは</a><a href="../../emoji/">絵文字</a><a href="../../unicode/">Unicode一覧</a><a href="../" aria-current="page">News</a></nav>
+</div>
+<article>
+<header class="page-intro news-article-intro">
+<p class="page-eyebrow">UNICODE NEWS</p>
+<time class="news-article-date" datetime="2026-10-05">2026.10.05</time>
+<h1 class="page-title">このサイトで表示できない文字</h1>
+<p class="page-lead">文字が四角形になる理由や、Unicodeとフォントの違いを解説します。</p>
+</header>
+<div class="news-article-content"><p>Unicode Converterに文字の番号が載っていても、画面では<strong>□や×のような記号に見えたり、何も表示されなかったり</strong>する場合があります。これは、Unicodeに登録されていることと、使っている端末で字形を描けることが別だからです。</p>
+<h2>表示できないのはなぜ？</h2>
+<p>Unicodeは文字とコードポイントなどを定義しますが、それぞれの文字の形を画面に描くには対応するフォントや描画機能が必要です。端末に適切な字形がない場合、代替の四角形などが表示されることがあります。</p>
+<p>特に新しく追加された文字や珍しい文字体系は、OSやブラウザ、フォントによって対応状況に差があります。</p>
+<h2>接合絵文字の場合</h2>
+<p>「👩‍💻」のような絵文字には、複数のUnicodeコードポイントを含むものがあります。構成する文字を個別に表示できても、<strong>結合後の絵文字を一つの形として描画できるとは限りません。</strong>そのため、別の端末では正常なのに、あるPCでは分離したり四角形になったりすることがあります。</p>
+<h2>このサイトのフォント補完について</h2>
+<p>Unicode Converterでは、端末標準のフォントを優先しながら、一部の文字体系にはサイト側のフォントも利用しています。ただし、利用可能なフォントには収録範囲があり、現状ですべての文字や接合絵文字を完全に補完できるわけではありません。</p>
+<h2>表示できないときに試せること</h2>
+<ul>
+<li>端末のOSとブラウザを最新の状態にする。</li>
+<li>同じ文字をほかの端末やアプリでも表示してみる。</li>
+<li>対応するフォントがあるか確認する。</li>
+<li>見えなくても、コードポイントが正しいかUnicodeの公式資料で確かめる。</li>
+</ul>
+<p>文字が画面に表示されないことは、その文字のUnicode番号が無効であるという意味ではありません。文字の情報と表示環境は分けて考えることが大切です。</p>
+<h2>参考資料</h2>
+<p><a href="https://www.unicode.org/standard/standard.html" target="_blank" rel="noopener noreferrer">Unicode Standard（公式） ↗</a> ／ <a href="https://www.unicode.org/reports/tr51/" target="_blank" rel="noopener noreferrer">Unicode Emoji（UTS #51） ↗</a></p></div>
+</article>
+<p class="news-article-back"><a href="../">← News一覧に戻る</a></p>
+</main>
+<div id="unicodeScope" aria-hidden="true">
+<div id="unicodeScopeRing"><span id="unicodeScopeGlyph"></span></div>
+<button id="unicodeScopeCode" type="button" aria-label="Unicodeコードをコピー"></button>
+</div>
+<script src="../../js/config.js?v=20261012-sitewide13" defer></script>
+<script src="../../js/glyph-check.js?v=20261012-sitewide13" defer></script>
+<script src="../../js/scope.js?v=20261012-header-exclusion17" defer></script>
+</body>
+</html>
