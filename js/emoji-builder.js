@@ -157,7 +157,16 @@
     const slotsCount=selected.length+(extendsFurther?1:0);
     if(active>=slotsCount)active=Math.max(0,slotsCount-1);
     slots.replaceChildren();
+    // Internal routing markers never represent Unicode code points.
+    // Keep them in selection state, but omit them (and their plus signs)
+    // from the visual sum of actual emoji components.
+    const visibleIndices=[];
     for(let i=0;i<slotsCount;i++){
+      if(selected[i]==="FLAG_COUNTRY" || selected[i]==="NO_DETAIL")continue;
+      visibleIndices.push(i);
+    }
+    for(let position=0;position<visibleIndices.length;position++){
+      const i=visibleIndices[position];
       const prefix=selected.slice(0,i);
       const opts=optionsAt(prefix,i);
       const title=stepTitle(i,opts);
@@ -178,7 +187,7 @@
         render();
       });
       slots.append(button);
-      if(i<slotsCount-1)slots.append(node("span","emoji-builder-plus","+"));
+      if(position<visibleIndices.length-1)slots.append(node("span","emoji-builder-plus","+"));
     }
     result.textContent=exact?exact.emoji:"—";
     codes.textContent=exact?exact.cps.map(n=>"U+"+n.toString(16).toUpperCase().padStart(4,"0")).join(" + "):"";
