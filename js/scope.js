@@ -1059,7 +1059,7 @@ document.addEventListener(
     const daily = event.target.closest("#dailyCharacter");
     if(daily){
       const codeText=document.getElementById("dailyCode")?.textContent||"";
-      const match=codeText.match(/U\\+([0-9A-Fa-f]{4,6})/);
+      const match=codeText.match(/U\+([0-9A-Fa-f]{4,6})/);
       if(!match)return;
       const codePoint=parseInt(match[1],16);
       if(codePoint>0x10FFFF || (codePoint>=0xD800&&codePoint<=0xDFFF))return;
