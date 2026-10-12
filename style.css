@@ -1380,8 +1380,9 @@ button:disabled {
 
 #unicodeScope {
   --code-top: 46px;
+  --scope-inverse-scale: 1;
 
-  position: fixed;
+  position: absolute;
 
   z-index: 10000;
 
@@ -1426,10 +1427,8 @@ button:disabled {
   justify-content: center;
 
   transform:
-    translate(
-      -50%,
-      -50%
-    );
+    translate(-50%, -50%)
+    scale(var(--scope-inverse-scale));
 
   border:
     2px solid
@@ -1518,9 +1517,10 @@ button:disabled {
     );
 
   transform:
-    translateX(
-      -50%
-    );
+    translateX(-50%)
+    scale(var(--scope-inverse-scale));
+
+  transform-origin: center top;
 
   margin: 0;
 
@@ -1587,7 +1587,7 @@ button:disabled {
 #unicodeScopeCode:active {
   transform:
     translateX(-50%)
-    scale(0.94);
+    scale(calc(var(--scope-inverse-scale) * 0.94));
 }
 
 
@@ -2995,13 +2995,21 @@ button:disabled {
 }
 .daily-facts-list li + li { margin-top: 0.4em; }
 
-/* Scope can display a full grapheme cluster such as a ZWJ emoji.
-   Keep its multi-code-point label readable on narrow screens. */
+/* Keep the code point sequence in one horizontal line at any zoom.
+   A long ZWJ sequence can scroll horizontally, but never wraps vertically. */
 #unicodeScopeCode {
+  display: block;
+  box-sizing: border-box;
+  width: max-content;
   max-width: min(360px, calc(100vw - 16px));
-  white-space: normal;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  overflow-y: hidden;
   text-align: center;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
 
 
