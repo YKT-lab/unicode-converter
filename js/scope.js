@@ -1066,21 +1066,10 @@ document.addEventListener(
 
 
     /*
-      The Daily character may be drawn from an SVG outline. It has no
-      selectable text node, so use its actual Unicode code-point label.
+      Today's Daily character remains outside Unicode Scope.
+      This also covers its fallback text and SVG outline.
     */
-    const daily = event.target.closest("#dailyCharacter");
-    if(daily){
-      const codeText=document.getElementById("dailyCode")?.textContent||"";
-      const match=codeText.match(/U\+([0-9A-Fa-f]{4,6})/);
-      if(!match)return;
-      const codePoint=parseInt(match[1],16);
-      if(codePoint>0x10FFFF || (codePoint>=0xD800&&codePoint<=0xDFFF))return;
-      const character=String.fromCodePoint(codePoint);
-      const rect=daily.getBoundingClientRect();
-      showUnicodeScope({character,rect,textNode:{parentElement:daily}});
-      return;
-    }
+    if(event.target.closest("#dailyCharacter"))return;
 
     // Keep navigation, form editing and buttons working normally.
     // Plain text in ordinary divs/spans, including former excluded groups,
