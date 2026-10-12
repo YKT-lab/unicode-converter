@@ -117,7 +117,11 @@
     if (sample.group === "flag" || sample.group === "tag") {
       return {glyph: sample.glyph, label: flagName(sample) || sample.name, searchText: sample.name};
     }
-    if (sample.group === "keycap") return {glyph: sample.glyph, label:sample.name?.replace(/^keycap:\s*/i,"") || "キーキャップ", searchText:sample.name};
+    if (sample.group === "keycap") {
+      const n=sample.cps[0];
+      const name=n===0x23?"シャープ":n===0x2A?"アスタリスク":n>=0x30&&n<=0x39?String.fromCharCode(n):"キーキャップ";
+      return {glyph: sample.glyph,label:name,searchText:sample.name};
+    }
     if (cps.length === 1 && isTone(cps[0])) {
       return {glyph:"●", label:toneLabels[cps[0]], tone:cps[0]};
     }
