@@ -15,9 +15,9 @@ function slotTokens(p){const a=p.split(" ").map(x=>parseInt(x,16)),tokens=[];let
 if(chunk.length)tokens.push(chunk);
 return tokens.map(x=>x.join("-"));}
 function tokenize(e){const cp=e[0].split(" ").map(x=>parseInt(x,16));const g=e[1];
-if(g==="flag"||g==="tag")return [e[0]]; // Choose region as a single understandable unit.
+if(g==="tag")return [e[0]]; // Hidden tag letters are presented as one named region.
 if(g==="keycap")return [e[0]];
-const chunks=[];let current=[];for(const n of cp){if(n===0x200D){if(current.length)chunks.push(current);current=[];}else if(n===0xFE0F){if(current.length)current.push(n);}else if(n===0x20E3){if(current.length)current.push(n);}else if(n>=0x1F3FB&&n<=0x1F3FF){if(current.length)current.push(n);else current=[n];}else if(current.length){chunks.push(current);current=[n];}else current=[n];}
+const chunks=[];let current=[];for(const n of cp){if(n===0x200D){if(current.length)chunks.push(current);current=[];}else if(n===0xFE0F){if(current.length)current.push(n);}else if(n===0x20E3){if(current.length)current.push(n);}else if(n>=0x1F3FB&&n<=0x1F3FF){if(current.length)chunks.push(current);current=[n];}else if(current.length){chunks.push(current);current=[n];}else current=[n];}
 if(current.length)chunks.push(current);
 return chunks.map(chunk=>chunk.map(renderCode).map(x=>x.slice(2)).join(" "));}
 function matches(e){return selected.every((value,i)=>e.tokens[i]===value);}
@@ -29,7 +29,7 @@ if(active>=max)active=max-1;
 slots.replaceChildren();
 for(let i=0;i<max;i++){const holder=document.createElement("button");holder.type="button";holder.className="emoji-builder-slot"+(i===active?" active":"");const val=selected[i];
 holder.append(text("span","emoji-builder-slot-glyph",val?grapheme(val.split(" ").map(s=>parseInt(s,16))):"＋"));
-holder.append(text("span","emoji-builder-slot-label",val?"素材 "+(i+1):"選択 "+(i+1)));
+holder.append(text("span","emoji-builder-slot-label",val&&/^1F3F[B-F]$/.test(val)?"肌の色":val?"素材 "+(i+1):"選択 "+(i+1)));
 holder.addEventListener("click",()=>{active=i;shown=36;search.value="";rebuild()});
 slots.append(holder);if(i<max-1)slots.append(text("span","emoji-builder-plus","+"));}
 const complete=valid.filter(e=>e.tokens.length===selected.length);
