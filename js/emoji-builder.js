@@ -89,7 +89,7 @@
   function tokenInfo(token,entry) {
     if(token==="FLAG_COUNTRY")return {glyph:"🇦 + 🇧",name:"地域指示記号",wide:true};
     if(token==="KEYCAP_MARK")return {glyph:"\u20E3",name:"キーキャップ結合記号",combining:true};
-    if(token==="NO_DETAIL")return {glyph:"＋",name:"肌の色だけを変更"};
+    if(token==="NO_DETAIL")return {glyph:"🎨",name:"肌の色を指定"};
     const cp=parseInt(token,16);
     if(token in tones)return {glyph:"●",name:tones[token],tone:token.toLowerCase()};
     if(cp>=0x1F1E6 && cp<=0x1F1FF && entry.group==="flag") {
