@@ -926,6 +926,20 @@ function clearNativeSelection() {
   }
 }
 
+/* Keep all editable fields and custom keyboard controls outside Scope.
+ * The code-point digit cells are divs (not native inputs or buttons), so
+ * excluding input and button tags alone is insufficient.
+ * Normal text, including converter RESULTS, remains eligible.
+ */
+function isScopeInteractionArea(target) {
+  return !!target?.closest?.(
+    ".site-topbar, #dailyCharacter, " +
+    ".unicode-single-tool, .unicode-bulk-section, .unicode-controls, " +
+    "button, a, input, textarea, select, option, summary, label, " +
+    "[role='button'], [contenteditable], [contenteditable='true']"
+  );
+}
+
 /* =========================================
    Scope pointer detection
 ========================================= */
@@ -947,7 +961,7 @@ document.addEventListener(
 
     // The entire shared header (including its padding and gaps) is outside
     // Unicode Scope. Do not start a tap from the header.
-    if (event.target.closest(".site-topbar")) {
+    if (isScopeInteractionArea(event.target)) {
       scopePointerStart = null;
       return;
     }
@@ -998,7 +1012,7 @@ document.addEventListener(
       null;
 
     // Also ignore a gesture ending in the header when it began below it.
-    if (event.target.closest(".site-topbar")) {
+    if (isScopeInteractionArea(event.target)) {
       return;
     }
 
@@ -1041,17 +1055,6 @@ document.addEventListener(
       return;
     }
 
-
-    /*
-      Today's Daily character remains outside Unicode Scope.
-      This also covers its fallback text and SVG outline.
-    */
-    if(event.target.closest("#dailyCharacter"))return;
-
-    // Keep navigation, form editing and buttons working normally.
-    // Plain text in ordinary divs/spans, including former excluded groups,
-    // remains eligible for Scope across every page.
-    if(event.target.closest("button, a, input, textarea, select, option, summary, label, [role='button'], [contenteditable='true']"))return;
 
     const result =
       getCharacterFromPoint(
