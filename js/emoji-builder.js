@@ -27,7 +27,7 @@
     ["gendered", "人物・動作"],
     ["hair", "髪型"],
     ["modifier", "肌の色"],
-    ["flag", "旗"],
+    ["flag", "国旗"],
     ["keycap", "キーキャップ"],
     ["other", "その他の接合"]
   ];
@@ -51,7 +51,6 @@
     0x2764: "ハート", 0x1F48B: "キス", 0x1F9AF: "白杖",
     0x1F9BD: "車いす", 0x1F9BC: "電動車いす", 0x1F9B1: "巻き毛"
   };
-  const flagTags = {"GB-ENG":"イングランド","GB-SCT":"スコットランド","GB-WLS":"ウェールズ"};
   const hex = cp => "U+" + cp.toString(16).toUpperCase().padStart(4, "0");
   const character = cps => String.fromCodePoint(...cps);
   const codePoints = raw => raw.split(" ").map(s => parseInt(s, 16));
@@ -71,10 +70,9 @@
   }
   function tokenize(entry) {
     const cps = entry.cps;
-    // A country or regional flag should be selected by its complete name.
-    // Flag types use different encodings: regional-indicator pairs vs. black-flag tag sequences.
+    // Only two-letter Regional Indicator country flags belong in this builder.
+    // Unicode tag-based subdivision flags remain documented in the source dataset.
     if (entry.group === "flag") return ["FLAG_COUNTRY",entry.cps[0].toString(16).toUpperCase(),entry.cps[1].toString(16).toUpperCase()];
-    if (entry.group === "tag") return ["FLAG_REGION",entry.raw];
     // UI presents the actual combining enclosing keycap, not the completed emoji.
     if (entry.group === "keycap") return ["KEYCAP_MARK",entry.raw];
     // Ignore joining controls in the UI but preserve them in the final result.
@@ -96,15 +94,6 @@
     return chunks.map(chunk => chunk.map(cp => cp.toString(16).toUpperCase()).join(" "));
   }
   function flagName(entry) {
-    if (entry.group === "tag") {
-      const name = entry.name.toLowerCase();
-      for (const [code,label] of Object.entries(flagTags)) {
-        if (name.includes(code.split("-")[1].toLowerCase())) return label;
-      }
-      if (name.includes("england")) return "イングランド";
-      if (name.includes("scotland")) return "スコットランド";
-      if (name.includes("wales")) return "ウェールズ";
-    }
     if (entry.group !== "flag") return null;
     const [a,b] = entry.cps;
     if (a < 0x1F1E6 || a > 0x1F1FF || b < 0x1F1E6 || b > 0x1F1FF) return null;
@@ -114,7 +103,6 @@
   }
   function tokenInfo(token, sample) {
     if (token === "FLAG_COUNTRY") return {glyph:"🇦 + 🇧",label:"国旗",parts:true};
-    if (token === "FLAG_REGION") return {glyph:"🏴",label:"地域旗"};
     if (sample.group === "flag" && /^1F1(?:E[6-9A-F]|F[0-9A-F])$/.test(token)) {
       const cp = parseInt(token,16);
       const letter = String.fromCharCode(cp - 0x1F1E6 + 65);
@@ -123,12 +111,10 @@
     if (token === "KEYCAP_MARK") return {glyph:"\u20E3",label:"キーキャップ結合記号",combining:true};
     const cps = codePoints(token);
     const glyph = character(cps);
-    if (sample.group === "flag" || sample.group === "tag") {
-      const country = sample.group === "flag";
+    if (sample.group === "flag") {
       return {
-        // Show the unjoined material here; the finished flag belongs in the result panel.
-        glyph: country ? sample.cps.map(cp=>String.fromCodePoint(cp)).join(" + ") : "🏴",
-        parts: country,
+        glyph: sample.cps.map(cp=>String.fromCodePoint(cp)).join(" + "),
+        parts: true,
         label: flagName(sample) || sample.name,
         searchText: sample.name
       };
@@ -150,10 +136,9 @@
   const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
   const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
   function stepLabel(index, options) {
-    if (group === "flag") return index === 0 ? "旗の種類" : selected[0] === "FLAG_COUNTRY" ? (index === 1 ? "1文字目" : "2文字目") : "地域";
+    if (group === "flag") return index === 0 ? "国旗" : index === 1 ? "1文字目" : "2文字目";
     if (group === "keycap") return index === 0 ? "結合記号" : "数字・記号";
     if (selected[0] === "FLAG_COUNTRY") return index === 1 ? "1文字目" : "2文字目";
-    if (index === 1 && selected[0] === "FLAG_REGION") return "地域";
     if (index === 1 && selected[0] === "KEYCAP_MARK") return "数字・記号";
     if (group === "modifier" && index === 0) return "基本の絵文字";
     if (options.length && options.every(token => {
@@ -186,7 +171,7 @@
     active = 0;
     shown = 36;
     search.value = "";
-    current = all.filter(entry => group === "all" ? entry.group !== "basic" : group === "flag" ? (entry.group === "flag" || entry.group === "tag") : entry.group === group);
+    current = all.filter(entry => group === "all" ? entry.group !== "basic" : entry.group === group);
     categoryLabel.textContent = groupNames[group];
     picker.open = false;
     render();
@@ -302,7 +287,9 @@
          !Array.isArray(data.entries) || data.entries.length!==3972) {
         throw Error("Unicode 18.0の公式データを検証できませんでした");
       }
-      all=data.entries.map(row=>{
+      // Preserve the official 3,972-entry source file. Exclude only the three
+      // tag-based subdivision flags from the interactive composition builder.
+      all=data.entries.filter(row=>row[1]!=="tag").map(row=>{
         const cps=codePoints(row[0]);
         const entry={raw:row[0],group:row[1],name:row[2],cps,glyph:character(cps)};
         entry.tokens=tokenize(entry);
