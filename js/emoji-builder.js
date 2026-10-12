@@ -27,8 +27,7 @@
     ["gendered", "人物・動作"],
     ["hair", "髪型"],
     ["modifier", "肌の色"],
-    ["flag", "国旗"],
-    ["tag", "地域旗"],
+    ["flag", "旗"],
     ["keycap", "キーキャップ"],
     ["other", "その他の接合"]
   ];
@@ -58,6 +57,7 @@
   const codePoints = raw => raw.split(" ").map(s => parseInt(s, 16));
   const toHexLine = cps => cps.map(hex).join(" + ");
   const isTone = cp => cp >= 0x1F3FB && cp <= 0x1F3FF;
+  let nameData = {component_names:{},flag_regions:{}};
   let displayNames = null;
   try {
     if (Intl.DisplayNames) displayNames = new Intl.DisplayNames(["ja"], {type:"region"});
@@ -72,9 +72,8 @@
   function tokenize(entry) {
     const cps = entry.cps;
     // A country or regional flag should be selected by its complete name.
-    if (entry.group === "flag" || entry.group === "tag" || entry.group === "keycap") {
-      return [entry.raw];
-    }
+    if (entry.group === "flag" || entry.group === "tag") return ["FLAG_FRAME",entry.raw];
+    if (entry.group === "keycap") return ["KEYCAP_FRAME",entry.raw];
     // Ignore joining controls in the UI but preserve them in the final result.
     // Skin tones become separate selectable attributes, including on both people.
     const chunks = [];
@@ -107,20 +106,22 @@
     const [a,b] = entry.cps;
     if (a < 0x1F1E6 || a > 0x1F1FF || b < 0x1F1E6 || b > 0x1F1FF) return null;
     const region = String.fromCharCode(65+a-0x1F1E6,65+b-0x1F1E6);
-    try { return displayNames?.of(region) || region; }
+    try { return nameData.flag_regions[region] || displayNames?.of(region) || region; }
     catch (_) { return region; }
   }
   function tokenInfo(token, sample) {
+    if (token === "FLAG_FRAME") return {glyph:"🏳️",label:"旗"};
+    if (token === "KEYCAP_FRAME") return {glyph:"🔢",label:"キーキャップ"};
     const cps = codePoints(token);
     const glyph = character(cps);
     if (sample.group === "flag" || sample.group === "tag") {
       return {glyph: sample.glyph, label: flagName(sample) || sample.name, searchText: sample.name};
     }
-    if (sample.group === "keycap") return {glyph: sample.glyph, label:"キーキャップ", searchText:sample.name};
+    if (sample.group === "keycap") return {glyph: sample.glyph, label:sample.name?.replace(/^keycap:\s*/i,"") || "キーキャップ", searchText:sample.name};
     if (cps.length === 1 && isTone(cps[0])) {
       return {glyph:"●", label:toneLabels[cps[0]], tone:cps[0]};
     }
-    const label = familiarNames[cps[0]] || (cps.length===1 ? hex(cps[0]) : "絵文字");
+    const label = nameData.component_names[cps[0]?.toString(16).toUpperCase()] || familiarNames[cps[0]] || sample.name || "絵文字";
     return {glyph, label, searchText:sample.name};
   }
 
@@ -129,9 +130,8 @@
   const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
   const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
   function stepLabel(index, options) {
-    if (group === "flag") return "国・地域";
-    if (group === "tag") return "地域";
-    if (group === "keycap") return "数字・記号";
+    if (group === "flag") return index === 0 ? "旗" : "国・地域";
+    if (group === "keycap") return index === 0 ? "キーキャップ" : "数字・記号";
     if (group === "modifier" && index === 0) return "基本の絵文字";
     if (options.length && options.every(token => {
       const parts = token.split(" ");
@@ -163,7 +163,7 @@
     active = 0;
     shown = 36;
     search.value = "";
-    current = all.filter(entry => group === "all" ? entry.group !== "basic" : entry.group === group);
+    current = all.filter(entry => group === "all" ? entry.group !== "basic" : group === "flag" ? (entry.group === "flag" || entry.group === "tag") : entry.group === group);
     categoryLabel.textContent = groupNames[group];
     picker.open = false;
     render();
@@ -267,9 +267,10 @@
       setTimeout(()=>{copy.textContent=original;},1400);
     }catch(_) {status.textContent="コピーできませんでした。生成結果を選択してコピーしてください。";}
   });
-  fetch("../data/unicode18_emoji_rgi_sequences.json")
-    .then(response=>{if(!response.ok)throw Error("HTTP "+response.status);return response.json();})
-    .then(data=>{
+  Promise.all(["../data/unicode18_emoji_rgi_sequences.json","../data/unicode18_emoji_builder_names_ja.json"].map(url=>fetch(url).then(response=>{if(!response.ok)throw Error("HTTP "+response.status);return response.json();})))
+    .then(([data,labels])=>{
+      if (!labels.component_names || !labels.flag_regions) throw Error("日本語名が読み込めません");
+      nameData=labels;
       if(data.unicode_version!=="18.0" || data.count!==3972 ||
          !Array.isArray(data.entries) || data.entries.length!==3972) {
         throw Error("Unicode 18.0の公式データを検証できませんでした");
