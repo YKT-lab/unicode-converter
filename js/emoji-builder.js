@@ -113,7 +113,7 @@
     catch (_) { return region; }
   }
   function tokenInfo(token, sample) {
-    if (token === "FLAG_COUNTRY") return {glyph:"🇯 + 🇵",label:"国旗",parts:true};
+    if (token === "FLAG_COUNTRY") return {glyph:"🇦 + 🇧",label:"国旗",parts:true};
     if (token === "FLAG_REGION") return {glyph:"🏴",label:"地域旗"};
     if (token === "KEYCAP_MARK") return {glyph:"\u20E3",label:"キーキャップ結合記号",combining:true};
     const cps = codePoints(token);
