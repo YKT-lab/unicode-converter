@@ -36,7 +36,7 @@
     const link = document.createElement("a");
     link.href = address.href;
     link.textContent = label;
-    if (normalizePath(address.pathname) === currentPath) {
+    if (normalizePath(address.pathname) === currentPath || (path === "news/" && currentPath.startsWith(normalizePath(address.pathname)))) {
       link.setAttribute("aria-current", "page");
     }
     fragment.append(link);
