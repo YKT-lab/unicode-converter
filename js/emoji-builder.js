@@ -13,6 +13,7 @@
   const slots = $("emoji-builder-slots");
   const choices = $("emoji-builder-choices");
   const result = $("emoji-builder-output");
+  const resultName = $("emoji-builder-result-name");
   const status = $("emoji-builder-status");
   const count = $("emoji-builder-count");
   const codes = $("emoji-builder-codes");
@@ -56,6 +57,7 @@
     return el;
   };
   let labels={component_names:{},flag_regions:{}};
+  let resultLabels={cldr_names:{},english_fallback:{}};
   let currentCategory="person";
   let entries=[],current=[],selected=[],active=0,shown=36;
 
@@ -190,6 +192,10 @@
       if(position<visibleIndices.length-1)slots.append(node("span","emoji-builder-plus","+"));
     }
     result.textContent=exact?exact.emoji:"—";
+    const cldrName=exact?resultLabels.cldr_names[exact.raw]:null;
+    const englishName=exact?resultLabels.english_fallback[exact.raw]:null;
+    resultName.textContent=cldrName || (englishName ? englishName+"（英語名）" : "");
+    resultName.hidden=!exact;
     codes.textContent=exact?exact.cps.map(n=>"U+"+n.toString(16).toUpperCase().padStart(4,"0")).join(" + "):"";
     copy.disabled=!exact;
     status.textContent=exact
@@ -253,12 +259,18 @@
   });
   Promise.all([
     "../data/unicode18_emoji_rgi_sequences.json",
-    "../data/unicode18_emoji_builder_names_ja.json"
+    "../data/unicode18_emoji_builder_names_ja.json",
+    "../data/unicode18_emoji_result_names_ja.json"
   ].map(url=>fetch(url).then(r=>{if(!r.ok)throw Error("HTTP "+r.status);return r.json();})))
-    .then(([data,names])=>{
+    .then(([data,names,resultNames])=>{
       if(data.unicode_version!=="18.0" || data.entries?.length!==3972 ||
         !names.component_names || !names.flag_regions)throw Error("絵文字データを検証できませんでした");
+      if(resultNames.unicode_version!=="18.0" ||
+        Object.keys(resultNames.cldr_names||{}).length!==2550 ||
+        Object.keys(resultNames.english_fallback||{}).length!==10)
+        throw Error("CLDR名称データを検証できませんでした");
       labels=names;
+      resultLabels=resultNames;
       entries=data.entries
         .filter(row=>row[1]!=="basic" && row[1]!=="tag")
         .map(row=>{
@@ -268,6 +280,8 @@
           item.path=buildPath(item);
           return item;
         });
+      const named=entries.every(e=>resultLabels.cldr_names[e.raw] || resultLabels.english_fallback[e.raw]);
+      if(!named)throw Error("完成絵文字の名称が不足しています");
       const paths=new Set(entries.map(e=>e.category+"|"+e.path.join("|")));
       if(entries.length!==2560 || paths.size!==2560 ||
         categories.some(([key])=>!entries.some(e=>e.category===key)))throw Error("絵文字の分類データに不整合があります");
