@@ -73,7 +73,7 @@
     const cps = entry.cps;
     // A country or regional flag should be selected by its complete name.
     // Flag types use different encodings: regional-indicator pairs vs. black-flag tag sequences.
-    if (entry.group === "flag") return ["FLAG_COUNTRY",entry.raw];
+    if (entry.group === "flag") return ["FLAG_COUNTRY",entry.cps[0].toString(16).toUpperCase(),entry.cps[1].toString(16).toUpperCase()];
     if (entry.group === "tag") return ["FLAG_REGION",entry.raw];
     // UI presents the actual combining enclosing keycap, not the completed emoji.
     if (entry.group === "keycap") return ["KEYCAP_MARK",entry.raw];
@@ -115,6 +115,11 @@
   function tokenInfo(token, sample) {
     if (token === "FLAG_COUNTRY") return {glyph:"🇦 + 🇧",label:"国旗",parts:true};
     if (token === "FLAG_REGION") return {glyph:"🏴",label:"地域旗"};
+    if (sample.group === "flag" && /^1F1(?:E[6-9A-F]|F[0-9A-F])$/.test(token)) {
+      const cp = parseInt(token,16);
+      const letter = String.fromCharCode(cp - 0x1F1E6 + 65);
+      return {glyph:String.fromCodePoint(cp),label:letter,searchText:letter+" "+sample.name};
+    }
     if (token === "KEYCAP_MARK") return {glyph:"\u20E3",label:"キーキャップ結合記号",combining:true};
     const cps = codePoints(token);
     const glyph = character(cps);
@@ -145,9 +150,10 @@
   const startsWith = (array, prefix) => prefix.every((part, i) => array[i] === part);
   const candidates = prefix => current.filter(entry => startsWith(entry.tokens, prefix));
   function stepLabel(index, options) {
-    if (group === "flag") return index === 0 ? "旗の種類" : "国・地域";
+    if (group === "flag") return index === 0 ? "旗の種類" : selected[0] === "FLAG_COUNTRY" ? (index === 1 ? "1文字目" : "2文字目") : "地域";
     if (group === "keycap") return index === 0 ? "結合記号" : "数字・記号";
-    if (index === 1 && selected[0]?.startsWith("FLAG_")) return "国・地域";
+    if (selected[0] === "FLAG_COUNTRY") return index === 1 ? "1文字目" : "2文字目";
+    if (index === 1 && selected[0] === "FLAG_REGION") return "地域";
     if (index === 1 && selected[0] === "KEYCAP_MARK") return "数字・記号";
     if (group === "modifier" && index === 0) return "基本の絵文字";
     if (options.length && options.every(token => {
