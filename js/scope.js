@@ -672,10 +672,14 @@ function showUnicodeScope(
   const viewHeight = visual ? visual.height : window.innerHeight;
   const viewRight = viewLeft + viewWidth;
   const viewBottom = viewTop + viewHeight;
+  // Inverse scaling keeps the circle and copied code readable at the same
+  // on-screen size even when the document itself is pinch-zoomed.
+  const zoom = visual ? Math.max(1,visual.scale || 1) : 1;
+  unicodeScope.style.setProperty("--scope-inverse-scale",String(1 / zoom));
 
   const glyphX = rect.left + scrollX + rect.width / 2;
   const glyphY = rect.top + scrollY + rect.height / 2;
-  const ringInset = Math.min(38,viewWidth / 2);
+  const ringInset = Math.min(38 / zoom,viewWidth / 2);
   const minX = viewLeft + ringInset;
   const maxX = viewRight - ringInset;
   const centerX = Math.max(minX,Math.min(maxX,glyphX));
@@ -685,12 +689,14 @@ function showUnicodeScope(
   unicodeScope.style.top = centerY + "px";
   unicodeScope.style.setProperty(
     "--code-top",
-    centerY + 100 > viewBottom ? "-56px" : "46px"
+    (centerY + 100 / zoom > viewBottom ? -56 : 46) / zoom + "px"
   );
 
-  // Keep the complete code sequence on a single horizontal line.
-  // Very long joined emoji can be scrolled sideways inside the label.
-  unicodeScopeCode.style.maxWidth = Math.max(24,viewWidth - 16) + "px";
+  // The label is zoom-compensated too. The available CSS width must be
+  // scaled back to screen pixels so that the actual rendered rectangle
+  // stays within the current visual viewport.
+  unicodeScopeCode.style.maxWidth =
+    Math.max(24,Math.min(360,viewWidth * zoom - 16)) + "px";
   unicodeScopeCode.style.left = "0px";
 
   unicodeScope.classList.add("visible");
@@ -701,7 +707,7 @@ function showUnicodeScope(
   const labelRect = unicodeScopeCode.getBoundingClientRect();
   const leftEdge = visual ? visual.offsetLeft : 0;
   const rightEdge = leftEdge + viewWidth;
-  const margin = Math.min(8,viewWidth / 8);
+  const margin = Math.min(8 / zoom,viewWidth / 8);
   let shift = 0;
   if (labelRect.left < leftEdge + margin) {
     shift = leftEdge + margin - labelRect.left;
