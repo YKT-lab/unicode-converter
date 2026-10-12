@@ -945,6 +945,12 @@ document.addEventListener(
 
     hideUnicodeScope();
 
+    // The entire shared header (including its padding and gaps) is outside
+    // Unicode Scope. Do not start a tap from the header.
+    if (event.target.closest(".site-topbar")) {
+      scopePointerStart = null;
+      return;
+    }
 
     scopePointerStart = {
       x:
@@ -990,6 +996,11 @@ document.addEventListener(
 
     scopePointerStart =
       null;
+
+    // Also ignore a gesture ending in the header when it began below it.
+    if (event.target.closest(".site-topbar")) {
+      return;
+    }
 
 
     const movement =
