@@ -5,6 +5,10 @@
 const MAX_RANDOM_COUNT =
   500;
 
+function currentRandomLimit() {
+  return isSvgModeEnabled() ? 100 : MAX_RANDOM_COUNT;
+}
+
 
 const unicodeDigitCount =
   document.getElementById(
@@ -1054,7 +1058,7 @@ function getSelectedRandomCount() {
   ) {
 
     return Math.min(
-      MAX_RANDOM_COUNT,
+      currentRandomLimit(),
       Math.max(
         1,
         Number(
@@ -1077,7 +1081,7 @@ function getSelectedRandomCount() {
       parsed
     )
       ? Math.min(
-          MAX_RANDOM_COUNT,
+          currentRandomLimit(),
           Math.max(
             1,
             parsed
