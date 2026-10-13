@@ -190,7 +190,7 @@ function generateRandomUnicode(
 
   const safeCount =
     Math.min(
-      500,
+      (typeof isSvgModeEnabled === "function" && isSvgModeEnabled() ? 100 : 500),
       Math.max(
         1,
         Math.trunc(
