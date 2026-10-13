@@ -3,7 +3,6 @@ const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
 const svgModeCurrent = document.getElementById("svgModeCurrent");
-const svgModePrompt = document.getElementById("svgModePrompt");
 const SVG_MODE_SESSION_KEY = "unicode-converter-svg-display";
 function readSvgModePreference() {
   try {
@@ -166,10 +165,6 @@ function refreshSvgModePresentation() {
   }
   if (svgModeCurrent) {
     svgModeCurrent.textContent = svgModeEnabled ? "現在：SVG表示" : "現在：通常表示";
-  }
-  if (svgModePrompt) {
-    svgModePrompt.textContent = svgModeEnabled
-      ? "通常の文字表示に戻す場合は" : "正しく表示されない場合は";
   }
   if (svgModeDescription) svgModeDescription.hidden = !svgModeEnabled;
 }

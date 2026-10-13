@@ -26,10 +26,10 @@ function makeEl(value="") {
 function simulate(opts={}) {
   const keys = new Map();
   if (opts.stored) keys.set("unicode-converter-svg-display",opts.stored);
-  const modeToggle=makeEl(), description=makeEl(), current=makeEl(), prompt=makeEl();
+  const modeToggle=makeEl(), description=makeEl(), current=makeEl();
   const progress=makeEl(), custom=makeEl("150"), randomLimit=makeEl();
   const nodes={svgModeToggle:modeToggle,svgModeDescription:description,
-    svgModeCurrent:current,svgModePrompt:prompt,svgModeProgress:progress,
+    svgModeCurrent:current,svgModeProgress:progress,
     randomCustomCount:custom};
   let reloads=0, conversions=[], scopeHides=0;
   const charInput=makeEl(opts.character||"");
@@ -79,7 +79,6 @@ assert.equal(empty.reloadCount(),1,"Empty conversion should trigger a reload");
 assert.equal(empty.conversions().length,0);
 assert.equal(empty.nodes.svgModeCurrent.textContent,"現在：SVG表示");
 assert.equal(empty.nodes.svgModeDescription.hidden,false);
-assert.equal(empty.nodes.svgModePrompt.textContent,"通常の文字表示に戻す場合は");
 assert.equal(empty.nodes.randomCustomCount.value,"100");
 
 const afterReload=simulate({stored:"svg"});
@@ -106,9 +105,13 @@ partial.click();
 assert.equal(partial.reloadCount(),0,"Partially-entered digit cells must not reload");
 assert.equal(partial.conversions().length,0,"Do not fabricate incomplete input");
 
-for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModePrompt"','id="svgModeDescription"'])
+for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
   assert(home.includes(tag),"Missing mode indicator/control "+tag);
-assert(home.includes('class="unicode-display-note unicode-scope-excluded"'));
+assert(home.includes('class="unicode-actions unicode-scope-excluded"'));
+assert(home.includes('class="svg-mode-switch"'));
+assert(home.includes('<a href="./news/svg-display/">SVG表示とは？</a>'));
+assert(!home.includes("SVG互換モードでは、サイトのフォントから"));
+assert(home.indexOf('id="svgModeToggle"') < home.indexOf('id="charOutput"'));
 assert(scope.includes(".unicode-scope-excluded"));
 assert(home.includes('href="./news/svg-display/"'));
 assert(news.includes('href="./svg-display/"'));
