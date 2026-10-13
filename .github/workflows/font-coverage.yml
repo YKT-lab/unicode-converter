@@ -63,6 +63,8 @@ jobs:
           node --check scripts/test-font-assignment.js
           node --check scripts/test-mobile-font-outlines.js
           node --check js/svg-mode.js
+          node --check js/scope.js
+          node --check js/random.js
           node --check js/font-coverage.js
           node --check js/emoji-display.js
           node --check js/daily.js
@@ -128,8 +130,8 @@ jobs:
       - name: Assemble GitHub Pages artifact without node_modules
         run: |
           mkdir -p _font_coverage_site
-          cp index.html style.css logo.png daily.json _font_coverage_site/
-          cp -R js fonts data _font_coverage_site/
+          # Keep all site pages and existing assets, not only the converter.
+          rsync -a --exclude='.git' --exclude='node_modules' --exclude='_font_coverage_site' ./ _font_coverage_site/
           cp node_modules/opentype.js/dist/opentype.min.js _font_coverage_site/js/opentype.min.js
           python3 -m venv /tmp/svg-venv
           /tmp/svg-venv/bin/pip install --quiet 'fonttools[woff]'
