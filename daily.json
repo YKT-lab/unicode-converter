@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-13",
-    "category": "ancient",
-    "codePoint": "13E1F",
-    "character": "𓸟",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M31 83Q31 118 50.5 143.5Q70 169 97 183L97 188Q97 201 91.5 215.5Q86 230 77.5 245Q69 260 59.5 273.5Q50 287 42 298L43 298L36 307L36 312Q36 317 38.5 323.5Q41 330 49 330L58 324L100 278Q98 300 88.5 318.5Q79 337 67 356Q55 374 45.5 392.5Q36 411 36 432L36 436Q36 440 37 441L56 441Q64 441 71.5 431.5Q79 422 85 411Q88 405 90.5 400Q93 395 97 392Q95 403 90.5 419Q86 435 80 451.5Q74 468 67.5 482.5Q61 497 57 505L58 505L46 519Q41 525 36 533Q31 541 31 550Q31 555 34.5 559.5Q38 564 43 564Q56 564 67.5 551.5Q79 539 88 525L99 508Q99 517 97 522L71 607Q67 618 53 634Q39 650 31 656L31 660Q31 669 36 671.5Q41 674 48 674Q53 674 54.5 673.5Q56 673 60 669L102 629Q102 653 96.5 672Q91 691 82 708.5Q73 726 61 742.5Q49 759 34 778L34 798L52 798L78 778L100 760Q104 756 105 756Q108 791 125 820.5Q142 850 172 870Q186 875 199.5 878Q213 881 228 881Q236 881 249.5 878.5Q263 876 275.5 870.5Q288 865 297.5 856Q307 847 307 835Q307 817 288 817Q278 817 271.5 819.5Q265 822 258 826Q245 836 232 836Q218 836 205 829.5Q192 823 182 811.5Q172 800 166 786Q160 772 160 757L160 187Q160 187 162 186Q200 175 224.5 150.5Q249 126 249 78Q248 74 246 62Q244 50 244 47Q230 13 200.5 -3Q171 -19 138 -19Q117 -19 98 -11.5Q79 -4 64 9.5Q49 23 40 41.5Q31 60 31 83ZM47 83Q47 63 55 47Q63 31 75.5 20Q88 9 104.5 3Q121 -3 139 -3Q156 -3 173 2.5Q190 8 203.5 19Q217 30 225 45.5Q233 61 233 81Q233 105 228.5 119Q224 133 216.5 140.5Q209 148 200 151.5Q191 155 181 157Q172 160 162.5 163.5Q153 167 146 173L136 173Q118 173 102 166.5Q86 160 74 148Q62 136 54.5 119.5Q47 103 47 83ZM60 298Q78 272 91 245.5Q104 219 112 186L144 190L144 757L151 791Q154 804 163 815Q172 826 184 834Q196 842 209 847Q222 852 233 852Q242 852 248.5 848.5Q255 845 261 841Q268 837 273.5 834.5Q279 832 287 832Q291 832 292 835Q288 843 279.5 849Q271 855 261.5 858.5Q252 862 242 864Q232 866 224 866Q213 866 206.5 864.5Q200 863 186 858Q183 858 181 857Q165 852 153.5 838.5Q142 825 135 808.5Q128 792 124 773.5Q120 755 119 740Q120 735 117 734.5Q114 734 111 734Q108 734 105 737L105 736L57 773L93 726L92 726Q95 723 97 718Q99 713 101 710L106 693L111 677Q111 673 111.5 663.5Q112 654 114 643Q115 632 116.5 622Q118 612 119 607Q119 601 109 601L94 615Q89 620 83 625.5Q77 631 72 636Q77 630 80.5 623Q84 616 86 611L111 526L111 523Q111 519 112 517L117 484Q117 482 115 479Q113 476 110 476Q108 476 105.5 478.5Q103 481 100 484L78 510L49 545Q49 543 49.5 542.5Q50 542 50 541L71 510Q78 499 84.5 482Q91 465 96.5 446.5Q102 428 106.5 409.5Q111 391 114 376L119 358Q119 354 115.5 353.5Q112 353 111 353L106 353Q104 356 97 365.5Q90 375 82.5 385.5Q75 396 68 405Q61 414 58 418Q56 420 54 422.5Q52 425 50 425Q51 415 59 400Q67 385 77 367Q91 342 105 312Q119 282 119 252Q119 245 111 245L109 245Q108 245 107 246ZM47 663L46 658L49 658Q51 657 54 655Q56 653 57.5 652Q59 651 60 650L59 650Q60 649 63.5 645Q67 641 72 636ZM51 310Q50 310 50 314L47 313L60 298L52 310ZM49 545L50 545Q49 546 50 546Q51 546 49 546Z",
-      "viewBox": "-41 -953 420 1044"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-13E1F",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの文字体系に属する象形文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "時間や季節を表す表語文字として機能する。",
-        "etymology": "",
-        "history": "",
-        "structure": "葉が落とされ複数の鋭い刻み目が付けられたナツメヤシの枝が、円の上部に載った構成をしている。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A palm branch, stripped of leaves, with multiple sharp notches (M4A), on top of a circle.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram (time/season)",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "tr",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram (time/season) : tr",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "M005C",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "M-05-014",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-14",
     "category": "ancient",
     "codePoint": "14354",
@@ -247,6 +121,163 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-15",
+    "category": "han",
+    "codePoint": "6EE9",
+    "character": "滩",
+    "font": "Noto Sans CJK JP",
+    "svg": {
+      "path": "M65 780C118 746 183 697 216 663L260 718C228 751 161 798 108 829ZM35 510C90 479 160 431 193 399L237 456C202 488 132 532 77 560ZM50 -21L114 -59C157 32 207 156 244 260L188 298C148 186 90 56 50 -21ZM737 786C767 742 798 681 811 642L872 668C858 707 826 765 795 809ZM636 372L766 372L766 239L636 239ZM636 438L636 572L766 572L766 438ZM636 174L766 174L766 38L636 38ZM242 502C284 440 326 369 364 299C325 188 273 100 213 45C229 33 251 10 261 -7C318 49 367 124 406 217C435 157 459 102 473 57L531 89C512 146 477 219 436 296C456 357 473 424 486 498L516 458C535 480 553 504 571 529L571 -78L636 -78L636 -28L957 -28L957 38L830 38L830 174L935 174L935 239L830 239L830 372L934 372L934 438L830 438L830 572L944 572L944 638L636 638C669 699 697 763 718 823L651 842C621 741 560 616 491 530C499 580 505 633 510 689L467 699L455 697L262 697L262 629L438 629C427 539 411 454 389 378C359 430 326 481 294 528Z",
+      "viewBox": "-38.760000000000005 -915.76 1069.52 1067.52"
+    },
+    "info": {
+      "category": "han",
+      "unicodeName": "CJK UNIFIED IDEOGRAPH-6EE9",
+      "block": "CJK Unified Ideographs",
+      "script": "Han",
+      "age": "1.1",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": {
+        "definition": "bank, a sandbar, shoal; rapids",
+        "japaneseOn": null,
+        "japaneseKun": null,
+        "strokes": {
+          "total": "13",
+          "alternateTotal": null,
+          "radicalStroke": "85.10",
+          "adobeJapan1": null
+        },
+        "variants": {
+          "kSimplifiedVariant": "U+6EE9",
+          "kTraditionalVariant": "U+6EE9 U+7058"
+        },
+        "numeric": {},
+        "irgSources": {
+          "kIRG_GSource": "G0-4C32",
+          "kIRG_HSource": "H-8DE8",
+          "kIRG_TSource": "T3-4246"
+        },
+        "dictionary": {
+          "kFourCornerCode": "3011",
+          "kPhonetic": "942*",
+          "kUnihanCore2020": "GH"
+        },
+        "sourceFiles": [
+          "Unihan_Readings.txt",
+          "Unihan_DictionaryLikeData.txt",
+          "Unihan_Variants.txt",
+          "Unihan_IRGSources.txt"
+        ]
+      },
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "水辺の地理的特徴を示す部首と画数を備えた漢字です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "岸、砂州、浅瀬、急流などを意味します。",
+        "etymology": "",
+        "history": "",
+        "structure": "総画数は13画であり、部首に関連する10画の構成を持ちます。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "unihan:definition",
+          "text": "bank, a sandbar, shoal; rapids",
+          "source": "Unicode Unihan",
+          "strength": "strong"
+        },
+        {
+          "kind": "unihan:totalStrokes",
+          "text": "13",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:radicalStroke",
+          "text": "85.10",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:simplifiedVariant",
+          "text": "U+6EE9",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:traditionalVariant",
+          "text": "U+6EE9 U+7058",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:irgSources",
+          "text": "kIRG_GSource=G0-4C32; kIRG_HSource=H-8DE8; kIRG_TSource=T3-4246",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Unihan Database",
+          "url": "https://www.unicode.org/reports/tr38/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unihan",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
         }
       ]
     }
