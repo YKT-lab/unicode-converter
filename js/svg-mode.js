@@ -2,7 +2,26 @@
 const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
-let svgModeEnabled = false;
+const svgModeCurrent = document.getElementById("svgModeCurrent");
+const svgModePrompt = document.getElementById("svgModePrompt");
+const SVG_MODE_SESSION_KEY = "unicode-converter-svg-display";
+function readSvgModePreference() {
+  try {
+    return window.sessionStorage?.getItem(SVG_MODE_SESSION_KEY) === "svg";
+  } catch (_error) {
+    return false;
+  }
+}
+function saveSvgModePreference() {
+  try {
+    if (!window.sessionStorage) return false;
+    window.sessionStorage.setItem(SVG_MODE_SESSION_KEY, svgModeEnabled ? "svg" : "normal");
+    return true;
+  } catch (_error) {
+    return false;
+  }
+}
+let svgModeEnabled = readSvgModePreference();
 let svgPreviousCustomCount = null;
 let svgParserPromise = null;
 const svgFontCache = new Map();
