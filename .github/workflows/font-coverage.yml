@@ -32,6 +32,7 @@ on:
       - "js/fonts.js"
       - "js/glyph-check.js"
       - "index.html"
+      - "news/**"
       - "style.css"
 
 permissions:
@@ -67,6 +68,7 @@ jobs:
           node --check scripts/test-mobile-font-outlines.js
           node --check js/svg-mode.js
           node --check scripts/test-svg-mode.js
+          node --check scripts/test-svg-mode-ui.js
           node --check js/scope.js
           node --check js/random.js
           node --check js/font-coverage.js
@@ -81,7 +83,9 @@ jobs:
           node --check js/fonts.js
           node --check scripts/generate-daily.js
       - name: Test SVG outline compatibility mode
-        run: node scripts/test-svg-mode.js
+        run: |
+          node scripts/test-svg-mode.js
+          node scripts/test-svg-mode-ui.js
       - name: Inspect real on-site font cmap tables
         run: node scripts/audit-unicode18-fonts.js
       - name: Build compressed browser font-coverage lookup

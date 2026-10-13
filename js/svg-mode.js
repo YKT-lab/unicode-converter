@@ -2,7 +2,26 @@
 const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
-let svgModeEnabled = false;
+const svgModeCurrent = document.getElementById("svgModeCurrent");
+const svgModePrompt = document.getElementById("svgModePrompt");
+const SVG_MODE_SESSION_KEY = "unicode-converter-svg-display";
+function readSvgModePreference() {
+  try {
+    return window.sessionStorage?.getItem(SVG_MODE_SESSION_KEY) === "svg";
+  } catch (_error) {
+    return false;
+  }
+}
+function saveSvgModePreference() {
+  try {
+    if (!window.sessionStorage) return false;
+    window.sessionStorage.setItem(SVG_MODE_SESSION_KEY, svgModeEnabled ? "svg" : "normal");
+    return true;
+  } catch (_error) {
+    return false;
+  }
+}
+let svgModeEnabled = readSvgModePreference();
 let svgPreviousCustomCount = null;
 let svgParserPromise = null;
 const svgFontCache = new Map();
@@ -139,20 +158,59 @@ function updateSvgRandomOptions() {
 document.getElementById("randomCustomCount")?.addEventListener("input", () => {
   if (svgModeEnabled) svgPreviousCustomCount = null;
 });
+function refreshSvgModePresentation() {
+  if (svgModeToggle) {
+    svgModeToggle.textContent = svgModeEnabled
+      ? "通常表示に戻す" : "SVG表示に切り替える";
+    svgModeToggle.setAttribute("aria-pressed", String(svgModeEnabled));
+  }
+  if (svgModeCurrent) {
+    svgModeCurrent.textContent = svgModeEnabled ? "現在：SVG表示" : "現在：通常表示";
+  }
+  if (svgModePrompt) {
+    svgModePrompt.textContent = svgModeEnabled
+      ? "通常の文字表示に戻す場合は" : "正しく表示されない場合は";
+  }
+  if (svgModeDescription) svgModeDescription.hidden = !svgModeEnabled;
+}
+function hasUnicodeInputForModeSwitch() {
+  const singleEntered = typeof singleHexDigits !== "undefined"
+    && singleHexDigits.some(Boolean);
+  return Boolean(
+    charInput?.value.trim() ||
+    unicodeInput?.value.trim() ||
+    singleEntered
+  );
+}
 svgModeToggle?.addEventListener("click", () => {
+  const hadInput = hasUnicodeInputForModeSwitch();
   svgModeEnabled = !svgModeEnabled;
-  svgModeToggle.textContent = svgModeEnabled
-    ? "通常表示に戻す" : "SVG表示に切り替える";
-  svgModeToggle.setAttribute("aria-pressed",String(svgModeEnabled));
-  svgModeDescription.hidden = !svgModeEnabled;
+  const saved = saveSvgModePreference();
+  refreshSvgModePresentation();
   updateSvgModeProgress("");
   updateSvgRandomOptions();
   hideUnicodeScope();
-  if (lastUnicodeOutputSource==="single" && singleHexDigits.every(Boolean)) {
-    convertUnicode("U+"+singleHexDigits.join(""));
-  } else if (lastUnicodeOutputSource==="bulk" && unicodeInput.value.trim()) {
+
+  // With no entered/result characters, reload the page once to make the
+  // switch perceptible. Save mode first; never reload if storage is blocked.
+  if (!hadInput) {
+    unicodeRun++; // Cancel any pending conversion.
+    if (saved && typeof window.location?.reload === "function") {
+      window.location.reload();
+    } else {
+      updateSvgModeProgress("表示方式を切り替えました");
+    }
+    return;
+  }
+
+  // Keep user input and history. Re-render only the active output.
+  if (lastUnicodeOutputSource === "single" && singleHexDigits.every(Boolean)) {
+    convertUnicode("U+" + singleHexDigits.join(""));
+  } else if (lastUnicodeOutputSource === "bulk" && unicodeInput.value.trim()) {
     convertUnicode();
   } else {
-    unicodeRun++; // Cancel any outstanding render.
+    unicodeRun++; // Incomplete input: keep it untouched.
   }
 });
+refreshSvgModePresentation();
+if (svgModeEnabled) updateSvgRandomOptions();

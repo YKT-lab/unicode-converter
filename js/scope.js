@@ -955,7 +955,7 @@ function clearNativeSelection() {
  */
 function isScopeInteractionArea(target) {
   return !!target?.closest?.(
-    ".site-topbar, #dailyCharacter, " +
+    ".site-topbar, .unicode-scope-excluded, #dailyCharacter, " +
     ".unicode-single-tool, .unicode-bulk-section, .unicode-controls, " +
     "button, a, input, textarea, select, option, summary, label, " +
     "[role='button'], [contenteditable], [contenteditable='true']"
