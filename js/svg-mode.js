@@ -3,6 +3,7 @@ const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
 let svgModeEnabled = false;
+let svgPreviousCustomCount = null;
 let svgParserPromise = null;
 const svgFontCache = new Map();
 
@@ -123,12 +124,21 @@ function updateSvgRandomOptions() {
   const max = svgModeEnabled ? 100 : 500;
   const custom = document.getElementById("randomCustomCount");
   if (custom) {
+    if (svgModeEnabled) {
+      svgPreviousCustomCount = custom.value;
+      if (Number(custom.value) > 100) custom.value = "100";
+    } else if (svgPreviousCustomCount !== null) {
+      if (custom.value === "100") custom.value = svgPreviousCustomCount;
+      svgPreviousCustomCount = null;
+    }
     custom.max = String(max);
-    if (Number(custom.value)>max) custom.value=String(max);
   }
   const label = document.querySelector(".random-limit");
   if (label) label.textContent = "最大"+max;
 }
+document.getElementById("randomCustomCount")?.addEventListener("input", () => {
+  if (svgModeEnabled) svgPreviousCustomCount = null;
+});
 svgModeToggle?.addEventListener("click", () => {
   svgModeEnabled = !svgModeEnabled;
   svgModeToggle.textContent = svgModeEnabled
