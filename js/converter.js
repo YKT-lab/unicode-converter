@@ -476,10 +476,17 @@ async function convertUnicode(
 
 
     if (typeof isSvgModeEnabled === "function" && isSvgModeEnabled()) {
+      // Never briefly show a device's missing-glyph symbol while loading.
+      inner.textContent = "";
+      wrapper.classList.add("loading-character");
+      charOutput.appendChild(wrapper);
       updateSvgModeProgress("SVG描画中: " + tokenIndex + " / " + tokens.length);
+      await yieldToBrowser();
+      if (currentRun !== unicodeRun) return;
       try {
         const result = await createSvgGlyph(codePoint, character);
         if (currentRun !== unicodeRun || !isSvgModeEnabled()) return;
+        wrapper.classList.remove("loading-character");
         if (result.svg) {
           inner.textContent = "";
           inner.appendChild(result.svg);
