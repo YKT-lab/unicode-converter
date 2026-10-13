@@ -160,8 +160,7 @@ function hasUnicodeInputForModeSwitch() {
   return Boolean(
     charInput?.value.trim() ||
     unicodeInput?.value.trim() ||
-    singleEntered ||
-    charOutput?.childNodes.length
+    singleEntered
   );
 }
 svgModeToggle?.addEventListener("click", () => {
