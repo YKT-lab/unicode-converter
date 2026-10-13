@@ -1238,15 +1238,29 @@ button:disabled {
 
 
 /* Quiet, opt-in SVG compatibility mode for devices with missing glyphs. */
-.svg-mode-offer {
-  display: block;
-  margin: 3px 0 0;
+/* Keep the optional mode control in the open space beneath “Back”. */
+.unicode-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  min-width: 0;
 }
-.unicode-display-status { margin: 0; }
+.unicode-actions .history-controls { margin: 0; }
+.svg-mode-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  max-width: 170px;
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.55;
+}
 .svg-mode-current {
-  display: inline-block;
-  margin-left: 0.55em;
-  color: #454d59;
+  display: block;
+  color: #656d77;
   font-weight: 600;
   white-space: nowrap;
 }
@@ -1261,6 +1275,7 @@ button:disabled {
   text-decoration: underline;
   text-underline-offset: 2px;
   cursor: pointer;
+  text-align: right;
 }
 #svgModeToggle:hover, #svgModeToggle:focus-visible {
   color: #171e29;
@@ -1294,6 +1309,20 @@ button:disabled {
   width: 42px;
   height: 42px;
   max-width: 42px;
+}
+
+@media (max-width: 520px) {
+  .unicode-actions {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .svg-mode-switch {
+    max-width: 125px;
+    font-size: 10px;
+  }
+  #svgModeToggle {
+    white-space: normal;
+  }
 }
 
 /* Device-specific font rendering disclaimer below Unicode → character */
