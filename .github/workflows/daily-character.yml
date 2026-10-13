@@ -9,6 +9,7 @@ on:
       - "scripts/**"
       - "js/daily.js"
       - "js/svg-mode.js"
+      - "news/**"
       - "index.html"
       - "style.css"
       - ".github/workflows/daily-character.yml"
@@ -85,6 +86,7 @@ jobs:
         run: |
           node --check js/svg-mode.js
           node scripts/test-svg-mode.js
+          node scripts/test-svg-mode-ui.js
           node --check js/converter.js
           cp node_modules/opentype.js/dist/opentype.min.js js/opentype.min.js
           python3 -m venv /tmp/svg-venv
