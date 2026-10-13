@@ -8,6 +8,7 @@ on:
     paths:
       - "scripts/**"
       - "js/daily.js"
+      - "js/svg-mode.js"
       - "index.html"
       - "style.css"
       - ".github/workflows/daily-character.yml"
@@ -83,6 +84,7 @@ jobs:
       - name: Prepare SVG compatibility fonts
         run: |
           node --check js/svg-mode.js
+          node scripts/test-svg-mode.js
           node --check js/converter.js
           cp node_modules/opentype.js/dist/opentype.min.js js/opentype.min.js
           python3 -m venv /tmp/svg-venv
