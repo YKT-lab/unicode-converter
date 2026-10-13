@@ -129,7 +129,7 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=20261014-svg-mode-ui2"
+    href="./style.css?v=20261014-toggle-placement3"
   >
   <link rel="stylesheet" href="./pages.css?v=20261012-1">
   <link rel="stylesheet" href="./layout.css?v=20261012-shared-header2">
@@ -145,7 +145,7 @@
 <script src="./js/glyph-check.js" defer></script>
 <script src="./js/emoji-display.js?v=20261010-1" defer></script>
 <script src="./js/font-coverage.js?v=20261011-4" defer></script>
-<script src="./js/svg-mode.js?v=20261014-ui2" defer></script>
+<script src="./js/svg-mode.js?v=20261014-toggle-placement3" defer></script>
 <script src="./js/converter.js?v=20261014-svg1" defer></script>
 <script src="./js/random.js?v=20261014-svg1" defer></script>
 <script src="./js/daily.js?v=20261012-two-headings" defer></script>
@@ -595,17 +595,21 @@
     </div>
 
 
-    <div class="history-controls">
-
-      <button
-        id="backUnicode"
-        type="button"
-        class="back-button"
-        disabled
-      >
-        ← 戻る
-      </button>
-
+    <div class="unicode-actions unicode-scope-excluded">
+      <div class="history-controls">
+        <button
+          id="backUnicode"
+          type="button"
+          class="back-button"
+          disabled
+        >
+          ← 戻る
+        </button>
+      </div>
+      <div class="svg-mode-switch">
+        <span id="svgModeCurrent" class="svg-mode-current" role="status" aria-live="polite">現在：通常表示</span>
+        <button id="svgModeToggle" type="button" aria-pressed="false">SVG表示に切り替える</button>
+      </div>
     </div>
 
   </div>
@@ -620,18 +624,8 @@
     "
   ></div>
 
-  <div class="unicode-display-note unicode-scope-excluded">
-    <p class="unicode-display-status">
-      ※ 表示は端末により異なる場合があります
-      <span id="svgModeCurrent" class="svg-mode-current" role="status" aria-live="polite">現在：通常表示</span>
-    </p>
-    <p class="svg-mode-offer">
-      <span id="svgModePrompt">正しく表示されない場合は</span>
-      <button id="svgModeToggle" type="button" aria-pressed="false">SVG表示に切り替える</button>
-    </p>
-  </div>
+  <p class="unicode-display-note unicode-scope-excluded">※ 表示は端末により異なる場合があります</p>
   <p id="svgModeDescription" class="svg-mode-description unicode-scope-excluded" hidden>
-    SVG互換モードでは、サイトのフォントから文字の輪郭を取り出し、図形として描画します。
     <a href="./news/svg-display/">SVG表示とは？</a>
   </p>
   <p id="svgModeProgress" class="svg-mode-progress" role="status" aria-live="polite" hidden></p>
