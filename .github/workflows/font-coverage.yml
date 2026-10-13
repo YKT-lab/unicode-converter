@@ -62,12 +62,14 @@ jobs:
           node --check scripts/test-unicode18-font-index.js
           node --check scripts/test-font-assignment.js
           node --check scripts/test-mobile-font-outlines.js
+          node --check js/svg-mode.js
           node --check js/font-coverage.js
           node --check js/emoji-display.js
           node --check js/daily.js
           node --check scripts/test-unicode18-emoji-display.js
           node --check js/converter.js
           node --check js/main.js
+          python3 -m py_compile scripts/prepare-svg-fonts.py
           node --check js/bulk-input-policy.js
           node --check scripts/test-bulk-input-policy.js
           node --check js/fonts.js
@@ -128,6 +130,10 @@ jobs:
           mkdir -p _font_coverage_site
           cp index.html style.css logo.png daily.json _font_coverage_site/
           cp -R js fonts data _font_coverage_site/
+          cp node_modules/opentype.js/dist/opentype.min.js _font_coverage_site/js/opentype.min.js
+          python3 -m venv /tmp/svg-venv
+          /tmp/svg-venv/bin/pip install --quiet 'fonttools[woff]'
+          /tmp/svg-venv/bin/python scripts/prepare-svg-fonts.py _font_coverage_site
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload GitHub Pages artifact
