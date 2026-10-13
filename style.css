@@ -1237,6 +1237,46 @@ button:disabled {
 }
 
 
+/* Quiet, opt-in SVG compatibility mode for devices with missing glyphs. */
+.svg-mode-offer { margin-left: 0.35em; }
+#svgModeToggle {
+  appearance: none;
+  border: 0;
+  border-radius: 3px;
+  padding: 1px 2px;
+  background: transparent;
+  color: #515b68;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+#svgModeToggle:hover, #svgModeToggle:focus-visible {
+  color: #171e29;
+  background: #edf0f3;
+}
+.svg-mode-description, .svg-mode-progress {
+  margin: 5px 2px 0;
+  color: #636b75;
+  font-size: 11px;
+  line-height: 1.65;
+  text-align: right;
+}
+.svg-mode-description[hidden], .svg-mode-progress[hidden] { display:none; }
+.unicode-svg-outline {
+  display: inline-block;
+  height: 1.12em;
+  width: auto;
+  max-width: none;
+  vertical-align: middle;
+  overflow: visible;
+}
+#unicodeScopeGlyph .unicode-svg-outline {
+  width: 42px;
+  height: 42px;
+  max-width: 42px;
+}
+
 /* Device-specific font rendering disclaimer below Unicode → character */
 .unicode-display-note {
   margin: 7px 2px 0;

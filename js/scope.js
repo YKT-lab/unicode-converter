@@ -160,6 +160,20 @@ function getCharacterFromPoint(
   y
 ) {
 
+  // SVG mode contains paths rather than text nodes. Preserve Scope tapping.
+  const svg = document.elementFromPoint(x,y)?.closest?.("#charOutput svg.unicode-svg-outline");
+  if (svg?.dataset.codePoint) {
+    const cp = parseInt(svg.dataset.codePoint,16);
+    if (Number.isInteger(cp) && cp>=0 && cp<=0x10FFFF) {
+      return {
+        character:String.fromCodePoint(cp),
+        rect:svg.getBoundingClientRect(),
+        textNode:{parentElement:svg.parentElement},
+        svgElement:svg
+      };
+    }
+  }
+
   let textNode =
     null;
 
@@ -468,6 +482,11 @@ function fitUnicodeScopeGlyph(
     32;
 
 
+  if (unicodeScopeGlyph.querySelector("svg.unicode-svg-outline")) {
+    unicodeScopeGlyph.style.transform = "none";
+    return;
+  }
+
   const analysis =
     analyseGlyphPixels(
       character,
@@ -617,8 +636,11 @@ function showUnicodeScope(
     "none";
 
 
-  unicodeScopeGlyph.textContent =
-    character;
+  if (result.svgElement) {
+    unicodeScopeGlyph.replaceChildren(result.svgElement.cloneNode(true));
+  } else {
+    unicodeScopeGlyph.textContent = character;
+  }
 
 
   unicodeScopeCode.textContent =

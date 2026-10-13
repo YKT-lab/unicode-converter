@@ -129,7 +129,7 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=20261012-zoom-scope16"
+    href="./style.css?v=20261014-svg1"
   >
   <link rel="stylesheet" href="./pages.css?v=20261012-1">
   <link rel="stylesheet" href="./layout.css?v=20261012-shared-header2">
@@ -145,12 +145,13 @@
 <script src="./js/glyph-check.js" defer></script>
 <script src="./js/emoji-display.js?v=20261010-1" defer></script>
 <script src="./js/font-coverage.js?v=20261011-4" defer></script>
-<script src="./js/converter.js?v=20261011-3" defer></script>
-<script src="./js/random.js?v=20261009-1" defer></script>
+<script src="./js/svg-mode.js?v=20261014-1" defer></script>
+<script src="./js/converter.js?v=20261014-svg1" defer></script>
+<script src="./js/random.js?v=20261014-svg1" defer></script>
 <script src="./js/daily.js?v=20261012-two-headings" defer></script>
-<script src="./js/scope.js?v=20261013-input-exclusion18" defer></script>
+<script src="./js/scope.js?v=20261014-svg1" defer></script>
 <script src="./js/bulk-input-policy.js?v=20261010-1" defer></script>
-<script src="./js/main.js?v=20261012-close-label1" defer></script>
+<script src="./js/main.js?v=20261014-svg1" defer></script>
 
 </head>
 
@@ -620,8 +621,17 @@
   ></div>
 
   <p class="unicode-display-note">
-    ※ 表示は端末により異なる場合があります
+    ※ 表示は端末により異なる場合があります。
+    <span class="svg-mode-offer">正しく表示されない場合は
+      <button id="svgModeToggle" type="button" aria-pressed="false">SVG表示に切り替える</button>
+    </span>
   </p>
+  <p id="svgModeDescription" class="svg-mode-description" hidden>
+    SVG互換モード：サイトのフォントから文字の輪郭を読み取り、1文字ずつSVGの図形として描画します。
+    端末の内蔵フォントには依存しません。読み込みに時間がかかることや、輪郭がない文字は表示できない場合があります。
+    ランダム生成は最大100文字です。
+  </p>
+  <p id="svgModeProgress" class="svg-mode-progress" role="status" aria-live="polite" hidden></p>
 
 
   <button

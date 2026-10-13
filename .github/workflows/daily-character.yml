@@ -8,6 +8,7 @@ on:
     paths:
       - "scripts/**"
       - "js/daily.js"
+      - "js/svg-mode.js"
       - "index.html"
       - "style.css"
       - ".github/workflows/daily-character.yml"
@@ -79,6 +80,16 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
+      - name: Prepare SVG compatibility fonts
+        run: |
+          node --check js/svg-mode.js
+          node scripts/test-svg-mode.js
+          node --check js/converter.js
+          cp node_modules/opentype.js/dist/opentype.min.js js/opentype.min.js
+          python3 -m venv /tmp/svg-venv
+          /tmp/svg-venv/bin/pip install --quiet 'fonttools[woff]'
+          /tmp/svg-venv/bin/python scripts/prepare-svg-fonts.py .
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v4

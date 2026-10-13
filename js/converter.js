@@ -354,6 +354,7 @@ async function convertUnicode(
 
   hideUnicodeScope();
 
+  if (typeof updateSvgModeProgress === "function") updateSvgModeProgress("");
 
   if (
     raw.length ===
@@ -373,10 +374,12 @@ async function convertUnicode(
       );
 
 
+  let tokenIndex = 0;
   for (
     const token
     of tokens
   ) {
+    tokenIndex++;
 
     if (
       currentRun !==
@@ -471,6 +474,34 @@ async function convertUnicode(
         character
       );
 
+
+    if (typeof isSvgModeEnabled === "function" && isSvgModeEnabled()) {
+      // Never briefly show a device's missing-glyph symbol while loading.
+      inner.textContent = "";
+      wrapper.classList.add("loading-character");
+      charOutput.appendChild(wrapper);
+      updateSvgModeProgress("SVG描画中: " + tokenIndex + " / " + tokens.length);
+      await yieldToBrowser();
+      if (currentRun !== unicodeRun) return;
+      try {
+        const result = await createSvgGlyph(codePoint, character);
+        if (currentRun !== unicodeRun || !isSvgModeEnabled()) return;
+        wrapper.classList.remove("loading-character");
+        if (result.svg) {
+          inner.textContent = "";
+          inner.appendChild(result.svg);
+          wrapper.classList.add("svg-character");
+        } else {
+          wrapper.replaceWith(makeStatusSpan(result.reason + ": U+" + hex));
+        }
+      } catch (error) {
+        if (currentRun !== unicodeRun) return;
+        console.warn("SVG render failed:", error);
+        wrapper.replaceWith(makeStatusSpan("SVG読込失敗: U+" + hex));
+      }
+      await yieldToBrowser();
+      continue;
+    }
 
     const fontNames =
       getWebFontNames(
@@ -640,5 +671,8 @@ async function convertUnicode(
 
 
     await yieldToBrowser();
+  }
+  if (currentRun === unicodeRun && typeof updateSvgModeProgress === "function") {
+    updateSvgModeProgress("");
   }
 }
