@@ -57,6 +57,8 @@ jobs:
           node scripts/test-svg-publish-guard.js
           node scripts/test-approved-svg-publish.js
           node scripts/test-pages-unification.js
+          node scripts/test-daily-evidence.js
+          node scripts/test-daily-han-two-facts.js
           # No font-derived outline shards are approved for public distribution.
           test ! -e svg-data/active.json
       - name: Rebuild local font audit before packaging
