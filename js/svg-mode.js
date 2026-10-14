@@ -166,7 +166,6 @@ function refreshSvgModePresentation() {
   if (svgModeCurrent) {
     svgModeCurrent.textContent = svgModeEnabled ? "現在：SVG表示" : "現在：通常表示";
   }
-  if (svgModeDescription) svgModeDescription.hidden = !svgModeEnabled;
 }
 function hasUnicodeInputForModeSwitch() {
   const singleEntered = typeof singleHexDigits !== "undefined"
