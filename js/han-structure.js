@@ -30,6 +30,23 @@
     }
     return result;
   }
-  if (typeof module !== "undefined" && module.exports) module.exports = {formatHanStructure};
-  else root.formatDailyHanStructure = formatHanStructure;
+  function getHanDailyFacts(info) {
+    if (!info || typeof info !== "object" || !info.han
+        || typeof info.han !== "object" || !info.sections) return null;
+    const meaning = typeof info.sections.meaning === "string"
+      ? info.sections.meaning.trim() : "";
+    const structure = formatHanStructure(info.han.strokes);
+    // Do not invent meanings, and do not show an empty fact just to fill a slot.
+    if (!meaning || !structure) return null;
+    return [
+      {key: "meaning", label: "意味", text: meaning},
+      {key: "structure", label: "部首・画数", text: structure}
+    ];
+  }
+  const api = {formatHanStructure, getHanDailyFacts};
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else {
+    root.formatDailyHanStructure = formatHanStructure;
+    root.getHanDailyFacts = getHanDailyFacts;
+  }
 })(typeof globalThis !== "undefined" ? globalThis : this);
