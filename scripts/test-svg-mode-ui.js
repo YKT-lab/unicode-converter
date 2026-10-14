@@ -71,7 +71,7 @@ function simulate(opts={}) {
 const empty=simulate();
 assert.equal(empty.ctx.isSvgModeEnabled(),false,"Normal must remain the initial mode");
 assert.equal(empty.nodes.svgModeCurrent.textContent,"現在：通常表示");
-assert.equal(empty.nodes.svgModeDescription.hidden,true);
+assert.equal(empty.nodes.svgModeDescription.hidden,false);
 empty.click();
 assert.equal(empty.ctx.isSvgModeEnabled(),true);
 assert.equal(empty.keys.get("unicode-converter-svg-display"),"svg");
@@ -110,6 +110,7 @@ for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescrip
 assert(home.includes('class="unicode-actions unicode-scope-excluded"'));
 assert(home.includes('class="svg-mode-switch"'));
 assert(home.includes('<a href="./news/svg-display/">SVG表示とは？</a>'));
+assert(!/id="svgModeDescription"[^>]*\shidden\b/.test(home),"SVG help must always be visible");
 assert(!home.includes("SVG互換モードでは、サイトのフォントから"));
 assert(home.indexOf('id="svgModeToggle"') < home.indexOf('id="charOutput"'));
 assert(scope.includes(".unicode-scope-excluded"));
