@@ -27,6 +27,8 @@ function simulate(opts={}) {
   const keys = new Map();
   if (opts.stored) keys.set("unicode-converter-svg-display",opts.stored);
   const modeToggle=makeEl(), description=makeEl(), current=makeEl();
+  // Mirror the markup: the SVG help link is visible in both modes.
+  description.hidden=false;
   const progress=makeEl(), custom=makeEl("150"), randomLimit=makeEl();
   const nodes={svgModeToggle:modeToggle,svgModeDescription:description,
     svgModeCurrent:current,svgModeProgress:progress,
