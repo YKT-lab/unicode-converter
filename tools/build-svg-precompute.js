@@ -23,12 +23,17 @@ const args=Object.fromEntries(process.argv.slice(2).map(arg=>{
   if(!m)throw Error("Invalid argument: "+arg);
   return [m[1],m[2]];
 }));
-for(const key of Object.keys(args))if(!["out","report","only"].includes(key))
+for(const key of Object.keys(args))if(!["out","report","only","approved-font"].includes(key))
   throw Error("Unknown argument: "+key);
 if(!args.out||!args.report)throw Error("Provide --out and --report");
 const OUT=path.resolve(args.out),REPORT=path.resolve(args.report);
 if(OUT===ROOT||OUT.startsWith(ROOT+path.sep))
   throw Error("Refusing to save copyrighted outline bundles inside the repository");
+const approvedFont=args["approved-font"]||null;
+if(approvedFont&&(!/^fonts\/[\w.-]+(?:\/[\w.-]+)*\.(?:ttf|otf|woff2?)$/i.test(approvedFont)||args.only))
+  throw Error("Approved build needs one repository font and no --only option");
+if(approvedFont&&!coverage.font_families.some(f=>f.file===approvedFont))
+  throw Error("Approved source absent from font index: "+approvedFont);
 const sample=args.only?
   new Set(args.only.split(",").map(s=>{
     if(!/^[0-9a-f]{1,6}$/i.test(s))throw Error("Invalid sample code point "+s);
@@ -56,6 +61,7 @@ for(const [a,b,index] of coverage.ranges) {
   }
 }
 const order=byFont.map((points,id)=>({id,points}))
+  .filter(item=>!approvedFont||coverage.font_families[item.id].file===approvedFont)
   .sort((a,b)=>b.points.length-a.points.length||a.id-b.id);
 const solved=new Uint8Array(0x110000),failures=[],fontsUsed=[];
 let count=0,rawPaths=0;
@@ -175,14 +181,16 @@ pages.sort((a,b)=>a.start-b.start);
 const digest=hash(pages.map(p=>p.sha256).join("\n")).slice(0,16);
 const manifest={schema_version:2,unicode_version:"18.0.0",
   build_id:digest,bucket_size:BUCKET,scanned_fonts:coverage.font_families.length,
-  glyphs:count,pages};
+  source_font:approvedFont,glyphs:count,pages};
 const manifestBody=JSON.stringify(manifest,null,2)+"\n";
 fs.writeFileSync(path.join(OUT,"manifest.json"),manifestBody);
 const expected=classifier.counts.svg_outline;
-const allPresent=!sample&&count===expected;
+const allPresent=!sample&&!approvedFont&&count===expected;
 const report={
   schema_version:1,unicode_version:"18.0.0",
-  mode:sample?"sample":"full",
+  mode:sample?"sample":approvedFont?"approved":"full",
+  approved_only:!!approvedFont,
+  approved_font:approvedFont,
   sample_requested:sample?[...sample].map(hex):null,
   expected_outline_count:sample?null:expected,
   generated_outline_count:count,
@@ -213,4 +221,6 @@ console.log("SVG_PRECOMPUTE_METRICS "+JSON.stringify({
   adaptive_splits:splitCount,oversized_shards_unsplittable:unsplittableCount,
   seconds:report.work_duration_seconds,build_id:digest
 }));
-if(!sample&&!allPresent)throw Error("Failed full outline coverage: "+count+" != "+expected);
+if(!sample&&!approvedFont&&!allPresent)throw Error("Failed full outline coverage: "+count+" != "+expected);
+if(approvedFont&&(count<=0||fontsUsed.length!==1||fontsUsed[0].font!==approvedFont||fontsUsed[0].contributed!==count))
+  throw Error("Empty or inconsistent approved font output");
