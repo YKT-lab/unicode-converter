@@ -1,0 +1,74 @@
+name: Test Licensed SVG Outline Release
+
+# Never deploy from feature branches. Validate real approved font only.
+on:
+  push:
+    branches: [feature/svg-approved-outlines-release]
+  pull_request:
+    paths:
+      - "tools/build-svg-precompute.js"
+      - "scripts/publish-svg-bundle.js"
+      - "scripts/test-approved-svg-publish.js"
+      - "scripts/test-svg-publish-guard.js"
+      - "docs/svg-font-license-approvals.json"
+      - "js/svg-mode.js"
+      - ".github/workflows/site-deploy.yml"
+      - ".github/workflows/test-svg-approved-release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install fontkit and parser
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Syntax and unchanged legacy SVG tests
+        run: |
+          node --check tools/build-svg-precompute.js
+          node --check scripts/publish-svg-bundle.js
+          node --check js/svg-mode.js
+          node scripts/test-svg-mode.js
+          node scripts/test-svg-mode-ui.js
+          node scripts/test-svg-precomputed-loader.js
+          node scripts/test-svg-publish-guard.js
+          node scripts/test-approved-svg-publish.js
+          node scripts/test-pages-unification.js
+      - name: Generate actual approved glyph contours locally
+        run: |
+          node tools/build-svg-precompute.js \
+            --approved-font=fonts/han/WenJinMinchoP3-Regular.otf \
+            --out="$RUNNER_TEMP/svg-approved" \
+            --report="$RUNNER_TEMP/svg-approved-metrics.json"
+      - name: Validate real release and copyright notice
+        run: |
+          node scripts/publish-svg-bundle.js \
+            --bundle="$RUNNER_TEMP/svg-approved" \
+            --metrics="$RUNNER_TEMP/svg-approved-metrics.json" \
+            --index=data/unicode18_font_coverage_index.json \
+            --review=docs/svg-font-license-approvals.json \
+            --dest="$RUNNER_TEMP/temporary-site/svg-data"
+          node - "$RUNNER_TEMP/temporary-site/svg-data" "$RUNNER_TEMP/svg-approved-metrics.json" <<'NODE'
+          const fs=require("node:fs"),path=require("node:path"),assert=require("node:assert/strict");
+          const folder=process.argv[2],r=JSON.parse(fs.readFileSync(process.argv[3],"utf8"));
+          const a=JSON.parse(fs.readFileSync(path.join(folder,"active.json"),"utf8"));
+          const m=JSON.parse(fs.readFileSync(path.join(folder,a.manifest),"utf8"));
+          const release=path.join(folder,a.build_id);
+          const notices=JSON.parse(fs.readFileSync(path.join(release,"SOURCES.json"),"utf8"));
+          assert.equal(m.glyphs,r.generated_outline_count);
+          assert(r.generated_outline_count>0);
+          assert.equal(r.mode,"approved");
+          assert.equal(m.source_font,"fonts/han/WenJinMinchoP3-Regular.otf");
+          assert.deepEqual(notices.sources.map(x=>x.notice),["LICENSE-1.md"]);
+          assert.match(fs.readFileSync(path.join(release,"LICENSE-1.md"),"utf8"),/SIL OPEN FONT LICENSE/);
+          assert(!r.font_contributions.some(x=>x.font!==m.source_font));
+          console.log("Validated real licensed SVG release:",r.generated_outline_count,"contours",m.pages.length,"shards");
+          NODE
+          echo "No generated outlines were uploaded or committed by this test."
