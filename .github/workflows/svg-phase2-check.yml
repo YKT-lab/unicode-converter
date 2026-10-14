@@ -1,0 +1,68 @@
+name: SVG Phase 2 Integration Checks
+
+on:
+  push:
+    branches: [feature/svg-precompute-phase2-integration]
+    paths:
+      - "js/svg-mode.js"
+      - "js/svg-precomputed-loader.js"
+      - "scripts/publish-svg-bundle.js"
+      - "scripts/test-svg-precomputed-loader.js"
+      - "scripts/test-svg-publish-guard.js"
+      - ".github/workflows/svg-phase2-check.yml"
+      - "index.html"
+  pull_request:
+    paths:
+      - "js/svg-mode.js"
+      - "js/svg-precomputed-loader.js"
+      - "scripts/publish-svg-bundle.js"
+      - "scripts/test-svg-precomputed-loader.js"
+      - "scripts/test-svg-publish-guard.js"
+      - ".github/workflows/svg-phase2-check.yml"
+      - "index.html"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Check script syntax
+        run: |
+          node --check js/svg-mode.js
+          node --check js/svg-precomputed-loader.js
+          node --check scripts/publish-svg-bundle.js
+          node --check scripts/test-svg-precomputed-loader.js
+          node --check scripts/test-svg-publish-guard.js
+      - name: Test original SVG functionality
+        run: |
+          node scripts/test-svg-mode.js
+          node scripts/test-svg-mode-ui.js
+      - name: Test new SVG loader and publish safety
+        run: |
+          node scripts/test-svg-precomputed-loader.js
+          node scripts/test-svg-publish-guard.js
+      - name: Verify real font shard sample without publishing
+        run: |
+          node tools/build-svg-precompute.js \
+            --out="$RUNNER_TEMP/svg-smoke" \
+            --report="$RUNNER_TEMP/svg-smoke-report.json" \
+            --only=0041,14354,109EB
+          node - "$RUNNER_TEMP/svg-smoke-report.json" <<'NODE'
+          const assert=require("node:assert/strict"),fs=require("node:fs");
+          const report=JSON.parse(fs.readFileSync(process.argv[2]));
+          assert.equal(report.generated_outline_count,3);
+          assert.equal(report.mode,"sample");
+          console.log("Verified private 3-glyph sample");
+          NODE
