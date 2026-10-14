@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-14",
-    "category": "ancient",
-    "codePoint": "14354",
-    "character": "𔍔",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M1069 326L1048 340L1011 266ZM1019 253L1010 262L1007 257ZM206 257L196 254L208 256Q218 197 261 151.5Q304 106 362.5 74.5Q421 43 486 26.5Q551 10 605 10Q661 10 724.5 27Q788 44 844.5 75.5Q901 107 944.5 152Q988 197 1005 254L1005 253Q1004 251 1001 249Q998 247 996 243L230 243Q228 247 227 248Q226 248 224 249L203 266ZM210 319Q210 339 196.5 350.5Q183 362 163 362Q146 362 133 350Q120 338 120 321Q120 304 133 292.5Q146 281 163 281Q181 281 195.5 291.5Q210 302 210 319ZM230 319Q230 297 215 282L234 267L990 267Q995 278 1002 296.5Q1009 315 1017 331.5Q1025 348 1033.5 358Q1042 368 1050 363Q1074 346 1085 339Q1096 332 1093 323.5Q1090 315 1073 299.5Q1056 284 1025 251L1026 251Q1008 189 962 140.5Q916 92 856 58.5Q796 25 729.5 7.5Q663 -10 605 -10Q569 -10 526 -2.5Q483 5 439.5 19.5Q396 34 354 56Q312 78 278 107Q244 136 220 172Q196 208 188 251L183 264Q172 261 163 261Q139 261 119.5 278Q100 295 100 321Q100 347 119 364.5Q138 382 163 382Q190 382 210 365Q230 348 230 319Z",
-      "viewBox": "20.508571428571415 -461.49142857142857 1152.6257142857146 550.9828571428571"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-14354",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトのヒエログリフ体系において、特定の音価を表すために用いられた象形記号の一つです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "音素文字として機能します。",
-        "etymology": "",
-        "history": "",
-        "structure": "前方に結び目のような輪があり後ろに上向きの線があるバスケット状のバッグ、あるいは前が結ばれたウシの子宮のような形状をしています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A basket-shaped bag with a tied off end at the front, resembling a loop, with an upwards stroke at the back / A uterus of a cow, tied off at the front, with an upward stroke at the back.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Phonemogram",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "ḥm",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "phonemogram : ḥm",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "F143C",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "V-15-012",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-15",
     "category": "han",
     "codePoint": "6EE9",
@@ -278,6 +152,124 @@
         {
           "name": "Unicode Unihan",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-16",
+    "category": "math",
+    "codePoint": "29E1",
+    "character": "⧡",
+    "font": "Noto Sans Math",
+    "svg": {
+      "path": "M51 237L51 271L521 614L521 237ZM207 305L453 305L453 486ZM51 102L51 173L521 173L521 102Z",
+      "viewBox": "10.04 -654.96 551.92 593.92"
+    },
+    "info": {
+      "category": "math",
+      "unicodeName": "INCREASES AS",
+      "block": "Miscellaneous Mathematical Symbols-B",
+      "script": "Common",
+      "age": "3.2",
+      "generalCategory": "Sm",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": {
+        "isMath": true,
+        "bracket": null,
+        "mirroredCodePoint": null
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": true,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "数学的な関係を表すために用いられるUnicodeの記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "Unicodeの名称リストにおいて、U+22B4（normal subgroup of or equal to）に関連文字として言及されています。",
+        "culture": "",
+        "unicodeInfo": "Unicodeの派生コアプロパティにおいて、数学記号としてのプロパティが定義されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:crossReference",
+          "text": "(normal subgroup of or equal to - 22B4)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:property",
+          "text": "Math",
+          "source": "Unicode DerivedCoreProperties",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode NamesList and Mathematical Characters",
+          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-22/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
