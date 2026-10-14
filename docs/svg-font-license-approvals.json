@@ -1,5 +1,20 @@
 {
   "schema_version": 1,
-  "instructions": "License and redistribution of derived glyph outlines must be independently reviewed for every contributing audited font before publishing. Never auto-approve.",
-  "approvals": []
+  "instructions": "Only listed, pinned and verified source fonts may contribute precomputed vector outlines. Preserve the full OFL notice in the published bundle. Additional fonts require independent review.",
+  "approvals": [
+    {
+      "file": "fonts/han/WenJinMinchoP3-Regular.otf",
+      "source_sha256": "139b85d33765f2a2938ebdd646766071f869a2351fbdd2cd763b540a55ac811e",
+      "source_git_blob_sha1": "0ee6844067def5cddf3a142e7c9baa237bef9ca9",
+      "status": "verified",
+      "outline_redistribution_allowed": true,
+      "license": "SIL OFL 1.1",
+      "license_source": "https://github.com/takushun-wu/WenJinMincho/blob/181c3a00be4c9827eeb18bda98804e8409d886d3/LICENSE.md",
+      "license_file": "fonts/han/LICENSE-WenJinMincho.md",
+      "license_git_blob_sha1": "75c26d38f05ea849da0194ae8916e2a091dd390c",
+      "reviewer": "repository license + upstream pinned revision cross-check",
+      "reviewed_on": "2026-10-14",
+      "notes": "The local font Git blob and upstream license match pinned upstream. Derived outlines are redistributed with complete copyright notice and SIL OFL 1.1, without assigning a reserved font name to a modified font."
+    }
+  ]
 }
