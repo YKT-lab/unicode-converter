@@ -1,0 +1,54 @@
+name: Unicode 18 SVG Capability Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/classify-unicode-svg.js"
+      - ".github/workflows/unicode-svg-capability-audit.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Classify all assigned Unicode code points
+        run: node tools/classify-unicode-svg.js
+      - name: Publish audit report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unicode18-svg-classification
+          path: |
+            data/unicode18_svg_classification.json
+            data/unicode18_svg_classification.md
+          retention-days: 30
+      - name: Commit reproducible classification
+        run: |
+          cp data/unicode18_svg_classification.json /tmp/unicode-svg-report.json
+          cp data/unicode18_svg_classification.md /tmp/unicode-svg-report.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git reset --hard HEAD
+          git checkout --detach origin/main
+          cp /tmp/unicode-svg-report.json data/unicode18_svg_classification.json
+          cp /tmp/unicode-svg-report.md data/unicode18_svg_classification.md
+          git add data/unicode18_svg_classification.json data/unicode18_svg_classification.md
+          if git diff --cached --quiet; then
+            echo "Classification already current"
+          else
+            git commit -m "Record Unicode 18 SVG classification"
+            git push origin HEAD:main
+          fi
