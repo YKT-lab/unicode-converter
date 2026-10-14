@@ -3104,3 +3104,8 @@ body,
 body * {
   touch-action: manipulation;
 }
+
+/* If a Han glyph has two substantive facts, hide the generic overview. */
+#dailyInfo > .daily-info-section[hidden] + #dailyDetails {
+  margin-top: 0;
+}
