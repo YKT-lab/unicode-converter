@@ -127,8 +127,37 @@ for(let n=0;n<order.length;n++){
   console.log("Font "+(n+1)+"/"+order.length+" "+entry.file+
     " outlines="+contributed+" total="+count);
 }
-const pages=[],pageCounts=[],topHeavy=[];
+const pages=[],topHeavy=[];
 let totalJsonBytes=0,totalGzipBytes=0,maxJsonBytes=0,maxGzipBytes=0;
+let splitCount=0,unsplittableCount=0;
+const TARGET_GZIP_BYTES=192*1024;
+function storeAdaptive(page,from,to,entries,suffix=""){
+  if(!entries.length)return;
+  const sorted=Object.fromEntries(entries);
+  const body=Buffer.from(JSON.stringify({v:1,g:sorted})+"\n");
+  const gz=zlib.gzipSync(body,{level:9});
+  if(gz.length>TARGET_GZIP_BYTES && from<to && entries.length>1){
+    splitCount++;
+    const half=Math.floor((from+to)/2);
+    const left=entries.filter(([key])=>parseInt(key,16)<=half);
+    const right=entries.filter(([key])=>parseInt(key,16)>half);
+    storeAdaptive(page,from,half,left,suffix+"a");
+    storeAdaptive(page,half+1,to,right,suffix+"b");
+    return;
+  }
+  const file="page-"+page+(suffix?"-"+suffix:"")+".json";
+  fs.writeFileSync(path.join(OUT,file),body);
+  const info={page,start:from,end:to,file,count:entries.length,bytes:body.length,
+    gzip_bytes:gz.length,sha256:hash(body)};
+  pages.push(info);
+  totalJsonBytes+=body.length;totalGzipBytes+=gz.length;
+  maxJsonBytes=Math.max(maxJsonBytes,body.length);
+  maxGzipBytes=Math.max(maxGzipBytes,gz.length);
+  if(info.gzip_bytes>TARGET_GZIP_BYTES){
+    topHeavy.push({page,file,gzip_bytes:info.gzip_bytes,count:entries.length});
+    unsplittableCount++;
+  }
+}
 for(const page of [...temporaryPages].sort()){
   const lines=fs.readFileSync(path.join(WORK,page+".jsonl"),"utf8").trim().split("\n");
   const glyphs={};
@@ -138,21 +167,13 @@ for(const page of [...temporaryPages].sort()){
     if(Object.hasOwn(glyphs,key))throw Error("Duplicate outline "+key);
     glyphs[key]=[box,d];
   }
-  const sorted=Object.fromEntries(Object.entries(glyphs).sort((a,b)=>parseInt(a[0],16)-parseInt(b[0],16)));
-  const body=Buffer.from(JSON.stringify({v:1,g:sorted})+"\n");
-  const gz=zlib.gzipSync(body,{level:9});
-  const file="page-"+page+".json";
-  fs.writeFileSync(path.join(OUT,file),body);
-  const info={page,file,count:Object.keys(sorted).length,bytes:body.length,
-    gzip_bytes:gz.length,sha256:hash(body)};
-  pages.push(info);pageCounts.push(info.count);
-  totalJsonBytes+=body.length;totalGzipBytes+=gz.length;
-  maxJsonBytes=Math.max(maxJsonBytes,body.length);
-  maxGzipBytes=Math.max(maxGzipBytes,gz.length);
-  if(info.gzip_bytes>192*1024)topHeavy.push({page,gzip_bytes:info.gzip_bytes});
+  const entries=Object.entries(glyphs).sort((a,b)=>parseInt(a[0],16)-parseInt(b[0],16));
+  const first=parseInt(page,16)*BUCKET;
+  storeAdaptive(page,first,first+BUCKET-1,entries);
 }
+pages.sort((a,b)=>a.start-b.start);
 const digest=hash(pages.map(p=>p.sha256).join("\n")).slice(0,16);
-const manifest={schema_version:1,unicode_version:"18.0.0",
+const manifest={schema_version:2,unicode_version:"18.0.0",
   build_id:digest,bucket_size:BUCKET,scanned_fonts:coverage.font_families.length,
   glyphs:count,pages};
 const manifestBody=JSON.stringify(manifest,null,2)+"\n";
@@ -169,6 +190,8 @@ const report={
   local_font_files:coverage.font_families.length,
   data_shards:pages.length,
   bucket_size:BUCKET,
+  oversized_shards_unsplittable:unsplittableCount,
+  adaptive_splits:splitCount,
   uncompressed_bytes:totalJsonBytes,
   gzip_estimated_bytes:totalGzipBytes,
   manifest_bytes:Buffer.byteLength(manifestBody),
@@ -187,6 +210,7 @@ console.log("SVG_PRECOMPUTE_METRICS "+JSON.stringify({
   mode:report.mode,glyphs:count,expected,
   page_count:pages.length,bytes:totalJsonBytes,
   gzip_estimated_bytes:totalGzipBytes,max_gzip_bytes:maxGzipBytes,
+  adaptive_splits:splitCount,oversized_shards_unsplittable:unsplittableCount,
   seconds:report.work_duration_seconds,build_id:digest
 }));
 if(!sample&&!allPresent)throw Error("Failed full outline coverage: "+count+" != "+expected);
