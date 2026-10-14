@@ -10,7 +10,7 @@ fs.writeFileSync(path.join(bundle,"page-0000.json"),body);
 const id="0123456789abcdef",p={start:0,end:127,file:"page-0000.json",
  count:1,bytes:body.length,sha256:hash(body)};
 fs.writeFileSync(path.join(bundle,"manifest.json"),JSON.stringify({
- schema_version:2,unicode_version:"18.0.0",build_id:id,glyphs:1,pages:[p]}));
+ schema_version:2,unicode_version:"18.0.0",build_id:id,bucket_size:128,scanned_fonts:1,glyphs:167875,pages:[p]}));
 const metrics={mode:"full",audit_matched:true,generated_outline_count:167875,
  build_id:id,local_font_files:1,data_shards:1,
  font_contributions:[{font:"fonts/example.ttf",contributed:1}]};
