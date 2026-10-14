@@ -1,0 +1,92 @@
+name: SVG Precompute Size Benchmark
+
+# Does NOT publish or upload generated glyph outline data.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/svg-precompute-phase1
+    paths:
+      - "tools/build-svg-precompute.js"
+      - ".github/workflows/svg-precompute-benchmark.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install pinned fontkit
+        run: npm install --no-audit --no-fund --package-lock=false
+
+      - name: Check precompute script syntax
+        run: node --check tools/build-svg-precompute.js
+
+      - name: Small real-font smoke test
+        run: |
+          node tools/build-svg-precompute.js \
+            --out="$RUNNER_TEMP/svg-sample" \
+            --report="$RUNNER_TEMP/svg-sample-metrics.json" \
+            --only=0041,14354,109EB
+          node - "$RUNNER_TEMP/svg-sample-metrics.json" <<'NODE'
+          const fs = require("node:fs");
+          const assert = require("node:assert/strict");
+          const r = JSON.parse(fs.readFileSync(process.argv[2]));
+          assert.equal(r.mode, "sample");
+          assert.equal(r.generated_outline_count, 3, "All 3 sample glyphs must have outlines");
+          console.log("SVG sample benchmark:", r.generated_outline_count, "glyphs");
+          NODE
+
+      - name: Generate full Unicode 18 SVG outline dataset locally
+        run: |
+          node --max-old-space-size=6144 tools/build-svg-precompute.js \
+            --out="$RUNNER_TEMP/svg-precomputed" \
+            --report="$RUNNER_TEMP/svg-full-metrics.json"
+
+      - name: Validate actual output and compare manifest counts
+        run: |
+          node - "$RUNNER_TEMP/svg-precomputed" "$RUNNER_TEMP/svg-full-metrics.json" <<'NODE'
+          const fs=require("node:fs");
+          const path=require("node:path");
+          const assert=require("node:assert/strict");
+          const folder=process.argv[2];
+          const r=JSON.parse(fs.readFileSync(process.argv[3]));
+          const m=JSON.parse(fs.readFileSync(path.join(folder,"manifest.json")));
+          assert.equal(r.generated_outline_count,167875);
+          assert.equal(r.audit_matched,true);
+          assert.equal(m.glyphs,r.generated_outline_count);
+          assert.equal(m.pages.length,r.data_shards);
+          assert.equal(m.bucket_size,128);
+          for(const p of m.pages){
+            const obj=JSON.parse(fs.readFileSync(path.join(folder,p.file)));
+            assert.equal(Object.keys(obj.g).length,p.count);
+            assert(p.bytes>0&&p.gzip_bytes>0);
+          }
+          console.log("Validated",m.glyphs,"glyphs in",m.pages.length,"shards");
+          console.log("Uncompressed bytes:",r.uncompressed_bytes,
+            "estimated gzip bytes:",r.gzip_estimated_bytes);
+          NODE
+
+      - name: Export summary metrics only
+        run: |
+          mkdir -p "$RUNNER_TEMP/svg-allowed-report"
+          cp "$RUNNER_TEMP/svg-full-metrics.json" "$RUNNER_TEMP/svg-allowed-report/"
+          cp "$RUNNER_TEMP/svg-sample-metrics.json" "$RUNNER_TEMP/svg-allowed-report/"
+          echo "Glyph outlines are intentionally NOT uploaded."
+
+      - name: Upload metrics only (never glyph data)
+        uses: actions/upload-artifact@v4
+        with:
+          name: svg-precompute-size-report
+          path: ${{ runner.temp }}/svg-allowed-report/
+          retention-days: 14
