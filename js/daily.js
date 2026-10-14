@@ -813,19 +813,25 @@ function renderDailyDetails(info) {
           ? info.facts.filter(f => f.kind === "daily:fact" && f.text)
               .map(f => f.text).join(" ") : ""
       };
-  for (const [key,label] of DAILY_SECTION_HEADINGS) {
-    const value = sections[key];
-    if (typeof value !== "string" || !value.trim()) continue;
+  // Han characters with documented meaning and exact Unihan radical/strokes
+  // need only these two useful sections. No generic introduction paragraph.
+  const hanFacts = typeof getHanDailyFacts === "function"
+    ? getHanDailyFacts(info) : null;
+  if (dailySummary.parentElement) dailySummary.parentElement.hidden = !!hanFacts;
+  const facts = hanFacts || DAILY_SECTION_HEADINGS.map(([key,label]) =>
+    ({key,label,text:sections[key]})
+  );
+  for (const {label,text} of facts) {
+    if (typeof text !== "string" || !text.trim()) continue;
     const block = document.createElement("div");
     block.className = "daily-info-section";
     const heading = document.createElement("div");
     heading.className = "daily-info-heading";
     heading.textContent = label;
     const body = document.createElement("p");
-    body.textContent = value.trim();
+    body.textContent = text.trim();
     block.append(heading,body);
     dailyDetails.appendChild(block);
-    // The public card must never display more than two additional headings.
     if (dailyDetails.childElementCount === 2) break;
   }
 }
@@ -845,7 +851,7 @@ function resetDailyInfo() {
 
 
   dailySummary.replaceChildren();
-
+  if (dailySummary.parentElement) dailySummary.parentElement.hidden = false;
 
   dailyDetails.replaceChildren();
   resetDailyLinguisticMeta();

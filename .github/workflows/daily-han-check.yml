@@ -1,0 +1,39 @@
+name: Daily Han Two Facts Checks
+
+on:
+  push:
+    branches: [feature/daily-han-two-facts]
+  pull_request:
+    paths:
+      - "js/daily.js"
+      - "js/han-structure.js"
+      - "scripts/test-daily-han-two-facts.js"
+      - "scripts/generate-described-daily.js"
+      - "scripts/daily-evidence.js"
+      - "index.html"
+      - "style.css"
+      - ".github/workflows/daily-han-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate JavaScript syntax
+        run: |
+          node --check js/daily.js
+          node --check js/han-structure.js
+          node --check scripts/generate-described-daily.js
+          node --check scripts/daily-evidence.js
+      - name: Regression test official Unicode facts and daily card
+        run: |
+          node scripts/test-daily-han-two-facts.js
+          node scripts/test-daily-evidence.js
