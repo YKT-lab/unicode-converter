@@ -118,8 +118,8 @@ function makeSvgOutline(font, codePoint, character) {
   svg.appendChild(outline);
   return svg;
 }
-/* Precomputed SVG release flag. Keep OFF until audited vectors are published. */
-const SVG_PRECOMPUTED_RELEASE_ENABLED = false;
+/* License-approved subset only. Missing/unlicensed glyphs use the proven font renderer. */
+const SVG_PRECOMPUTED_RELEASE_ENABLED = true;
 let precomputedSvgClient = null;
 function getPrecomputedSvgClient() {
   if (!SVG_PRECOMPUTED_RELEASE_ENABLED || !window.UnicodePrecomputedSvg) return null;
@@ -133,7 +133,13 @@ function getPrecomputedSvgClient() {
 }
 async function createSvgGlyph(codePoint, character) {
   const client = getPrecomputedSvgClient();
-  if (client) return client.getGlyph(codePoint);
+  if (client) {
+    const precomputed = await client.getGlyph(codePoint);
+    if (precomputed.svg) return precomputed;
+    // The approved bundle intentionally contains only one font. Always
+    // preserve support for other scripts and transient network failures.
+    // Fallback is the previously shipped OpenType SVG renderer below.
+  }
 
   const index = await getUnicodeCoverageIndex();
   if (!index) return {svg:null,reason:"SVGデータ未取得"};
