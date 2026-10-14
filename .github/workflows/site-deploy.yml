@@ -55,6 +55,7 @@ jobs:
           node scripts/test-svg-mode-ui.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
+          node scripts/test-approved-svg-publish.js
           node scripts/test-pages-unification.js
           # No font-derived outline shards are approved for public distribution.
           test ! -e svg-data/active.json
@@ -82,8 +83,19 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/svg-font-converter"
           "$RUNNER_TEMP/svg-font-converter/bin/pip" install --quiet 'fonttools[woff]'
           "$RUNNER_TEMP/svg-font-converter/bin/python" scripts/prepare-svg-fonts.py _site
-          # Avoid accidentally shipping generated outlines before license review.
-          test ! -e _site/svg-data/active.json
+          # Generate only revision-pinned, license-approved outlines and
+          # gate publication on source SHA, OFL license, and shard integrity.
+          node tools/build-svg-precompute.js \
+            --approved-font=fonts/han/WenJinMinchoP3-Regular.otf \
+            --out="$RUNNER_TEMP/svg-approved" \
+            --report="$RUNNER_TEMP/svg-approved-metrics.json"
+          node scripts/publish-svg-bundle.js \
+            --bundle="$RUNNER_TEMP/svg-approved" \
+            --metrics="$RUNNER_TEMP/svg-approved-metrics.json" \
+            --index=data/unicode18_font_coverage_index.json \
+            --review=docs/svg-font-license-approvals.json \
+            --dest=_site/svg-data
+          test -s _site/svg-data/active.json
           test -s _site/js/opentype.min.js
           test -s _site/js/svg-precomputed-loader.js
           test -s _site/data/unicode18_font_coverage_index.json
