@@ -1,0 +1,30 @@
+"use strict";
+const assert=require("node:assert/strict");
+const fs=require("node:fs"),path=require("node:path");
+const dir=path.join(__dirname,"..",".github","workflows");
+const files=fs.readdirSync(dir).filter(x=>/\.ya?ml$/.test(x));
+const deploy=[],uploads=[];
+for(const file of files){
+ const data=fs.readFileSync(path.join(dir,file),"utf8");
+ if(/uses:\s*actions\/deploy-pages@/.test(data))deploy.push(file);
+ if(/uses:\s*actions\/upload-pages-artifact@/.test(data))uploads.push(file);
+}
+assert.deepEqual(deploy,["site-deploy.yml"],"Exactly one Pages deployment workflow");
+assert.deepEqual(uploads,["site-deploy.yml"],"Exactly one Pages upload workflow");
+const site=fs.readFileSync(path.join(dir,"site-deploy.yml"),"utf8");
+const daily=fs.readFileSync(path.join(dir,"daily-character.yml"),"utf8");
+const fonts=fs.readFileSync(path.join(dir,"font-coverage.yml"),"utf8");
+assert.match(site,/workflow_run:/);
+assert.match(site,/Daily Unicode Character/);
+assert.match(site,/Unicode 18 Font Coverage Build/);
+assert.match(site,/workflow_dispatch:/);
+assert.match(site,/ref: main/);
+assert.match(site,/group: pages/);
+assert.match(site,/node scripts\/test-svg-publish-guard\.js/);
+assert.match(site,/test ! -e _site\/svg-data\/active\.json/);
+assert.match(fonts,/git push origin HEAD:main/);
+assert.match(daily,/schedule:/);
+assert(!/^\s{2}push:/m.test(daily),"Daily must not redraw on ordinary source pushes");
+assert(!/actions\/upload-pages-artifact|actions\/deploy-pages/.test(fonts));
+assert(!/actions\/upload-pages-artifact|actions\/deploy-pages/.test(daily));
+console.log("PASS: Single Pages deployer, daily schedule retained, audited build retained");

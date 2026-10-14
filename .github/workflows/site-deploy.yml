@@ -1,0 +1,98 @@
+name: Unicode Converter Site Deployment
+
+# The ONLY custom workflow permitted to deploy GitHub Pages.
+# Required repository setting: Settings > Pages > Source = GitHub Actions.
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows:
+      - Unicode 18 Font Coverage Build
+      - Daily Unicode Character
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout newest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Configure Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install reproducible font tools
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Validate browser scripts and SVG release guards
+        run: |
+          node --check js/svg-mode.js
+          node --check js/svg-precomputed-loader.js
+          node --check js/converter.js
+          node --check js/scope.js
+          node --check scripts/publish-svg-bundle.js
+          node scripts/test-svg-mode.js
+          node scripts/test-svg-mode-ui.js
+          node scripts/test-svg-precomputed-loader.js
+          node scripts/test-svg-publish-guard.js
+          node scripts/test-pages-unification.js
+          # No font-derived outline shards are approved for public distribution.
+          test ! -e svg-data/active.json
+      - name: Rebuild local font audit before packaging
+        run: |
+          node scripts/audit-unicode18-fonts.js
+          node scripts/build-unicode18-font-index.js
+          node scripts/test-unicode18-font-index.js
+          node scripts/test-font-assignment.js
+          node scripts/test-mobile-font-outlines.js
+          node scripts/test-unicode18-emoji-display.js
+      - name: Assemble a complete, deterministic site artifact
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='_site' \
+            --exclude='svg-data' \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            ./ _site/
+          cp node_modules/opentype.js/dist/opentype.min.js _site/js/opentype.min.js
+          python3 -m venv "$RUNNER_TEMP/svg-font-converter"
+          "$RUNNER_TEMP/svg-font-converter/bin/pip" install --quiet 'fonttools[woff]'
+          "$RUNNER_TEMP/svg-font-converter/bin/python" scripts/prepare-svg-fonts.py _site
+          # Avoid accidentally shipping generated outlines before license review.
+          test ! -e _site/svg-data/active.json
+          test -s _site/js/opentype.min.js
+          test -s _site/js/svg-precomputed-loader.js
+          test -s _site/data/unicode18_font_coverage_index.json
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload complete site artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
