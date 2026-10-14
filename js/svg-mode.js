@@ -118,7 +118,23 @@ function makeSvgOutline(font, codePoint, character) {
   svg.appendChild(outline);
   return svg;
 }
+/* Precomputed SVG release flag. Keep OFF until audited vectors are published. */
+const SVG_PRECOMPUTED_RELEASE_ENABLED = false;
+let precomputedSvgClient = null;
+function getPrecomputedSvgClient() {
+  if (!SVG_PRECOMPUTED_RELEASE_ENABLED || !window.UnicodePrecomputedSvg) return null;
+  if (!precomputedSvgClient) {
+    precomputedSvgClient = window.UnicodePrecomputedSvg.createClient({
+      baseUrl: "./svg-data/", documentObj: document,
+      maxParallel: 4, maxCache: 6, retries: 1
+    });
+  }
+  return precomputedSvgClient;
+}
 async function createSvgGlyph(codePoint, character) {
+  const client = getPrecomputedSvgClient();
+  if (client) return client.getGlyph(codePoint);
+
   const index = await getUnicodeCoverageIndex();
   if (!index) return {svg:null,reason:"SVGデータ未取得"};
   const candidates = svgCandidateFontIds(index,codePoint);
