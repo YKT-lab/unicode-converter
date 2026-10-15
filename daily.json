@@ -1,162 +1,5 @@
 {
   "current": {
-    "date": "2026-10-15",
-    "category": "han",
-    "codePoint": "6EE9",
-    "character": "滩",
-    "font": "Noto Sans CJK JP",
-    "svg": {
-      "path": "M65 780C118 746 183 697 216 663L260 718C228 751 161 798 108 829ZM35 510C90 479 160 431 193 399L237 456C202 488 132 532 77 560ZM50 -21L114 -59C157 32 207 156 244 260L188 298C148 186 90 56 50 -21ZM737 786C767 742 798 681 811 642L872 668C858 707 826 765 795 809ZM636 372L766 372L766 239L636 239ZM636 438L636 572L766 572L766 438ZM636 174L766 174L766 38L636 38ZM242 502C284 440 326 369 364 299C325 188 273 100 213 45C229 33 251 10 261 -7C318 49 367 124 406 217C435 157 459 102 473 57L531 89C512 146 477 219 436 296C456 357 473 424 486 498L516 458C535 480 553 504 571 529L571 -78L636 -78L636 -28L957 -28L957 38L830 38L830 174L935 174L935 239L830 239L830 372L934 372L934 438L830 438L830 572L944 572L944 638L636 638C669 699 697 763 718 823L651 842C621 741 560 616 491 530C499 580 505 633 510 689L467 699L455 697L262 697L262 629L438 629C427 539 411 454 389 378C359 430 326 481 294 528Z",
-      "viewBox": "-38.760000000000005 -915.76 1069.52 1067.52"
-    },
-    "info": {
-      "category": "han",
-      "unicodeName": "CJK UNIFIED IDEOGRAPH-6EE9",
-      "block": "CJK Unified Ideographs",
-      "script": "Han",
-      "age": "1.1",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": {
-        "definition": "bank, a sandbar, shoal; rapids",
-        "japaneseOn": null,
-        "japaneseKun": null,
-        "strokes": {
-          "total": "13",
-          "alternateTotal": null,
-          "radicalStroke": "85.10",
-          "adobeJapan1": null
-        },
-        "variants": {
-          "kSimplifiedVariant": "U+6EE9",
-          "kTraditionalVariant": "U+6EE9 U+7058"
-        },
-        "numeric": {},
-        "irgSources": {
-          "kIRG_GSource": "G0-4C32",
-          "kIRG_HSource": "H-8DE8",
-          "kIRG_TSource": "T3-4246"
-        },
-        "dictionary": {
-          "kFourCornerCode": "3011",
-          "kPhonetic": "942*",
-          "kUnihanCore2020": "GH"
-        },
-        "sourceFiles": [
-          "Unihan_Readings.txt",
-          "Unihan_DictionaryLikeData.txt",
-          "Unihan_Variants.txt",
-          "Unihan_IRGSources.txt"
-        ]
-      },
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "水辺の地理的特徴を示す部首と画数を備えた漢字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "岸、砂州、浅瀬、急流などを意味します。",
-        "etymology": "",
-        "history": "",
-        "structure": "総画数は13画であり、部首に関連する10画の構成を持ちます。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "unihan:definition",
-          "text": "bank, a sandbar, shoal; rapids",
-          "source": "Unicode Unihan",
-          "strength": "strong"
-        },
-        {
-          "kind": "unihan:totalStrokes",
-          "text": "13",
-          "source": "Unicode Unihan",
-          "strength": "supporting"
-        },
-        {
-          "kind": "unihan:radicalStroke",
-          "text": "85.10",
-          "source": "Unicode Unihan",
-          "strength": "supporting"
-        },
-        {
-          "kind": "unihan:simplifiedVariant",
-          "text": "U+6EE9",
-          "source": "Unicode Unihan",
-          "strength": "supporting"
-        },
-        {
-          "kind": "unihan:traditionalVariant",
-          "text": "U+6EE9 U+7058",
-          "source": "Unicode Unihan",
-          "strength": "supporting"
-        },
-        {
-          "kind": "unihan:irgSources",
-          "text": "kIRG_GSource=G0-4C32; kIRG_HSource=H-8DE8; kIRG_TSource=T3-4246",
-          "source": "Unicode Unihan",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Unihan Database",
-          "url": "https://www.unicode.org/reports/tr38/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unihan",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-16",
     "category": "math",
     "codePoint": "29E1",
@@ -270,6 +113,132 @@
         {
           "name": "Unicode UTR #25",
           "url": "https://www.unicode.org/reports/tr25/"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-17",
+    "category": "ancient",
+    "codePoint": "1371B",
+    "character": "𓜛",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M249 46Q266 46 282 53Q298 60 310.5 72Q323 84 331 100Q339 116 340 134L346 145L346 146Q340 157 338 162Q336 165 336 169Q336 178 343.5 205.5Q351 233 360.5 265.5Q370 298 379.5 329.5Q389 361 394 378Q394 380 395 383Q396 386 396 388Q396 409 394 431Q392 453 388 476Q380 473 372.5 469Q365 465 360 460Q358 434 352.5 401Q347 368 338 333.5Q329 299 316.5 267.5Q304 236 289 214Q291 204 293.5 194.5Q296 185 296 175Q296 172 294.5 166.5Q293 161 290.5 155Q288 149 284.5 145Q281 141 278 141L265 141Q259 141 257 145Q255 149 254.5 154Q254 159 255 164.5Q256 170 256 172Q244 155 244 135Q246 129 248.5 124.5Q251 120 251 116.5Q251 113 247.5 110.5Q244 108 235 106Q228 104 223 111.5Q218 119 214.5 129.5Q211 140 209 150Q207 160 207 164Q207 181 216.5 196Q226 211 237 221Q239 241 245 260Q251 279 257.5 298Q264 317 269.5 336Q275 355 276 375Q278 417 283.5 458Q289 499 290 541L280 545L274 527Q272 521 269 518Q266 515 260.5 514.5Q255 514 243 514L234 514Q220 504 215 500Q210 496 197 500Q189 502 189 509Q188 520 174 531.5Q160 543 143.5 559Q127 575 113.5 596.5Q100 618 100 650Q100 667 107.5 683.5Q115 700 127 713.5Q139 727 155.5 735.5Q172 744 190 744Q224 744 257.5 737Q291 730 323.5 720.5Q356 711 388.5 699.5Q421 688 453 679Q459 677 459.5 668Q460 659 458 646Q493 633 529.5 620.5Q566 608 604 608Q628 608 658 606.5Q688 605 713.5 596Q739 587 756.5 568Q774 549 774 514Q774 482 770 451Q766 420 766 388Q766 350 770 313Q774 276 774 238Q774 218 772.5 195Q771 172 770 148.5Q769 125 769.5 102.5Q770 80 775 62Q777 57 778 51Q779 45 779 38Q779 35 777 30.5Q775 26 772 21Q769 16 766 12Q763 8 761 8Q751 6 746.5 5.5Q742 5 739 5Q736 5 732 7Q728 9 720 14Q690 3 659.5 2.5Q629 2 598 4Q588 4 588 14L588 30Q588 37 596 39.5Q604 42 616 43.5Q628 45 642 48Q656 51 668 59Q680 67 687 81.5Q694 96 693 121L692 135L609 135Q602 116 594.5 97Q587 78 587 58Q587 40 586 25.5Q585 11 564 5L543 5Q537 5 532 9Q527 13 522 15Q508 6 486.5 4Q465 2 449 2L439 2Q433 2 426.5 2.5Q420 3 410 14L410 31Q410 38 418.5 41Q427 44 439.5 46.5Q452 49 466.5 53.5Q481 58 494 68.5Q507 79 516.5 97Q526 115 528 145Q528 147 528 147L529 149Q538 203 538 257Q538 277 534 297Q530 317 530 337Q530 361 536.5 384.5Q543 408 544 432Q527 440 508 444.5Q489 449 470 454Q473 418 473 382Q473 375 464 354Q455 333 443.5 308Q432 283 423 261Q414 239 414 230Q414 225 416 214.5Q418 204 419 193Q420 182 418 173.5Q416 165 409 165L399 165Q392 165 387.5 173.5Q383 182 381 187L381 186Q379 178 379 174Q379 166 381 159L382 157Q392 154 398.5 143.5Q405 133 405 125L405 4Q405 -5 395 -5L98 -5Q90 -5 90 4L90 125Q90 136 97.5 147.5Q105 159 118 159Q131 159 137 153.5Q143 148 147 137L154 120L156 116L156 117Q160 106 165 97Q174 78 193.5 62Q213 46 249 46ZM453 627Q450 615 446 608Q454 575 459 542Q464 509 468 475Q478 473 494.5 469Q511 465 526.5 460Q542 455 553 449.5Q564 444 564 438Q564 412 557 387.5Q550 363 550 337Q550 317 554 297Q558 277 558 257Q558 231 556.5 205.5Q555 180 550 155L751 155Q752 176 753 196.5Q754 217 754 238Q754 276 750 313Q746 350 746 388Q746 420 750 451Q754 482 754 514Q754 542 738 557.5Q722 573 699 579.5Q676 586 650 587Q624 588 604 588Q564 588 527 600.5Q490 613 453 627ZM158 573Q161 586 166 601.5Q171 617 178 630.5Q185 644 195 653Q205 662 217 662Q225 662 237.5 657.5Q250 653 252 643L254 631L411 590L437 663Q407 672 376.5 682.5Q346 693 315 702Q284 711 252.5 717.5Q221 724 190 724Q177 724 164.5 717.5Q152 711 142 700.5Q132 690 126 676.5Q120 663 120 650Q120 622 131.5 604.5Q143 587 158 573ZM243 613Q237 615 235.5 623.5Q234 632 233 635L228 640L223 641Q221 641 219.5 641.5Q218 642 217 642Q209 642 202.5 632.5Q196 623 190.5 609.5Q185 596 181.5 581.5Q178 567 176 558Q187 549 195 540Q203 531 207 520Q214 525 218 527.5Q222 530 224.5 531.5Q227 533 230.5 533.5Q234 534 241 534L256 535Q261 551 263.5 558.5Q266 566 270 568Q274 570 281.5 566.5Q289 563 304 557Q306 556 308 553Q310 550 310 548L310 530Q310 521 309 513L313 516Q319 508 325 499.5Q331 491 336 482L350 479Q366 490 384 495Q381 515 377 534.5Q373 554 368 573L384 576ZM374 124Q356 125 359 127L358 127Q358 126 357.5 126Q357 126 357 125Q355 106 345.5 88.5Q336 71 321.5 57.5Q307 44 288.5 36Q270 28 249 28Q225 28 208 33.5Q191 39 179.5 48Q168 57 160.5 67.5Q153 78 147 88L138 113L131 128Q129 133 125.5 137Q122 141 118 141Q113 141 110.5 136Q108 131 108 125L108 13L387 13L387 125Q387 129 384 134Q381 122 374 124ZM431 580Q421 567 414 568L388 575Q398 531 407 482.5Q416 434 416 388Q416 383 411.5 366.5Q407 350 402 331Q397 312 392 296.5Q387 281 386 277Q375 240 366 209Q365 204 363 200Q365 205 368 209Q371 214 375 214L388 214Q392 214 395 210Q395 214 394.5 219.5Q394 225 394 230Q394 239 401.5 259Q409 279 419 301.5Q429 324 438.5 346Q448 368 453 382Q453 433 447 482Q441 531 431 580ZM307 490L301 432Q298 403 296 374Q295 353 289.5 333.5Q284 314 277 295Q270 276 264 256.5Q258 237 257 216Q257 212 252 207Q247 202 241.5 196Q236 190 231.5 182Q227 174 227 164L227 159Q228 162 231 169Q234 176 238 182Q242 188 246.5 192Q251 196 256 195Q271 192 274 189L270 209Q268 219 270 223Q284 242 296 271.5Q308 301 317 334Q326 367 332 400Q338 433 340 459Q333 461 327.5 463Q322 465 320 468Q314 481 307 490ZM712 135Q713 109 709.5 90Q706 71 696 57.5Q686 44 667.5 36Q649 28 621 23Q646 22 670 23.5Q694 25 717 34Q722 36 731 31Q740 26 742 25L753 27L756 33Q758 37 759 38Q759 49 755.5 59.5Q752 70 751 81Q750 95 750 108L750 135ZM430 23Q435 23 439.5 22.5Q444 22 449 22Q454 22 463.5 22.5Q473 23 482.5 24Q492 25 501 27.5Q510 30 513 34Q516 38 521 37Q526 36 531 34Q536 32 540 29Q544 26 546 25L561 25L563 26Q569 33 568 41.5Q567 50 567 58Q567 78 574 97L588 135L547 135Q544 106 534.5 87.5Q525 69 510 56.5Q495 44 474.5 36.5Q454 29 430 23ZM195 554Q194 555 190.5 564Q187 573 189 578L191 585Q193 590 197 592L213 599Q221 602 225 598Q229 594 226 586L215 555L206 559ZM356 170L358 167L359 165Q359 168 359 174Q359 177 360 184Q360 186 360 188Q357 175 356 170ZM363 200Q364 198 363 197Q363 199 363 200Z",
+      "viewBox": "30.08 -803.92 808.84 868.84"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-1371B",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプト文字の拡張規格に収録されている、人物の動作をかたどったヒエログリフです。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "特定の語を綴る際に音素文字（表音文字）として機能します。",
+        "etymology": "",
+        "history": "",
+        "structure": "長髪の女性が直立姿勢から背中がほぼ水平になるまで前屈し、足の前にある砂丘（N26）のような物体へ両手を伸ばして手を入れている姿で表されます。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "Woman, standing, with long hair, bent forward, back nearly horizontal, arms extended forward, hands in an object which resembles a sand covered mountain over the edge of the cultivated areas (N26), in front of the feet.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Phonemogram",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "nḏ",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "phonemogram : nḏ",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "B036C",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "B-05-024",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
       ]
     }
