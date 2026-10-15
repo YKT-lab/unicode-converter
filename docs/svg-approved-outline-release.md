@@ -38,3 +38,17 @@
 本番でのiPad・Safari・LINEブラウザ確認。ほかのフォントも、その配信条件・著作権表示・ファイル同一性を一つずつ確認してから段階的に追加する。残る **154,319輪郭** は現時点で「事前生成方式での配信対象外」であり、現行SVG互換方式による表示を維持する。
 
 この数値は**対応範囲の優劣ではない**。事前生成経路の処理負担と読み込みの安定性が実機で改善するか別途評価が必要。
+
+
+## 2026-10-15: OFLファミリーによる収録拡大
+
+最初の13,556文字だけの試験から、著作権表示・SHA-256・原ライセンスを検証した**97フォント**を対象とする自動生成へ移行。データ公開時のチェックは `docs/svg-approved-fonts.json` と `scripts/publish-svg-approved-set.js` に集約。
+
+- 実生成: **167,723文字**（解析可能と確認した167,875文字の約99.9%）
+- 配布用分割ファイル: **1,588個**
+- gzip換算: **87,848,735 bytes**（約87.8MB）
+- 元フォント: Noto 92、WenJin Mincho 1、Plangothic 2、UniHieroglyphica 1、Kaiyuan Small Seal 1
+- 未確認: BabelStone Han（別APL）、BabelStone Pseudographica（OFL確認済みだが未統合）、Egyptology Extended（フォントと上流のライセンス表記差）、Mallige（不明）。これら由来のSVGは許諾条件が整うまで**事前生成データとして配信しない**。
+- 事前生成データがない文字と通信失敗時は、以前のOpenType.js方式を引き続き使用。
+
+出典・ライセンス本文は `docs/licenses/` に保持し、配信成果物に `SOURCES.json` と `FONT-COPYRIGHTS.txt`、各プロジェクトのOFLライセンス・第三者表示を同梱する。
