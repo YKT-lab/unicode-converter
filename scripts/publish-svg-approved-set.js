@@ -120,7 +120,7 @@ for(const f of policy.approved_fonts){
       "project license is not pinned");
     const projectLicense=fs.readFileSync(path.join(ROOT,registered.file));
     insist(blob(projectLicense)===registered.blob_sha1&&
-      projectLicense.toString("utf8").includes("SIL OPEN FONT LICENSE"),
+      /SIL Open Font License/i.test(projectLicense.toString("utf8")),
       "project license invalid "+f.file);
     licenseName=path.basename(f.license_file);
     licenseSource=f.license_source;
