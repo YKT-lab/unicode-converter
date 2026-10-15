@@ -753,5 +753,6 @@
       "license_source": "https://github.com/notofonts/get-noto",
       "copyright_notice_source": "embedded font name table"
     }
-  ]
+  ],
+  "license_git_blob_sha1": "c82d72e422e2d08c5ab439b6bac7c2177ea0c565"
 }
