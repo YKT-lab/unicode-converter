@@ -55,12 +55,16 @@ jobs:
           const manifest=JSON.parse(fs.readFileSync(path.join(p,pointer.manifest),"utf8"));
           const sources=JSON.parse(fs.readFileSync(path.join(p,pointer.build_id,"SOURCES.json"),"utf8"));
           assert.equal(report.mode,"approved-set");
-          assert(manifest.glyphs>13556,"Must increase beyond existing licensed baseline");
-          assert.equal(sources.sources.length,93);
+          assert(manifest.glyphs>87014,"Must exceed previous 93-font licensed coverage");
+          assert.equal(sources.sources.length,97);
           assert.equal(report.generated_outline_count,manifest.glyphs);
           assert.equal(report.font_contributions.reduce((n,x)=>n+x.contributed,0),manifest.glyphs);
           assert(fs.existsSync(path.join(p,pointer.build_id,"LICENSE-Noto-OFL-1.1.txt")));
           assert(fs.existsSync(path.join(p,pointer.build_id,"LICENSE-WenJinMincho-OFL-1.1.md")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Plangothic-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"UniHieroglyphica-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Kaiyuan-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Kaiyuan-THIRD_PARTY_NOTICES.md")));
           console.log("SUCCESS: Expanded licensed SVG glyphs:",manifest.glyphs,
             "font count:",sources.sources.length,"pages:",manifest.pages.length,
             "gzip estimate:",report.gzip_estimated_bytes);
