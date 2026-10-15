@@ -1,0 +1,72 @@
+name: Licensed Multi-Font SVG Outline Release
+on:
+  push:
+    branches: [feature/svg-license-family-expansion]
+  pull_request:
+    paths:
+      - "tools/build-svg-precompute.js"
+      - "scripts/publish-svg-approved-set.js"
+      - "scripts/test-svg-approved-set-policy.js"
+      - "docs/svg-approved-fonts.json"
+      - "docs/licenses/**"
+      - ".github/workflows/site-deploy.yml"
+      - ".github/workflows/test-svg-licensed-set.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund --package-lock=false
+      - name: Syntax and policy tests
+        run: |
+          node --check tools/build-svg-precompute.js
+          node --check scripts/publish-svg-approved-set.js
+          node scripts/test-svg-approved-set-policy.js
+          node scripts/test-pages-unification.js
+          node scripts/test-svg-precomputed-loader.js
+          node scripts/test-svg-publish-guard.js
+          node scripts/test-approved-svg-publish.js
+      - name: Precompute SVG paths from approved sources only
+        run: |
+          node tools/build-svg-precompute.js \
+            --approved-list=docs/svg-approved-fonts.json \
+            --out="$RUNNER_TEMP/svg-reviewed" \
+            --report="$RUNNER_TEMP/svg-review-report.json"
+      - name: Verify and stage licensed glyph database without deploying
+        run: |
+          node scripts/publish-svg-approved-set.js \
+            --bundle="$RUNNER_TEMP/svg-reviewed" \
+            --metrics="$RUNNER_TEMP/svg-review-report.json" \
+            --index=data/unicode18_font_coverage_index.json \
+            --policy=docs/svg-approved-fonts.json \
+            --dest="$RUNNER_TEMP/site/svg-data"
+          node - "$RUNNER_TEMP/site/svg-data" "$RUNNER_TEMP/svg-review-report.json" <<'NODE'
+          const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
+          const p=process.argv[2], report=JSON.parse(fs.readFileSync(process.argv[3],"utf8"));
+          const pointer=JSON.parse(fs.readFileSync(path.join(p,"active.json"),"utf8"));
+          const manifest=JSON.parse(fs.readFileSync(path.join(p,pointer.manifest),"utf8"));
+          const sources=JSON.parse(fs.readFileSync(path.join(p,pointer.build_id,"SOURCES.json"),"utf8"));
+          assert.equal(report.mode,"approved-set");
+          assert(manifest.glyphs>87014,"Must exceed previous 93-font licensed coverage");
+          assert.equal(sources.sources.length,97);
+          assert.equal(report.generated_outline_count,manifest.glyphs);
+          assert.equal(report.font_contributions.reduce((n,x)=>n+x.contributed,0),manifest.glyphs);
+          assert(fs.existsSync(path.join(p,pointer.build_id,"LICENSE-Noto-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"LICENSE-WenJinMincho-OFL-1.1.md")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Plangothic-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"UniHieroglyphica-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Kaiyuan-OFL-1.1.txt")));
+          assert(fs.existsSync(path.join(p,pointer.build_id,"Kaiyuan-THIRD_PARTY_NOTICES.md")));
+          console.log("SUCCESS: Expanded licensed SVG glyphs:",manifest.glyphs,
+            "font count:",sources.sources.length,"pages:",manifest.pages.length,
+            "gzip estimate:",report.gzip_estimated_bytes);
+          NODE
+          echo "All generated SVG outlines remain in the private Action's temporary directory."

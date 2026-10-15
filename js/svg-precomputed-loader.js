@@ -1,7 +1,7 @@
 /*
  * Unicode Converter SVG shard client (precomputed renderer).
- * This file is inert until svg-mode.js opts into it.
- * Vectors remain license-gated and are not yet deployed.
+ * Activated only in the user-selected SVG mode. Glyphs are drawn from
+ * license-gated, hash-checked shards; missing glyphs use the legacy fallback.
  */
 (function(root){
 "use strict";

@@ -56,10 +56,12 @@ jobs:
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
           node scripts/test-approved-svg-publish.js
+          node --check scripts/publish-svg-approved-set.js
+          node scripts/test-svg-approved-set-policy.js
           node scripts/test-pages-unification.js
           node scripts/test-daily-evidence.js
           node scripts/test-daily-han-two-facts.js
-          # No font-derived outline shards are approved for public distribution.
+          # Never ship unverified/stale outline data from the repository.
           test ! -e svg-data/active.json
       - name: Rebuild local font audit before packaging
         run: |
@@ -88,14 +90,14 @@ jobs:
           # Generate only revision-pinned, license-approved outlines and
           # gate publication on source SHA, OFL license, and shard integrity.
           node tools/build-svg-precompute.js \
-            --approved-font=fonts/han/WenJinMinchoP3-Regular.otf \
+            --approved-list=docs/svg-approved-fonts.json \
             --out="$RUNNER_TEMP/svg-approved" \
             --report="$RUNNER_TEMP/svg-approved-metrics.json"
-          node scripts/publish-svg-bundle.js \
+          node scripts/publish-svg-approved-set.js \
             --bundle="$RUNNER_TEMP/svg-approved" \
             --metrics="$RUNNER_TEMP/svg-approved-metrics.json" \
             --index=data/unicode18_font_coverage_index.json \
-            --review=docs/svg-font-license-approvals.json \
+            --policy=docs/svg-approved-fonts.json \
             --dest=_site/svg-data
           test -s _site/svg-data/active.json
           test -s _site/js/opentype.min.js
