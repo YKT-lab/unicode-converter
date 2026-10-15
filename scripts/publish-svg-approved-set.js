@@ -50,10 +50,10 @@ let hasNoto=false,hasWenjin=false;
 for(const f of policy.approved_fonts){
   insist(f&&typeof f.file==="string"&&/^[a-f0-9]{64}$/.test(f.sha256)&&
     f.license==="SIL OFL 1.1"&&
-    ["noto","noto-cjk","wenjin"].includes(f.license_family),"invalid approved entry");
+    ["noto","noto-cjk","wenjin","plangothic","unihieroglyphica","kaiyuan"].includes(f.license_family),"invalid approved entry");
   const ref=indexMap.get(f.file);
   insist(ref&&ref.sha256===f.sha256,"font audit mismatch "+f.file);
-  insist(/^fonts\/[\w.-]+\/[\w.-]+\.(?:ttf|otf)$/i.test(f.file),"unsafe source file");
+  insist(/^fonts\/[\w.-]+\/[\w.-]+\.(?:ttf|otf|woff2)$/i.test(f.file),"unsafe source file");
   const bytes=fs.readFileSync(path.join(ROOT,f.file));
   insist(hash(bytes)===f.sha256,"actual font hash drift "+f.file);
   const font=fontkit.openSync(path.join(ROOT,f.file));
@@ -78,7 +78,7 @@ for(const f of policy.approved_fonts){
     licenseName="LICENSE-Noto-OFL-1.1.txt";
     licenseSource=f.license_source;
     hasNoto=true;
-  }else{
+  }else if(f.license_family==="wenjin"){
     insist(f.file===previous.file&&
       f.sha256===previous.source_sha256&&
       f.license_source===previous.license_source&&
@@ -91,6 +91,39 @@ for(const f of policy.approved_fonts){
     licenseName="LICENSE-WenJinMincho-OFL-1.1.md";
     licenseSource=previous.license_source;
     hasWenjin=true;
+  }else{
+    const allowed={
+      plangothic:{
+        names:["fonts/han/PlangothicP1-Regular.woff2","fonts/han/PlangothicP2-Regular.woff2"],
+        families:/^Plangothic P[12]$/,
+        license:"docs/licenses/Plangothic-OFL-1.1.txt",
+        source:"https://github.com/Losketch/Plangothic-Project"
+      },
+      unihieroglyphica:{
+        names:["fonts/hieroglyphs/UniHieroglyphica.ttf"],
+        families:/^UniHieroglyphica$/,
+        license:"docs/licenses/UniHieroglyphica-OFL-1.1.txt",
+        source:"https://github.com/thesaurus-linguae-aegyptiae/unihieroglyphica"
+      },
+      kaiyuan:{
+        names:["fonts/seal/KaiyuanSmallSeal-Regular.woff2"],
+        families:/^Kaiyuan Small Seal$/,
+        license:"docs/licenses/Kaiyuan-OFL-1.1.txt",
+        source:"https://github.com/frankslin/kaiyuan-small-seal-font"
+      }
+    }[f.license_family];
+    insist(allowed&&allowed.names.includes(f.file)&&allowed.families.test(family)&&
+      f.license_file===allowed.license&&f.license_source===allowed.source,
+      "project source/license identity mismatch "+f.file);
+    const registered=policy.additional_licenses?.find(x=>x.file===f.license_file);
+    insist(registered&&/^[a-f0-9]{40}$/.test(registered.blob_sha1),
+      "project license is not pinned");
+    const projectLicense=fs.readFileSync(path.join(ROOT,registered.file));
+    insist(blob(projectLicense)===registered.blob_sha1&&
+      projectLicense.toString("utf8").includes("SIL OPEN FONT LICENSE"),
+      "project license invalid "+f.file);
+    licenseName=path.basename(f.license_file);
+    licenseSource=f.license_source;
   }
   approved.set(f.file,f);
   notices.push({file:f.file,sha256:f.sha256,family,copyright,license:"SIL OFL 1.1",
@@ -143,10 +176,18 @@ try{
   fs.writeFileSync(path.join(tmp,"LICENSE-Noto-OFL-1.1.txt"),licenseBytes);
   if(hasWenjin)fs.copyFileSync(path.join(ROOT,previous.license_file),
     path.join(tmp,"LICENSE-WenJinMincho-OFL-1.1.md"));
+  for(const item of policy.additional_licenses||[]){
+    insist(/^docs\/licenses\/[\w.-]+$/.test(item.file)&&
+      /^[a-f0-9]{40}$/.test(item.blob_sha1),
+      "invalid supplemental license name");
+    const data=fs.readFileSync(path.join(ROOT,item.file));
+    insist(blob(data)===item.blob_sha1,"supplemental license content changed");
+    fs.writeFileSync(path.join(tmp,path.basename(item.file)),data);
+  }
   const sourceFile={
     schema_version:1,build_id:manifest.build_id,unicode_version:"18.0.0",
     generated_outline_count:manifest.glyphs,
-    licenses:["LICENSE-Noto-OFL-1.1.txt","LICENSE-WenJinMincho-OFL-1.1.md"],
+    licenses:["LICENSE-Noto-OFL-1.1.txt","LICENSE-WenJinMincho-OFL-1.1.md",...(policy.additional_licenses||[]).map(x=>path.basename(x.file))],
     sources:notices
   };
   fs.writeFileSync(path.join(tmp,"SOURCES.json"),JSON.stringify(sourceFile,null,2)+"\n");
