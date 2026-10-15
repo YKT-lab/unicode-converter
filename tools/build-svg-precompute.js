@@ -23,13 +23,22 @@ const args=Object.fromEntries(process.argv.slice(2).map(arg=>{
   if(!m)throw Error("Invalid argument: "+arg);
   return [m[1],m[2]];
 }));
-for(const key of Object.keys(args))if(!["out","report","only","approved-font"].includes(key))
+for(const key of Object.keys(args))if(!["out","report","only","approved-font","approved-list"].includes(key))
   throw Error("Unknown argument: "+key);
 if(!args.out||!args.report)throw Error("Provide --out and --report");
 const OUT=path.resolve(args.out),REPORT=path.resolve(args.report);
 if(OUT===ROOT||OUT.startsWith(ROOT+path.sep))
   throw Error("Refusing to save copyrighted outline bundles inside the repository");
 const approvedFont=args["approved-font"]||null;
+const approvedList=args["approved-list"] ? JSON.parse(fs.readFileSync(path.resolve(ROOT,args["approved-list"]),"utf8")) : null;
+if(approvedList&&(approvedFont||args.only||approvedList.schema_version!==1||approvedList.unicode_version!=="18.0.0"||!Array.isArray(approvedList.approved_fonts)||!approvedList.approved_fonts.length))
+  throw Error("Invalid approved set configuration");
+const approvedFiles=approvedList?new Set(approvedList.approved_fonts.map(x=>x.file)):null;
+if(approvedFiles&&approvedFiles.size!==approvedList.approved_fonts.length)throw Error("Duplicate source in approved list");
+if(approvedList)for(const src of approvedList.approved_fonts){
+  const f=coverage.font_families.find(f=>f.file===src.file);
+  if(!f||f.sha256!==src.sha256)throw Error("Pinned approved font mismatch: "+src.file);
+}
 if(approvedFont&&(!/^fonts\/[\w.-]+(?:\/[\w.-]+)*\.(?:ttf|otf|woff2?)$/i.test(approvedFont)||args.only))
   throw Error("Approved build needs one repository font and no --only option");
 if(approvedFont&&!coverage.font_families.some(f=>f.file===approvedFont))
@@ -61,7 +70,7 @@ for(const [a,b,index] of coverage.ranges) {
   }
 }
 const order=byFont.map((points,id)=>({id,points}))
-  .filter(item=>!approvedFont||coverage.font_families[item.id].file===approvedFont)
+  .filter(item=>(!approvedFont||coverage.font_families[item.id].file===approvedFont)&&(!approvedFiles||approvedFiles.has(coverage.font_families[item.id].file)))
   .sort((a,b)=>b.points.length-a.points.length||a.id-b.id);
 const solved=new Uint8Array(0x110000),failures=[],fontsUsed=[];
 let count=0,rawPaths=0;
@@ -181,15 +190,16 @@ pages.sort((a,b)=>a.start-b.start);
 const digest=hash(pages.map(p=>p.sha256).join("\n")).slice(0,16);
 const manifest={schema_version:2,unicode_version:"18.0.0",
   build_id:digest,bucket_size:BUCKET,scanned_fonts:coverage.font_families.length,
-  source_font:approvedFont,glyphs:count,pages};
+  source_font:approvedFont,source_fonts:approvedList?approvedList.approved_fonts.map(f=>f.file).sort():null,glyphs:count,pages};
 const manifestBody=JSON.stringify(manifest,null,2)+"\n";
 fs.writeFileSync(path.join(OUT,"manifest.json"),manifestBody);
 const expected=classifier.counts.svg_outline;
-const allPresent=!sample&&!approvedFont&&count===expected;
+const allPresent=!sample&&!approvedFont&&!approvedList&&count===expected;
 const report={
   schema_version:1,unicode_version:"18.0.0",
-  mode:sample?"sample":approvedFont?"approved":"full",
-  approved_only:!!approvedFont,
+  mode:sample?"sample":approvedList?"approved-set":approvedFont?"approved":"full",
+  approved_only:!!(approvedFont||approvedList),
+  approved_fonts:approvedList?approvedList.approved_fonts.map(f=>f.file).sort():null,
   approved_font:approvedFont,
   sample_requested:sample?[...sample].map(hex):null,
   expected_outline_count:sample?null:expected,
@@ -221,6 +231,8 @@ console.log("SVG_PRECOMPUTE_METRICS "+JSON.stringify({
   adaptive_splits:splitCount,oversized_shards_unsplittable:unsplittableCount,
   seconds:report.work_duration_seconds,build_id:digest
 }));
-if(!sample&&!approvedFont&&!allPresent)throw Error("Failed full outline coverage: "+count+" != "+expected);
+if(!sample&&!approvedFont&&!approvedList&&!allPresent)throw Error("Failed full outline coverage: "+count+" != "+expected);
+if(approvedList&&(!count||fontsUsed.some(f=>!approvedFiles.has(f.font))||fontsUsed.reduce((sum,f)=>sum+f.contributed,0)!==count))
+  throw Error("Invalid approved set outline result");
 if(approvedFont&&(count<=0||fontsUsed.length!==1||fontsUsed[0].font!==approvedFont||fontsUsed[0].contributed!==count))
   throw Error("Empty or inconsistent approved font output");
