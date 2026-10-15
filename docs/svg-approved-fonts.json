@@ -274,12 +274,39 @@
       "copyright_notice_source": "embedded font name table"
     },
     {
+      "file": "fonts/han/PlangothicP1-Regular.woff2",
+      "sha256": "073fb3aeb6e5b5f03252281a41699e8cbf702be4e83e09eb1646979782aaf27b",
+      "license": "SIL OFL 1.1",
+      "license_family": "plangothic",
+      "license_source": "https://github.com/Losketch/Plangothic-Project",
+      "license_file": "docs/licenses/Plangothic-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/han/PlangothicP2-Regular.woff2",
+      "sha256": "168f0055c771f10a8bff636139abc02d3f06fe696b0725fbc17a50c7b4879863",
+      "license": "SIL OFL 1.1",
+      "license_family": "plangothic",
+      "license_source": "https://github.com/Losketch/Plangothic-Project",
+      "license_file": "docs/licenses/Plangothic-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
       "file": "fonts/han/WenJinMinchoP3-Regular.otf",
       "sha256": "139b85d33765f2a2938ebdd646766071f869a2351fbdd2cd763b540a55ac811e",
       "license": "SIL OFL 1.1",
       "license_family": "wenjin",
       "license_source": "https://github.com/takushun-wu/WenJinMincho/blob/181c3a00be4c9827eeb18bda98804e8409d886d3/LICENSE.md",
       "copyright_notice_source": "fonts/han/LICENSE-WenJinMincho.md"
+    },
+    {
+      "file": "fonts/hieroglyphs/UniHieroglyphica.ttf",
+      "sha256": "ad60bb2f469697837b556388d47b500a21d866370a49a8be770b206108aaf664",
+      "license": "SIL OFL 1.1",
+      "license_family": "unihieroglyphica",
+      "license_source": "https://github.com/thesaurus-linguae-aegyptiae/unihieroglyphica",
+      "license_file": "docs/licenses/UniHieroglyphica-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
     },
     {
       "file": "fonts/music/NotoMusic-Regular.ttf",
@@ -730,6 +757,15 @@
       "copyright_notice_source": "embedded font name table"
     },
     {
+      "file": "fonts/seal/KaiyuanSmallSeal-Regular.woff2",
+      "sha256": "42b12441d1469c9bf61310bb727a014027b09a9ca4265708fb1dcaa3dd2e8d5f",
+      "license": "SIL OFL 1.1",
+      "license_family": "kaiyuan",
+      "license_source": "https://github.com/frankslin/kaiyuan-small-seal-font",
+      "license_file": "docs/licenses/Kaiyuan-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
       "file": "fonts/symbols/NotoSansMath-Regular.ttf",
       "sha256": "80b61fd613d3519197e64fff6f7e71fdc7f3e6526440ea4115b554ef7fd59af7",
       "license": "SIL OFL 1.1",
@@ -754,5 +790,23 @@
       "copyright_notice_source": "embedded font name table"
     }
   ],
-  "license_git_blob_sha1": "c82d72e422e2d08c5ab439b6bac7c2177ea0c565"
+  "license_git_blob_sha1": "c82d72e422e2d08c5ab439b6bac7c2177ea0c565",
+  "additional_licenses": [
+    {
+      "file": "docs/licenses/Plangothic-OFL-1.1.txt",
+      "blob_sha1": "77b17316cf1e8ab216bd6743996dfc67cc86216a"
+    },
+    {
+      "file": "docs/licenses/UniHieroglyphica-OFL-1.1.txt",
+      "blob_sha1": "6a6023709464dc5bb8d0addeee5bd40b0ed8a9e1"
+    },
+    {
+      "file": "docs/licenses/Kaiyuan-OFL-1.1.txt",
+      "blob_sha1": "ad155945cb79c3c9b079a5078cac029fb7149eea"
+    },
+    {
+      "file": "docs/licenses/Kaiyuan-THIRD_PARTY_NOTICES.md",
+      "blob_sha1": "725a68cc3a9c7138956f4fc4fb40cf4172f488b5"
+    }
+  ]
 }
