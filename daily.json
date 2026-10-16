@@ -1,123 +1,5 @@
 {
   "current": {
-    "date": "2026-10-16",
-    "category": "math",
-    "codePoint": "29E1",
-    "character": "⧡",
-    "font": "Noto Sans Math",
-    "svg": {
-      "path": "M51 237L51 271L521 614L521 237ZM207 305L453 305L453 486ZM51 102L51 173L521 173L521 102Z",
-      "viewBox": "10.04 -654.96 551.92 593.92"
-    },
-    "info": {
-      "category": "math",
-      "unicodeName": "INCREASES AS",
-      "block": "Miscellaneous Mathematical Symbols-B",
-      "script": "Common",
-      "age": "3.2",
-      "generalCategory": "Sm",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": {
-        "isMath": true,
-        "bracket": null,
-        "mirroredCodePoint": null
-      },
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": true,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "数学的な関係を表すために用いられるUnicodeの記号です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "Unicodeの名称リストにおいて、U+22B4（normal subgroup of or equal to）に関連文字として言及されています。",
-        "culture": "",
-        "unicodeInfo": "Unicodeの派生コアプロパティにおいて、数学記号としてのプロパティが定義されています。",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "namesList:crossReference",
-          "text": "(normal subgroup of or equal to - 22B4)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:property",
-          "text": "Math",
-          "source": "Unicode DerivedCoreProperties",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode NamesList and Mathematical Characters",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-22/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode DerivedCoreProperties",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
-        },
-        {
-          "name": "Unicode BidiBrackets",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
-        },
-        {
-          "name": "Unicode BidiMirroring",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
-        },
-        {
-          "name": "Unicode UTR #25",
-          "url": "https://www.unicode.org/reports/tr25/"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-17",
     "category": "ancient",
     "codePoint": "1371B",
@@ -239,6 +121,110 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-18",
+    "category": "kana",
+    "codePoint": "31F6",
+    "character": "ㇶ",
+    "font": "Noto Sans JP",
+    "svg": {
+      "path": "M351 622Q349 607 347.5 589.5Q346 572 346 555Q346 544 346 512.5Q346 481 346 438Q346 395 346 347Q346 299 346 254.5Q346 210 346 176Q346 142 346 127Q346 93 357.5 81.5Q369 70 398 64Q417 60 444.5 58.5Q472 57 503 57Q536 57 575 58.5Q614 60 653.5 63Q693 66 728 71Q763 76 789 83L789 2Q753 -3 703.5 -7Q654 -11 601.5 -13Q549 -15 503 -15Q465 -15 431 -12.5Q397 -10 371 -6Q320 3 297 28.5Q274 54 274 106Q274 126 274 163Q274 200 274 247Q274 294 274 343.5Q274 393 274 437Q274 481 274 512.5Q274 544 274 555Q274 570 272 588.5Q270 607 268 622ZM313 354Q348 362 394.5 375Q441 388 490.5 403.5Q540 419 585 435.5Q630 452 662 466Q681 474 699.5 483Q718 492 735 503L767 431Q748 425 729.5 416.5Q711 408 692 401Q651 385 600.5 367.5Q550 350 498 334Q446 318 398 305.5Q350 293 313 284Z",
+      "viewBox": "217.04 -672.96 622.92 738.92"
+    },
+    "info": {
+      "category": "kana",
+      "unicodeName": "KATAKANA LETTER SMALL HI",
+      "block": "Katakana Phonetic Extensions",
+      "script": "Katakana",
+      "age": "3.2",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "カタカナ「ヒ」を小書きにした特殊表記用の仮名文字です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "アイヌ語やその他の言語における音声転写に使用されます。",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "この文字が属する収録範囲は、JIS X 0213:2000の規定に基づいて制定されました。",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "registered:usage",
+          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:supplementalInfo",
+          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:fact",
+          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
         }
       ]
     }
