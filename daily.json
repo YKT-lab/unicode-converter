@@ -1,109 +1,5 @@
 {
   "current": {
-    "date": "2026-10-18",
-    "category": "kana",
-    "codePoint": "31F6",
-    "character": "ㇶ",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M351 622Q349 607 347.5 589.5Q346 572 346 555Q346 544 346 512.5Q346 481 346 438Q346 395 346 347Q346 299 346 254.5Q346 210 346 176Q346 142 346 127Q346 93 357.5 81.5Q369 70 398 64Q417 60 444.5 58.5Q472 57 503 57Q536 57 575 58.5Q614 60 653.5 63Q693 66 728 71Q763 76 789 83L789 2Q753 -3 703.5 -7Q654 -11 601.5 -13Q549 -15 503 -15Q465 -15 431 -12.5Q397 -10 371 -6Q320 3 297 28.5Q274 54 274 106Q274 126 274 163Q274 200 274 247Q274 294 274 343.5Q274 393 274 437Q274 481 274 512.5Q274 544 274 555Q274 570 272 588.5Q270 607 268 622ZM313 354Q348 362 394.5 375Q441 388 490.5 403.5Q540 419 585 435.5Q630 452 662 466Q681 474 699.5 483Q718 492 735 503L767 431Q748 425 729.5 416.5Q711 408 692 401Q651 385 600.5 367.5Q550 350 498 334Q446 318 398 305.5Q350 293 313 284Z",
-      "viewBox": "217.04 -672.96 622.92 738.92"
-    },
-    "info": {
-      "category": "kana",
-      "unicodeName": "KATAKANA LETTER SMALL HI",
-      "block": "Katakana Phonetic Extensions",
-      "script": "Katakana",
-      "age": "3.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "カタカナ「ヒ」を小書きにした特殊表記用の仮名文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "アイヌ語やその他の言語における音声転写に使用されます。",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "この文字が属する収録範囲は、JIS X 0213:2000の規定に基づいて制定されました。",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "registered:usage",
-          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:supplementalInfo",
-          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-19",
     "category": "ancient",
     "codePoint": "1425F",
@@ -225,6 +121,110 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-20",
+    "category": "kana",
+    "codePoint": "31F2",
+    "character": "ㇲ",
+    "font": "Noto Sans JP",
+    "svg": {
+      "path": "M748 537Q745 532 738.5 521Q732 510 728 501Q714 467 688.5 418Q663 369 631.5 319Q600 269 565 231Q519 180 464.5 130.5Q410 81 348.5 39Q287 -3 223 -34L166 27Q267 67 353.5 132.5Q440 198 505 270Q533 302 561 343Q589 384 610.5 425Q632 466 640 494Q633 494 609 494Q585 494 552 494Q519 494 482.5 494Q446 494 413 494Q380 494 356.5 494Q333 494 326 494Q311 494 293 493Q275 492 260 491.5Q245 491 241 490L241 570Q247 570 262.5 568.5Q278 567 295.5 566.5Q313 566 326 566Q334 566 358 566Q382 566 415 566Q448 566 484 566Q520 566 553 566Q586 566 610 566Q634 566 641 566Q661 566 678.5 568Q696 570 704 572ZM572 276Q605 248 641.5 214Q678 180 712.5 144Q747 108 777.5 75.5Q808 43 828 17L768 -37Q739 2 698 48.5Q657 95 612 141.5Q567 188 522 226Z",
+      "viewBox": "113.03999999999999 -624.96 767.92 714.92"
+    },
+    "info": {
+      "category": "kana",
+      "unicodeName": "KATAKANA LETTER SMALL SU",
+      "block": "Katakana Phonetic Extensions",
+      "script": "Katakana",
+      "age": "3.2",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "カタカナ拡張領域に収録されている小書きの片仮名文字です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "アイヌ語をはじめとする諸言語の音声転写に用いられます。",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "JIS X 0213:2000の文字セットに基づいてUnicodeへ制定されました。",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "registered:usage",
+          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:supplementalInfo",
+          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:fact",
+          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
         }
       ]
     }
