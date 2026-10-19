@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-19",
-    "category": "ancient",
-    "codePoint": "1425F",
-    "character": "𔉟",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M978 540Q987 525 995.5 516Q1004 507 1014 502.5Q1024 498 1037.5 497Q1051 496 1071 496Q1103 496 1118 508.5Q1133 521 1132 553Q1121 575 1105 582.5Q1089 590 1063 590Q1051 590 1037 586Q1023 582 1011 575.5Q999 569 990 559.5Q981 550 979 540ZM977 174Q990 151 1012.5 139.5Q1035 128 1060 128Q1091 128 1112 139Q1133 150 1133 179Q1133 193 1125 201.5Q1117 210 1106 214Q1095 218 1081.5 219Q1068 220 1058 220Q1037 220 1023 215Q1009 210 1000 203Q991 196 986 188Q981 180 977 174ZM537 0Q537 -10 527 -10Q440 -8 362 10Q284 28 226 69.5Q168 111 134 178.5Q100 246 100 347Q100 422 124.5 491.5Q149 561 194.5 614Q240 667 305 698.5Q370 730 450 730L538 730Q548 730 548 720L550 555L962 554Q968 567 980 577.5Q992 588 1006 595.5Q1020 603 1035.5 606.5Q1051 610 1063 610Q1107 610 1130 589Q1153 568 1154.5 543Q1156 518 1135 497Q1114 476 1071 476Q1049 476 1033 477.5Q1017 479 1004 485Q991 491 980 502.5Q969 514 958 534L489 535Q452 535 424 517Q396 499 377.5 470.5Q359 442 349.5 406.5Q340 371 340 336Q340 307 354.5 279.5Q369 252 392.5 230Q416 208 445 195Q474 182 503 182L959 182Q970 213 999.5 226.5Q1029 240 1058 240Q1073 240 1089.5 238Q1106 236 1120.5 229.5Q1135 223 1144 211Q1153 199 1153 179Q1153 157 1144 143.5Q1135 130 1121.5 122Q1108 114 1091.5 111Q1075 108 1060 108Q1031 108 1003.5 122Q976 136 961 162L536 162ZM528 710L450 710Q375 710 314 680.5Q253 651 210 601Q167 551 143.5 485Q120 419 120 347Q120 254 150.5 190.5Q181 127 234.5 88Q288 49 360.5 31Q433 13 517 10L516 162L503 162Q471 162 438 176.5Q405 191 379 215Q353 239 336.5 270.5Q320 302 320 336Q320 372 330 410.5Q340 449 360.5 481Q381 513 413 534Q445 555 489 555L530 555Z",
-      "viewBox": "15.632000000000005 -814.3679999999999 1223.3359999999998 908.736"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-1425F",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの文字体系において、特定の行為や道具を表すために用いられた象形文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "捕獲や網漁といった行為に関連する分類辞として機能します。",
-        "etymology": "",
-        "history": "",
-        "structure": "おもりを取り付けていない漁網や鳥猟用の網の形状を視覚的に表現しています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A net used for fishing or fowling, without weights.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Classifier catching, netting",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "ꞽḥ.t",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "classifier catching, netting : ꞽḥ.t",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "T024A",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "T-14-012",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-20",
     "category": "kana",
     "codePoint": "31F2",
@@ -225,6 +99,151 @@
         {
           "name": "Unicode NamesList",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-21",
+    "category": "punctuation",
+    "codePoint": "2329",
+    "character": "〈",
+    "font": "Noto Sans JP",
+    "svg": {
+      "path": "M948 -57L885 -86L588 380L885 846L948 817L668 380Z",
+      "viewBox": "513.44 -920.56 509.12 1081.12"
+    },
+    "info": {
+      "category": "punctuation",
+      "unicodeName": "LEFT-POINTING ANGLE BRACKET",
+      "block": "Miscellaneous Technical",
+      "script": "Common",
+      "age": "1.1",
+      "generalCategory": "Ps",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": {
+        "isMath": false,
+        "bracket": {
+          "pairedCodePoint": "232A",
+          "type": "o"
+        },
+        "mirroredCodePoint": "232A"
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": "3008",
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": true,
+        "unicode1Name": "BRA",
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "左側を指す山括弧の形状をした開き括弧記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "Unicode規格において、CJK用の左山括弧（U+3008）への互換分解が定義されています。",
+        "related": "対となる閉じ括弧（U+232A）のほか、小なり記号（U+003C）や数学用左山括弧（U+27E8）、単一の左山引用符（U+2039）が関連文字として指定されています。",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:crossReference",
+          "text": "(less-than sign - 003C)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(single left-pointing angle quotation mark - 2039)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(mathematical left angle bracket - 27E8)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:decomposition",
+          "text": "3008 left angle bracket",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiBracket",
+          "text": "paired U+232A (o)",
+          "source": "Unicode BidiBrackets",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiMirror",
+          "text": "mirrored U+232A",
+          "source": "Unicode BidiMirroring",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode CLDR Japanese Emoji Annotations",
+          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
