@@ -39,11 +39,11 @@ async function explainUnicodeDisplayFailure(codePoint, displayFailure = false) {
     return "無効なサロゲート: U+" + hex;
   if (index && !mapped)
     return "未割当・対象外: U+" + hex;
-  if (mapped?.[2] === "Jurc")
-    return "女真文字: U+" + hex + "（対応フォントを調査中）";
   const covered = index && unicodeRangeLookup(index.ranges, codePoint);
+  // A real cmap entry—not a character's Script—determines support.
+  // Jurchen and Garay stay unsupported until a verified font is added.
   if (index && !covered)
-    return "サイト内フォント未収録: U+" + hex;
+    return "フォント未対応: U+" + hex;
   return displayFailure
     ? "この端末または通信環境で表示を確認できません: U+" + hex
     : "表示データを確認できません: U+" + hex;
@@ -471,7 +471,9 @@ async function convertUnicode(
     if (currentRun !== unicodeRun) return;
     const allocated = indexForStatus?.script_ranges &&
       unicodeRangeLookup(indexForStatus.script_ranges, codePoint);
-    if (indexForStatus && (!allocated || allocated[2] === "Jurc")) {
+    const coveredLocally = indexForStatus?.ranges &&
+      unicodeRangeLookup(indexForStatus.ranges, codePoint);
+    if (indexForStatus && (!allocated || !coveredLocally)) {
       charOutput.appendChild(makeStatusSpan(
         await explainUnicodeDisplayFailure(codePoint, true)
       ));

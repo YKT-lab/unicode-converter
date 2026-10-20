@@ -180,7 +180,7 @@ function getVerifiedRandomPool() {
           const assigned = index.script_ranges[k];
           const lo = Math.max(range[0], assigned[0]);
           const hi = Math.min(range[1], assigned[1]);
-          if (lo > hi || assigned[2] === "Jurc") continue;
+          if (lo > hi) continue;
           const count = hi - lo + 1;
           total += count;
           pool.push([lo, hi, total]);

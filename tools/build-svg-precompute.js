@@ -50,8 +50,13 @@ const sample=args.only?
     if(cp>0x10FFFF)throw Error("Out of Unicode range");
     return cp;
   })):null;
-if(coverage.unicode_version!=="18.0.0"||classifier.unicode_version!=="18.0.0"||
-   coverage.font_families.length!==classifier.font_count)
+if(coverage.unicode_version!=="18.0.0"||classifier.unicode_version!=="18.0.0")
+  throw Error("Unicode data versions mismatch");
+const classifierFresh = coverage.font_families.length === classifier.font_count;
+// The audited outline count is required for a full-source report, not for a
+// restricted licensed release. New unapproved fonts must never block the
+// SHA-pinned allowlisted SVG bundle from being rebuilt.
+if(!classifierFresh && !approvedFont && !approvedList && !sample)
   throw Error("Unicode font coverage and outline audit need rebuilding");
 fs.mkdirSync(OUT,{recursive:true});
 fs.mkdirSync(path.dirname(REPORT),{recursive:true});
@@ -193,8 +198,8 @@ const manifest={schema_version:2,unicode_version:"18.0.0",
   source_font:approvedFont,source_fonts:approvedList?approvedList.approved_fonts.map(f=>f.file).sort():null,glyphs:count,pages};
 const manifestBody=JSON.stringify(manifest,null,2)+"\n";
 fs.writeFileSync(path.join(OUT,"manifest.json"),manifestBody);
-const expected=classifier.counts.svg_outline;
-const allPresent=!sample&&!approvedFont&&!approvedList&&count===expected;
+const expected=classifierFresh?classifier.counts.svg_outline:null;
+const allPresent=!sample&&!approvedFont&&!approvedList&&expected!==null&&count===expected;
 const report={
   schema_version:1,unicode_version:"18.0.0",
   mode:sample?"sample":approvedList?"approved-set":approvedFont?"approved":"full",
