@@ -23,6 +23,31 @@ function makeStatusSpan(
   return span;
 }
 
+/*
+ * Status reasons derive from the Unicode 18 allocation and audited cmap,
+ * not browser-only Unicode property data (which may be a different version).
+ */
+async function explainUnicodeDisplayFailure(codePoint, displayFailure = false) {
+  const hex = codePoint.toString(16).toUpperCase();
+  const index = typeof getUnicodeCoverageIndex === "function"
+    ? await getUnicodeCoverageIndex() : null;
+  const mapped = index?.script_ranges &&
+    unicodeRangeLookup(index.script_ranges, codePoint);
+  if (codePoint <= 0x1F || (codePoint >= 0x7F && codePoint <= 0x9F))
+    return "制御文字: U+" + hex;
+  if (codePoint >= 0xD800 && codePoint <= 0xDFFF)
+    return "無効なサロゲート: U+" + hex;
+  if (index && !mapped)
+    return "未割当・対象外: U+" + hex;
+  if (mapped?.[2] === "Jurc")
+    return "女真文字: U+" + hex + "（対応フォントを調査中）";
+  const covered = index && unicodeRangeLookup(index.ranges, codePoint);
+  if (index && !covered)
+    return "サイト内フォント未収録: U+" + hex;
+  return displayFailure
+    ? "この端末または通信環境で表示を確認できません: U+" + hex
+    : "表示データを確認できません: U+" + hex;
+}
 /* =========================================
    Character → Unicode
 ========================================= */
@@ -442,6 +467,18 @@ async function convertUnicode(
         .toUpperCase();
 
 
+    const indexForStatus = await getUnicodeCoverageIndex();
+    if (currentRun !== unicodeRun) return;
+    const allocated = indexForStatus?.script_ranges &&
+      unicodeRangeLookup(indexForStatus.script_ranges, codePoint);
+    if (indexForStatus && (!allocated || allocated[2] === "Jurc")) {
+      charOutput.appendChild(makeStatusSpan(
+        await explainUnicodeDisplayFailure(codePoint, true)
+      ));
+      await yieldToBrowser();
+      continue;
+    }
+
     if (
       isInvisibleCharacter(
         codePoint,
@@ -451,9 +488,7 @@ async function convertUnicode(
 
       charOutput.appendChild(
         makeStatusSpan(
-          "不可視: U+"
-          +
-          hex
+          await explainUnicodeDisplayFailure(codePoint, true)
         )
       );
 
@@ -492,12 +527,12 @@ async function convertUnicode(
           inner.appendChild(result.svg);
           wrapper.classList.add("svg-character");
         } else {
-          wrapper.replaceWith(makeStatusSpan(result.reason + ": U+" + hex));
+          wrapper.replaceWith(makeStatusSpan(await explainUnicodeDisplayFailure(codePoint, true) + " / " + result.reason));
         }
       } catch (error) {
         if (currentRun !== unicodeRun) return;
         console.warn("SVG render failed:", error);
-        wrapper.replaceWith(makeStatusSpan("SVG読込失敗: U+" + hex));
+        wrapper.replaceWith(makeStatusSpan(await explainUnicodeDisplayFailure(codePoint, true) + " / SVG読込失敗"));
       }
       await yieldToBrowser();
       continue;
@@ -625,9 +660,7 @@ async function convertUnicode(
 
       wrapper.replaceWith(
         makeStatusSpan(
-          "空白: U+"
-          +
-          hex
+          await explainUnicodeDisplayFailure(codePoint, true)
         )
       );
 
@@ -648,9 +681,7 @@ async function convertUnicode(
 
       wrapper.replaceWith(
         makeStatusSpan(
-          "未対応: U+"
-          +
-          hex
+          await explainUnicodeDisplayFailure(codePoint, true)
         )
       );
 

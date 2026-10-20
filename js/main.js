@@ -1226,22 +1226,19 @@ randomCustomCount.addEventListener("keydown", event => {
 
 generateRandomButton.addEventListener(
   "click",
-  () => {
+  async () => {
 
     const count =
       getSelectedRandomCount();
 
 
+    try {
     if (
       count ===
       1
     ) {
-
+      const codePoint = await generateRandomCodePoint();
       saveUnicodeHistory();
-
-
-      const codePoint =
-        generateRandomCodePoint();
 
 
       setSingleUnicodeCodePoint(
@@ -1257,7 +1254,7 @@ generateRandomButton.addEventListener(
       "bulk";
 
 
-    generateRandomUnicode(
+    await generateRandomUnicode(
       count,
       false
     );
@@ -1268,6 +1265,13 @@ generateRandomButton.addEventListener(
     setBulkInputExpanded(
       false
     );
+    } catch (error) {
+      console.warn("ランダム抽選に失敗しました", error);
+      const status = document.createElement("span");
+      status.className = "character-status";
+      status.textContent = "対応範囲データを取得できません。通信を確認して再試行してください。";
+      charOutput.replaceChildren(status);
+    }
   }
 );
 
