@@ -46,11 +46,11 @@ insist(policy.license_text==="docs/licenses/Noto-OFL-1.1.txt"&&
 const old=read(path.join(ROOT,"docs/svg-font-license-approvals.json"));
 const previous=old.approvals?.find(x=>x.file==="fonts/han/WenJinMinchoP3-Regular.otf");
 insist(previous&&previous.outline_redistribution_allowed===true,"existing WenJin approval missing");
-let hasNoto=false,hasWenjin=false;
+let hasNoto=false,hasNotoEmoji=false,hasGenZui=false,hasWenjin=false;
 for(const f of policy.approved_fonts){
   insist(f&&typeof f.file==="string"&&/^[a-f0-9]{64}$/.test(f.sha256)&&
     f.license==="SIL OFL 1.1"&&
-    ["noto","noto-cjk","wenjin","plangothic","unihieroglyphica","kaiyuan"].includes(f.license_family),"invalid approved entry");
+    ["noto","noto-cjk","noto-emoji","genzui","wenjin","plangothic","unihieroglyphica","kaiyuan"].includes(f.license_family),"invalid approved entry");
   const ref=indexMap.get(f.file);
   insist(ref&&ref.sha256===f.sha256,"font audit mismatch "+f.file);
   insist(/^fonts\/[\w.-]+\/[\w.-]+\.(?:ttf|otf|woff2)$/i.test(f.file),"unsafe source file");
@@ -63,8 +63,8 @@ for(const f of policy.approved_fonts){
     "missing copyright in font metadata "+f.file);
   let licenseName,licenseSource;
   if(f.license_family==="noto"||f.license_family==="noto-cjk"){
-    insist(/^Noto(?:Sans|Serif|Music|Color|Znamenny)[\w.-]*\.(?:otf|ttf)$/i.test(path.basename(f.file))&&
-      /^Noto(?: Sans| Serif| Music| Color| Znamenny)/i.test(family),
+    insist(/^Noto(?:Sans|Serif|Naskh|Music|Color|Znamenny)[\w.-]*\.(?:otf|ttf)$/i.test(path.basename(f.file))&&
+      /^Noto(?: Sans| Serif| Naskh| Music| Color| Znamenny)/i.test(family),
       "Noto identity mismatch "+f.file);
     if(f.license_family==="noto-cjk"){
       insist(/NotoSansCJK/i.test(f.file),"CJK family mismatch");
@@ -78,6 +78,39 @@ for(const f of policy.approved_fonts){
     licenseName="LICENSE-Noto-OFL-1.1.txt";
     licenseSource=f.license_source;
     hasNoto=true;
+  }else if(f.license_family==="noto-emoji"){
+    insist(f.file==="fonts/emoji/NotoColorEmoji-Regular.ttf"&&
+      /^Noto Color Emoji$/i.test(family)&&
+      f.license_file==="docs/licenses/NotoEmoji-OFL-1.1.txt"&&
+      f.license_source==="https://github.com/googlefonts/noto-emoji",
+      "Noto Emoji source/license identity mismatch "+f.file);
+    const registered=policy.additional_licenses?.find(x=>x.file===f.license_file);
+    insist(registered&&/^[a-f0-9]{40}$/.test(registered.blob_sha1),
+      "Noto Emoji license is not pinned");
+    const projectLicense=fs.readFileSync(path.join(ROOT,registered.file));
+    insist(blob(projectLicense)===registered.blob_sha1&&
+      /SIL OPEN FONT LICENSE/i.test(projectLicense.toString("utf8")),
+      "Noto Emoji license invalid");
+    licenseName=path.basename(f.license_file);
+    licenseSource=f.license_source;
+    hasNotoEmoji=true;
+  }else if(f.license_family==="genzui"){
+    insist(["fonts/east-asian/GenZuiSans-Regular.ttf",
+      "fonts/east-asian/GenZuiSerif-Regular.ttf"].includes(f.file)&&
+      /^Gen Zui (?:Sans|Serif)$/i.test(family)&&
+      f.license_file==="docs/licenses/GenZui-OFL-1.1.txt"&&
+      f.license_source==="https://github.com/mkpoli/GenZui",
+      "GenZui source/license identity mismatch "+f.file);
+    const registered=policy.additional_licenses?.find(x=>x.file===f.license_file);
+    insist(registered&&/^[a-f0-9]{40}$/.test(registered.blob_sha1),
+      "GenZui license is not pinned");
+    const projectLicense=fs.readFileSync(path.join(ROOT,registered.file));
+    insist(blob(projectLicense)===registered.blob_sha1&&
+      /SIL OPEN FONT LICENSE/i.test(projectLicense.toString("utf8")),
+      "GenZui license invalid");
+    licenseName=path.basename(f.license_file);
+    licenseSource=f.license_source;
+    hasGenZui=true;
   }else if(f.license_family==="wenjin"){
     insist(f.file===previous.file&&
       f.sha256===previous.source_sha256&&
@@ -129,7 +162,7 @@ for(const f of policy.approved_fonts){
   notices.push({file:f.file,sha256:f.sha256,family,copyright,license:"SIL OFL 1.1",
     license_source:licenseSource,license_file:licenseName});
 }
-insist(hasNoto&&hasWenjin,"expected Noto/WenJin license families missing");
+insist(hasNoto&&hasNotoEmoji&&hasGenZui&&hasWenjin,"expected Noto/Noto Emoji/GenZui/WenJin license families missing");
 let totalContributed=0;
 const contributed=new Set();
 for(const src of metrics.font_contributions){

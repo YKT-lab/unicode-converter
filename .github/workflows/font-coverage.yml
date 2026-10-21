@@ -9,6 +9,7 @@ on:
       - ".github/workflows/font-coverage.yml"
       - "scripts/audit-unicode18-fonts.js"
       - "scripts/build-unicode18-font-index.js"
+      - "tools/classify-unicode-svg.js"
       - "scripts/test-unicode18-font-index.js"
       - "scripts/test-font-assignment.js"
       - "scripts/test-mobile-font-outlines.js"
@@ -54,6 +55,7 @@ jobs:
         run: |
           node --check scripts/audit-unicode18-fonts.js
           node --check scripts/build-unicode18-font-index.js
+          node --check tools/classify-unicode-svg.js
           node --check scripts/test-unicode18-font-index.js
           node --check scripts/test-font-assignment.js
           node --check scripts/test-mobile-font-outlines.js
@@ -83,6 +85,8 @@ jobs:
         run: node scripts/build-unicode18-font-index.js
       - name: Validate font index and official Unicode boundaries
         run: node scripts/test-unicode18-font-index.js
+      - name: Build Unicode 18 SVG capability classification
+        run: node tools/classify-unicode-svg.js
       - name: Verify new font assignments for reported Unicode characters
         run: node scripts/test-font-assignment.js
       - name: Verify specialist outlines for eight mobile problem characters
@@ -113,6 +117,8 @@ jobs:
           mkdir -p /tmp/unicode-font-output
           cp data/unicode18_font_cmap_audit.json /tmp/unicode-font-output/
           cp data/unicode18_font_coverage_index.json /tmp/unicode-font-output/
+          cp data/unicode18_svg_classification.json /tmp/unicode-font-output/
+          cp data/unicode18_svg_classification.md /tmp/unicode-font-output/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
@@ -121,7 +127,7 @@ jobs:
           git reset --hard HEAD
           git checkout --detach origin/main
           cp /tmp/unicode-font-output/* data/
-          git add data/unicode18_font_cmap_audit.json data/unicode18_font_coverage_index.json
+          git add data/unicode18_font_cmap_audit.json data/unicode18_font_coverage_index.json data/unicode18_svg_classification.json data/unicode18_svg_classification.md
           if git diff --cached --quiet; then
             echo "Coverage output already current"
           else

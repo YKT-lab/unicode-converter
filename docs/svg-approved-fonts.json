@@ -1,12 +1,14 @@
 {
   "schema_version": 1,
   "unicode_version": "18.0.0",
-  "purpose": "Allowlist of pinned Noto fonts and verified WenJin Mincho for vector outline redistribution. Noto font family follows the Noto project official OFL 1.1 license; per-font copyright is extracted and retained at release.",
+  "purpose": "Allowlist of SHA-pinned fonts whose vector-outline redistribution has been verified under SIL OFL 1.1. Includes Noto/Noto Emoji, GenZui, WenJin Mincho, Plangothic, UniHieroglyphica and Kaiyuan; per-font copyright metadata is preserved at release.",
   "license_text": "docs/licenses/Noto-OFL-1.1.txt",
   "license_project_urls": [
     "https://github.com/notofonts/get-noto",
     "https://github.com/notofonts/noto-docs/blob/main/docs/website/use.md",
-    "https://github.com/adobe-fonts/source-han-super-otc"
+    "https://github.com/adobe-fonts/source-han-super-otc",
+    "https://github.com/googlefonts/noto-emoji",
+    "https://github.com/mkpoli/GenZui"
   ],
   "approved_fonts": [
     {
@@ -242,6 +244,24 @@
       "copyright_notice_source": "embedded font name table"
     },
     {
+      "file": "fonts/east-asian/GenZuiSans-Regular.ttf",
+      "sha256": "121871ee522380b1f591fc6871850416cb74e075a534438eb5180b43094ebe0f",
+      "license": "SIL OFL 1.1",
+      "license_family": "genzui",
+      "license_source": "https://github.com/mkpoli/GenZui",
+      "license_file": "docs/licenses/GenZui-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/east-asian/GenZuiSerif-Regular.ttf",
+      "sha256": "3f46b65c28fa8ba55d61777dadc03b40f2e972cd9499de9a4fb9b1ae58cb172e",
+      "license": "SIL OFL 1.1",
+      "license_family": "genzui",
+      "license_source": "https://github.com/mkpoli/GenZui",
+      "license_file": "docs/licenses/GenZui-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
       "file": "fonts/east-asian/NotoSerifKhitanSmallScript-Regular.ttf",
       "sha256": "a8371e485454a7680cc213a8f9e6baf028ff3b00f384cba7fb5fe5992e61c07d",
       "license": "SIL OFL 1.1",
@@ -255,6 +275,15 @@
       "license": "SIL OFL 1.1",
       "license_family": "noto",
       "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/emoji/NotoColorEmoji-Regular.ttf",
+      "sha256": "ad4a3478943b88660a194d1434793bc02c8007819f2d1e7da9ede289e78f9ca7",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto-emoji",
+      "license_source": "https://github.com/googlefonts/noto-emoji",
+      "license_file": "docs/licenses/NotoEmoji-OFL-1.1.txt",
       "copyright_notice_source": "embedded font name table"
     },
     {
@@ -306,6 +335,502 @@
       "license_family": "unihieroglyphica",
       "license_source": "https://github.com/thesaurus-linguae-aegyptiae/unihieroglyphica",
       "license_file": "docs/licenses/UniHieroglyphica-OFL-1.1.txt",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoNaskhArabic-Regular.ttf",
+      "sha256": "6f0a92031367b2f5a2078fe9d24f3433122b61a0bad57c423aad8f3c39aa2e6e",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansArabic-Regular.ttf",
+      "sha256": "bdff3e5659d67e67def05b33f749683b9376ae819d65d3dd62ac4640b3aaef48",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansArmenian-Regular.ttf",
+      "sha256": "720df88c332417a235b4d6209d14ec2e2bf4bfe2a954b7453d869ea593bfce1e",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansBatak-Regular.ttf",
+      "sha256": "e92e4bffffc64f7265ca9da1097e8b8be31fb963b8148edd06d1a22e1a449160",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansBengali-Regular.ttf",
+      "sha256": "b55c62ee531e3214da6c0701daecea89a52ba42db7d8206b92e6b51f397a3193",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansBuginese-Regular.ttf",
+      "sha256": "bc19f17d7f6e8f280c2cc95ef6d1b67fac25becfe98722f482039a4d84f3c9ba",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansBuhid-Regular.ttf",
+      "sha256": "328d80e11e7f65f9b6e4bac12de32b7ce42154301c2a14ba92155e32e05939d6",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansCham-Regular.ttf",
+      "sha256": "d48a34e02b4096eb3f2e008b74459789540598c2274d65fc53012517d0b08d92",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansCoptic-Regular.ttf",
+      "sha256": "e70bd535d7e6cdf2346eab36ea76441059b18ee14d3243e85240b5e65eb0ad45",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansDevanagari-Regular.ttf",
+      "sha256": "4e3c66638958c3e2ab5d37f47a8deb89fffeb7be9985c665a519bbc7ba762313",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansGlagolitic-Regular.ttf",
+      "sha256": "bb00b6d9cacbab378ef11b1f83250495cd7b6503d143c75d90b1efafa76c691e",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansGujarati-Regular.ttf",
+      "sha256": "9b5a7aaeeb649a2e75a49d8b006a1f87db1b61c0df3b001609f4e0725d88dbf6",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansGurmukhi-Regular.ttf",
+      "sha256": "658d0207da305a1411c539a8b0bbeda64d4146e54fb4827facddb890b6b90d74",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansHanunoo-Regular.ttf",
+      "sha256": "ef23d153e9d666becc0d79fa88f0ae21f46138f1285b8eac304661ab35717aed",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansHebrew-Regular.ttf",
+      "sha256": "cdefaf8efd47045f6820928eba84db5bed7557539328952b5f828315485e02ee",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansJavanese-Regular.ttf",
+      "sha256": "81fdea70d379989bafea65eae5a6a96144991b437415744716a49a56f09f747a",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansKannada-Regular.ttf",
+      "sha256": "9ad74dc64838c6855b96f671fc08e425a58921b9d0c71712ea79c328a27e6e38",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansKayahLi-Regular.ttf",
+      "sha256": "71235e4d51c4e591b20717c525997c72ee906a9d39ce55f8f8bb8c60e96ab807",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansLao-Regular.ttf",
+      "sha256": "0a86e5e1ccfe34ca78c43fac6829dc751b42bcc469272a9a55325aae587bfbe7",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansLepcha-Regular.ttf",
+      "sha256": "8dad9629d709f0dba5d769988d1466daf300751f6bba2659465aaa6214261590",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansLimbu-Regular.ttf",
+      "sha256": "5cea5d0f2a089c36ea24e8481f65a2aff5d4b0890db440326cea2c808f82d582",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansLisu-Regular.ttf",
+      "sha256": "f56f6bca7618c5d95d9e2adf45168844f161dedd95abeadbd58c1fbba7be750d",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansMalayalam-Regular.ttf",
+      "sha256": "c08de7fa8d032a5d6a4d120fb82c78cec60b362a4e73fa26360d89759ff2a7f9",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansMandaic-Regular.ttf",
+      "sha256": "0ecb2440205b9fe02fce714ddda98bb59892d4f7eacce2c1f12028b172a34de8",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansMeeteiMayek-Regular.ttf",
+      "sha256": "66dd434ad6211990d95ba598ad8e44dee30fb32556cb2310bc7f246e00c40990",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansNewTaiLue-Regular.ttf",
+      "sha256": "35499f3b79c2a4683ba2784b0d4c652d58e2c28c48775b33c9e8e94f2dee965a",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansNKo-Regular.ttf",
+      "sha256": "c756efb2c40f754107d76fa4e401fc3b8b7edec5cc65db549d3d0236ac6d08a1",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansOgham-Regular.ttf",
+      "sha256": "5b3705f2dbc34a493eaa968af282456f319dd74cd230a61614d5b7f6baa31121",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansOlChiki-Regular.ttf",
+      "sha256": "4b1ad6ec4a30277c75fd66465b0b9ae489e19f8fdf44ef3179b6fda7f5ceb32d",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansOriya-Regular.ttf",
+      "sha256": "a16645d056017927406546aa78e4ce15e782fd8783467267b75450453d007415",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansPhagsPa-Regular.ttf",
+      "sha256": "ad1d57202a3d71241822d984d53b4f458a89fa403c73e56010ea65fb367a9299",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansRejang-Regular.ttf",
+      "sha256": "ac84f549caba39e85d0d22a62f4fcf7dcacdf263d01527eb44388e96ce58d785",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansRunic-Regular.ttf",
+      "sha256": "c43f941ef6c8a4f8217e7ffb332fce74f760140a7fd5919f86347e5e2a10b5c9",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansSamaritan-Regular.ttf",
+      "sha256": "430aa9e70b6c500c4267e9ecc5165d15bfefc761d86650101deeb7e07260d5ed",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansSaurashtra-Regular.ttf",
+      "sha256": "8ebdec75287c63310a1aff3660d0fa5b3dd027606c17f69217a5a5a5142f6e63",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansSundanese-Regular.ttf",
+      "sha256": "6cf8ae0d063b8af8ab1bc1b8c7041ac92104e74989dcc1217763723ca6a50c9e",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansSylotiNagri-Regular.ttf",
+      "sha256": "b3bb806a5fe533e550a27b51b28961cb09522f2a700c2c858169d9c8ed6573c4",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansSyriac-Regular.ttf",
+      "sha256": "4440929bf1a47bb50179e8d8495641d208c63d607355e451f29ea2d3e5343290",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTagalog-Regular.ttf",
+      "sha256": "8fdf54f14d3869e5bfabb7c552e32ac39a2f7609cc6e857a2e8480da2ad9031f",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTagbanwa-Regular.ttf",
+      "sha256": "5ed080972eead72d6f7f074ac2020dd6f82d8158161040f702b539e43a776a28",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTaiLe-Regular.ttf",
+      "sha256": "25d2ef9aa4438c7b651ada7f32801e196b5a4a3ca8d6e41cf36e37ecb99aff22",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTaiTham-Regular.ttf",
+      "sha256": "b94134811a2f8c26631a728837bb72f74dad87402810fc46b34c310312a6b369",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTaiViet-Regular.ttf",
+      "sha256": "5f7e2a8d5cca567620d101534fc34b432e1577ff01f3f1752750050c90b1ca7f",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTamil-Regular.ttf",
+      "sha256": "3c0a186feb3c63c7f6d63e1511dcdc144e745ae09b98e217c83f3e317974f6f9",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTelugu-Regular.ttf",
+      "sha256": "b274780b69d1d23fe84b55e809a152cb2ac5306d33864b1f87622f6971871aae",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansThaana-Regular.ttf",
+      "sha256": "7543935bdcef770c9d3dd54222651b29040e5ec82f3bc58542392b2c7a9cbd3c",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansThai-Regular.ttf",
+      "sha256": "61cf814eec46b294d6ea4401ac295d0cecd5207bd2331dcc5a15e7301d30ee44",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSansTifinagh-Regular.ttf",
+      "sha256": "8058054786bc572007193988654d1ded342bc2538c2d91c50d1a7238ea1a99cc",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifArmenian-Regular.ttf",
+      "sha256": "6dc71b17c55d398c7cc88edeec527292ba1e0573b033ac2136c636ab36c27d76",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifBengali-Regular.ttf",
+      "sha256": "c1743dce480147e4563e479ddc31d5ff6544372437428622a54c7c867c50f55b",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifDevanagari-Regular.ttf",
+      "sha256": "e272d11d271c61a8d5d0f65764fd368ae53b9f9dabcce244a8941aa8f32ccc70",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifGujarati-Regular.ttf",
+      "sha256": "b8961ff6faf8e5561e3d0109953c4a9798e9bb8e8d48f66c3d1ef038fe45c940",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifGurmukhi-Regular.ttf",
+      "sha256": "5ef2d04a6d6fd22959989d14148dcf0ffbb970cc35e6316ba63cd5c146f32667",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifHebrew-Regular.ttf",
+      "sha256": "dfd5a6aefe97a99f68fe43388342913d50bb9fbf6d3afc4d2c7725661bc4a2b1",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifKannada-Regular.ttf",
+      "sha256": "95a78c95359dc59b9ec56bdc5bdf8a9642394d2ef87ded945fb3885893b3eac6",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifLao-Regular.ttf",
+      "sha256": "a8d38866520f3c96d0e0e43f079f16c72ae4963bbabdf21cae26092c7cb65ec7",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifMalayalam-Regular.ttf",
+      "sha256": "45c34ac8c169a37a4fbb5b8fbf507def328bbf36180b08095726d460d577ec1d",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifOriya-Regular.ttf",
+      "sha256": "c674ab8038d1e51e783fdd7192fd39ae8a2aa48701589955bdabd627c0c3eb13",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifTamil-Regular.ttf",
+      "sha256": "8a8cb015a3afec2998e01aabcb42fb365994132d95dbc2150208b4fefd8dc2e4",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifTelugu-Regular.ttf",
+      "sha256": "2b376e0351fb140f2edad9c54e8977f4f1effc4fe72443e152b3f6ad392c6f5f",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifThai-Regular.ttf",
+      "sha256": "747b5bb1fdd329850ddd3218d872a3d2a96ab0dd544f51e5300c6d1b12071b62",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
+      "copyright_notice_source": "embedded font name table"
+    },
+    {
+      "file": "fonts/imported-scripts/NotoSerifTibetan-Regular.ttf",
+      "sha256": "ee97bf3dc56e813651db734c9f35f8f1d41e7e31acf5f7d893e64ad22b292446",
+      "license": "SIL OFL 1.1",
+      "license_family": "noto",
+      "license_source": "https://github.com/notofonts/get-noto",
       "copyright_notice_source": "embedded font name table"
     },
     {
@@ -807,6 +1332,14 @@
     {
       "file": "docs/licenses/Kaiyuan-THIRD_PARTY_NOTICES.md",
       "blob_sha1": "725a68cc3a9c7138956f4fc4fb40cf4172f488b5"
+    },
+    {
+      "file": "docs/licenses/GenZui-OFL-1.1.txt",
+      "blob_sha1": "ee30e7ef685dbc6ad58bdd787dcda36f477591fe"
+    },
+    {
+      "file": "docs/licenses/NotoEmoji-OFL-1.1.txt",
+      "blob_sha1": "d09d3d0e09169f6747754e6b25faf5ba5ef6402d"
     }
   ]
 }

@@ -1,7 +1,7 @@
 "use strict";
 /*
  * Actual SVG-outline audit of every assigned Unicode 18.0 code point.
- * The source is the 101 local, cmap-audited fonts served by the site.
+ * The source is the current local, cmap-audited font set served by the site.
  * This tests build-time SVG paths, not browser OpenType performance.
  */
 const fs=require("node:fs");
