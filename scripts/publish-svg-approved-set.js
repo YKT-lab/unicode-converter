@@ -97,7 +97,7 @@ for(const f of policy.approved_fonts){
   }else if(f.license_family==="genzui"){
     insist(["fonts/east-asian/GenZuiSans-Regular.ttf",
       "fonts/east-asian/GenZuiSerif-Regular.ttf"].includes(f.file)&&
-      /^Gen Zui (?:Sans|Serif)$/i.test(family)&&
+      /^Gen ?Zui (?:Sans|Serif)$/i.test(family)&&
       f.license_file==="docs/licenses/GenZui-OFL-1.1.txt"&&
       f.license_source==="https://github.com/mkpoli/GenZui",
       "GenZui source/license identity mismatch "+f.file);
