@@ -118,7 +118,7 @@ function makeSvgOutline(font, codePoint, character) {
   svg.appendChild(outline);
   return svg;
 }
-/* License-approved subset only. Missing/unlicensed glyphs use the proven font renderer. */
+/* License-approved precomputed release is authoritative in SVG mode. */
 const SVG_PRECOMPUTED_RELEASE_ENABLED = true;
 let precomputedSvgClient = null;
 function getPrecomputedSvgClient() {
@@ -132,33 +132,12 @@ function getPrecomputedSvgClient() {
   return precomputedSvgClient;
 }
 async function createSvgGlyph(codePoint, character) {
+  // Deterministic production renderer: use only precomputed, license-approved,
+  // SHA-256-verified SVG outlines. Browser-side font parsing is intentionally
+  // not used as a fallback because it can behave differently across devices.
   const client = getPrecomputedSvgClient();
-  if (client) {
-    const precomputed = await client.getGlyph(codePoint);
-    if (precomputed.svg) return precomputed;
-    // The approved bundle intentionally contains only one font. Always
-    // preserve support for other scripts and transient network failures.
-    // Fallback is the previously shipped OpenType SVG renderer below.
-  }
-
-  const index = await getUnicodeCoverageIndex();
-  if (!index) return {svg:null,reason:"SVGデータ未取得"};
-  const candidates = svgCandidateFontIds(index,codePoint);
-  if (!candidates.length) return {svg:null,reason:"SVG未対応"};
-  let hadError = false;
-  for (const id of candidates) {
-    const file = index.font_families[id]?.file;
-    if (!file) continue;
-    try {
-      const font = await loadSvgFont(file);
-      const svg = makeSvgOutline(font,codePoint,character);
-      if (svg) return {svg,reason:null};
-    } catch (error) {
-      hadError = true;
-      console.warn("SVG glyph load failed:",file,error);
-    }
-  }
-  return {svg:null,reason:hadError?"SVG読込失敗":"SVG未対応"};
+  if (!client) return {svg:null,reason:"SVGデータローダー未取得"};
+  return client.getGlyph(codePoint);
 }
 function updateSvgRandomOptions() {
   const max = svgModeEnabled ? 100 : 500;

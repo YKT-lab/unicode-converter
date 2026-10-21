@@ -8,6 +8,10 @@ const source=fs.readFileSync(path.join(ROOT,"js/svg-mode.js"),"utf8");
 const index=JSON.parse(fs.readFileSync(path.join(ROOT,"data/unicode18_font_coverage_index.json"),"utf8"));
 assert(!source.includes('createElementNS("http://www.w3.org/2000/svg","text")'),
   "SVG compatibility must draw outline paths, not font-dependent SVG text");
+assert(!source.includes("if (precomputed.svg) return precomputed;"),
+  "SVG mode must not fall back to device-side font parsing after a precomputed miss");
+assert(source.includes("return client.getGlyph(codePoint);"),
+  "SVG mode must use the precomputed release as the authoritative renderer");
 
 const elements=[];
 function element(tag) {

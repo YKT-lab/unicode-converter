@@ -529,12 +529,14 @@ async function convertUnicode(
           inner.appendChild(result.svg);
           wrapper.classList.add("svg-character");
         } else {
-          wrapper.replaceWith(makeStatusSpan(await explainUnicodeDisplayFailure(codePoint, true) + " / " + result.reason));
+          wrapper.replaceWith(makeStatusSpan(
+            (result.reason || "SVG未対応") + ": U+" + hex
+          ));
         }
       } catch (error) {
         if (currentRun !== unicodeRun) return;
         console.warn("SVG render failed:", error);
-        wrapper.replaceWith(makeStatusSpan(await explainUnicodeDisplayFailure(codePoint, true) + " / SVG読込失敗"));
+        wrapper.replaceWith(makeStatusSpan("SVG表示処理エラー: U+" + hex));
       }
       await yieldToBrowser();
       continue;
