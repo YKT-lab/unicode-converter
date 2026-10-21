@@ -1,150 +1,5 @@
 {
   "current": {
-    "date": "2026-10-21",
-    "category": "punctuation",
-    "codePoint": "2329",
-    "character": "〈",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M948 -57L885 -86L588 380L885 846L948 817L668 380Z",
-      "viewBox": "513.44 -920.56 509.12 1081.12"
-    },
-    "info": {
-      "category": "punctuation",
-      "unicodeName": "LEFT-POINTING ANGLE BRACKET",
-      "block": "Miscellaneous Technical",
-      "script": "Common",
-      "age": "1.1",
-      "generalCategory": "Ps",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": {
-        "isMath": false,
-        "bracket": {
-          "pairedCodePoint": "232A",
-          "type": "o"
-        },
-        "mirroredCodePoint": "232A"
-      },
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": "3008",
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": true,
-        "unicode1Name": "BRA",
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "左側を指す山括弧の形状をした開き括弧記号です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "",
-        "structure": "Unicode規格において、CJK用の左山括弧（U+3008）への互換分解が定義されています。",
-        "related": "対となる閉じ括弧（U+232A）のほか、小なり記号（U+003C）や数学用左山括弧（U+27E8）、単一の左山引用符（U+2039）が関連文字として指定されています。",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "namesList:crossReference",
-          "text": "(less-than sign - 003C)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(single left-pointing angle quotation mark - 2039)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(mathematical left angle bracket - 27E8)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:decomposition",
-          "text": "3008 left angle bracket",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiBracket",
-          "text": "paired U+232A (o)",
-          "source": "Unicode BidiBrackets",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiMirror",
-          "text": "mirrored U+232A",
-          "source": "Unicode BidiMirroring",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode CLDR Japanese Emoji Annotations",
-          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode DerivedCoreProperties",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
-        },
-        {
-          "name": "Unicode BidiBrackets",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
-        },
-        {
-          "name": "Unicode BidiMirroring",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
-        },
-        {
-          "name": "Unicode UTR #25",
-          "url": "https://www.unicode.org/reports/tr25/"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-22",
     "category": "kana",
     "codePoint": "31F0",
@@ -244,6 +99,143 @@
         {
           "name": "Unicode NamesList",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-23",
+    "category": "han",
+    "codePoint": "30532",
+    "character": "𰔲",
+    "font": "Plangothic P2",
+    "svg": {
+      "path": "M559 495L559 437L711 437L711 495ZM559 595L559 540L711 540L711 595ZM777 325Q754 351 734 382L542 382Q522 352 498 325ZM46 -5Q76 -6 98 -6Q120 -6 130 -5Q148 -5 147 11L147 276Q98 257 52 239L31 310Q83 328 147 350L147 569L41 569L41 639L147 639L147 840L211 840L211 639L298 639L298 569L211 569L211 374Q251 389 294 405L307 339Q258 319 211 301L211 11Q212 -18 204 -34Q196 -50 180 -59Q152 -73 66 -73Q61 -40 46 -5ZM343 19L343 71L767 71L767 19ZM949 771L949 616L886 616L886 711L384 711L384 616L323 616L323 771L609 771Q601 799 590 825L652 848Q671 805 682 771ZM709 -11Q780 -18 798 -18Q816 -18 820 -12Q836 -1 848 139L443 139Q455 190 465 255L520 247Q516 219 510 192L729 192Q735 230 741 273L452 273L452 278Q398 231 331 197Q314 235 299 254Q357 279 414 325Q446 351 472 382L314 382L314 437L497 437L497 495L398 495L398 540L497 540L497 595L399 595L399 642L497 642L497 688L559 688L559 642L711 642L711 688L773 688L773 642L870 642L870 595L773 595L773 540L872 540L872 495L773 495L773 437L955 437L955 382L803 382Q870 304 969 267Q953 245 936 207Q861 243 805 296Q798 241 790 192L913 192Q905 75 898 35Q890 -7 884 -23Q867 -72 821 -73Q810 -74 788 -74Q766 -74 723 -71Q721 -39 709 -11Z",
+      "viewBox": "-44.040000000000006 -923.04 1088.08 1072.08"
+    },
+    "info": {
+      "category": "han",
+      "unicodeName": "CJK UNIFIED IDEOGRAPH-30532",
+      "block": "CJK Unified Ideographs Extension G",
+      "script": "Han",
+      "age": "13.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": {
+        "definition": null,
+        "japaneseOn": null,
+        "japaneseKun": null,
+        "strokes": {
+          "total": "16",
+          "alternateTotal": null,
+          "radicalStroke": "64.13",
+          "adobeJapan1": null
+        },
+        "variants": {
+          "kTraditionalVariant": "U+3A77"
+        },
+        "numeric": {},
+        "irgSources": {
+          "kIRG_UKSource": "UK-01816"
+        },
+        "dictionary": {},
+        "sourceFiles": [
+          "Unihan_Readings.txt",
+          "Unihan_Variants.txt",
+          "Unihan_IRGSources.txt"
+        ]
+      },
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "CJK統合漢字拡張Gに収録されている統合漢字の一つです。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "部首は64（手偏）、総画数は16画で構成されています。",
+        "related": "U+3A77が繁体字の異体字として確認されています。",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "unihan:totalStrokes",
+          "text": "16",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:radicalStroke",
+          "text": "64.13",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:traditionalVariant",
+          "text": "U+3A77",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        },
+        {
+          "kind": "unihan:irgSources",
+          "text": "kIRG_UKSource=UK-01816",
+          "source": "Unicode Unihan",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Unihan Database",
+          "url": "https://www.unicode.org/reports/tr38/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unihan",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
         }
       ]
     }
