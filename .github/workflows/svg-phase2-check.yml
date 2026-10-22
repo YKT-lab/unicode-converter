@@ -4,19 +4,23 @@ on:
   push:
     branches: [feature/svg-precompute-phase2-integration]
     paths:
+      - "js/converter.js"
       - "js/svg-mode.js"
       - "js/svg-precomputed-loader.js"
       - "scripts/publish-svg-bundle.js"
       - "scripts/test-svg-precomputed-loader.js"
+      - "scripts/test-svg-converter-fallback.js"
       - "scripts/test-svg-publish-guard.js"
       - ".github/workflows/svg-phase2-check.yml"
       - "index.html"
   pull_request:
     paths:
+      - "js/converter.js"
       - "js/svg-mode.js"
       - "js/svg-precomputed-loader.js"
       - "scripts/publish-svg-bundle.js"
       - "scripts/test-svg-precomputed-loader.js"
+      - "scripts/test-svg-converter-fallback.js"
       - "scripts/test-svg-publish-guard.js"
       - ".github/workflows/svg-phase2-check.yml"
       - "index.html"
@@ -40,10 +44,12 @@ jobs:
         run: npm install --no-audit --no-fund --package-lock=false
       - name: Check script syntax
         run: |
+          node --check js/converter.js
           node --check js/svg-mode.js
           node --check js/svg-precomputed-loader.js
           node --check scripts/publish-svg-bundle.js
           node --check scripts/test-svg-precomputed-loader.js
+          node --check scripts/test-svg-converter-fallback.js
           node --check scripts/test-svg-publish-guard.js
       - name: Test original SVG functionality
         run: |
@@ -51,6 +57,7 @@ jobs:
           node scripts/test-svg-mode-ui.js
       - name: Test new SVG loader and publish safety
         run: |
+          node scripts/test-svg-converter-fallback.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
       - name: Verify real font shard sample without publishing

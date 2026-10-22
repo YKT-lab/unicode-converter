@@ -105,6 +105,38 @@ function attachSvgFailure(node, failure) {
     node.dataset.svgPhase = failure.phase || failure.error.phase;
 }
 
+// User-facing labels are deliberately separate from loader diagnostics.
+function svgFailureDetails(failure = {}) {
+  const code = failure.code || failure.error?.code || "processing";
+  const stage = failure.stage || failure.error?.stage;
+  const phase = failure.phase || failure.error?.phase;
+  if (code === "unassigned") return {code:"unassigned", text:"未割当"};
+  if (code === "control") return {code:"control", text:"制御文字"};
+  if (code === "invisible" || code === "space")
+    return {code:"invisible", text:"不可視文字"};
+  if (code === "timeout") return {code:"timeout", text:"時間切れ"};
+  if (stage === "render" || phase === "geometry")
+    return {code:"svg-render-error", text:"描画失敗"};
+  if (code === "unsupported" || code === "private-use")
+    return {code:"svg-unsupported", text:"SVG未対応"};
+  if (["missing", "network", "loader"].includes(code))
+    return {code:"svg-load-error", text:"読込失敗"};
+  if (["hash", "decode", "validation"].includes(phase) ||
+      ["version", "integrity", "manifest", "format"].includes(code))
+    return {code:"svg-integrity-error", text:"検証失敗"};
+  return {code:"svg-render-error", text:"描画失敗"};
+}
+
+function makeSvgFailureSpan(codePoint, failure) {
+  const details = svgFailureDetails(failure);
+  const span = makeStatusSpan(details.text);
+  span.dataset.reason = details.code;
+  span.dataset.displayMode = "svg-error";
+  span.dataset.codePoint = codePoint.toString(16).toUpperCase().padStart(4, "0");
+  attachSvgFailure(span, failure);
+  return span;
+}
+
 function makeUnicodeFailureSpan(codePoint, context) {
   const details = unicodeFailureDetails(codePoint, context);
   const span = makeStatusSpan(details.text);
@@ -427,6 +459,7 @@ function createGlyphElement(
 
 async function convertUnicode(rawOverride = null) {
   const currentRun = ++unicodeRun;
+  const svgMode = typeof isSvgModeEnabled === "function" && isSvgModeEnabled();
   const raw = (rawOverride === null ? unicodeInput.value : String(rawOverride)).trim();
   charOutput.className = "result character-result";
   charOutput.textContent = "";
@@ -445,8 +478,6 @@ async function convertUnicode(rawOverride = null) {
   if (currentRun !== unicodeRun) return;
 
   const tokens = raw.split(/[\s,]+/).filter(Boolean);
-  // Release-wide failures should not delay every character in a batch.
-  let svgReleaseFailure = null;
   let emojiUnavailable = false;
   let tokenIndex = 0;
   for (const token of tokens) {
@@ -468,9 +499,12 @@ async function convertUnicode(rawOverride = null) {
     try {
       const character = String.fromCodePoint(codePoint);
       const hex = codePoint.toString(16).toUpperCase();
-      // A local cmap miss does not rule out an SVG or an OS font.
-      if (unicodeNonGlyphReason(codePoint, indexForStatus)) {
-        charOutput.appendChild(makeUnicodeFailureSpan(codePoint, failureContext));
+      // Classification is shared; SVG and normal rendering remain separate.
+      const nonGlyphReason = unicodeNonGlyphReason(codePoint, indexForStatus);
+      if (nonGlyphReason) {
+        charOutput.appendChild(svgMode
+          ? makeSvgFailureSpan(codePoint, {...nonGlyphReason, stage:"unicode", phase:"classification"})
+          : makeUnicodeFailureSpan(codePoint, failureContext));
         await yieldToBrowser();
         continue;
       }
@@ -478,7 +512,7 @@ async function convertUnicode(rawOverride = null) {
       const {wrapper, inner} = createGlyphElement(codePoint, character);
       glyphWrapper = wrapper;
       inner.setAttribute("aria-label", "U+" + hex.padStart(4, "0"));
-      if (typeof isSvgModeEnabled === "function" && isSvgModeEnabled()) {
+      if (svgMode) {
         // Do not flash a device's missing-glyph symbol while SVG is loading.
         inner.textContent = "";
         wrapper.classList.add("loading-character");
@@ -486,10 +520,11 @@ async function convertUnicode(rawOverride = null) {
         updateSvgModeProgress("SVG描画中: " + tokenIndex + " / " + tokens.length);
         await yieldToBrowser();
         if (currentRun !== unicodeRun) return;
+        let svgStage = "loader";
         try {
-          const result = svgReleaseFailure ||
-            await withDisplayTimeout(createSvgGlyph(codePoint, character), 18000);
+          const result = await withDisplayTimeout(createSvgGlyph(codePoint, character), 18000);
           if (currentRun !== unicodeRun || !isSvgModeEnabled()) return;
+          svgStage = "render";
           wrapper.classList.remove("loading-character");
           if (result.svg) {
             inner.textContent = "";
@@ -499,29 +534,22 @@ async function convertUnicode(rawOverride = null) {
             await yieldToBrowser();
             continue;
           }
-          failureContext.svgFailure = {...result, reason:result.reason || "SVG未対応"};
+          // A missing entry is different from a missing file or bad response.
+          failureContext.svgFailure = result;
         } catch (error) {
           if (currentRun !== unicodeRun) return;
           console.warn("SVG render failed:", error);
           failureContext.svgFailure = {
-            code:error.code || "processing", stage:error.stage, url:error.url,
-            reason:error.code === "timeout" ? "SVG読み込みタイムアウト" : "SVG表示処理エラー",
-            error
+            code:error.code || "processing", stage:error.stage || svgStage,
+            phase:error.phase, url:error.url, error
           };
         }
-        // Reuse the normal path, including color emoji and specialist fonts.
-        const failure = failureContext.svgFailure;
-        const failureCode = failure.code || failure.error?.code;
-        if (failureCode !== "unsupported" &&
-            (["active", "manifest"].includes(failure.stage || failure.error?.stage) ||
-             failureCode === "integrity"))
-          svgReleaseFailure = failure;
-        attachSvgFailure(wrapper, failure);
-        wrapper.title = failure.reason + "：通常表示へ切り替えました";
-        wrapper.classList.remove("loading-character");
-        inner.textContent = character;
+        wrapper.replaceWith(makeSvgFailureSpan(codePoint, failureContext.svgFailure));
+        await yieldToBrowser();
+        continue;
       }
 
+      // Normal mode only: Web/CSS fonts, native emoji and the OS font stack.
       const fontNames = getWebFontNames(codePoint);
       if (fontNames.length > 0) wrapper.classList.add("loading-character");
       if (!wrapper.parentNode) charOutput.appendChild(wrapper);
@@ -546,28 +574,10 @@ async function convertUnicode(rawOverride = null) {
         inner.textContent = emojiPlan.character;
         inner.dataset.codePoint = hex;
         inner.setAttribute("aria-label", "U+" + hex);
-        let nativeVisible = true;
-        if (failureContext.svgFailure) {
-          // Unicode's emoji property does not mean this iOS version has the
-          // glyph. After an SVG failure, keep trying if native emoji is tofu.
-          try {
-            const family = getComputedStyle(inner).fontFamily;
-            nativeVisible = !isRenderedBlank(emojiPlan.character, family) &&
-              !looksLikeMissingGlyph(emojiPlan.character, family);
-          } catch (error) {
-            nativeVisible = false;
-            failureContext.fontFailure = error;
-          }
-        }
-        if (nativeVisible) {
-          if (emojiPlan.displayVariation)
-            wrapper.title = (wrapper.title ? wrapper.title + " / " : "") +
-              "U+" + hex + "（カラー表示用の U+FE0F を追加）";
-          await yieldToBrowser();
-          continue;
-        }
-        wrapper.classList.remove("native-color-emoji");
-        inner.textContent = character;
+        if (emojiPlan.displayVariation)
+          wrapper.title = "U+" + hex + "（カラー表示用の U+FE0F を追加）";
+        await yieldToBrowser();
+        continue;
       }
 
       let selectedFont = null;
@@ -625,7 +635,12 @@ async function convertUnicode(rawOverride = null) {
       // Font/Canvas/DOM failures affect this character, not the whole batch.
       console.warn("Character rendering failed:", error);
       failureContext.fontFailure = error;
-      const status = makeUnicodeFailureSpan(codePoint, failureContext);
+      const status = svgMode
+        ? makeSvgFailureSpan(codePoint, {
+          code:error.code || "processing", stage:error.stage || "render",
+          phase:error.phase, url:error.url, error
+        })
+        : makeUnicodeFailureSpan(codePoint, failureContext);
       if (glyphWrapper?.parentNode) glyphWrapper.replaceWith(status);
       else charOutput.appendChild(status);
       await yieldToBrowser();

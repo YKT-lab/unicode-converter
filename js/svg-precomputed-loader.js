@@ -1,7 +1,7 @@
 /*
  * Unicode Converter SVG shard client (precomputed renderer).
  * Activated only in the user-selected SVG mode. Glyphs are drawn from
- * license-gated, hash-checked shards; callers can fall back to normal fonts.
+ * license-gated, hash-checked shards; failures retain typed diagnostics.
  */
 (function(root){
 "use strict";
