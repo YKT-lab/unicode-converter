@@ -1,4 +1,11 @@
 /* Optional SVG compatibility renderer: true vector outlines, never SVG text. */
+// Capture while this deferred script is executing: currentScript is null later
+// in click handlers. Keep the project prefix even on nested/unslashed URLs.
+const svgModeScriptUrl = document.currentScript?.src ||
+  Array.from(document.scripts || []).find(script =>
+    /\/js\/svg-mode\.js(?:[?#]|$)/.test(script.src || ""))?.src;
+const svgDataBaseUrl = svgModeScriptUrl
+  ? new URL("../svg-data/", svgModeScriptUrl).href : "./svg-data/";
 const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
@@ -125,7 +132,7 @@ function getPrecomputedSvgClient() {
   if (!SVG_PRECOMPUTED_RELEASE_ENABLED || !window.UnicodePrecomputedSvg) return null;
   if (!precomputedSvgClient) {
     precomputedSvgClient = window.UnicodePrecomputedSvg.createClient({
-      baseUrl: "./svg-data/", documentObj: document,
+      baseUrl: svgDataBaseUrl, documentObj: document,
       maxParallel: 4, maxCache: 6, retries: 1
     });
   }
@@ -136,7 +143,7 @@ async function createSvgGlyph(codePoint, character) {
   // SHA-256-verified SVG outlines. Browser-side font parsing is intentionally
   // not used as a fallback because it can behave differently across devices.
   const client = getPrecomputedSvgClient();
-  if (!client) return {svg:null,reason:"SVGデータローダー未取得"};
+  if (!client) return {svg:null,reason:"SVGデータローダー未取得",code:"loader",stage:"loader"};
   return client.getGlyph(codePoint);
 }
 function updateSvgRandomOptions() {
