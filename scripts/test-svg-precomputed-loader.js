@@ -11,10 +11,22 @@ const page={start:0,end:127,file:"page-0000.json",count:2,bytes:pageBuf.length,
 const m={schema_version:2,unicode_version:"18.0.0",build_id:id,bucket_size:128,glyphs:2,pages:[page]};
 const active={schema_version:1,build_id:id,manifest:id+"/manifest.json"};
 const doc={baseURI:"https://example.invalid/unicode-converter/",createElementNS:(_ns,tag)=>({
- tag,attrs:{},children:[],setAttribute(k,v){this.attrs[k]=v},appendChild(x){this.children.push(x)}
+ tag,attrs:{},dataset:{},style:{setProperty(k,v){this[k]=v}},children:[],
+ setAttribute(k,v){
+  this.attrs[k]=String(v);
+  if(k==="style")for(const pair of String(v).split(";")){
+   const at=pair.indexOf(":");if(at<0)continue;
+   const key=pair.slice(0,at).trim().replace(/-([a-z])/g,(_m,c)=>c.toUpperCase());
+   this.style[key]=pair.slice(at+1).trim();
+  }
+ },appendChild(x){this.children.push(x)}
 })};
 function session(opts={}){
- const urls=new Map([[base+"active.json",active],[base+id+"/manifest.json",m],[base+id+"/page-0000.json",g]]);
+ const data=opts.glyphs||g;
+ const bytes=Buffer.from(JSON.stringify(data));
+ const record={...page,bytes:bytes.length,sha256:crypto.createHash("sha256").update(bytes).digest("hex")};
+ const manifest={...m,pages:[record],...(opts.layout?{layout:opts.layout}:{})};
+ const urls=new Map([[base+"active.json",active],[base+id+"/manifest.json",manifest],[base+id+"/page-0000.json",data]]);
  const calls=[],requests=[];let simultaneous=0,maxSimultaneous=0;
  const fetchFn=async (u,init)=>{
   calls.push(u);requests.push({url:u,...init});simultaneous++;maxSimultaneous=Math.max(maxSimultaneous,simultaneous);
@@ -60,6 +72,62 @@ const watchdog=setTimeout(()=>{console.error("FAIL: SVG loader test did not sett
  assert.equal(s.calls.filter(x=>x.endsWith("page-0000.json")).length,1);
  assert.equal(s.max(),1);
  assert.equal(s.client.stats().cachedShards,1);
+ assert.equal(a.svg.attrs.viewBox,"0 -10 12 12","Old releases without metrics remain readable");
+
+ const fontMetrics={unitsPerEm:1000,ascent:800,descent:-200,lineGap:0,
+  advanceWidth:500,fontFile:"fonts/scripts/Test-Regular.ttf",fontSha256:"a".repeat(64),fontWeight:400};
+ const tinyPath="M150 0L170 0L170 20L150 20Z";
+ const fullPath="M0 0L500 0L500 700L0 700Z";
+ const metricGlyphs={v:1,g:{"0041":[[0,-800,500,1000],fullPath],
+  "0042":[[0,-800,500,1000],tinyPath]},
+  m:{"0041":fontMetrics,"0042":fontMetrics}};
+ const metricSession=session({glyphs:metricGlyphs,layout:"font-metrics-v1"});
+ const full=await metricSession.client.getGlyph(65),tiny=await metricSession.client.getGlyph(66);
+ assert(full.svg&&tiny.svg,"New metrics-bearing releases must be readable");
+ for(const svg of [full.svg,tiny.svg]){
+  assert.equal(svg.attrs.viewBox,"0 -800 500 1000");
+  assert.equal(parseFloat(svg.style.width),0.5);
+  assert.equal(parseFloat(svg.style.height),1);
+  assert.equal(parseFloat(svg.style.verticalAlign),-0.2);
+  assert.equal(svg.attrs["data-font-file"]||svg.dataset.fontFile,fontMetrics.fontFile);
+  assert.equal(svg.attrs["data-font-sha256"]||svg.dataset.fontSha256,fontMetrics.fontSha256);
+  assert.equal(Number(svg.attrs["data-advance-em"]??svg.dataset.advanceEm),0.5);
+  assert.equal(svg.children[0].attrs.transform,"scale(1,-1)");
+  assert(!svg.children[0].attrs.stroke||svg.children[0].attrs.stroke==="none",
+   "Font outlines must not acquire synthetic bold strokes");
+ }
+ assert.equal(full.svg.children[0].attrs.d,fullPath);
+ assert.equal(tiny.svg.children[0].attrs.d,tinyPath);
+ assert.equal(tiny.svg.style.height,full.svg.style.height,
+  "Small ink bounds must not cause a different em scale");
+
+ const zeroMetrics={...fontMetrics,advanceWidth:0};
+ const mark=api.svgElement(doc,0x301,[[0,-800,1000,1000],"M-250 600L-100 760L-150 760Z"],zeroMetrics);
+ assert.equal(Number(mark.attrs["data-advance-em"]??mark.dataset.advanceEm),0);
+ assert.equal(parseFloat(mark.style.width),1,"A zero-advance mark still needs a nonzero SVG viewport");
+ assert.equal(mark.attrs.viewBox,"0 -800 1000 1000");
+ assert.equal(mark.children[0].attrs.d,"M-250 600L-100 760L-150 760Z",
+  "Negative bearings must not be centered or translated");
+
+ for(const changed of [{unitsPerEm:0},{ascent:-200},{descent:800},{lineGap:NaN},
+  {advanceWidth:-1},{fontFile:"../unreviewed.ttf"},{fontSha256:"bad"},{fontWeight:700}]){
+  assert.throws(()=>api.svgElement(doc,65,metricGlyphs.g["0041"],{...fontMetrics,...changed}),
+   err=>err instanceof api.SvgLoadError&&err.code==="format",
+   "Malformed font metrics must not be displayed: "+JSON.stringify(changed));
+ }
+ const invalidMetrics=session({glyphs:{...metricGlyphs,m:{...metricGlyphs.m,
+  "0041":{...fontMetrics,unitsPerEm:0}}}});
+ const badMetrics=await invalidMetrics.client.getGlyph(65);
+ assert.equal(badMetrics.svg,null);
+ assert.equal(badMetrics.code,"format");
+ const missingMetrics=await session({layout:"font-metrics-v1"}).client.getGlyph(65);
+ assert.equal(missingMetrics.svg,null,"A metrics release must not silently revert to bounding-box normalization");
+ assert.equal(missingMetrics.code,"format");
+ const incompleteMetrics=await session({layout:"font-metrics-v1",glyphs:{...metricGlyphs,
+  m:{"0041":fontMetrics}}}).client.getGlyph(65);
+ assert.equal(incompleteMetrics.svg,null,"Every outline in a metrics shard needs its own metadata");
+ assert.equal(incompleteMetrics.code,"format");
+
  assert.equal((await s.client.getGlyph(200)).reason,"SVG未対応");
  assert.equal((await s.client.getGlyph(0xd800)).reason,"無効なUnicode番号");
  assert.equal((await session({bad:true}).client.getGlyph(65)).reason,"SVGデータ不整合");

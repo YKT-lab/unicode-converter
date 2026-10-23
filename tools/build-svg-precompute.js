@@ -16,6 +16,7 @@ const zlib=require("node:zlib");
 const crypto=require("node:crypto");
 const fontkit=require("@cantoo/fontkit");
 const ROOT=path.resolve(__dirname,"..");
+const {getCandidateFontIds}=require("../js/font-policy.js");
 const coverage=JSON.parse(fs.readFileSync(path.join(ROOT,"data/unicode18_font_coverage_index.json"),"utf8"));
 const classifier=JSON.parse(fs.readFileSync(path.join(ROOT,"data/unicode18_svg_classification.json"),"utf8"));
 const args=Object.fromEntries(process.argv.slice(2).map(arg=>{
@@ -64,23 +65,29 @@ const WORK=fs.mkdtempSync(path.join(os.tmpdir(),"unicode-svg-precompute-"));
 const startMs=Date.now(),BUCKET=128;
 const hash=data=>crypto.createHash("sha256").update(data).digest("hex");
 const hex=cp=>cp.toString(16).toUpperCase().padStart(4,"0");
-const byFont=coverage.font_families.map(()=>[]);
-let tracked=0;
-for(const [a,b,index] of coverage.ranges) {
-  const ids=coverage.combinations[index]||[];
+const candidates=new Map(),candidatePositions=new Map();
+let pending=new Map();
+function enqueue(groups,id,cp){
+  if(!groups.has(id))groups.set(id,[]);
+  groups.get(id).push(cp);
+}
+for(const [a,b] of coverage.ranges) {
   for(let cp=a;cp<=b;cp++) {
     if(sample&&!sample.has(cp))continue;
-    tracked++;
-    for(const id of ids)byFont[id].push(cp);
+    const ids=getCandidateFontIds(coverage,cp).filter(id=>{
+      const entry=coverage.font_families[id];
+      return entry&&(!approvedFont||entry.file===approvedFont)&&
+        (!approvedFiles||approvedFiles.has(entry.file));
+    });
+    if(!ids.length)continue;
+    candidates.set(cp,ids);candidatePositions.set(cp,0);
+    enqueue(pending,ids[0],cp);
   }
 }
-const order=byFont.map((points,id)=>({id,points}))
-  .filter(item=>(!approvedFont||coverage.font_families[item.id].file===approvedFont)&&(!approvedFiles||approvedFiles.has(coverage.font_families[item.id].file)))
-  .sort((a,b)=>b.points.length-a.points.length||a.id-b.id);
-const solved=new Uint8Array(0x110000),failures=[],fontsUsed=[];
+const solved=new Uint8Array(0x110000),failures=[],fontResults=new Map();
 let count=0,rawPaths=0;
 const temporaryPages=new Set();
-function shape(font,cp,notdef) {
+function shape(font,cp,notdef,source) {
   if(!font.hasGlyphForCodePoint(cp))return null;
   const glyph=font.glyphForCodePoint(cp);
   if(!glyph||glyph.id===0||!glyph.path)return null;
@@ -90,20 +97,24 @@ function shape(font,cp,notdef) {
   if(w<=0||h<=0)return null;
   const d=glyph.path.toSVG();
   if(!d||!d.trim()||(notdef&&d===notdef))return null;
-  // fontkit coordinates are y-up. Store the SVG viewBox in y-down
-  // coordinates and let the client invert y with transform=scale(1,-1).
-  const pad=Math.max(w,h)*0.08;
-  const box=[
-    bounds.minX-pad,
-    -bounds.maxY-pad,
-    w+pad*2,
-    h+pad*2
-  ].map(x=>Number(x.toFixed(3)));
-  if(!box.every(Number.isFinite)||box[2]<=0||box[3]<=0)return null;
-  return [box,d];
+  // Keep the font's coordinate system: do not enlarge a small glyph to its
+  // own ink bounds. Bearings, ascenders and descenders remain untouched.
+  const metrics={unitsPerEm:font.unitsPerEm,ascent:font.ascent,descent:font.descent,
+    lineGap:font.lineGap,advanceWidth:glyph.advanceWidth,
+    fontFile:source.file,fontSha256:source.sha256,fontWeight:400};
+  if(![metrics.unitsPerEm,metrics.ascent,metrics.descent,metrics.lineGap,
+       metrics.advanceWidth].every(Number.isFinite)||metrics.unitsPerEm<=0||
+     metrics.ascent<=metrics.descent||metrics.advanceWidth<0)return null;
+  // A zero-advance combining mark still has a usable viewport; its actual
+  // horizontal advance stays zero in metadata and is respected by the client.
+  const box=[0,-metrics.ascent,metrics.advanceWidth||metrics.unitsPerEm,
+    metrics.ascent-metrics.descent];
+  return [box,d,metrics];
 }
-for(let n=0;n<order.length;n++){
-  const {id,points}=order[n];
+let round=0;
+while(pending.size){
+ const next=new Map();round++;
+ for(const [id,points] of [...pending].sort((a,b)=>a[0]-b[0])){
   if(points.length===0)continue;
   const entry=coverage.font_families[id],file=path.join(ROOT,entry.file);
   if(!fs.existsSync(file))throw Error("Missing font "+entry.file);
@@ -114,7 +125,9 @@ for(let n=0;n<order.length;n++){
   catch(error){throw Error("Font parse failed for "+entry.file+": "+error)}
   let notdef="";
   try{notdef=font.getGlyph(0)?.path?.toSVG()||""}catch(_error){}
-  let contributed=0,errors=0,buffer=new Map(),bufferSize=0;
+  if(!fontResults.has(id))fontResults.set(id,{font:entry.file,contributed:0,errors:0});
+  const resultStats=fontResults.get(id);
+  let contributed=0,buffer=new Map(),bufferSize=0;
   function flush(){
     for(const [page,lines] of buffer){
       const dest=path.join(WORK,page+".jsonl");
@@ -126,16 +139,21 @@ for(let n=0;n<order.length;n++){
   for(const cp of points){
     if(solved[cp])continue;
     let result;
-    try{result=shape(font,cp,notdef)}
+    try{result=shape(font,cp,notdef,entry)}
     catch(error){
-      errors++;
+      resultStats.errors++;
       if(failures.length<60)failures.push({codepoint:hex(cp),font:entry.file,error:String(error)});
+    }
+    if(!result){
+      const position=candidatePositions.get(cp)+1;
+      candidatePositions.set(cp,position);
+      const alternative=candidates.get(cp)[position];
+      if(alternative!==undefined)enqueue(next,alternative,cp);
       continue;
     }
-    if(!result)continue;
     solved[cp]=1;count++;contributed++;
     const page=Math.floor(cp/BUCKET).toString(16).padStart(4,"0");
-    const line=JSON.stringify([cp,result[0],result[1]])+"\n";
+    const line=JSON.stringify([cp,result[0],result[1],result[2]])+"\n";
     if(!buffer.has(page))buffer.set(page,[]);
     buffer.get(page).push(line);
     bufferSize+=Buffer.byteLength(line);
@@ -143,18 +161,24 @@ for(let n=0;n<order.length;n++){
     if(bufferSize>=8*1024*1024)flush();
   }
   flush();
-  fontsUsed.push({font:entry.file,contributed,errors});
-  console.log("Font "+(n+1)+"/"+order.length+" "+entry.file+
+  resultStats.contributed+=contributed;
+  console.log("Round "+round+" font "+entry.file+
     " outlines="+contributed+" total="+count);
+ }
+ pending=next;
 }
+const fontsUsed=[...fontResults].sort((a,b)=>a[0]-b[0]).map(([,result])=>result);
 const pages=[],topHeavy=[];
 let totalJsonBytes=0,totalGzipBytes=0,maxJsonBytes=0,maxGzipBytes=0;
 let splitCount=0,unsplittableCount=0;
 const TARGET_GZIP_BYTES=192*1024;
 function storeAdaptive(page,from,to,entries,suffix=""){
   if(!entries.length)return;
-  const sorted=Object.fromEntries(entries);
-  const body=Buffer.from(JSON.stringify({v:1,g:sorted})+"\n");
+  const sorted=Object.fromEntries(entries.map(([key,entry])=>[key,entry.slice(0,2)]));
+  const metricEntries=Object.fromEntries(entries.map(([key,entry])=>[key,entry[2]]));
+  // Keep v1/g geometry readable by existing clients while the optional m
+  // table gives new clients exact font sizing, source identity and baseline.
+  const body=Buffer.from(JSON.stringify({v:1,g:sorted,m:metricEntries})+"\n");
   const gz=zlib.gzipSync(body,{level:9});
   if(gz.length>TARGET_GZIP_BYTES && from<to && entries.length>1){
     splitCount++;
@@ -182,10 +206,10 @@ for(const page of [...temporaryPages].sort()){
   const lines=fs.readFileSync(path.join(WORK,page+".jsonl"),"utf8").trim().split("\n");
   const glyphs={};
   for(const line of lines){
-    const [cp,box,d]=JSON.parse(line);
+    const [cp,box,d,metrics]=JSON.parse(line);
     const key=hex(cp);
     if(Object.hasOwn(glyphs,key))throw Error("Duplicate outline "+key);
-    glyphs[key]=[box,d];
+    glyphs[key]=[box,d,metrics];
   }
   const entries=Object.entries(glyphs).sort((a,b)=>parseInt(a[0],16)-parseInt(b[0],16));
   const first=parseInt(page,16)*BUCKET;
@@ -194,7 +218,7 @@ for(const page of [...temporaryPages].sort()){
 pages.sort((a,b)=>a.start-b.start);
 const digest=hash(pages.map(p=>p.sha256).join("\n")).slice(0,16);
 const manifest={schema_version:2,unicode_version:"18.0.0",
-  build_id:digest,bucket_size:BUCKET,scanned_fonts:coverage.font_families.length,
+  build_id:digest,bucket_size:BUCKET,layout:"font-metrics-v1",scanned_fonts:coverage.font_families.length,
   source_font:approvedFont,source_fonts:approvedList?approvedList.approved_fonts.map(f=>f.file).sort():null,glyphs:count,pages};
 const manifestBody=JSON.stringify(manifest,null,2)+"\n";
 fs.writeFileSync(path.join(OUT,"manifest.json"),manifestBody);
@@ -202,6 +226,7 @@ const expected=classifierFresh?classifier.counts.svg_outline:null;
 const allPresent=!sample&&!approvedFont&&!approvedList&&expected!==null&&count===expected;
 const report={
   schema_version:1,unicode_version:"18.0.0",
+  layout:"font-metrics-v1",
   mode:sample?"sample":approvedList?"approved-set":approvedFont?"approved":"full",
   approved_only:!!(approvedFont||approvedList),
   approved_fonts:approvedList?approvedList.approved_fonts.map(f=>f.file).sort():null,

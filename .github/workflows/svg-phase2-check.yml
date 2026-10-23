@@ -7,6 +7,16 @@ on:
       - "js/converter.js"
       - "js/svg-mode.js"
       - "js/svg-precomputed-loader.js"
+      - "js/font-policy.js"
+      - "js/font-coverage.js"
+      - "js/glyph-layout.js"
+      - "tools/build-svg-precompute.js"
+      - "scripts/publish-svg-approved-set.js"
+      - "scripts/test-font-policy.js"
+      - "scripts/test-glyph-layout.js"
+      - "scripts/test-svg-font-metrics.js"
+      - "scripts/test-svg-metrics-publish.js"
+      - "style.css"
       - "scripts/publish-svg-bundle.js"
       - "scripts/test-svg-precomputed-loader.js"
       - "scripts/test-svg-converter-fallback.js"
@@ -18,6 +28,16 @@ on:
       - "js/converter.js"
       - "js/svg-mode.js"
       - "js/svg-precomputed-loader.js"
+      - "js/font-policy.js"
+      - "js/font-coverage.js"
+      - "js/glyph-layout.js"
+      - "tools/build-svg-precompute.js"
+      - "scripts/publish-svg-approved-set.js"
+      - "scripts/test-font-policy.js"
+      - "scripts/test-glyph-layout.js"
+      - "scripts/test-svg-font-metrics.js"
+      - "scripts/test-svg-metrics-publish.js"
+      - "style.css"
       - "scripts/publish-svg-bundle.js"
       - "scripts/test-svg-precomputed-loader.js"
       - "scripts/test-svg-converter-fallback.js"
@@ -47,6 +67,9 @@ jobs:
           node --check js/converter.js
           node --check js/svg-mode.js
           node --check js/svg-precomputed-loader.js
+          node --check js/font-policy.js
+          node --check js/font-coverage.js
+          node --check js/glyph-layout.js
           node --check scripts/publish-svg-bundle.js
           node --check scripts/test-svg-precomputed-loader.js
           node --check scripts/test-svg-converter-fallback.js
@@ -60,6 +83,10 @@ jobs:
           node scripts/test-svg-converter-fallback.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
+          node scripts/test-font-policy.js
+          node scripts/test-glyph-layout.js
+          node scripts/test-svg-font-metrics.js
+          node scripts/test-svg-metrics-publish.js
       - name: Verify real font shard sample without publishing
         run: |
           node tools/build-svg-precompute.js \

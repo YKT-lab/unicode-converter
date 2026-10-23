@@ -463,6 +463,7 @@ async function convertUnicode(rawOverride = null) {
   const raw = (rawOverride === null ? unicodeInput.value : String(rawOverride)).trim();
   charOutput.className = "result character-result";
   charOutput.textContent = "";
+  if (typeof UnicodeGlyphLayout !== "undefined") UnicodeGlyphLayout.reset(charOutput);
   hideUnicodeScope();
   if (typeof updateSvgModeProgress === "function") updateSvgModeProgress("");
   if (!raw) return;
@@ -529,6 +530,20 @@ async function convertUnicode(rawOverride = null) {
           if (result.svg) {
             inner.textContent = "";
             inner.appendChild(result.svg);
+            if (result.metrics) {
+              // A zero-advance combining mark still has an overflowing SVG
+              // viewport, but must not acquire a full-em space in the string.
+              const {unitsPerEm:em, ascent, descent, advanceWidth} = result.metrics;
+              inner.style.width = (advanceWidth / em) + "em";
+              inner.style.height = "1em";
+              inner.style.position = "relative";
+              // Match the normal text's line-height:1 box. Keep the larger
+              // font viewport outside line layout, with its native baseline.
+              inner.style.verticalAlign = ((ascent + descent - em) / (2 * em)) + "em";
+              result.svg.style.position = "absolute";
+              result.svg.style.left = "0";
+              result.svg.style.top = ((1 - (ascent - descent) / em) / 2) + "em";
+            }
             wrapper.classList.add("svg-character");
             wrapper.dataset.displayMode = "svg";
             await yieldToBrowser();
@@ -628,7 +643,6 @@ async function convertUnicode(rawOverride = null) {
         await yieldToBrowser();
         continue;
       }
-      applyGlyphScale(wrapper, inner, codePoint, character);
       await yieldToBrowser();
     } catch (error) {
       if (currentRun !== unicodeRun) return;
@@ -646,6 +660,8 @@ async function convertUnicode(rawOverride = null) {
       await yieldToBrowser();
     }
   }
-  if (currentRun === unicodeRun && typeof updateSvgModeProgress === "function")
-    updateSvgModeProgress("");
+  if (currentRun === unicodeRun) {
+    if (typeof updateSvgModeProgress === "function") updateSvgModeProgress("");
+    if (typeof UnicodeGlyphLayout !== "undefined") UnicodeGlyphLayout.fit(charOutput);
+  }
 }

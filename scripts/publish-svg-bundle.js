@@ -24,6 +24,7 @@ if(!["full","approved"].includes(mode)||review.schema_version!==1||
    !Array.isArray(metrics.font_contributions))
  throw Error("Invalid SVG publication metadata");
 if(manifest.schema_version!==2||manifest.unicode_version!=="18.0.0"||
+   (manifest.layout!==undefined&&manifest.layout!=="font-metrics-v1")||
    manifest.build_id!==metrics.build_id||manifest.bucket_size!==128||
    manifest.scanned_fonts!==index.font_families.length||
    metrics.local_font_files!==index.font_families.length||
@@ -50,6 +51,7 @@ for(const x of review.approvals){
  approvals.set(x.file,x);
 }
 const sources=new Map(index.font_families.map(f=>[f.file,f]));
+const contributingSources=new Set(metrics.font_contributions.filter(f=>f.contributed>0).map(f=>f.font));
 const lacking=[],notices=[];
 for(const f of metrics.font_contributions){
  if(!Number.isInteger(f.contributed)||f.contributed<0||!sources.has(f.font))
@@ -103,6 +105,26 @@ for(const page of manifest.pages){
  if(body.v!==1||!body.g||typeof body.g!=="object"||Array.isArray(body.g)||
     Object.keys(body.g).length!==page.count)
   throw Error("Page glyph count mismatch: "+page.file);
+ if(body.m!==undefined||manifest.layout==="font-metrics-v1"){
+  if(!body.m||typeof body.m!=="object"||Array.isArray(body.m)||
+     Object.keys(body.m).length!==Object.keys(body.g).length)
+   throw Error("Glyph metrics count mismatch: "+page.file);
+  for(const key of Object.keys(body.g)){
+   const m=body.m[key],glyph=body.g[key],source=m&&sources.get(m.fontFile);
+   if(!Object.hasOwn(body.m,key)||!m||typeof m!=="object"||Array.isArray(m)||
+      ![m.unitsPerEm,m.ascent,m.descent,m.lineGap,m.advanceWidth].every(Number.isFinite)||
+      m.unitsPerEm<=0||m.ascent<=m.descent||m.advanceWidth<0||m.fontWeight!==400)
+    throw Error("Invalid glyph font metrics: "+key);
+   if(!source||source.sha256!==m.fontSha256||!approvals.has(m.fontFile)||
+      !contributingSources.has(m.fontFile))
+    throw Error("Unapproved glyph metrics source: "+key);
+   const expected=[0,-m.ascent,m.advanceWidth||m.unitsPerEm,m.ascent-m.descent];
+   if(!Array.isArray(glyph)||glyph.length!==2||!Array.isArray(glyph[0])||
+      glyph[0].length!==4||!glyph[0].every((value,i)=>Number.isFinite(value)&&Math.abs(value-expected[i])<1e-6)||
+      typeof glyph[1]!=="string"||!glyph[1].trim())
+    throw Error("Glyph metrics viewport mismatch: "+key);
+  }
+ }
  for(const key of Object.keys(body.g)){
   const cp=parseInt(key,16);
   if(!/^[0-9a-f]{4,6}$/i.test(key)||cp<page.start||cp>page.end)

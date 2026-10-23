@@ -5,6 +5,11 @@ on:
   pull_request:
     paths:
       - "tools/build-svg-precompute.js"
+      - "js/font-policy.js"
+      - "scripts/publish-svg-bundle.js"
+      - "scripts/test-font-policy.js"
+      - "scripts/test-svg-font-metrics.js"
+      - "scripts/test-svg-metrics-publish.js"
       - "scripts/publish-svg-approved-set.js"
       - "scripts/test-svg-approved-set-policy.js"
       - "docs/svg-approved-fonts.json"
@@ -34,6 +39,8 @@ jobs:
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
           node scripts/test-approved-svg-publish.js
+          node scripts/test-font-policy.js
+          node scripts/test-svg-metrics-publish.js
       - name: Precompute SVG paths from approved sources only
         run: |
           node tools/build-svg-precompute.js \
@@ -48,6 +55,7 @@ jobs:
             --index=data/unicode18_font_coverage_index.json \
             --policy=docs/svg-approved-fonts.json \
             --dest="$RUNNER_TEMP/site/svg-data"
+          node scripts/test-svg-font-metrics.js --bundle="$RUNNER_TEMP/site/svg-data"
           node - "$RUNNER_TEMP/site/svg-data" "$RUNNER_TEMP/svg-review-report.json" <<'NODE'
           const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path");
           const p=process.argv[2], report=JSON.parse(fs.readFileSync(process.argv[3],"utf8"));
@@ -55,7 +63,7 @@ jobs:
           const manifest=JSON.parse(fs.readFileSync(path.join(p,pointer.manifest),"utf8"));
           const sources=JSON.parse(fs.readFileSync(path.join(p,pointer.build_id,"SOURCES.json"),"utf8"));
           assert.equal(report.mode,"approved-set");
-          assert(manifest.glyphs>87014,"Must exceed previous 93-font licensed coverage");
+          assert(manifest.glyphs>=170775,"Must retain the complete approved SVG coverage");
           assert.equal(sources.sources.length,162);
           assert.equal(report.generated_outline_count,manifest.glyphs);
           assert.equal(report.font_contributions.reduce((n,x)=>n+x.contributed,0),manifest.glyphs);

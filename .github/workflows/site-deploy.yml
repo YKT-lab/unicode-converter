@@ -49,12 +49,18 @@ jobs:
           node --check js/svg-mode.js
           node --check js/svg-precomputed-loader.js
           node --check js/converter.js
+          node --check js/font-policy.js
+          node --check js/font-coverage.js
+          node --check js/glyph-layout.js
           node --check js/scope.js
           node --check scripts/publish-svg-bundle.js
           node scripts/test-svg-mode.js
           node scripts/test-svg-mode-ui.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-converter-fallback.js
+          node scripts/test-font-policy.js
+          node scripts/test-glyph-layout.js
+          node scripts/test-svg-metrics-publish.js
           node scripts/test-svg-publish-guard.js
           node scripts/test-approved-svg-publish.js
           node --check scripts/publish-svg-approved-set.js
@@ -100,7 +106,10 @@ jobs:
             --index=data/unicode18_font_coverage_index.json \
             --policy=docs/svg-approved-fonts.json \
             --dest=_site/svg-data
+          node scripts/test-svg-font-metrics.js --bundle=_site/svg-data
           test -s _site/svg-data/active.json
+          test -s _site/js/font-policy.js
+          test -s _site/js/glyph-layout.js
           test -s _site/js/opentype.min.js
           test -s _site/js/svg-precomputed-loader.js
           test -s _site/data/unicode18_font_coverage_index.json

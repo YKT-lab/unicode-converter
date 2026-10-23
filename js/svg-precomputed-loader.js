@@ -31,7 +31,8 @@ function validManifest(active,manifest){
   throw new SvgLoadError("manifest","Bad SVG release pointer");
  if(!manifest||manifest.schema_version!==2||manifest.unicode_version!=="18.0.0"||
     manifest.build_id!==active.build_id||manifest.bucket_size!==128||
-    !Array.isArray(manifest.pages)||!Number.isInteger(manifest.glyphs))
+    !Array.isArray(manifest.pages)||!Number.isInteger(manifest.glyphs)||
+    (manifest.layout!==undefined&&manifest.layout!=="font-metrics-v1"))
   throw new SvgLoadError("manifest","Bad SVG outline manifest");
  let last=-1,count=0;
  for(const p of manifest.pages){
@@ -46,18 +47,43 @@ function validManifest(active,manifest){
  if(count!==manifest.glyphs)throw new SvgLoadError("manifest","SVG shard count mismatch");
  return manifest.pages;
 }
-function svgElement(doc,cp,entry){
+function svgElement(doc,cp,entry,metrics=null){
  if(!Array.isArray(entry)||entry.length!==2||!Array.isArray(entry[0])||
    entry[0].length!==4||!entry[0].every(Number.isFinite)||
    entry[0][2]<=0||entry[0][3]<=0||typeof entry[1]!=="string"||
    !entry[1].trim()||entry[1].length>7_000_000)
   throw new SvgLoadError("format","Invalid SVG glyph geometry");
+ if(metrics){
+  if(!metrics||typeof metrics!=="object"||
+     ![metrics.unitsPerEm,metrics.ascent,metrics.descent,metrics.lineGap,metrics.advanceWidth].every(Number.isFinite)||
+     metrics.unitsPerEm<=0||metrics.ascent<=metrics.descent||metrics.advanceWidth<0||
+     metrics.fontWeight!==400||typeof metrics.fontFile!=="string"||
+     !/^fonts\/[\w.-]+(?:\/[\w.-]+)*\.(?:ttf|otf|woff2?)$/i.test(metrics.fontFile)||
+     metrics.fontFile.split("/").includes("..")||!SHA.test(metrics.fontSha256))
+   throw new SvgLoadError("format","Invalid SVG font metrics");
+  const expected=[0,-metrics.ascent,metrics.advanceWidth||metrics.unitsPerEm,metrics.ascent-metrics.descent];
+  if(entry[0].some((value,i)=>Math.abs(value-expected[i])>0.002))
+   throw new SvgLoadError("format","SVG viewport and font metrics differ");
+ }
  const svg=doc.createElementNS(NS,"svg"),outline=doc.createElementNS(NS,"path");
  svg.setAttribute("viewBox",entry[0].join(" "));
  svg.setAttribute("class","unicode-svg-outline");
  svg.setAttribute("role","img");
  svg.setAttribute("aria-label","U+"+hex(cp));
  svg.setAttribute("data-code-point",hex(cp));
+ if(metrics){
+  const em=metrics.unitsPerEm,advance=metrics.advanceWidth/em;
+  // Preserve the font's origin and baseline. Never fit an individual ink box.
+  svg.setAttribute("preserveAspectRatio","xMinYMin meet");
+  svg.setAttribute("style","width:"+(advance||1)+"em;height:"+
+   ((metrics.ascent-metrics.descent)/em)+"em;vertical-align:"+
+   (metrics.descent/em)+"em;overflow:visible");
+  svg.setAttribute("data-font-metrics","em");
+  svg.setAttribute("data-advance-em",String(advance));
+  svg.setAttribute("data-font-file",metrics.fontFile);
+  svg.setAttribute("data-font-sha256",metrics.fontSha256);
+  svg.setAttribute("data-font-weight",String(metrics.fontWeight));
+ }
  outline.setAttribute("d",entry[1]);
  outline.setAttribute("fill","currentColor");
  // fontkit stores Y upwards; SVG's coordinate space points downwards.
@@ -173,7 +199,7 @@ function createClient(options={}){
     let pages;
     try{pages=validManifest(active,json)}
     catch(err){throw contextError(err,"manifest",url(active.manifest),"validation")}
-    const result={build:active.build_id,pages};
+    const result={build:active.build_id,pages,layout:json.layout};
     if(manifestPromise===promise)version=result;
     return result;
    })().catch(err=>{if(manifestPromise===promise){manifestPromise=null;version=null}throw err});
@@ -195,7 +221,11 @@ function createClient(options={}){
     const cp=parseInt(code,16);
     if(cp<page.start||cp>page.end)throw new SvgLoadError("version","Out-of-range glyph");
    }
-   return obj.g;
+   if(obj.m!==undefined&&(!obj.m||typeof obj.m!=="object"||Array.isArray(obj.m)||
+      Object.keys(obj.m).length!==page.count||Object.keys(obj.g).some(code=>
+       !Object.prototype.hasOwnProperty.call(obj.m,code)||!obj.m[code]||typeof obj.m[code]!=="object")))
+    throw new SvgLoadError("format","Invalid SVG metrics table");
+   return obj;
   }).catch(err=>{if(cache.get(key)===promise)cache.delete(key);throw contextError(err,"shard",url(key),"validation")});
   cache.set(key,promise);
   while(cache.size>maxCache)cache.delete(cache.keys().next().value);
@@ -204,9 +234,11 @@ function createClient(options={}){
  async function once(cp,reload=false){
   const v=await manifest(),p=findPage(v.pages,cp);
   if(!p)return {svg:null,reason:"SVG未対応",code:"unsupported",stage:"manifest"};
-  const all=await shard(p,v.build,reload),entry=all[hex(cp)];
+  const all=await shard(p,v.build,reload),entry=all.g[hex(cp)],metrics=all.m?.[hex(cp)];
   if(!entry)return {svg:null,reason:"SVG未対応",code:"unsupported",stage:"shard"};
-  try{return {svg:svgElement(doc,cp,entry),reason:null}}
+  if(v.layout==="font-metrics-v1"&&!metrics)
+   throw contextError(new SvgLoadError("format","Missing SVG font metrics"),"shard",url(v.build+"/"+p.file),"validation");
+  try{return {svg:svgElement(doc,cp,entry,metrics),reason:null,metrics:metrics||null}}
   catch(err){throw contextError(err,"render",url(v.build+"/"+p.file),"geometry")}
  }
  function clear(){cache.clear();manifestPromise=null;version=null}
