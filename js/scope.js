@@ -155,6 +155,60 @@ function getCharacterRect(
    Nearest character from tap point
 ========================================= */
 
+function getScopeSvgRect(svg) {
+  const valid = rect => rect && rect.width > 0 && rect.height > 0 &&
+    [rect.left, rect.top, rect.width, rect.height].every(Number.isFinite);
+  try {
+    const ink = svg.querySelector("path")?.getBoundingClientRect();
+    if (valid(ink)) return ink;
+  } catch (_error) { /* Safari may not expose geometry for a hidden path. */ }
+  try {
+    const viewport = svg.getBoundingClientRect();
+    return valid(viewport) ? viewport : null;
+  } catch (_error) { return null; }
+}
+
+function cloneUnicodeScopeSvg(source) {
+  const clone = source.cloneNode(true);
+  const viewBox = (source.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+  let heightEm = /em$/.test(source.style.height) ? parseFloat(source.style.height) : NaN;
+  if (!(heightEm > 0)) {
+    const style = getComputedStyle(source);
+    heightEm = parseFloat(style.height) / parseFloat(style.fontSize);
+  }
+  // The result uses absolute positioning to preserve its text baseline.
+  // Those offsets must never become the Scope's containing-block offsets.
+  clone.removeAttribute("style");
+  clone.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  if (viewBox.length === 4 && Number.isFinite(viewBox[3]) && viewBox[3] > 0 && heightEm > 0)
+    clone.dataset.scopeUnitsPerEm = String(viewBox[3] / heightEm);
+  return clone;
+}
+
+function fitScopeSvgGlyph(svg, fontSize) {
+  const unitsPerEm = Number(svg.dataset.scopeUnitsPerEm);
+  if (!(unitsPerEm > 0) || !(fontSize > 0)) return false;
+  let ink;
+  try { ink = svg.getBBox(); }
+  catch (_error) { return false; }
+  if (!ink || ![ink.x, ink.y, ink.width, ink.height].every(Number.isFinite) ||
+      ink.width <= 0 || ink.height <= 0) return false;
+  // getBBox on the SVG root includes the path's Y-axis transform. Center
+  // this clone's visible ink, keeping the native em scale and the same
+  // enlargement limit as normal Scope text. Small marks stay small.
+  const naturalScale = fontSize / unitsPerEm;
+  const scale = Math.min(1.15, 42 / (ink.width * naturalScale), 42 / (ink.height * naturalScale));
+  const side = 42 / (naturalScale * scale);
+  if (!Number.isFinite(side) || side <= 0) return false;
+  svg.setAttribute("viewBox", [
+    ink.x + ink.width / 2 - side / 2,
+    ink.y + ink.height / 2 - side / 2,
+    side, side
+  ].join(" "));
+  svg.dataset.scopeScale = String(scale);
+  return true;
+}
+
 function getCharacterFromPoint(
   x,
   y
@@ -164,10 +218,11 @@ function getCharacterFromPoint(
   const svg = document.elementFromPoint(x,y)?.closest?.("#charOutput svg.unicode-svg-outline");
   if (svg?.dataset.codePoint) {
     const cp = parseInt(svg.dataset.codePoint,16);
-    if (Number.isInteger(cp) && cp>=0 && cp<=0x10FFFF) {
+    const rect = getScopeSvgRect(svg);
+    if (Number.isInteger(cp) && cp>=0 && cp<=0x10FFFF && rect) {
       return {
         character:String.fromCodePoint(cp),
-        rect:svg.getBoundingClientRect(),
+        rect,
         textNode:{parentElement:svg.parentElement},
         svgElement:svg
       };
@@ -482,8 +537,9 @@ function fitUnicodeScopeGlyph(
     32;
 
 
-  if (unicodeScopeGlyph.querySelector("svg.unicode-svg-outline")) {
-    unicodeScopeGlyph.style.transform = "none";
+  const svg = unicodeScopeGlyph.querySelector("svg.unicode-svg-outline");
+  if (svg) {
+    fitScopeSvgGlyph(svg, fontSize);
     return;
   }
 
@@ -637,7 +693,7 @@ function showUnicodeScope(
 
 
   if (result.svgElement) {
-    unicodeScopeGlyph.replaceChildren(result.svgElement.cloneNode(true));
+    unicodeScopeGlyph.replaceChildren(cloneUnicodeScopeSvg(result.svgElement));
   } else {
     unicodeScopeGlyph.textContent = character;
   }

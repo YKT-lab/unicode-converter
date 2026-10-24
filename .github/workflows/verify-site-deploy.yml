@@ -32,6 +32,7 @@ jobs:
         run: |
           node scripts/test-svg-mode.js
           node scripts/test-svg-mode-ui.js
+          node scripts/test-svg-scope.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-publish-guard.js
       - name: Rebuild the real font index
