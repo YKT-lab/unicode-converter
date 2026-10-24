@@ -1,0 +1,64 @@
+name: Combining Character Maker Checks
+
+on:
+  pull_request:
+    paths:
+      - "combining/**"
+      - "combining-maker.css"
+      - "js/combining-*.js"
+      - "js/font-policy.js"
+      - "js/site-header.js"
+      - "data/combining-*.json"
+      - "scripts/*combining*.js"
+      - ".github/workflows/combining-maker-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "combining/**"
+      - "combining-maker.css"
+      - "js/combining-*.js"
+      - "js/font-policy.js"
+      - "js/site-header.js"
+      - "data/combining-*.json"
+      - "scripts/*combining*.js"
+      - ".github/workflows/combining-maker-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate browser modules and exact codepoint operations
+        run: |
+          node --check js/combining-maker.js
+          node --check js/combining-core.js
+          node --check js/combining-normalization.js
+          node --check js/combining-fonts.js
+          node scripts/test-combining-core.js
+          node scripts/test-combining-fonts.js
+          node scripts/test-combining-normalization.js
+      - name: Verify generated UCD data and official normalization conformance
+        run: |
+          node scripts/build-combining-data.js --check --cache-dir="$RUNNER_TEMP/combining-ucd"
+          node scripts/test-combining-normalization.js --ucd-dir="$RUNNER_TEMP/combining-ucd"
+      - name: Install a pinned browser test runner
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test desktop and mobile page interactions
+        run: node scripts/test-combining-browser.js
+      - name: Retain browser reports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: combining-maker-browser
+          path: ${{ runner.temp }}/unicode-combining-maker
+          if-no-files-found: ignore

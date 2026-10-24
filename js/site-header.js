@@ -2,7 +2,7 @@
 /*
  * One canonical header for every route.
  * Existing HTML provides accessible non-JavaScript fallback markup;
- * the shared initializer normalizes it on all five pages.
+ * the shared initializer normalizes it on every page.
  */
 (function () {
   const bar = document.querySelector(".site-topbar");
@@ -22,6 +22,7 @@
     ["", "トップページ"],
     ["about/", "Unicodeとは"],
     ["emoji/", "絵文字"],
+    ["combining/", "結合文字メーカー"],
     ["unicode/", "Unicode一覧"],
     ["news/", "News"]
   ];

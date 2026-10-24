@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Unicodeの結合文字を検索し、自由な文字列に重ねてプレビュー。結合クラスやコードポイント、NFC・NFD・NFKC・NFKDの正規化結果も確認できます。">
+<title>結合文字メーカー | Unicode Converter</title>
+<link rel="stylesheet" href="../style.css?v=20261024-combining1">
+<link rel="stylesheet" href="../pages.css?v=20261012-1">
+<link rel="stylesheet" href="../layout.css?v=20261012-shared-header2">
+<link rel="stylesheet" href="../combining-maker.css?v=20261024-combining1">
+<script src="../js/site-header.js?v=20261024-combining1" defer></script>
+</head>
+<body>
+<main class="combining-maker">
+<div class="site-topbar">
+<header class="site-header unicode-scope-excluded">
+<a class="site-logo-link" href="../" aria-label="トップページに戻る"><img class="site-logo" src="../logo.png" alt="Unicode Converter" draggable="false"></a>
+</header>
+<nav class="site-nav" aria-label="サイト内メニュー"><a href="../">トップページ</a><a href="../about/">Unicodeとは</a><a href="../emoji/">絵文字</a><a href="./" aria-current="page">結合文字メーカー</a><a href="../unicode/">Unicode一覧</a><a href="../news/">News</a></nav>
+</div>
+<section class="page-intro">
+<p class="page-eyebrow">COMBINING CHARACTERS</p>
+<h1 class="page-title">結合文字メーカー</h1>
+<p class="page-lead">文字にアクセントや記号を重ねてみよう。好きな文字列に結合文字を追加し、並び順や正規化による違いを調べられます。</p>
+<p class="page-muted" id="combining-data-summary"><span id="combining-data-version">Unicodeデータを読み込み中…</span> <span id="combining-data-count"></span><br><span id="combining-data-categories"></span></p>
+</section>
+<noscript><p class="page-card">結合文字の検索・プレビュー・正規化にはJavaScriptが必要です。ブラウザの設定で有効にしてください。</p></noscript>
+
+<section class="page-card" aria-labelledby="combining-build-heading">
+<h2 id="combining-build-heading">文字を組み合わせる</h2>
+<label class="combining-label" for="combining-base">基本の文字列</label>
+<textarea class="page-input combining-text" id="combining-base" rows="2" dir="auto" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="combining-base-help">a</textarea>
+<p class="page-muted" id="combining-base-help">絵文字・記号・複数文字・結合文字を含む、任意のUnicode文字列を入力できます。下で選んだ結合文字は、文字列の末尾に順番どおり追加します。各文字へ一括では追加しません。</p>
+<div class="combining-section-head">
+<h3 id="combining-selected-heading">追加する結合文字</h3>
+<button type="button" class="page-button" id="combining-clear" disabled>追加分をすべて削除</button>
+</div>
+<p class="page-muted" id="combining-empty-selected">下の一覧から結合文字を追加してください。同じ文字も繰り返し追加できます。</p>
+<ol class="combining-selected" id="combining-selected" aria-labelledby="combining-selected-heading"></ol>
+
+<div class="combining-preview-panel">
+<h3 id="combining-preview-heading">プレビュー</h3>
+<div class="combining-preview-surface" aria-labelledby="combining-preview-heading"><span class="combining-text" id="combining-preview" dir="auto"></span></div>
+<p class="page-muted">入力した順序のまま表示します。自動で正規化しません。</p>
+<p class="combining-code-label">コードポイント列</p>
+<code class="combining-codes" id="combining-result-codes" dir="ltr"></code>
+<div class="combining-actions">
+<button type="button" class="page-button primary" id="combining-copy-result" disabled>結合結果をコピー</button>
+<button type="button" class="page-button" id="combining-copy-codes" disabled>コードポイント列をコピー</button>
+</div>
+</div>
+<p class="page-muted combining-status" id="combining-status" role="status" aria-live="polite">データを読み込んでいます。</p>
+</section>
+
+<section class="page-card" aria-labelledby="combining-catalogue-heading">
+<h2 id="combining-catalogue-heading">結合文字を探す</h2>
+<p class="page-muted">公式名称・U+コードポイント・文字体系・一般カテゴリ（Mn / Mc / Me）で検索できます。◌は位置を分かりやすくする補助表示で、追加される文字には含まれません。</p>
+<label class="combining-label" for="combining-search">検索</label>
+<input class="page-input" id="combining-search" type="search" placeholder="例：ACUTE、U+0301、Arabic、Mn" spellcheck="false" autocapitalize="off" autocomplete="off" aria-controls="combining-catalogue">
+<div class="combining-filters">
+<div><label class="combining-label" for="combining-script">文字体系</label><select class="page-input" id="combining-script" aria-controls="combining-catalogue"><option value="">すべての文字体系</option></select></div>
+<div><label class="combining-label" for="combining-category">一般カテゴリ</label><select class="page-input" id="combining-category" aria-controls="combining-catalogue"><option value="">すべてのカテゴリ</option><option value="Mn">Mn：非前進結合文字</option><option value="Mc">Mc：前進結合文字</option><option value="Me">Me：囲み結合文字</option></select></div>
+</div>
+<p class="page-muted combining-status" id="combining-catalogue-status" role="status" aria-live="polite">一覧を読み込んでいます。</p>
+<ul class="combining-catalogue" id="combining-catalogue" aria-busy="true"></ul>
+<button type="button" class="page-button" id="combining-more" hidden>さらに表示</button>
+<button type="button" class="page-button" id="combining-retry" hidden>データを再読み込み</button>
+</section>
+
+<section class="page-card" aria-labelledby="combining-normalization-heading">
+<h2 id="combining-normalization-heading">正規化を比較する</h2>
+<p>同じ文字列でも、合成文字と基底文字＋結合文字など、複数の表現が存在します。NFC・NFDは正準等価、NFKC・NFKDは互換等価も扱います。互換正規化では全角文字や丸数字などの表現も変わります。</p>
+<div class="combining-normalizations" id="combining-normalizations"><p class="page-muted">データの読み込み後、4種類の正規化結果とコードポイント列を表示します。</p></div>
+</section>
+
+<section class="page-card" aria-labelledby="combining-notes-heading">
+<h2 id="combining-notes-heading">表示と組み合わせについて</h2>
+<ul>
+<li>異なる文字体系も自由に組み合わせられます。Unicodeに存在する文字同士でも、すべての組み合わせの表示が保証されるわけではありません。</li>
+<li>結合位置・重なり方・文字の有無は、フォント、OS、ブラウザのシェーピング処理によって異なります。対応しない文字が□になったり、結合文字が離れて表示されたりする場合があります。</li>
+<li>このページは、文字列全体をブラウザの通常のフォント表示で描画します。既存の文字単位のSVGを並べても正しい結合位置は再現できないため、SVG成功として扱いません。文字列全体のシェーピングとフォントの対応を保証できるSVG表示は、現時点では提供していません。</li>
+<li>点線の円は単独文字の位置を示す補助です。Variation Selectorなど、点線の円に重ねても見えない文字も収録しています。結合クラス0の文字も一般カテゴリがMn・Mc・Meなら対象です。</li>
+</ul>
+<p class="page-muted">公式データ：<a href="https://www.unicode.org/ucd/" target="_blank" rel="noopener noreferrer">Unicode Character Database ↗</a> ／ <a href="https://www.unicode.org/reports/tr15/" target="_blank" rel="noopener noreferrer">Unicode正規化（UAX #15）↗</a></p>
+</section>
+<p class="page-home-link"><a href="../">← トップページに戻る</a></p>
+</main>
+<script src="../js/font-policy.js?v=20261024-combining1" defer></script>
+<script src="../js/combining-fonts.js?v=20261024-combining1" defer></script>
+<script src="../js/combining-normalization.js?v=20261024-combining1" defer></script>
+<script src="../js/combining-core.js?v=20261024-combining1" defer></script>
+<script src="../js/combining-maker.js?v=20261024-combining1" defer></script>
+</body>
+</html>
