@@ -175,6 +175,64 @@ test("SVG success keeps data-display-mode=svg and uses no normal font rendering"
   assertNoNormalRendering(f);
   assert.equal(f.progress.at(-1), "");
 });
+for (const advanceWidth of [0, 268, 1000]) {
+  test("SVG retains native advance " + advanceWidth + " and a text-sized baseline box", async () => {
+    const svg = element("svg");
+    const metrics = {unitsPerEm:1000, ascent:1160, descent:-288, advanceWidth};
+    const f = fixture({renderSvg: async () => ({svg, metrics, reason:null})});
+    const [node] = await f.convert(advanceWidth === 0 ? "0301" : "3002");
+    expectGlyph(node, "svg");
+    const inner = node.children[0];
+    assert.equal(inner.style.width, (advanceWidth / 1000) + "em");
+    assert.equal(inner.style.height, "1em");
+    assert.equal(inner.style.verticalAlign, "-0.064em");
+    assert.equal(svg.style.position, "absolute", "The viewport must not expand the text line box");
+    assert(Math.abs(parseFloat(svg.style.top) + .224) < 1e-9);
+    assert.equal(inner.style.transform, undefined, "Do not fit individual ink boxes");
+    assertNoNormalRendering(f);
+  });
+}
+test("Normal mode also preserves the original small Egyptian outline", async () => {
+  const f = fixture({svg:false});
+  const [node] = await f.convert("14354");
+  expectGlyph(node, "web-font");
+  assert(!f.normalCalls.includes("applyGlyphScale"), "The converter must not inflate a small glyph");
+});
+test("Normal U+1394 records its audited local source without claiming an OS glyph ID", async () => {
+  const f = fixture({svg:false, selectFont:async()=>"Unicode Site 120"});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"web-font");
+  assert.equal(node.dataset.codePoint,"1394");
+  assert.equal(node.dataset.fontFamily,"Unicode Site 120");
+  assert.equal(node.dataset.fontSource,"local");
+  assert.equal(node.dataset.fontFile,"fonts/scripts/NotoSansEthiopic-Regular.ttf");
+  assert.equal(node.dataset.fontSha256,coverage.font_families[120].sha256);
+  assert.equal(node.dataset.glyphId,undefined);
+});
+test("Successful OS fallback removes the rejected local font attribution", async () => {
+  const f = fixture({svg:false, selectFont:async()=>"Unicode Site 120",
+    missing:(_character,family)=>family.includes("Unicode Site")});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"normal");
+  assert.equal(node.dataset.fontSource,"system");
+  assert.equal(node.dataset.fontFile,undefined);
+  assert.equal(node.dataset.fontSha256,undefined);
+});
+test("SVG output records release layout and the exact outline source", async () => {
+  const metrics={unitsPerEm:1000,ascent:1069,descent:-293,advanceWidth:483,
+    fontFile:"fonts/scripts/NotoSansEthiopic-Regular.ttf",fontSha256:coverage.font_families[120].sha256};
+  const f = fixture({renderSvg:async()=>({svg:element("svg"),metrics,
+    build:"0123456789abcdef",layout:"font-metrics-v1"})});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"svg");
+  assert.equal(node.dataset.codePoint,"1394");
+  assert.equal(node.dataset.svgBuild,"0123456789abcdef");
+  assert.equal(node.dataset.svgLayout,"font-metrics-v1");
+  assert.equal(node.dataset.fontSource,"svg-outline");
+  assert.equal(node.dataset.fontFile,metrics.fontFile);
+  assert.equal(node.dataset.fontSha256,metrics.fontSha256);
+  assertNoNormalRendering(f);
+});
 for (const [code, stage, phase, reason, label] of [
   ["unsupported", "manifest", "validation", "svg-unsupported", "SVG未対応"],
   ["unsupported", "shard", "validation", "svg-unsupported", "SVG未対応"],

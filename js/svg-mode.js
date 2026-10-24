@@ -99,23 +99,32 @@ function svgCandidateFontIds(index, codePoint) {
   return ordered;
 }
 function makeSvgOutline(font, codePoint, character) {
+  const em = font.unitsPerEm, ascent = font.ascender, descent = font.descender;
+  if (![em,ascent,descent].every(Number.isFinite) || em <= 0 || ascent <= descent) return null;
   const glyphId = font.charToGlyphIndex(character);
   if (!glyphId) return null; // Do not draw the .notdef box.
   const glyph = font.glyphs.get(glyphId);
   if (!glyph) return null;
-  const glyphPath = glyph.getPath(0, 0, font.unitsPerEm || 1000);
+  const advance = glyph.advanceWidth;
+  if (!Number.isFinite(advance) || advance < 0) return null;
+  // OpenType's getPath already inverts Y. Using the font's own em as its
+  // fontSize keeps native units; never fit a glyph's ink to an equal box.
+  const glyphPath = glyph.getPath(0, 0, em);
   const d = glyphPath.toPathData(2);
   if (!d) return null;
   const bounds = glyphPath.getBoundingBox();
   if (![bounds.x1,bounds.y1,bounds.x2,bounds.y2].every(Number.isFinite)) return null;
   const w = bounds.x2-bounds.x1, h = bounds.y2-bounds.y1;
   if (w<=0 || h<=0) return null;
-  const pad = Math.max(w,h)*0.08;
   const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
   const outline = document.createElementNS("http://www.w3.org/2000/svg","path");
-  svg.setAttribute("viewBox",[
-    bounds.x1-pad,bounds.y1-pad,w+2*pad,h+2*pad
-  ].map(x=>Number(x.toFixed(2))).join(" "));
+  svg.setAttribute("viewBox",[0,-ascent,advance||em,ascent-descent].join(" "));
+  svg.setAttribute("preserveAspectRatio","xMinYMin meet");
+  svg.setAttribute("style","width:"+(advance/em||1)+"em;height:"+
+    ((ascent-descent)/em)+"em;vertical-align:"+(descent/em)+"em;overflow:visible");
+  svg.setAttribute("data-font-metrics","em");
+  svg.setAttribute("data-advance-em",String(advance/em));
+  svg.setAttribute("data-font-weight","400");
   svg.setAttribute("class","unicode-svg-outline");
   svg.setAttribute("role","img");
   svg.setAttribute("aria-label","U+"+codePoint.toString(16).toUpperCase());

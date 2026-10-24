@@ -23,6 +23,8 @@ on:
       - "data/unicode18_font_audit_manifest.json"
       - "fonts/**"
       - "js/font-coverage.js"
+      - "js/font-policy.js"
+      - "scripts/test-font-policy.js"
       - "js/converter.js"
       - "js/svg-mode.js"
       - "scripts/prepare-svg-fonts.py"
@@ -65,6 +67,8 @@ jobs:
           node --check js/scope.js
           node --check js/random.js
           node --check js/font-coverage.js
+          node --check js/font-policy.js
+          node --check scripts/test-font-policy.js
           node --check js/emoji-display.js
           node --check js/daily.js
           node --check scripts/test-unicode18-emoji-display.js
@@ -89,6 +93,8 @@ jobs:
         run: node tools/classify-unicode-svg.js
       - name: Verify new font assignments for reported Unicode characters
         run: node scripts/test-font-assignment.js
+      - name: Verify shared normal and SVG font preference order
+        run: node scripts/test-font-policy.js
       - name: Verify specialist outlines for eight mobile problem characters
         run: node scripts/test-mobile-font-outlines.js
       - name: Test bulk Unicode input performance policy

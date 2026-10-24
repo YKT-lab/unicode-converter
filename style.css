@@ -485,6 +485,21 @@ input:focus {
     center center;
 }
 
+/* The converter uses font advances and a shared baseline in both modes.
+   Do not center each glyph in an equal-sized card or enlarge its ink box. */
+#charOutput .character-span {
+  display: inline-block;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  vertical-align: baseline;
+}
+#charOutput .glyph-inner {
+  vertical-align: baseline;
+  font-weight: 400;
+  font-synthesis: none;
+}
+
 
 /* =========================================
    Invalid / status labels
@@ -1309,6 +1324,9 @@ button:disabled {
   width: 42px;
   height: 42px;
   max-width: 42px;
+}
+#unicodeScopeGlyph .unicode-svg-outline[data-font-metrics="em"] {
+  max-width: none;
 }
 
 @media (max-width: 520px) {

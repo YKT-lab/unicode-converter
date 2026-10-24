@@ -141,6 +141,7 @@ function makeUnicodeFailureSpan(codePoint, context) {
   const details = unicodeFailureDetails(codePoint, context);
   const span = makeStatusSpan(details.text);
   span.dataset.reason = details.code;
+  span.dataset.codePoint = codePoint.toString(16).toUpperCase().padStart(4, "0");
   attachSvgFailure(span, context.svgFailure);
   if (context.fontFailure) span.dataset.fontError = context.fontFailure.code || "processing";
   return span;
@@ -409,6 +410,21 @@ function goBackUnicode() {
    Glyph DOM
 ========================================= */
 
+function recordNormalFontSource(wrapper, family, index, source = null) {
+  const local = /^Unicode Site (\d+)$/.exec(family || "");
+  const entry = local && index?.font_families?.[Number(local[1])];
+  wrapper.dataset.fontFamily = family || "";
+  wrapper.dataset.fontSource = source || (entry ? "local" : family ? "web" : "css");
+  // These identify a requested, audited local font. A CSS/OS fallback's
+  // actual platform font and glyph ID cannot be inferred from font-family.
+  delete wrapper.dataset.fontFile;
+  delete wrapper.dataset.fontSha256;
+  if (entry) {
+    wrapper.dataset.fontFile = entry.file;
+    wrapper.dataset.fontSha256 = entry.sha256;
+  }
+}
+
 function createGlyphElement(
   codePoint,
   character
@@ -426,6 +442,8 @@ function createGlyphElement(
     getFontClass(
       codePoint
     );
+
+  wrapper.dataset.codePoint = codePoint.toString(16).toUpperCase().padStart(4, "0");
 
 
   const inner =
@@ -463,6 +481,7 @@ async function convertUnicode(rawOverride = null) {
   const raw = (rawOverride === null ? unicodeInput.value : String(rawOverride)).trim();
   charOutput.className = "result character-result";
   charOutput.textContent = "";
+  if (typeof UnicodeGlyphLayout !== "undefined") UnicodeGlyphLayout.reset(charOutput);
   hideUnicodeScope();
   if (typeof updateSvgModeProgress === "function") updateSvgModeProgress("");
   if (!raw) return;
@@ -529,8 +548,29 @@ async function convertUnicode(rawOverride = null) {
           if (result.svg) {
             inner.textContent = "";
             inner.appendChild(result.svg);
+            if (result.metrics) {
+              // A zero-advance combining mark still has an overflowing SVG
+              // viewport, but must not acquire a full-em space in the string.
+              const {unitsPerEm:em, ascent, descent, advanceWidth} = result.metrics;
+              inner.style.width = (advanceWidth / em) + "em";
+              inner.style.height = "1em";
+              inner.style.position = "relative";
+              // Match the normal text's line-height:1 box. Keep the larger
+              // font viewport outside line layout, with its native baseline.
+              inner.style.verticalAlign = ((ascent + descent - em) / (2 * em)) + "em";
+              result.svg.style.position = "absolute";
+              result.svg.style.left = "0";
+              result.svg.style.top = ((1 - (ascent - descent) / em) / 2) + "em";
+            }
             wrapper.classList.add("svg-character");
             wrapper.dataset.displayMode = "svg";
+            if (result.build) wrapper.dataset.svgBuild = result.build;
+            if (result.layout) wrapper.dataset.svgLayout = result.layout;
+            if (result.metrics?.fontFile) {
+              wrapper.dataset.fontSource = "svg-outline";
+              wrapper.dataset.fontFile = result.metrics.fontFile;
+              wrapper.dataset.fontSha256 = result.metrics.fontSha256;
+            }
             await yieldToBrowser();
             continue;
           }
@@ -571,6 +611,7 @@ async function convertUnicode(rawOverride = null) {
         wrapper.classList.remove("loading-character");
         wrapper.classList.add("native-color-emoji");
         wrapper.dataset.displayMode = "normal";
+        recordNormalFontSource(wrapper, null, indexForStatus, "native-emoji");
         inner.textContent = emojiPlan.character;
         inner.dataset.codePoint = hex;
         inner.setAttribute("aria-label", "U+" + hex);
@@ -593,6 +634,7 @@ async function convertUnicode(rawOverride = null) {
       if (currentRun !== unicodeRun) return;
       if (selectedFont) inner.style.fontFamily = '"' + selectedFont + '", sans-serif';
       wrapper.dataset.displayMode = selectedFont ? "web-font" : "normal";
+      recordNormalFontSource(wrapper, selectedFont, indexForStatus);
       wrapper.classList.remove("loading-character");
 
       // Keep the eight audited specialist outlines: Safari Canvas heuristics
@@ -614,6 +656,7 @@ async function convertUnicode(rawOverride = null) {
       }
       if (currentRun !== unicodeRun) return;
       const fontFamily = getComputedStyle(inner).fontFamily;
+      if (!selectedFont) recordNormalFontSource(wrapper, fontFamily, indexForStatus, "css");
       let missing = isRenderedBlank(character, fontFamily) || looksLikeMissingGlyph(character, fontFamily);
       if (missing) {
         // A downloaded/CSS font may still fail on this device. Give the OS
@@ -621,14 +664,16 @@ async function convertUnicode(rawOverride = null) {
         inner.style.fontFamily = "system-ui, sans-serif";
         const systemFamily = getComputedStyle(inner).fontFamily;
         missing = isRenderedBlank(character, systemFamily) || looksLikeMissingGlyph(character, systemFamily);
-        if (!missing) wrapper.dataset.displayMode = "normal";
+        if (!missing) {
+          wrapper.dataset.displayMode = "normal";
+          recordNormalFontSource(wrapper, systemFamily, null, "system");
+        }
       }
       if (missing) {
         wrapper.replaceWith(makeUnicodeFailureSpan(codePoint, failureContext));
         await yieldToBrowser();
         continue;
       }
-      applyGlyphScale(wrapper, inner, codePoint, character);
       await yieldToBrowser();
     } catch (error) {
       if (currentRun !== unicodeRun) return;
@@ -646,6 +691,8 @@ async function convertUnicode(rawOverride = null) {
       await yieldToBrowser();
     }
   }
-  if (currentRun === unicodeRun && typeof updateSvgModeProgress === "function")
-    updateSvgModeProgress("");
+  if (currentRun === unicodeRun) {
+    if (typeof updateSvgModeProgress === "function") updateSvgModeProgress("");
+    if (typeof UnicodeGlyphLayout !== "undefined") UnicodeGlyphLayout.fit(charOutput);
+  }
 }

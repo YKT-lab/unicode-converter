@@ -21,6 +21,7 @@ function insist(ok,why){if(!ok)throw Error("SVG OFL release refused: "+why)}
 insist(policy.schema_version===1&&policy.unicode_version==="18.0.0"&&
   Array.isArray(policy.approved_fonts)&&policy.approved_fonts.length>0,"approved source registry");
 insist(manifest.schema_version===2&&manifest.unicode_version==="18.0.0"&&
+  (manifest.layout===undefined||manifest.layout==="font-metrics-v1")&&
   manifest.bucket_size===128&&/^[0-9a-f]{16}$/.test(manifest.build_id)&&
   manifest.build_id===metrics.build_id&&Array.isArray(manifest.pages)&&manifest.pages.length,
   "invalid build manifest");
@@ -190,6 +191,27 @@ for(const p of manifest.pages){
   insist(data.v===1&&data.g&&typeof data.g==="object"&&
     !Array.isArray(data.g)&&Object.keys(data.g).length===p.count,
     "shard count mismatch");
+  if(data.m!==undefined||manifest.layout==="font-metrics-v1"){
+    insist(data.m&&typeof data.m==="object"&&!Array.isArray(data.m)&&
+      Object.keys(data.m).length===Object.keys(data.g).length,
+      "glyph metrics count mismatch");
+    for(const name of Object.keys(data.g)){
+      const m=data.m[name],glyph=data.g[name];
+      insist(Object.hasOwn(data.m,name)&&m&&typeof m==="object"&&!Array.isArray(m)&&
+        [m.unitsPerEm,m.ascent,m.descent,m.lineGap,m.advanceWidth].every(Number.isFinite)&&
+        m.unitsPerEm>0&&m.ascent>m.descent&&m.advanceWidth>=0&&m.fontWeight===400,
+        "invalid glyph font metrics "+name);
+      const source=approved.get(m.fontFile);
+      insist(source&&source.sha256===m.fontSha256&&contributed.has(m.fontFile)&&
+        indexMap.get(m.fontFile)?.sha256===m.fontSha256,
+        "unapproved glyph metrics source "+name);
+      const expected=[0,-m.ascent,m.advanceWidth||m.unitsPerEm,m.ascent-m.descent];
+      insist(Array.isArray(glyph)&&glyph.length===2&&Array.isArray(glyph[0])&&
+        glyph[0].length===4&&glyph[0].every((value,i)=>Number.isFinite(value)&&Math.abs(value-expected[i])<1e-6)&&
+        typeof glyph[1]==="string"&&glyph[1].trim(),
+        "glyph metrics viewport mismatch "+name);
+    }
+  }
   for(const name of Object.keys(data.g)){
     const point=parseInt(name,16);
     insist(/^[a-f0-9]{4,6}$/i.test(name)&&point>=p.start&&point<=p.end,

@@ -115,11 +115,10 @@ function testUnicodeGlyph(character,family){
  * The candidate list is ranked by Unicode Script and local font
  * specialization at build time. Try only fonts whose real cmap includes cp.
  *
- * For common Japanese characters, preserve web Noto Sans JP's original
- * appearance; avoid downloading a 16 MB CJK font unnecessarily.
+ * Prefer the same local regular font files used by the SVG build. Legacy
+ * CSS/Google fonts remain available when those files cannot be loaded.
  */
 async function selectUnicodeFont(codePoint,character){
-  if(codePoint>=0x0020&&codePoint<=0x007E)return null;
   // The eight audited specialist glyphs must not lose their font because
   // the large coverage index took over five seconds to download on mobile.
   const data=verifiedSpecialistGlyphFiles.has(codePoint)
@@ -144,10 +143,6 @@ async function selectUnicodeFont(codePoint,character){
   const script=scriptRange?.[2];
   const cpJapanese=(codePoint>=0x3040&&codePoint<=0x30FF)||
     (codePoint>=0x3400&&codePoint<=0x9FFF);
-  if(cpJapanese){
-    const japanese=await tryLegacy("Noto Sans JP");
-    if(japanese)return japanese;
-  }
   if(data){
     // The exact cmap index is authoritative: a script-level association
     // never means a font supports every single character of that script.
@@ -156,22 +151,31 @@ async function selectUnicodeFont(codePoint,character){
       const coveredIds=data.combinations[entry[2]]||[];
       const covered=new Set(coveredIds);
       const scriptIds=data.script_font_candidates?.[script]||[];
-      const selected=new Set();
-      // Try the matching script's actual, ordered local fonts first.
-      for(const id of scriptIds){
-        if(!covered.has(id)||selected.has(id))continue;
-        selected.add(id);
-        const face=await loadAuditedUnicodeFont(id,data.font_families[id]);
-        if(face&&(isVerifiedSpecialistSelection(codePoint,face)||testUnicodeGlyph(character,face)))return face;
+      let candidates=null;
+      if(typeof UnicodeFontPolicy!=="undefined"&&
+         typeof UnicodeFontPolicy.getCandidateFontIds==="function"){
+        try{candidates=UnicodeFontPolicy.getCandidateFontIds(data,codePoint)}
+        catch(error){console.warn("Shared font policy unavailable",error)}
       }
-      // Backward compatibility and coverage for fonts that belong to more
-      // than one script, or when the deployed index has not been rebuilt yet.
-      for(const id of coveredIds){
-        if(selected.has(id))continue;
+      // Preserve the previous ordering if the optional shared script is
+      // missing or an older cached implementation cannot serve this index.
+      if(!Array.isArray(candidates)||!candidates.length){
+        candidates=[];
+        const selected=new Set();
+        for(const id of [...scriptIds,...coveredIds]){
+          if(!covered.has(id)||selected.has(id))continue;
+          selected.add(id);candidates.push(id);
+        }
+      }
+      for(const id of candidates){
         const face=await loadAuditedUnicodeFont(id,data.font_families[id]);
         if(face&&(isVerifiedSpecialistSelection(codePoint,face)||testUnicodeGlyph(character,face)))return face;
       }
     }
+  }
+  if(cpJapanese){
+    const japanese=await tryLegacy("Noto Sans JP");
+    if(japanese)return japanese;
   }
   // Preexisting CSS/web-font fallback remains available for older glyphs.
   for(const family of getWebFontNames(codePoint)){
