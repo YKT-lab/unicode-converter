@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-24",
-    "category": "ancient",
-    "codePoint": "13248",
-    "character": "𓉈",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M948 233Q948 216 941 210Q905 221 885 251Q874 271 854 323Q834 375 807 455L787 518Q782 531 776.5 544Q771 557 764 567Q765 559 766.5 552.5Q768 546 769 538Q770 527 783 503Q786 498 790 487Q794 476 799 459Q788 435 756 433L705 433Q680 433 628 430Q620 429 611 429Q602 429 594 429L551 429Q549 429 544.5 429.5Q540 430 530 432Q524 430 517.5 428.5Q511 427 506 428Q501 428 500 429L501 429L492 432Q490 432 482 427L476 429Q467 438 467 447Q467 483 513 483L523 480Q528 478 536 476Q544 474 554 472Q567 474 579 476Q591 478 603 480L654 488Q631 499 618 511.5Q605 524 597 540Q574 532 556.5 525Q539 518 528 513L505 504Q477 494 451 489Q425 484 410 484L410 478Q410 476 410.5 475Q411 474 411 472L411 467Q411 424 321 424Q313 424 302 424Q291 424 275 425Q260 426 249 426Q238 426 230 426Q215 426 185 423Q183 423 181.5 422.5Q180 422 178 422L172 422Q164 421 155.5 421Q147 421 142 421Q129 421 121 426L116 422L106 418L95 426L79 423Q79 427 74 427Q68 427 63 425Q61 425 59 426Q52 439 52 445Q52 458 66.5 470.5Q81 483 95 483Q123 483 137 472Q156 475 174 479Q192 483 211 486L295 501Q295 505 291.5 511Q288 517 275 528Q243 559 231 595L227 613Q227 615 225 619L223 630Q217 653 211.5 672.5Q206 692 201 706Q198 711 181.5 718Q165 725 142 731Q113 738 92 744.5Q71 751 63 759L65 764Q64 764 62 765Q60 766 60 767L52 774L58 796L104 801L122 802Q125 803 134 809.5Q143 816 154 825Q178 846 196 849Q205 875 208 940L219 943Q223 943 223 942Q230 931 236 918Q242 905 245 891Q250 912 250.5 923Q251 934 252 939L266 940Q288 912 288 879Q288 866 284 852Q280 838 275 828Q280 820 288 805Q296 790 306 767L332 697Q337 686 348 675.5Q359 665 370 659Q387 652 426 652Q443 652 469 655.5Q495 659 530 666Q606 680 635 680Q643 680 651.5 680Q660 680 668 679Q670 679 674 678.5Q678 678 681 678Q690 677 703 672.5Q716 668 730 660Q741 653 753.5 645Q766 637 774 630Q806 598 839.5 540Q873 482 904 399Q948 278 948 233ZM946 -20L48 -18L50 -1L139 -1L139 62Q119 62 93 63Q67 64 48 64L50 83L139 83L139 148Q119 148 93 149Q67 150 48 150L50 168L476 168L476 285Q456 303 428 327Q400 351 366 380Q333 380 291.5 380.5Q250 381 207 381Q164 381 122.5 381.5Q81 382 48 382L50 424L812 422L810 380L606 380Q629 348 629 320Q629 291 606 271Q583 251 553 251Q538 251 519 258L519 168Q564 168 620 167.5Q676 167 733.5 167Q791 167 847 166.5Q903 166 948 166L946 148L857 148L857 83Q877 83 903 82Q929 81 948 81L946 62L857 62L857 -1Q877 -1 903 -2Q929 -3 948 -3ZM234 848Q233 848 232 849Q231 849 231 850Q231 863 230 872Q229 881 226 891Q224 880 221 868Q218 856 214 847L233 844ZM74 454L72 452L70 452Q70 454 71 455ZM500 452L502 452L501 449L499 449ZM486 457L488 456Q487 455 487 454Q487 453 486 453L484 453ZM931 232L932 234Q933 233 938 233ZM70 445L70 452L72 451Q71 450 71 446ZM884 291Q892 271 904 255.5Q916 240 930 234Q928 260 911 316.5Q894 373 867 445Q852 483 829.5 521Q807 559 781 594Q755 626 719 644.5Q683 663 641 663Q602 663 533 648Q465 633 426 633Q358 633 335 659Q319 673 295 748Q287 771 279 787Q271 803 263 812L253 804L243 813Q239 815 243 819Q270 841 270 879Q270 886 265 903L255 859Q251 844 245 831Q239 818 232 808Q229 805 227 807L217 813Q213 815 216 818L224 828Q218 829 213 829.5Q208 830 201 830Q190 830 163 808Q134 785 119 785Q104 785 93.5 783.5Q83 782 75 780L78 777Q90 776 103.5 774.5Q117 773 129 772L127 756L99 758Q108 756 122 753Q136 750 153 747Q207 736 214 723Q218 715 223 693Q225 688 225.5 683Q226 678 228 672Q239 629 255 592.5Q271 556 291 539L291 556Q291 568 293.5 582Q296 596 304 613L316 610Q319 610 319 606Q310 571 310 549Q310 537 310.5 520Q311 503 312 480L131 454Q119 463 102 463Q82 463 75 456L88 452L86 444Q86 441 87 440L88 441Q88 443 89 446Q90 449 90 451L106 449L106 443L110 440L126 448Q137 440 142 440Q146 440 154 440.5Q162 441 169 442Q176 443 182.5 443.5Q189 444 191 444Q236 443 264 443Q292 443 306 443Q340 443 361.5 446Q383 449 389 453Q391 455 392.5 460Q394 465 394 467Q394 472 393 480.5Q392 489 391 492Q390 497 390 507Q390 517 390 531L392 560L409 558L409 551Q409 549 408.5 546Q408 543 408 540L408 514Q408 511 408.5 509Q409 507 409 503L415 503Q444 503 489 517.5Q534 532 588 559Q583 567 580 580Q577 593 575 611L591 611Q601 563 624 536Q631 528 647.5 515.5Q664 503 690 486L688 476Q590 455 552 455Q546 455 536 459Q528 461 520 463Q512 465 508 465Q495 465 489 458Q491 457 494 456.5Q497 456 499 456Q501 456 503 454Q506 454 510 454.5Q514 455 516 455L518 447Q524 449 530 449Q531 449 534 448.5Q537 448 539 447Q540 447 540.5 446.5Q541 446 542 446Q546 445 551 445Q561 445 573.5 445Q586 445 602 446L612 446Q615 446 618.5 446.5Q622 447 626 447Q649 449 669.5 449.5Q690 450 701 450L720 450Q723 450 726.5 449.5Q730 449 733 449L741 449Q752 449 763.5 453Q775 457 780 463L763 510Q755 533 750.5 555.5Q746 578 747 603L757 606Q761 606 761 605Q777 582 794 543.5Q811 505 831 453ZM613 323L616 312L608 313Q611 316 611 320ZM573 380Q585 369 593 357.5Q601 346 608 332Q604 341 596 353.5Q588 366 579 380ZM566 289Q582 289 600 301Q598 321 582 340.5Q566 360 540 380L519 380L519 304Q533 296 545.5 292.5Q558 289 566 289ZM838 83L838 148L683 148L683 83ZM501 380L495 380L495 319Q495 318 496 318Q497 317 498 317L501 315ZM794 399L794 406L67 406L67 399ZM589 274L575 271L575 273L589 280ZM553 269Q559 269 562.5 269Q566 269 571 271L566 271Q536 271 493.5 300Q451 329 399 380L396 380L444 337L473 312Q522 269 553 269ZM476 380L424 380Q438 366 450 355.5Q462 345 476 334ZM838 -1L838 62L683 62L683 -1ZM501 168L501 268Q499 269 497.5 269Q496 269 495 270L495 168ZM664 83L664 148L507 148L507 83ZM664 -1L664 62L507 62L507 -1ZM489 83L489 148L333 148L333 83ZM489 -1L489 62L333 62L333 -1ZM314 83L314 148L158 148L158 83ZM314 -1L314 62L158 62L158 -1ZM204 789L183 786L173 797L180 813Q183 814 193 814L203 812Q204 808 204 805Q204 802 205 800Q205 797 206 796Z",
-      "viewBox": "-29.040000000000006 -1020.04 1054.08 1117.08"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH NU017",
-      "block": "Egyptian Hieroglyphs",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "5.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの特定の行政区画に関連する情報を記録するために用いたヒエログリフです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "上エジプト第17のノモスであるアヌビス・ノモスを表す表語文字として機能します。",
-        "etymology": "",
-        "history": "",
-        "structure": "灌漑溝のある土地の記号の上に宗教的な旗竿が立ち、その頂部に尾を下げて伏せるジャッカルが描かれた視覚構造を持ちます。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A jackal, lying down, tail downwards (E15), on top of a standard used for the carrying of religious symbols (R12) on top of a parcel of land with irrigation ditches (N24).",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram (Anubis nome (17th nome of Upper Egypt))",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "ꞽnpw.t",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram (Anubis nome (17th nome of Upper Egypt)) : ꞽnpw.t",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "NU017",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "E-07-030",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-25",
     "category": "ancient",
     "codePoint": "13C3A",
@@ -211,6 +85,132 @@
         {
           "kind": "taxonomyIndex",
           "text": "G-11-019",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-26",
+    "category": "ancient",
+    "codePoint": "14340",
+    "character": "𔍀",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M276 606Q289 613 301.5 620.5Q314 628 324 637.5Q334 647 339.5 660.5Q345 674 345 692Q345 720 325 743.5Q305 767 278 768Q263 767 250 760.5Q237 754 227.5 743Q218 732 212.5 718.5Q207 705 207 690Q207 671 212.5 658Q218 645 228 635.5Q238 626 250 619Q262 612 276 606ZM277 173Q304 215 322.5 254.5Q341 294 341 326Q341 343 335.5 355Q330 367 321 375.5Q312 384 300.5 390Q289 396 276 401Q250 390 230.5 374.5Q211 359 211 326Q211 295 230.5 255Q250 215 277 173ZM276 585Q248 572 226.5 555Q205 538 205 504Q205 466 226.5 449.5Q248 433 275 423Q303 435 325 451Q347 467 347 502Q347 539 325.5 556Q304 573 276 585ZM359 724Q365 709 365 692Q365 651 345 630Q325 609 299 596Q326 584 346.5 564Q367 544 367 502Q367 462 346.5 443Q326 424 300 412Q325 401 343 383Q361 365 361 326Q361 288 340 244Q319 200 289 155Q318 111 348 72Q378 33 396 6L379 -6Q361 22 333 58.5Q305 95 277 137Q249 96 221 59.5Q193 23 174 -6L157 6Q176 34 206 73Q236 112 265 155Q235 200 213 245Q191 290 191 326Q191 363 209 381.5Q227 400 251 412Q238 418 226 425Q214 432 205 442.5Q196 453 190.5 468Q185 483 185 504Q185 523 190.5 537.5Q196 552 205.5 562.5Q215 573 227 581Q239 589 252 595Q226 608 206.5 628Q187 648 187 690Q187 708 195 727L104 779Q95 785 104.5 806Q114 827 138 850Q162 873 197.5 891.5Q233 910 275 910Q320 910 356.5 891.5Q393 873 417 850Q441 827 450.5 806Q460 785 451 779ZM278 788Q301 787 320 774.5Q339 762 351 742L432 792Q409 837 368 863.5Q327 890 275 890Q223 890 186 863Q149 836 123 792L204 745Q216 763 235 775Q254 787 277 788L277 778Z",
+      "viewBox": "26.341621621621627 -983.28 502.3167567567568 1062.56"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-14340",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプトの文字体系であるヒエログリフに含まれる記号の1つ。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "古代エジプト語の表記において、音素文字（表音文字）として機能する。",
+        "etymology": "",
+        "history": "",
+        "structure": "3つの輪を持つ繊維の束で作られた拭き取り具の姿を描いている。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "A swab made from a hank of fiber with three loops.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Phonemogram",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "wꜣḥ",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "phonemogram : wꜣḥ",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "V091",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "V-08-040",
           "source": "Unicode Unikemet",
           "strength": "supporting"
         }
