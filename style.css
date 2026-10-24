@@ -1321,12 +1321,10 @@ button:disabled {
   overflow: visible;
 }
 #unicodeScopeGlyph .unicode-svg-outline {
+  display: block;
   width: 42px;
   height: 42px;
   max-width: 42px;
-}
-#unicodeScopeGlyph .unicode-svg-outline[data-font-metrics="em"] {
-  max-width: none;
 }
 
 @media (max-width: 520px) {
