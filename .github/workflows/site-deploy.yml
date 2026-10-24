@@ -56,6 +56,7 @@ jobs:
           node --check scripts/publish-svg-bundle.js
           node scripts/test-svg-mode.js
           node scripts/test-svg-mode-ui.js
+          node scripts/test-svg-scope.js
           node scripts/test-svg-precomputed-loader.js
           node scripts/test-svg-converter-fallback.js
           node scripts/test-font-policy.js
