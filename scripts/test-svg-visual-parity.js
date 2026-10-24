@@ -171,6 +171,12 @@ async function session(browser,r,width){
   const cdp=await context.newCDPSession(page);await cdp.send("DOM.enable");await cdp.send("CSS.enable");
   await page.locator("#unicodeInput").fill(raw);
   await page.evaluate(async()=>{lastUnicodeOutputSource="bulk";await convertUnicode()});
+  // Input also schedules its own debounced conversion. Its newer run may
+  // supersede the explicit call above; capture the completed output, never
+  // the first run's partial DOM after cancellation.
+  await page.waitForFunction(count=>!isSvgModeEnabled()&&charOutput.children.length===count&&
+   [...charOutput.children].every(n=>n.dataset.displayMode||n.classList.contains("character-status"))&&
+   !charOutput.querySelector(".loading-character"),points.length);
   const normal=await snapshot(page,cdp,r);
   await page.locator("#charOutput").screenshot({path:path.join(out,r.label+"-normal-"+width+".png")});
   await page.locator("#svgModeToggle").click();
@@ -201,8 +207,15 @@ async function session(browser,r,width){
     near(b.fontSize,a.fontSize,.03,"CSS font size U+"+hex(points[n]));
     near(b.svg.pixelsPerEm,a.fontSize,.15,"Physical SVG em U+"+hex(points[n]));
     if(a.source?.file&&a.source.file===b.source?.file&&a.actualSourceVerified){
-     near(b.svg.inkHeight,a.highResolutionInk.height,.3,"Same-source ink height U+"+hex(points[n]));
-     near(b.svg.inkWidth,a.highResolutionInk.width,.3,"Same-source ink width U+"+hex(points[n]));
+     // Canvas may quantize even a 1000px request (Chromium glyph caches can
+     // retain a lower-resolution hinted box). Keep that measurement in the
+     // report, and independently compare exact source outlines and advances.
+     const bounds=a.source.bounds,scale=a.fontSize/a.source.unitsPerEm;
+     near(b.svg.inkHeight,(bounds.maxY-bounds.minY)*scale,.15,"Native font ink height U+"+hex(points[n]));
+     near(b.svg.inkWidth,(bounds.maxX-bounds.minX)*scale,.15,"Native font ink width U+"+hex(points[n]));
+     near(a.highResolutionInk.advance,a.source.advanceWidth*scale,.03,"Normal font em/advance U+"+hex(points[n]));
+     b.svg.canvasInkDifference={width:b.svg.inkWidth-a.highResolutionInk.width,
+      height:b.svg.inkHeight-a.highResolutionInk.height};
      near(b.wrapperWidth,a.wrapperWidth,.08,"Same-source advance U+"+hex(points[n]));
      near(b.svg.baseline,a.baseline,.2,"Same-source baseline U+"+hex(points[n]));
      assert.deepEqual(b.source.shapedGlyphIds,a.source.shapedGlyphIds);
