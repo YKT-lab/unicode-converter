@@ -115,3 +115,78 @@ hinting、アンチエイリアス、ピクセル丸めが異なるため、小�
 
 iPhone/iPad実機のSafariおよびLINE内ブラウザの確認は別途必要。
 デスクトップブラウザの画面幅変更は、実機の文字レンダラーの検証を代替しない。
+
+## 比較画像を受けての追加調査
+
+2026-10-23の確認時点でPR #13は未マージだった。公開サイトのHTMLは
+`svg-precomputed-loader.js?v=20261022-svg-fallback1` と
+`converter.js?v=20261022-svg-only2` を参照していた。
+公開中のSVGビルドは `462e88cc7cd99565`、manifestにlayout指定はなく、
+U+1394のシャードにもメトリクスがなかった。PR #13の新しいem表示は
+この公開経路ではまだ利用されていなかった。
+
+U+1394は **ETHIOPIC TONAL MARK DIFAT**。通常表示で利用できるローカル候補は
+`fonts/scripts/NotoSansEthiopic-Regular.ttf`（400）のみである。
+このファイルのcmapと単独文字のshapingは、どちらもグリフID **96**
+（`difat.eth`）を選ぶ。旧・新SVGのpathもこのグリフのpathと完全一致する。
+異なるUnicodeへの変換や別グリフの抽出は起きていない。
+
+| 項目 | 旧SVG | em基準の新SVG |
+| --- | --- | --- |
+| viewBox | `43.72 -240.28 395.56 267.56` | `0 -1069 483 1362` |
+| CSS高さ | `1.12em` | `1.362em` |
+| 原字形の輪郭高 | 213フォント単位 | 同じ213フォント単位 |
+| font-size 42pxでの輪郭高 | 約37.45px | 約8.95px |
+| 送り幅の扱い | 切り抜いたviewBoxに依存 | 元の483/1000em |
+
+新SVGのCSS幅は `advanceWidth / unitsPerEm` em、高さは
+`(ascent - descent) / unitsPerEm` em。これらをviewBoxの幅・高さで割ると、
+どちらも `font-size / unitsPerEm` となり、通常文字と同倍率になる。
+U+1394の本来の輪郭高は **0.213em**、送り幅は **0.483em** であり、
+小さく低い位置にある字形が元フォントの設計である。
+旧方式の約4.186倍の拡大が、比較画像の大きなアーチと整合する。
+
+追加調査では別の境界条件も修正した。通常文字のはみ出し判定を表示サイズの
+Canvasメトリクスで行うと、ヒンティングや丸めで輪郭幅が整数寄りになり、
+小数のSVG輪郭なら収まる幅で通常モードだけ文字列全体が縮小され得た。
+通常文字は1000pxで計測してCSSピクセルへ換算するようにし、SVGと同じ精度へ近づけた。
+旧実装で失敗し、新実装で成功する境界幅の回帰テストを追加した。
+一律の縮小係数や文字ごとの拡大は追加していない。
+
+成功した文字にも `data-code-point`、通常フォントの
+`data-font-family` / `data-font-source` / `data-font-file` / `data-font-sha256`、
+SVGの `data-svg-build` / `data-svg-layout` を記録する。
+旧データのlayoutは `legacy-bounds`、新データは `font-metrics-v1` として識別する。
+OSフォントへ進んだ場合はローカルファイル名・SHAの属性を消し、
+利用を確認できなかったフォントを使用中と誤記録しない。
+表示文言や通常/SVGの描画経路は変えない。
+
+`scripts/test-svg-font-metrics.js` はEthiopicの声調記号10文字を加えた26文字で、
+正式なフォントファイル、cmap・shapingのグリフID、path、送り幅と大小比を検査する。
+`scripts/test-svg-visual-parity.js` はPlaywrightを別途利用するブラウザ比較用テストで、
+次のように実行する。PNGとJSONはリポジトリの外へ出力する。
+
+```sh
+node scripts/test-svg-visual-parity.js \
+  --bundle=/path/to/new-svg-bundle \
+  --baseline-root=/path/to/old-site-source \
+  --baseline-bundle=/path/to/old-svg-bundle \
+  --chromium=/path/to/chromium \
+  --out=/path/to/comparison-output
+```
+
+固定の同一入力を実際の切替ボタンで通常/SVGへ変換し、字順・個数・入力の保持、
+font-size・em・viewBox・CSS寸法・行間・文字間隔・全体縮小率を記録する。
+通常文字はChromiumのCDPでも実際の使用フォントを確認し、ローカルファイルの
+cmap・shapingのグリフIDとSVG pathを照合する。小さい画面幅も同じ文字列で比較する。
+通常サイズの整数丸めを一致判定の基準にせず、1000pxのCanvas計測を縮小した
+輪郭寸法とSVGの物理寸法を直接比較する。
+
+添付画像だけでは元の入力全文や端末の実フォントを確定できないため、
+既定の再現列はU+1394を含む固定19文字とした。`--text=` または `--codepoints=` で
+別の可視文字列も同じ条件で比較できる。
+CSSのfont-familyだけから端末フォントやそのグリフIDを推定することはしない。
+iPhoneにのみ存在する端末フォントはSVG生成環境では利用できない。
+同じフォントファイルがライセンス承認済みの生成環境にない場合は、
+対応する承認済みフォントの字形を保ち、端末フォントと無理に一致させない。
+iPhone Safari・LINE内ブラウザの実機確認は今回も未検証である。

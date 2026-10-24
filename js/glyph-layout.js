@@ -16,10 +16,15 @@ function inkBounds(output,view){
    try{
     if(!context)context=output.ownerDocument.createElement("canvas").getContext("2d");
     const css=view.getComputedStyle(inner);
-    context.font=css.fontStyle+" "+css.fontWeight+" "+css.fontSize+" "+css.fontFamily;
+    // Measure in font space, then scale to CSS pixels. Measuring at the
+    // displayed size quantizes hinted text bounds, while SVG keeps fractional
+    // outlines; near the panel edge that could shrink only normal mode.
+    const fontSize=parseFloat(css.fontSize),measureSize=1000;
+    context.font=css.fontStyle+" "+css.fontWeight+" "+measureSize+"px "+css.fontFamily;
     const ink=context.measureText(inner.textContent);
-    if(Number.isFinite(ink.actualBoundingBoxLeft)&&Number.isFinite(ink.actualBoundingBoxRight)){
-     x1=box.left-ink.actualBoundingBoxLeft;x2=box.left+ink.actualBoundingBoxRight;
+    if(fontSize>0&&Number.isFinite(ink.actualBoundingBoxLeft)&&Number.isFinite(ink.actualBoundingBoxRight)){
+     const scale=fontSize/measureSize;
+     x1=box.left-ink.actualBoundingBoxLeft*scale;x2=box.left+ink.actualBoundingBoxRight*scale;
     }
    }catch(_error){/* DOM bounds remain usable when Canvas is unavailable. */}
   }

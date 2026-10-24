@@ -13,7 +13,8 @@ const args=Object.fromEntries(process.argv.slice(2).map(arg=>{
  return[match[1],path.resolve(match[2])];
 }));
 const points=[0x41,0x69,0x57,0x2e,0x2c,0x301,0x3042,0x3041,0x3064,0x3063,
- 0x30a2,0x30a1,0x3002,0x4e00,0x109eb,0x14354];
+ 0x30a2,0x30a1,0x3002,0x4e00,0x109eb,0x14354,
+ ...Array.from({length:10},(_,n)=>0x1390+n)];
 const hex=cp=>cp.toString(16).toUpperCase().padStart(4,"0");
 const read=file=>JSON.parse(fs.readFileSync(file,"utf8"));
 const hash=bytes=>crypto.createHash("sha256").update(bytes).digest("hex");
@@ -76,7 +77,18 @@ try{
   const expected=[0,-font.ascent,width,font.ascent-font.descent];
   for(let n=0;n<4;n++)near(entry[0][n],expected[n],"font-space viewport U+"+hex(cp));
   assert.equal(entry[1],glyph.path.toSVG(),"Original outline path must remain unchanged U+"+hex(cp));
-  samples.set(cp,{metrics,bounds,inkHeight:(bounds.maxY-bounds.minY)/font.unitsPerEm,
+  if(cp>=0x1390&&cp<=0x1399){
+   assert.equal(metrics.fontFile,"fonts/scripts/NotoSansEthiopic-Regular.ttf",
+    "Ethiopic tonal marks must use the same available regular font as normal mode");
+   const shaped=font.layout(String.fromCodePoint(cp));
+   assert.equal(shaped.glyphs.length,1,"One tonal codepoint must not be split into different glyphs");
+   assert.equal(shaped.glyphs[0].id,glyph.id,"Default shaping must select the same cmap glyph U+"+hex(cp));
+   assert.equal(shaped.glyphs[0].path.toSVG(),entry[1],"Shaping must preserve the SVG outline U+"+hex(cp));
+   near(shaped.positions[0].xAdvance,metrics.advanceWidth,"Shaped advance U+"+hex(cp));
+   near(shaped.positions[0].xOffset,0,"Shaped X offset U+"+hex(cp));
+   near(shaped.positions[0].yOffset,0,"Shaped Y offset U+"+hex(cp));
+  }
+  samples.set(cp,{metrics,bounds,glyphId:glyph.id,inkHeight:(bounds.maxY-bounds.minY)/font.unitsPerEm,
    inkWidth:(bounds.maxX-bounds.minX)/font.unitsPerEm});
  }
  for(const [small,large] of [[0x3041,0x3042],[0x3063,0x3064],[0x30a1,0x30a2]]){
@@ -95,6 +107,12 @@ try{
  assert.equal(mark.metrics.advanceWidth,0,"Combining acute must retain zero advance");
  assert(mark.bounds.minX<0||mark.bounds.maxY>mark.metrics.unitsPerEm/2,
   "A combining mark must retain its bearing and raised position");
+ const difat=samples.get(0x1394);
+ assert.equal(difat.glyphId,96,"U+1394 ETHIOPIC TONAL MARK DIFAT must retain the audited glyph ID");
+ near(difat.inkHeight,0.213,"U+1394 must retain its naturally small ink height in em");
+ near(difat.metrics.advanceWidth/difat.metrics.unitsPerEm,0.483,"U+1394 native advance in em");
+ assert(difat.inkHeight<samples.get(0x1392).inkHeight/2,
+  "Short and tall Ethiopic tonal marks must retain their native relative sizes");
  if(args.baseline){
   const before=codePointsIn(args.baseline),after=codePointsIn(bundle);
   assert(before.size>=170775,"Baseline must contain the full approved release");

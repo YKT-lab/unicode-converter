@@ -238,7 +238,14 @@ function createClient(options={}){
   if(!entry)return {svg:null,reason:"SVG未対応",code:"unsupported",stage:"shard"};
   if(v.layout==="font-metrics-v1"&&!metrics)
    throw contextError(new SvgLoadError("format","Missing SVG font metrics"),"shard",url(v.build+"/"+p.file),"validation");
-  try{return {svg:svgElement(doc,cp,entry,metrics),reason:null,metrics:metrics||null}}
+  try{
+   const svg=svgElement(doc,cp,entry,metrics),layout=v.layout||"legacy-bounds";
+   // Keep release identity with the drawn outline: a preview using an older
+   // public bundle must not be mistaken for the new em-based renderer.
+   svg.setAttribute("data-svg-build",v.build);
+   svg.setAttribute("data-svg-layout",layout);
+   return {svg,reason:null,metrics:metrics||null,build:v.build,layout};
+  }
   catch(err){throw contextError(err,"render",url(v.build+"/"+p.file),"geometry")}
  }
  function clear(){cache.clear();manifestPromise=null;version=null}

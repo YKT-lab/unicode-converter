@@ -73,6 +73,10 @@ const watchdog=setTimeout(()=>{console.error("FAIL: SVG loader test did not sett
  assert.equal(s.max(),1);
  assert.equal(s.client.stats().cachedShards,1);
  assert.equal(a.svg.attrs.viewBox,"0 -10 12 12","Old releases without metrics remain readable");
+ assert.equal(a.build,id);
+ assert.equal(a.layout,"legacy-bounds","Identify old normalized data rather than labelling it as em metrics");
+ assert.equal(a.svg.attrs["data-svg-build"],id);
+ assert.equal(a.svg.attrs["data-svg-layout"],"legacy-bounds");
 
  const fontMetrics={unitsPerEm:1000,ascent:800,descent:-200,lineGap:0,
   advanceWidth:500,fontFile:"fonts/scripts/Test-Regular.ttf",fontSha256:"a".repeat(64),fontWeight:400};
@@ -84,7 +88,11 @@ const watchdog=setTimeout(()=>{console.error("FAIL: SVG loader test did not sett
  const metricSession=session({glyphs:metricGlyphs,layout:"font-metrics-v1"});
  const full=await metricSession.client.getGlyph(65),tiny=await metricSession.client.getGlyph(66);
  assert(full.svg&&tiny.svg,"New metrics-bearing releases must be readable");
+ assert.equal(full.build,id);
+ assert.equal(full.layout,"font-metrics-v1");
  for(const svg of [full.svg,tiny.svg]){
+  assert.equal(svg.attrs["data-svg-build"],id);
+  assert.equal(svg.attrs["data-svg-layout"],"font-metrics-v1");
   assert.equal(svg.attrs.viewBox,"0 -800 500 1000");
   assert.equal(parseFloat(svg.style.width),0.5);
   assert.equal(parseFloat(svg.style.height),1);

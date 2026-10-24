@@ -198,6 +198,41 @@ test("Normal mode also preserves the original small Egyptian outline", async () 
   expectGlyph(node, "web-font");
   assert(!f.normalCalls.includes("applyGlyphScale"), "The converter must not inflate a small glyph");
 });
+test("Normal U+1394 records its audited local source without claiming an OS glyph ID", async () => {
+  const f = fixture({svg:false, selectFont:async()=>"Unicode Site 120"});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"web-font");
+  assert.equal(node.dataset.codePoint,"1394");
+  assert.equal(node.dataset.fontFamily,"Unicode Site 120");
+  assert.equal(node.dataset.fontSource,"local");
+  assert.equal(node.dataset.fontFile,"fonts/scripts/NotoSansEthiopic-Regular.ttf");
+  assert.equal(node.dataset.fontSha256,coverage.font_families[120].sha256);
+  assert.equal(node.dataset.glyphId,undefined);
+});
+test("Successful OS fallback removes the rejected local font attribution", async () => {
+  const f = fixture({svg:false, selectFont:async()=>"Unicode Site 120",
+    missing:(_character,family)=>family.includes("Unicode Site")});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"normal");
+  assert.equal(node.dataset.fontSource,"system");
+  assert.equal(node.dataset.fontFile,undefined);
+  assert.equal(node.dataset.fontSha256,undefined);
+});
+test("SVG output records release layout and the exact outline source", async () => {
+  const metrics={unitsPerEm:1000,ascent:1069,descent:-293,advanceWidth:483,
+    fontFile:"fonts/scripts/NotoSansEthiopic-Regular.ttf",fontSha256:coverage.font_families[120].sha256};
+  const f = fixture({renderSvg:async()=>({svg:element("svg"),metrics,
+    build:"0123456789abcdef",layout:"font-metrics-v1"})});
+  const [node] = await f.convert("1394");
+  expectGlyph(node,"svg");
+  assert.equal(node.dataset.codePoint,"1394");
+  assert.equal(node.dataset.svgBuild,"0123456789abcdef");
+  assert.equal(node.dataset.svgLayout,"font-metrics-v1");
+  assert.equal(node.dataset.fontSource,"svg-outline");
+  assert.equal(node.dataset.fontFile,metrics.fontFile);
+  assert.equal(node.dataset.fontSha256,metrics.fontSha256);
+  assertNoNormalRendering(f);
+});
 for (const [code, stage, phase, reason, label] of [
   ["unsupported", "manifest", "validation", "svg-unsupported", "SVG未対応"],
   ["unsupported", "shard", "validation", "svg-unsupported", "SVG未対応"],

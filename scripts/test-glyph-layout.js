@@ -33,4 +33,21 @@ assert(boxes[0].left>=1,"A negative bearing must remain inside the panel");
 assert(parseFloat(overhang.style.fontSize)<48);
 reset(overhang);
 assert.equal(overhang.style.fontSize,"");assert.equal(overhang.dataset.layoutScale,undefined);
+// At a panel boundary, hinted text metrics may round ink up by a pixel.
+// The same font's exact SVG outline fits. Neither mode should then be
+// uniformly reduced just because text and SVG use different metric precision.
+const vector=panel([[0,.975]],61.875),text=panel([],61.875);
+text.ownerDocument.defaultView.getComputedStyle=()=>({fontSize:"48px",fontStyle:"normal",fontWeight:"400",
+ fontFamily:"Test Regular",borderLeftWidth:"0",borderRightWidth:"0",paddingLeft:"14"});
+const context={font:"",measureText(){
+ const size=Number(/([0-9.]+)px/.exec(this.font)[1]);
+ return {actualBoundingBoxLeft:0,actualBoundingBoxRight:Math.ceil(.975*size)};
+}};
+text.ownerDocument.createElement=()=>({getContext:()=>context});
+text.querySelectorAll=()=>[{textContent:"A",querySelector:()=>null,
+ getBoundingClientRect:()=>({left:14,right:61})}];
+fit(text);fit(vector);
+assert.equal(text.dataset.layoutScale,vector.dataset.layoutScale,
+ "Normal and SVG output must not acquire different font sizes from low-resolution metric rounding");
+assert.equal(text.style.fontSize,"");
 console.log("Glyph layout checks passed: natural spacing, uniform shrink, bearings, resize and reset");
