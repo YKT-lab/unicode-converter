@@ -69,6 +69,10 @@ jobs:
           node scripts/test-pages-unification.js
           node scripts/test-daily-evidence.js
           node scripts/test-daily-han-two-facts.js
+          node --check js/combining-maker.js
+          node scripts/test-combining-core.js
+          node scripts/test-combining-normalization.js
+          node scripts/test-combining-fonts.js
           # Never ship unverified/stale outline data from the repository.
           test ! -e svg-data/active.json
       - name: Rebuild local font audit before packaging
@@ -113,6 +117,9 @@ jobs:
           test -s _site/js/glyph-layout.js
           test -s _site/js/opentype.min.js
           test -s _site/js/svg-precomputed-loader.js
+          test -s _site/combining/index.html
+          test -s _site/data/combining-marks.json
+          test -s _site/data/combining-normalization.json
           test -s _site/data/unicode18_font_coverage_index.json
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
