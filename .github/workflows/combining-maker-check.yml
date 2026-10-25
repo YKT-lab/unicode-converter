@@ -40,9 +40,11 @@ jobs:
         run: |
           node --check js/combining-maker.js
           node --check js/combining-core.js
+          node --check js/combining-candidates.js
           node --check js/combining-normalization.js
           node --check js/combining-fonts.js
           node scripts/test-combining-core.js
+          node scripts/test-combining-candidates.js
           node scripts/test-combining-fonts.js
           node scripts/test-combining-normalization.js
       - name: Verify generated UCD data and official normalization conformance
