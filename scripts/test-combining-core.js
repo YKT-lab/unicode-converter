@@ -12,6 +12,9 @@ assert(marks.length > 2400, "All mark categories, not just familiar Latin accent
 assert.deepEqual(Object.fromEntries(["Mn", "Mc", "Me"].map(category => [category, marks.filter(x => x.category === category).length])), data.category_counts);
 assert.equal(core.codePoints("A😀\u0301"), "U+0041 U+1F600 U+0301");
 assert.equal(core.codePoints(""), "");
+for (const base of ["a", "あ", "\u{1F600}", "\u{10400}", " ", "\u0301"]) assert(core.parseBase(base).valid, base);
+assert.equal(core.parseBase("\u{10400}").codepoint, 0x10400);
+for (const base of ["", "ab", "e\u0301", "👩‍🔬", "❤️", "\uD800", "\uDC00"]) assert(!core.parseBase(base).valid, base);
 assert.equal(core.compose("a", [at(0x301), at(0x323)]), "a\u0301\u0323");
 assert.equal(core.compose("😀字\u200D", [at(0x301)]), "😀字\u200D\u0301");
 assert.equal(core.compose("", [at(0x301)]), "\u0301", "Dotted circle is never inserted into result");

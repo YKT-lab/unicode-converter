@@ -41,6 +41,16 @@ function rangeLookup(rows) {
     return null;
   };
 }
+function compactRanges(rows) {
+  const sorted = rows.slice().sort((a,b) => a[0] - b[0]);
+  const result = [];
+  for (const row of sorted) {
+    const previous = result[result.length - 1];
+    if (previous && previous[1] + 1 === row[0] && JSON.stringify(previous[2]) === JSON.stringify(row[2])) previous[1] = row[1];
+    else result.push(row.slice());
+  }
+  return result;
+}
 function build(source) {
   if (!source["ReadMe.txt"].toLowerCase().includes("version " + VERSION) ||
       !/contains final data files/i.test(source["ReadMe.txt"]) || /(?:draft|beta)/i.test(source["ReadMe.txt"]))
@@ -92,9 +102,36 @@ function build(source) {
     sources, license:{name:"Unicode License V3", url:"https://www.unicode.org/license.txt",
       notice_file:"docs/licenses/Unicode-LICENSE.txt"}};
   const category_counts = Object.fromEntries([...CATEGORIES].map(category => [category, marks.filter(mark => mark.category === category).length]));
+  // Base-character classification is generated separately. Preserve the two
+  // existing files byte-for-byte, and avoid loading the raw UCD in a browser.
+  const categoryRanges = [], musicRanges = [];
+  let pendingRange = null;
+  for (const line of source["UnicodeData.txt"].trim().split(/\r?\n/)) {
+    const fields = line.split(";"), cp = parseInt(fields[0], 16);
+    if (/, First>$/.test(fields[1])) { pendingRange = [cp, fields[2]]; continue; }
+    if (/, Last>$/.test(fields[1])) {
+      if (!pendingRange || pendingRange[1] !== fields[2]) throw Error("Invalid UnicodeData category range");
+      categoryRanges.push([pendingRange[0], cp, fields[2]]); pendingRange = null; continue;
+    }
+    if (pendingRange) throw Error("Unclosed UnicodeData category range");
+    categoryRanges.push([cp, cp, fields[2]]);
+    if (/MUSICAL|MUSIC SYMBOL|ZNAMENNY/.test(fields[1])) musicRanges.push([cp, cp, true]);
+  }
+  if (pendingRange) throw Error("Unclosed UnicodeData category range");
+  const scriptNames = Object.fromEntries([...new Map([...aliases.values()].map(value => [value.code, value.name]))].sort((a,b) => a[0].localeCompare(b[0])));
+  const scriptRanges = propertyRows(source["Scripts.txt"]).map(([raw, value]) => {
+    const script = aliases.get(value);
+    if (!script) throw Error("Unknown Script range " + value);
+    return [...range(raw), script.code];
+  });
+  const extensionRanges = propertyRows(source["ScriptExtensions.txt"]).map(([raw, value]) => [...range(raw), value.split(/\s+/)]);
+  const baseProperties = {...metadata, script_names:scriptNames,
+    script_ranges:compactRanges(scriptRanges), script_extension_ranges:compactRanges(extensionRanges),
+    category_ranges:compactRanges(categoryRanges), music_ranges:compactRanges(musicRanges)};
   return {
     catalogue:{...metadata,count:marks.length,category_counts,marks},
-    normalization:{...metadata,decompositions,combining_classes,compositions}
+    normalization:{...metadata,decompositions,combining_classes,compositions},
+    baseProperties
   };
 }
 
@@ -119,9 +156,10 @@ async function main() {
     }
     source[name]=fs.readFileSync(target,"utf8");
   }));
-  const {catalogue,normalization}=build(source);
+  const {catalogue,normalization,baseProperties}=build(source);
   const outputs = [["data/combining-marks.json",JSON.stringify(catalogue)+"\n"],
     ["data/combining-normalization.json",JSON.stringify(normalization)+"\n"],
+    ["data/combining-base-properties.json",JSON.stringify(baseProperties)+"\n"],
     ["docs/licenses/Unicode-LICENSE.txt",source["LICENSE.txt"]]];
   for (const [relative,content] of outputs) {
     const target=path.join(ROOT,relative);
