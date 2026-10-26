@@ -39,6 +39,27 @@ function fixture(options = {}) {
   };
   return {adapter: createAdapter(config), config, data, requests, created, added, calls};
 }
+test("site-wide device mode performs no index fetch or FontFace load", async () => {
+  const f = fixture();
+  f.config.documentObj.defaultView = {};
+  const adapter = createAdapter({...f.config});
+  // The module reads the root API dynamically; use a VM browser fixture for this contract.
+  const context = {
+    URL, setTimeout, clearTimeout, AbortController,
+    document: {...f.config.documentObj, currentScript: {src: f.config.scriptUrl}, baseURI: "https://example.test/unicode-converter/combining/"},
+    fetch: f.config.fetchFn, FontFace: f.config.FontFace,
+    UnicodeFontPolicy: f.config.fontPolicy,
+    UnicodeSiteDisplay: {isDeviceFontModeEnabled: () => true}
+  };
+  vm.runInNewContext(source, context);
+  const result = await context.UnicodeCombiningFonts.prepare("A\u0301");
+  assert.equal(result.reason, "site-device-font");
+  assert.equal(result.fontFamily, "sans-serif");
+  assert.equal(result.files.length, 0);
+  assert.equal(f.requests.length, 0);
+  assert.equal(f.created.length, 0);
+});
+
 test("prefers one common font for a complete shaped string", async () => {
   const f = fixture();
   const result = await f.adapter.prepare("A\u0301");

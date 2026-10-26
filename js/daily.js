@@ -1,3 +1,7 @@
+function isSiteDeviceFontMode() {
+  return Boolean(window.UnicodeSiteDisplay?.isDeviceFontModeEnabled?.());
+}
+
 /* =========================================
    JST date
 ========================================= */
@@ -437,6 +441,11 @@ function setDailyInlineGlyphFont(
   element,
   entry
 ) {
+
+  if (isSiteDeviceFontMode()) {
+    element.style.fontFamily = "";
+    return;
+  }
 
   const families = {
     "Tangut Extended":
@@ -1162,6 +1171,16 @@ async function loadDailyCharacter() {
       entry.info,
       entry
     );
+
+    // Strong site-wide device mode: do not use the site's native-emoji
+    // rewrite, pre-generated SVG, indexed WebFonts, or missing-glyph checks.
+    if (isSiteDeviceFontMode()) {
+      dailyCharacter.className = "character device-font-character";
+      dailyCharacter.removeAttribute("title");
+      dailyCharacter.textContent = character;
+      dailyCharacter.dataset.displayMode = "browser";
+      return;
+    }
 
 
     /*

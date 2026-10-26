@@ -84,6 +84,15 @@
     });
     async function prepare(text) {
       try {
+        if (root.UnicodeSiteDisplay?.isDeviceFontModeEnabled?.()) {
+          return {
+            fontFamily: "sans-serif",
+            files: [],
+            sourceFamilies: [],
+            reason: "site-device-font",
+            svgReason: "whole-string-shaping-unavailable"
+          };
+        }
         const points = [...new Set(Array.from(String(text), character => character.codePointAt(0)))].filter(needsGlyph);
         if (!points.length) return result([], "native-font-fallback");
         const data = await index();
