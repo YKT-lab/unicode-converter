@@ -167,67 +167,109 @@ main > #dailyCharacterBox {
   .page-card { padding: 24px 0; }
 }
 
-/* Header settings: one icon beside the centered logo, with an opaque popover.
-   The panel intentionally overlays navigation/content instead of increasing
-   the fixed header height. */
+/* Header settings: quiet controls aligned to the visual centre of the logo row.
+   The menu uses a translucent glass surface and drops gently from above. */
 .site-topbar .site-header {
   position: relative;
 }
 .site-settings {
   position: absolute;
   top: 50%;
-  right: 0;
+  right: 4px;
   z-index: 1020;
   transform: translateY(-50%);
 }
 .site-settings-toggle {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   padding: 0;
-  border: 1px solid #d9dde4;
-  border-radius: 50%;
-  background: #fff;
-  color: #445064;
-  font: inherit;
-  font-size: 21px;
-  font-weight: 520;
-  line-height: 1;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(247,248,250,.56);
+  box-shadow: inset 0 0 0 1px rgba(64,76,96,.13);
+  color: #465268;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color .18s ease,
+    box-shadow .18s ease,
+    color .18s ease,
+    transform .18s ease;
+}
+.site-settings-toggle:hover {
+  background: rgba(239,242,246,.78);
+  box-shadow: inset 0 0 0 1px rgba(64,76,96,.18);
 }
 .site-settings.open .site-settings-toggle {
-  background: #f1f3f6;
-  color: #1f2938;
-  font-size: 27px;
-  font-weight: 350;
+  background: rgba(235,238,243,.78);
+  color: #263247;
+  box-shadow: inset 0 0 0 1px rgba(55,68,89,.17);
+}
+.site-settings-icon {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.site-settings.open .site-settings-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.65;
 }
 .site-settings-toggle:focus-visible,
 .site-settings-option:focus-visible {
   outline: 2px solid #007aff;
   outline-offset: 3px;
 }
+
 .site-settings-panel {
   position: absolute;
-  top: calc(100% + 9px);
+  top: calc(100% + 8px);
   right: 0;
   width: 188px;
   box-sizing: border-box;
   padding: 13px;
-  border: 1px solid #dde1e7;
+  border: 1px solid rgba(115,125,142,.22);
   border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 12px 32px rgba(22, 30, 44, .16);
+  background: rgba(246,248,251,.82);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+  box-shadow:
+    0 16px 38px rgba(25,34,49,.14),
+    0 2px 8px rgba(25,34,49,.06);
   color: #263246;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0,-11px,0) scale(.985);
+  transform-origin: top right;
+  transition:
+    opacity .19s ease,
+    transform .22s cubic-bezier(.2,.75,.25,1),
+    visibility 0s linear .22s;
 }
-.site-settings-panel[hidden] { display: none !important; }
+.site-settings.open .site-settings-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0,0,0) scale(1);
+  transition:
+    opacity .19s ease,
+    transform .22s cubic-bezier(.2,.75,.25,1),
+    visibility 0s;
+}
 .site-settings-heading {
   margin: 0 2px 10px;
-  color: #6b7280;
+  color: #687286;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .045em;
 }
 .site-settings-option {
   display: flex;
@@ -237,33 +279,59 @@ main > #dailyCharacterBox {
   justify-content: center;
   margin: 0;
   padding: 9px 11px;
-  border: 1px solid #d8dde6;
+  border: 1px solid rgba(111,123,142,.18);
   border-radius: 10px;
-  background: #f6f7f9;
-  color: #4e596b;
+  background: rgba(255,255,255,.55);
+  color: #4b5669;
   font: inherit;
   font-size: 12px;
   font-weight: 680;
   line-height: 1.2;
   cursor: pointer;
+  transition:
+    background-color .16s ease,
+    border-color .16s ease,
+    color .16s ease,
+    transform .16s ease;
 }
+.site-settings-option:hover {
+  background: rgba(255,255,255,.82);
+  border-color: rgba(92,106,128,.25);
+}
+.site-settings-option:active { transform: scale(.985); }
 .site-settings-option + .site-settings-option { margin-top: 7px; }
 .site-settings-option[aria-pressed="true"] {
-  border-color: #34465f;
-  background: #34465f;
+  border-color: rgba(43,58,82,.88);
+  background: rgba(43,58,82,.92);
   color: #fff;
 }
+
 @media (max-width: 520px) {
-  .site-settings { right: 1px; }
-  .site-settings-toggle {
-    width: 36px;
-    height: 36px;
-    font-size: 20px;
+  .site-settings {
+    right: 5px;
+    top: 50%;
   }
-  .site-settings.open .site-settings-toggle { font-size: 26px; }
+  .site-settings-toggle {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+  .site-settings-icon {
+    width: 18px;
+    height: 18px;
+  }
   .site-settings-panel {
     width: 176px;
     top: calc(100% + 7px);
     padding: 12px;
+    background: rgba(246,248,251,.84);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-settings-toggle,
+  .site-settings-panel,
+  .site-settings-option {
+    transition: none;
   }
 }
