@@ -1,114 +1,618 @@
-/* Compact material picker matching the site's existing emoji builder. */
+/* Visual polish for the combining-character maker.
+ * Keep the Unicode/data behaviour unchanged; align the interaction rhythm
+ * with the existing emoji builder and reduce visual density on mobile.
+ */
 .combining-maker [hidden] { display: none !important; }
 .combining-maker *, .combining-maker *::before, .combining-maker *::after { box-sizing: border-box; }
-.combining-maker .page-intro { margin: 12px 0 15px; }
-.combining-maker .page-title { margin-bottom: 6px; }
-.combining-maker .page-lead { font-size: 13px; }
-.combining-maker #combining-data-summary { margin: 6px 0 0; font-size: 11px; }
+
+.combining-maker .page-intro { margin: 12px 0 20px; }
+.combining-maker .page-title { margin-bottom: 8px; }
+.combining-maker .page-lead { font-size: 14px; }
+.combining-maker #combining-data-summary { margin: 7px 0 0; font-size: 11px; }
 .combining-data-categories { display: none; }
-.combining-maker .page-card { padding: 16px 0 17px; }
-.combining-maker .page-button { margin-top: 0; min-height: 44px; padding: 9px 12px; font-size: 12px; }
+
+/* Match the secondary-page card treatment used by the emoji builder.
+   PR #16 had removed horizontal padding, which made this page feel much
+   denser than the rest of the site. */
+.combining-maker .page-card {
+  padding: 19px 20px;
+}
+.combining-maker .page-button {
+  margin-top: 0;
+  min-height: 44px;
+  padding: 9px 12px;
+  font-size: 12px;
+}
 .combining-maker .page-input { font-size: 16px; }
 .combining-maker .page-button:disabled { opacity: .45; cursor: default; }
-.combining-maker button:focus-visible, .combining-maker input:focus-visible,
-.combining-maker select:focus-visible, .combining-maker summary:focus-visible { outline: 2px solid #007aff; outline-offset: 3px; }
-.combining-maker .combining-section-title { font-size: 16px; margin-bottom: 12px; }
-.combining-label { display: block; margin: 0 0 6px; font-size: 13px; font-weight: 650; }
-.combining-base-row { display: flex; align-items: center; gap: 12px; }
-.combining-base-row .combining-label { flex-shrink: 0; margin: 0; }
-#combining-base { flex: 0 0 100px; width: 100px; min-height: 54px; padding: 7px 12px; text-align: center; font-size: 28px; line-height: 1.3; }
-#combining-base-info { min-width: 0; overflow-wrap: anywhere; }
-.combining-maker .combining-base-help { margin: 6px 0 0; font-size: 11px; }
-.combining-base-error { color: #a02124 !important; margin: 7px 0 0; font-size: 12px !important; }
-.combining-base-error:empty { display: none; }
-.combining-text, .combining-dotted {
-  font-family: "Noto Sans Phonetics", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-weight: 400; font-style: normal; font-synthesis: none;
-  font-kerning: normal; letter-spacing: normal; text-transform: none;
+.combining-maker button:focus-visible,
+.combining-maker input:focus-visible,
+.combining-maker select:focus-visible,
+.combining-maker summary:focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 3px;
 }
-.combining-text { white-space: pre-wrap; unicode-bidi: plaintext; overflow-wrap: anywhere; }
-.combining-dotted { display: inline-block; unicode-bidi: isolate; font-size: 28px; line-height: 1.5; }
-.combining-composition-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 12px 0 7px; }
-.combining-composition-head h3 { margin: 0; font-size: 13px; }
-.combining-composition-head .page-button { min-height: 44px; padding: 6px 9px; font-size: 11px; }
-.combining-composition { display: flex; align-items: center; gap: 6px; min-height: 74px; max-height: 174px; overflow: auto; padding: 3px 2px 6px; -webkit-overflow-scrolling: touch; }
-.combining-slot { flex: 0 0 auto; min-width: 64px; min-height: 67px; padding: 7px 8px; border: 1px solid #dde1e8; border-radius: 11px; background: #f7f8fa; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-.combining-slot-glyph { font-size: 27px; line-height: 1.35; }
-.combining-slot-code { display: block; color: #667080; font-size: 10px; line-height: 1.3; }
-.combining-plus { color: #949aa3; flex: 0 0 auto; font-size: 15px; font-weight: 600; }
-.combining-selected { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; margin: 0; padding: 0; list-style: none; }
-.combining-selected-item { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; min-width: 0; }
-.combining-mark-controls { display: flex; gap: 3px; align-items: center; justify-content: center; flex-wrap: wrap; }
-.combining-mark-controls .page-button { padding: 5px 7px; min-height: 44px; min-width: 44px; font-size: 10px; }
-.combining-mark-description { font-size: 10px; line-height: 1.35; overflow-wrap: anywhere; }
-#combining-empty-selected { flex: 0 0 auto; font-size: 11px; }
-.combining-preview-panel { display: flex; align-items: center; gap: 20px; margin: 10px 0 0; padding: 12px 0; border-top: 1px solid var(--content-divider, #e7e9ed); border-bottom: 1px solid var(--content-divider, #e7e9ed); }
-.combining-preview-main { flex: 0 1 180px; min-width: 0; }
-.combining-preview-main h3 { margin: 0 0 3px; color: #667080; font-size: 11px; }
-.combining-preview-surface { font-size: 50px; line-height: 1.6; min-height: 80px; padding: 3px 10px; text-align: center; border-radius: 10px; background: #f7f8fa; }
-.combining-result-actions { flex: 1; min-width: 0; }
-.combining-codes { display: block; white-space: pre-wrap; word-break: break-word; unicode-bidi: isolate; font-size: 11px; line-height: 1.8; min-height: 1.8em; }
-.combining-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
-.combining-maker .combining-status { margin: 6px 0 0; font-size: 11px; line-height: 1.5; }
-.combining-picker-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; }
-.combining-picker-head h2 { margin: 0 !important; font-size: 16px; }
-.combining-all-toggle { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; font-size: 12px; cursor: pointer; flex-shrink: 0; }
-.combining-all-toggle input { width: 18px; height: 18px; margin: 0; accent-color: #344d70; }
-.combining-groups { display: flex; flex-wrap: nowrap; gap: 5px; overflow-x: auto; padding: 3px; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
-.combining-group, .combining-groups .page-button, .combining-groups button { min-height: 44px; flex: 0 0 auto; padding: 7px 10px; border: 1px solid #dbe1e9; border-radius: 9px; color: #43516a; background: #f7f8fa; font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; }
+
+.combining-maker .combining-section-title {
+  margin: 0 0 13px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+.combining-label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Base character: same simple label/control rhythm as Emoji's category row. */
+.combining-base-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 0 0;
+}
+.combining-base-row .combining-label {
+  flex: 0 0 auto;
+  min-width: 62px;
+  margin: 0;
+}
+#combining-base {
+  flex: 0 0 112px;
+  width: 112px;
+  min-height: 56px;
+  padding: 8px 12px;
+  border-radius: 11px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1.25;
+}
+#combining-base-info {
+  min-width: 0;
+  color: #667080;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.combining-maker .combining-base-help {
+  margin: 7px 0 0 74px;
+  font-size: 11px;
+}
+.combining-base-error {
+  margin: 7px 0 0 74px;
+  color: #a02124 !important;
+  font-size: 12px !important;
+}
+.combining-base-error:empty { display: none; }
+
+.combining-text,
+.combining-dotted {
+  font-family: "Noto Sans Phonetics", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-synthesis: none;
+  font-kerning: normal;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.combining-text {
+  white-space: pre-wrap;
+  unicode-bidi: plaintext;
+  overflow-wrap: anywhere;
+}
+.combining-dotted {
+  display: inline-block;
+  unicode-bidi: isolate;
+  font-size: 28px;
+  line-height: 1.5;
+}
+
+/* Composition strip mirrors Emoji's selected-material slots. */
+.combining-composition-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 17px 0 7px;
+}
+.combining-composition-head h3 {
+  margin: 0;
+  font-size: 13px;
+}
+.combining-composition-head .page-button {
+  min-height: 40px;
+  padding: 7px 10px;
+  background: #eef0f4;
+  border: 1px solid #d8dee8;
+  color: #30415b;
+  font-size: 11px;
+}
+.combining-composition {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 76px;
+  max-height: 166px;
+  margin: 0;
+  padding: 3px 2px 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+.combining-slot {
+  flex: 0 0 auto;
+  min-width: 62px;
+  min-height: 70px;
+  padding: 8px 9px;
+  border: 1px solid #dde1e8;
+  border-radius: 11px;
+  background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.combining-slot-glyph {
+  font-size: 26px;
+  line-height: 1.2;
+}
+.combining-slot-code {
+  display: block;
+  max-width: 92px;
+  color: #667080;
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.combining-plus {
+  flex: 0 0 auto;
+  color: #949aa3;
+  font-size: 15px;
+  font-weight: 600;
+}
+.combining-selected {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.combining-selected-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+/* Keep 44px touch targets, but remove the three long labels that made every
+   selected slot look like a miniature form. aria-labels still describe them. */
+.combining-mark-controls {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+.combining-mark-controls .page-button {
+  min-width: 40px;
+  width: 40px;
+  min-height: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 0;
+  color: #526079;
+  background: #e9edf4;
+}
+.combining-mark-controls .page-button::before {
+  font-size: 15px;
+  line-height: 1;
+}
+.combining-mark-controls [data-action="up"]::before { content: "←"; }
+.combining-mark-controls [data-action="down"]::before { content: "→"; }
+.combining-mark-controls [data-action="remove"]::before { content: "×"; font-size: 18px; }
+#combining-empty-selected {
+  flex: 0 0 auto;
+  padding: 0 4px;
+  font-size: 11px;
+}
+
+/* Result treatment intentionally follows .emoji-builder-result:
+   large uncluttered glyph at left, actions at right, divider above/below. */
+.combining-preview-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 16px 0 0;
+  padding: 16px 0;
+  border-top: 1px solid #e7e9ed;
+  border-bottom: 1px solid #e7e9ed;
+}
+.combining-preview-main {
+  flex: 0 1 210px;
+  min-width: 0;
+}
+.combining-preview-main h3 {
+  margin: 0 0 3px;
+  color: #747983;
+  font-size: 12px;
+  font-weight: 500;
+}
+.combining-preview-surface {
+  min-height: 72px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  text-align: left;
+  font-size: 54px;
+  line-height: 1.3;
+}
+.combining-result-actions {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+.combining-codes {
+  display: block;
+  min-height: 1.8em;
+  color: #747983;
+  white-space: pre-wrap;
+  word-break: break-word;
+  unicode-bidi: isolate;
+  font-size: 11px;
+  line-height: 1.65;
+}
+.combining-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 8px;
+}
+.combining-maker .combining-status {
+  margin: 8px 0 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Picker header and category strip. */
+.combining-picker-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+.combining-picker-head h2 {
+  margin: 0 !important;
+  font-size: 18px;
+  line-height: 1.45;
+}
+.combining-all-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.combining-all-toggle input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #253954;
+}
+.combining-groups {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin: 0 -2px;
+  padding: 3px 2px 5px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.combining-groups::-webkit-scrollbar { display: none; }
+.combining-group,
+.combining-groups .page-button,
+.combining-groups button {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 8px 11px;
+  border: 1px solid #dbe1e9;
+  border-radius: 10px;
+  background: #f7f8fa;
+  color: #43516a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
 .combining-groups button:hover { background: #eaf0f8; }
-.combining-groups button[aria-pressed="true"], .combining-groups button.active { color: #fff; border-color: #344d70; background: #344d70; }
+.combining-groups button[aria-pressed="true"],
+.combining-groups button.active {
+  border-color: #758cad;
+  background: #eaf0f8;
+  color: #26344a;
+}
 .combining-groups button:disabled { opacity: .45; cursor: default; }
-.combining-maker .combining-recommendation-note { margin: 7px 0 8px; font-size: 11px; line-height: 1.5; }
-.combining-search-options { border-bottom: 1px solid #e7e9ed; padding: 0 0 6px; }
-.combining-search-options summary { padding: 7px 0; color: #4c5c73; font-size: 12px; cursor: pointer; }
-.combining-search-fields { padding: 6px 0 7px; }
-.combining-filters { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 10px; margin-top: 10px; }
-.combining-filters select { width: 100%; min-height: 44px; }
-.combining-maker .combining-catalogue { display: grid; grid-template-columns: repeat(auto-fill,minmax(84px,1fr)); gap: 7px; max-height: 266px; min-height: 80px; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; margin: 8px 0; padding: 3px; list-style: none; align-content: start; }
+.combining-maker .combining-recommendation-note {
+  margin: 5px 0 8px;
+  color: #747983;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+/* Advanced filters should not compete with the primary pick-and-add flow. */
+.combining-search-options {
+  margin-top: 2px;
+  padding: 0;
+  border-top: 1px solid #edf0f4;
+  border-bottom: 1px solid #edf0f4;
+}
+.combining-search-options summary {
+  padding: 9px 0;
+  color: #526079;
+  font-size: 12px;
+  cursor: pointer;
+}
+.combining-search-fields { padding: 5px 0 10px; }
+.combining-filters {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.combining-filters select {
+  width: 100%;
+  min-height: 44px;
+}
+
+/* Choice grid now follows Emoji's material cards more closely. */
+.combining-maker .combining-catalogue {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(77px, 1fr));
+  gap: 7px;
+  max-height: 235px;
+  min-height: 80px;
+  margin: 10px 0;
+  padding: 2px;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  list-style: none;
+  align-content: start;
+}
 .combining-catalogue-item { min-width: 0; }
-.combining-candidate { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; min-height: 92px; padding: 7px 3px; border: 1px solid #e2e5eb; border-radius: 10px; background: #fff; color: #26344a; cursor: pointer; }
-.combining-candidate:hover { background: #edf2f7; border-color: #9badc5; }
+.combining-candidate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+  min-height: 78px;
+  padding: 7px 3px;
+  border: 1px solid #e2e5eb;
+  border-radius: 10px;
+  background: #fff;
+  color: #26344a;
+  cursor: pointer;
+  transition: background-color .15s, border-color .15s;
+}
+.combining-candidate:hover {
+  background: #edf2f7;
+  border-color: #9badc5;
+}
 .combining-candidate:disabled { opacity: .45; cursor: default; }
-.combining-candidate-preview { font-size: 29px; line-height: 1.45; min-height: 42px; }
-.combining-candidate-code { color: #717985; font-size: 10px; line-height: 1.2; }
-.combining-candidate-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 9px; color: #586475; max-width: 100%; overflow-wrap: anywhere; line-height: 1.25; text-align: center; }
-.combining-pagination { display: flex; align-items: center; justify-content: space-between; gap: 7px; }
-#combining-page-status { text-align: center; font-size: 11px; }
-.combining-detail-panel > summary { padding: 3px 0; color: #2b384b; font-size: 15px; font-weight: 650; cursor: pointer; }
-.combining-normalization { padding: 12px 0; border-bottom: 1px solid #e7e9ed; min-width: 0; }
-.combining-normalization:last-child { border-bottom: 0; padding-bottom: 0; }
-.combining-normalization h3 { margin: 0 0 4px; font-size: 13px; }
-.combining-normalization .combining-text { display: block; min-height: 1.7em; padding-block: 4px; font-size: 28px; line-height: 1.7; }
+.combining-candidate-preview {
+  min-height: 36px;
+  font-size: 27px;
+  line-height: 1.25;
+}
+.combining-candidate-code {
+  max-width: 100%;
+  padding-inline: 2px;
+  color: #717985;
+  font-size: 9px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.combining-candidate-name {
+  display: -webkit-box;
+  max-width: 100%;
+  color: #4c5562;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  line-height: 1.3;
+  text-align: center;
+}
+.combining-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+}
+#combining-page-status {
+  text-align: center;
+  font-size: 11px;
+}
+
+/* Secondary information stays visually subordinate. */
+.combining-detail-panel > summary {
+  padding: 2px 0;
+  color: #2b384b;
+  font-size: 15px;
+  font-weight: 650;
+  cursor: pointer;
+}
+.combining-normalization {
+  min-width: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #e7e9ed;
+}
+.combining-normalization:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.combining-normalization h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+}
+.combining-normalization .combining-text {
+  display: block;
+  min-height: 1.7em;
+  padding-block: 4px;
+  font-size: 28px;
+  line-height: 1.7;
+}
 .combining-normalization .combining-codes { margin: 4px 0; }
-.combining-normalization .page-muted { margin: 4px 0; font-size: 11px; }
+.combining-normalization .page-muted {
+  margin: 4px 0;
+  font-size: 11px;
+}
 .combining-normalized-text { unicode-bidi: plaintext; }
-.combining-copy-fallback { position: fixed; top: 0; left: -10000px; width: 1px; height: 1px; min-height: 0; padding: 0; }
-.combining-manual-copy { display: block; margin-top: 8px; font-size: 16px; unicode-bidi: plaintext; }
+.combining-copy-fallback {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+}
+.combining-manual-copy {
+  display: block;
+  margin-top: 8px;
+  font-size: 16px;
+  unicode-bidi: plaintext;
+}
+
 @media (max-width: 560px) {
-  .combining-maker .page-intro { margin-top: 8px; }
+  .combining-maker .page-intro { margin-top: 8px; margin-bottom: 16px; }
   .combining-maker .page-title { font-size: 25px; }
-  .combining-maker .page-card { padding: 13px 0 15px; }
-  .combining-base-row { gap: 9px; flex-wrap: wrap; }
-  #combining-base { flex-basis: 80px; width: 80px; min-height: 49px; font-size: 26px; }
-  #combining-base-info { flex: 1; font-size: 11px; }
-  .combining-maker .combining-base-help { font-size: 10px; }
-  .combining-composition { max-height: 152px; }
-  .combining-slot { min-width: 55px; min-height: 62px; padding: 6px; }
+  .combining-maker .page-card { padding: 17px 16px; }
+  .combining-base-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 7px 10px;
+    align-items: center;
+  }
+  .combining-base-row .combining-label {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  #combining-base {
+    width: 82px;
+    min-height: 50px;
+    flex-basis: auto;
+    font-size: 26px;
+  }
+  #combining-base-info {
+    font-size: 10px;
+  }
+  .combining-maker .combining-base-help,
+  .combining-base-error {
+    margin-left: 0;
+    font-size: 10px;
+  }
+  .combining-composition-head { margin-top: 14px; }
+  .combining-composition { max-height: 145px; }
+  .combining-slot {
+    min-width: 56px;
+    min-height: 64px;
+    padding: 7px 6px;
+  }
   .combining-slot-glyph { font-size: 25px; }
-  .combining-preview-panel { gap: 10px; padding: 10px 0; }
-  .combining-preview-main { flex: 0 0 95px; }
-  .combining-preview-surface { min-height: 73px; font-size: 44px; line-height: 1.55; padding-inline: 5px; }
-  .combining-actions { gap: 4px; }
-  .combining-actions .page-button { padding-inline: 8px; font-size: 11px; }
-  .combining-picker-head { gap: 6px; }
-  .combining-picker-head h2 { font-size: 15px; }
-  .combining-groups { gap: 4px; }
-  .combining-groups button { min-height: 44px; padding: 7px 8px; font-size: 11px; }
-  .combining-maker .combining-catalogue { grid-template-columns: repeat(auto-fill,minmax(66px,1fr)); max-height: 238px; gap: 6px; }
-  .combining-candidate { min-height: 85px; padding: 6px 2px; }
-  .combining-candidate-preview { font-size: 26px; min-height: 38px; }
-  .combining-candidate-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 9px; }
-  .combining-pagination .page-button { padding-inline: 9px; }
+  .combining-mark-controls .page-button {
+    min-width: 40px;
+    width: 40px;
+    min-height: 40px;
+    height: 40px;
+  }
+
+  .combining-preview-panel {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 9px;
+    padding: 14px 0;
+  }
+  .combining-preview-main {
+    flex: none;
+    width: 100%;
+  }
+  .combining-preview-surface {
+    min-height: 58px;
+    font-size: 46px;
+    line-height: 1.3;
+  }
+  .combining-result-actions {
+    flex: none;
+    width: 100%;
+  }
+  .combining-actions { gap: 6px; }
+  .combining-actions .page-button {
+    flex: 1 1 130px;
+    padding-inline: 8px;
+    font-size: 11px;
+  }
+
+  .combining-picker-head {
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .combining-picker-head h2 { font-size: 17px; }
+  .combining-all-toggle {
+    min-height: 36px;
+    padding-top: 1px;
+    font-size: 11px;
+  }
+  .combining-groups {
+    gap: 5px;
+    margin-inline: -1px;
+  }
+  .combining-groups button {
+    min-height: 40px;
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+  .combining-maker .combining-recommendation-note {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+  .combining-maker .combining-catalogue {
+    grid-template-columns: repeat(auto-fill, minmax(66px, 1fr));
+    max-height: 220px;
+    gap: 6px;
+  }
+  .combining-candidate {
+    min-height: 70px;
+    padding: 6px 2px;
+  }
+  .combining-candidate-preview {
+    min-height: 33px;
+    font-size: 25px;
+  }
+  .combining-candidate-name { font-size: 9px; }
+  .combining-pagination .page-button {
+    min-width: 86px;
+    padding-inline: 8px;
+  }
   .combining-filters { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .combining-candidate { transition: none; }
 }
