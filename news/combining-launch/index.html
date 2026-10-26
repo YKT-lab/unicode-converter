@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Unicode Converterに結合文字メーカーを追加しました。結合文字の検索、組み合わせ、並び替え、正規化結果を確認できます。">
+<title>結合文字メーカーを追加しました | Unicode Converter</title>
+<link rel="stylesheet" href="../../style.css?v=20261012-zoom-scope16">
+<link rel="stylesheet" href="../../pages.css?v=20261012-1">
+<link rel="stylesheet" href="../../layout.css?v=20261012-shared-header2">
+<link rel="stylesheet" href="../../news.css?v=20261012-news1">
+<script src="../../js/site-header.js?v=20261024-combining1" defer></script>
+</head>
+<body>
+<main>
+<div class="site-topbar">
+<header class="site-header unicode-scope-excluded">
+<a class="site-logo-link" href="../../" aria-label="トップページに戻る"><img class="site-logo" src="../../logo.png" alt="Unicode Converter" draggable="false"></a>
+</header>
+<nav class="site-nav unicode-scope-excluded" aria-label="サイト内メニュー"><a href="../../">トップページ</a><a href="../../about/">Unicodeとは</a><a href="../../emoji/">絵文字</a><a href="../../combining/">結合文字メーカー</a><a href="../../unicode/">Unicode一覧</a><a href="../" aria-current="page">News</a></nav>
+</div>
+<article>
+<header class="page-intro news-article-intro">
+<p class="page-eyebrow">UNICODE NEWS</p>
+<time class="news-article-date" datetime="2026-10-24">2026.10.24</time>
+<h1 class="page-title">結合文字メーカーを追加しました</h1>
+<p class="page-lead">基本文字に結合文字を重ね、Unicode上の構成や正規化結果を確認できる新しいツールです。</p>
+</header>
+<div class="news-article-content">
+<p>Unicode Converterに<strong>結合文字メーカー</strong>を追加しました。アクセント記号や囲み記号などの結合文字を探して追加し、1つの文字列としてどのように表示されるかを確認できます。</p>
+<h2>できること</h2>
+<ul>
+<li>Unicode 18.0の結合文字を検索できます。</li>
+<li>複数の結合文字を追加し、順番を入れ替えたり削除したりできます。</li>
+<li>完成した文字列とコードポイント列を確認・コピーできます。</li>
+<li>NFC、NFD、NFKC、NFKDの4種類の正規化結果を比較できます。</li>
+</ul>
+<p>同じ見た目でも、1つのコードポイントで表される文字と、基本文字＋結合文字の複数コードポイントで表される文字があります。結合文字メーカーでは、その違いを実際に組み立てながら確認できます。</p>
+<p><a href="../../combining/">結合文字メーカーを開く →</a></p>
+</div>
+</article>
+<p class="news-article-back"><a href="../">← News一覧に戻る</a></p>
+</main>
+<div id="unicodeScope" aria-hidden="true">
+<div id="unicodeScopeRing"><span id="unicodeScopeGlyph"></span></div>
+<button id="unicodeScopeCode" type="button" aria-label="Unicodeコードをコピー"></button>
+</div>
+<script src="../../js/config.js?v=20261012-sitewide13" defer></script>
+<script src="../../js/glyph-check.js?v=20261012-sitewide13" defer></script>
+<script src="../../js/scope.js?v=20261026-scope-toggle1" defer></script>
+</body>
+</html>
