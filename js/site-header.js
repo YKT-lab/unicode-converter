@@ -59,12 +59,47 @@
   settingsToggle.setAttribute("aria-controls", "siteSettingsPanel");
   settingsToggle.setAttribute("aria-label", "表示設定を開く");
   settingsToggle.title = "表示設定";
-  settingsToggle.textContent = "⚙︎";
+
+  function settingsIcon(kind) {
+    const ns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(ns, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    svg.classList.add("site-settings-icon");
+
+    if (kind === "close") {
+      const first = document.createElementNS(ns, "path");
+      first.setAttribute("d", "M6.5 6.5 17.5 17.5");
+      const second = document.createElementNS(ns, "path");
+      second.setAttribute("d", "M17.5 6.5 6.5 17.5");
+      svg.append(first, second);
+      return svg;
+    }
+
+    const ring = document.createElementNS(ns, "circle");
+    ring.setAttribute("cx", "12");
+    ring.setAttribute("cy", "12");
+    ring.setAttribute("r", "3.15");
+    svg.append(ring);
+    for (let angle = 0; angle < 360; angle += 45) {
+      const spoke = document.createElementNS(ns, "path");
+      spoke.setAttribute("d", "M12 3.3v2.25");
+      spoke.setAttribute("transform", "rotate(" + angle + " 12 12)");
+      svg.append(spoke);
+    }
+    return svg;
+  }
+
+  function renderSettingsIcon(open) {
+    settingsToggle.replaceChildren(settingsIcon(open ? "close" : "settings"));
+  }
+  renderSettingsIcon(false);
 
   const panel = document.createElement("div");
   panel.id = "siteSettingsPanel";
   panel.className = "site-settings-panel";
-  panel.hidden = true;
+  panel.setAttribute("aria-hidden", "true");
 
   const heading = document.createElement("div");
   heading.className = "site-settings-heading";
@@ -114,24 +149,28 @@
 
   function setSettingsOpen(open) {
     const next = Boolean(open);
-    panel.hidden = !next;
     settingsToggle.setAttribute("aria-expanded", String(next));
     settingsToggle.setAttribute("aria-label", next ? "表示設定を閉じる" : "表示設定を開く");
     settingsToggle.title = next ? "閉じる" : "表示設定";
-    settingsToggle.textContent = next ? "×" : "⚙︎";
+    panel.setAttribute("aria-hidden", String(!next));
+    deviceFont.tabIndex = next ? 0 : -1;
+    scopeOff.tabIndex = next ? 0 : -1;
+    renderSettingsIcon(next);
     settings.classList.toggle("open", next);
   }
+  setSettingsOpen(false);
 
   settingsToggle.addEventListener("click", event => {
     event.stopPropagation();
-    setSettingsOpen(panel.hidden);
+    setSettingsOpen(settingsToggle.getAttribute("aria-expanded") !== "true");
   });
   panel.addEventListener("click", event => event.stopPropagation());
   document.addEventListener("click", event => {
-    if (!panel.hidden && !settings.contains(event.target)) setSettingsOpen(false);
+    if (settingsToggle.getAttribute("aria-expanded") === "true" && !settings.contains(event.target))
+      setSettingsOpen(false);
   });
   document.addEventListener("keydown", event => {
-    if (event.key !== "Escape" || panel.hidden) return;
+    if (event.key !== "Escape" || settingsToggle.getAttribute("aria-expanded") !== "true") return;
     setSettingsOpen(false);
     settingsToggle.focus();
   });
