@@ -77,6 +77,9 @@ function test(name,run){run();checks++;}
 const f=fixture();
 for(const name of ["getScopeSvgRect","cloneUnicodeScopeSvg","fitScopeSvgGlyph"])
  assert.equal(typeof f.ctx[name],"function","Missing Scope SVG regression helper: "+name);
+assert.equal(typeof f.ctx.isUnicodeScopeEnabled,"function");
+assert.equal(typeof f.ctx.setUnicodeScopeEnabled,"function");
+assert.equal(f.ctx.isUnicodeScopeEnabled(),true);
 
 test("clone is in flow and does not mutate the converter SVG",()=>{
  const svg=sourceSvg(),before=footprint(svg),clone=f.ctx.cloneUnicodeScopeSvg(svg);
@@ -160,6 +163,15 @@ test("normal text still uses the original Canvas fitting path",()=>{
  assert.equal(f.glyph.textContent,"g");assert.equal(f.glyph.children.length,0);
  assert(f.ctx.canvasCalls>0);assert.match(f.glyph.style.transform,/^scale\(/);
  assert.equal(f.code.textContent,"U+0067");
+});
+test("Scope OFF suppresses the lens without changing glyph rendering",()=>{
+ const f=fixture();
+ f.ctx.setUnicodeScopeEnabled(false);
+ assert.equal(f.ctx.isUnicodeScopeEnabled(),false);
+ f.ctx.showUnicodeScope({character:"A",rect:{left:10,top:10,width:10,height:10},textNode:{parentElement:element()}});
+ assert(!f.scope.classList.contains("visible"));
+ f.ctx.setUnicodeScopeEnabled(true);
+ assert.equal(f.ctx.isUnicodeScopeEnabled(),true);
 });
 test("scroll and visual viewport changes dismiss old lens geometry",()=>{
  const f=fixture();
