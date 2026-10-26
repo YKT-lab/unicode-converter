@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-26",
-    "category": "ancient",
-    "codePoint": "14340",
-    "character": "𔍀",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M276 606Q289 613 301.5 620.5Q314 628 324 637.5Q334 647 339.5 660.5Q345 674 345 692Q345 720 325 743.5Q305 767 278 768Q263 767 250 760.5Q237 754 227.5 743Q218 732 212.5 718.5Q207 705 207 690Q207 671 212.5 658Q218 645 228 635.5Q238 626 250 619Q262 612 276 606ZM277 173Q304 215 322.5 254.5Q341 294 341 326Q341 343 335.5 355Q330 367 321 375.5Q312 384 300.5 390Q289 396 276 401Q250 390 230.5 374.5Q211 359 211 326Q211 295 230.5 255Q250 215 277 173ZM276 585Q248 572 226.5 555Q205 538 205 504Q205 466 226.5 449.5Q248 433 275 423Q303 435 325 451Q347 467 347 502Q347 539 325.5 556Q304 573 276 585ZM359 724Q365 709 365 692Q365 651 345 630Q325 609 299 596Q326 584 346.5 564Q367 544 367 502Q367 462 346.5 443Q326 424 300 412Q325 401 343 383Q361 365 361 326Q361 288 340 244Q319 200 289 155Q318 111 348 72Q378 33 396 6L379 -6Q361 22 333 58.5Q305 95 277 137Q249 96 221 59.5Q193 23 174 -6L157 6Q176 34 206 73Q236 112 265 155Q235 200 213 245Q191 290 191 326Q191 363 209 381.5Q227 400 251 412Q238 418 226 425Q214 432 205 442.5Q196 453 190.5 468Q185 483 185 504Q185 523 190.5 537.5Q196 552 205.5 562.5Q215 573 227 581Q239 589 252 595Q226 608 206.5 628Q187 648 187 690Q187 708 195 727L104 779Q95 785 104.5 806Q114 827 138 850Q162 873 197.5 891.5Q233 910 275 910Q320 910 356.5 891.5Q393 873 417 850Q441 827 450.5 806Q460 785 451 779ZM278 788Q301 787 320 774.5Q339 762 351 742L432 792Q409 837 368 863.5Q327 890 275 890Q223 890 186 863Q149 836 123 792L204 745Q216 763 235 775Q254 787 277 788L277 778Z",
-      "viewBox": "26.341621621621627 -983.28 502.3167567567568 1062.56"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-14340",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの文字体系であるヒエログリフに含まれる記号の1つ。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "古代エジプト語の表記において、音素文字（表音文字）として機能する。",
-        "etymology": "",
-        "history": "",
-        "structure": "3つの輪を持つ繊維の束で作られた拭き取り具の姿を描いている。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A swab made from a hank of fiber with three loops.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Phonemogram",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "wꜣḥ",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "phonemogram : wꜣḥ",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "V091",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "V-08-040",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-27",
     "category": "ancient",
     "codePoint": "132F7",
@@ -247,6 +121,110 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-28",
+    "category": "kana",
+    "codePoint": "31F6",
+    "character": "ㇶ",
+    "font": "Noto Sans JP",
+    "svg": {
+      "path": "M351 622Q349 607 347.5 589.5Q346 572 346 555Q346 544 346 512.5Q346 481 346 438Q346 395 346 347Q346 299 346 254.5Q346 210 346 176Q346 142 346 127Q346 93 357.5 81.5Q369 70 398 64Q417 60 444.5 58.5Q472 57 503 57Q536 57 575 58.5Q614 60 653.5 63Q693 66 728 71Q763 76 789 83L789 2Q753 -3 703.5 -7Q654 -11 601.5 -13Q549 -15 503 -15Q465 -15 431 -12.5Q397 -10 371 -6Q320 3 297 28.5Q274 54 274 106Q274 126 274 163Q274 200 274 247Q274 294 274 343.5Q274 393 274 437Q274 481 274 512.5Q274 544 274 555Q274 570 272 588.5Q270 607 268 622ZM313 354Q348 362 394.5 375Q441 388 490.5 403.5Q540 419 585 435.5Q630 452 662 466Q681 474 699.5 483Q718 492 735 503L767 431Q748 425 729.5 416.5Q711 408 692 401Q651 385 600.5 367.5Q550 350 498 334Q446 318 398 305.5Q350 293 313 284Z",
+      "viewBox": "217.04 -672.96 622.92 738.92"
+    },
+    "info": {
+      "category": "kana",
+      "unicodeName": "KATAKANA LETTER SMALL HI",
+      "block": "Katakana Phonetic Extensions",
+      "script": "Katakana",
+      "age": "3.2",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "カタカナ拡張ブロックに収録されている、小書きの「ヒ」の文字です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "アイヌ語やその他の言語における音声転写の表記に用いられます。",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "JIS X 0213:2000の規格に基づいて制定されました。",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "registered:usage",
+          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:supplementalInfo",
+          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        },
+        {
+          "kind": "registered:fact",
+          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
+          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "strength": "strong"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
+          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
         }
       ]
     }
