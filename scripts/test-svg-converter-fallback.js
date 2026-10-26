@@ -77,6 +77,8 @@ function failure(code = "network", stage = "shard", phase = "fetch") {
 }
 function fixture(options = {}) {
   let svgEnabled = options.svg !== false;
+  const browserEnabled = options.browser === true;
+  if (browserEnabled) svgEnabled = false;
   const output = element("div"), progress = [], svgCalls = [], fontCalls = [], normalCalls = [];
   const index = Object.hasOwn(options, "index") ? options.index : coverage;
   const ctx = {
@@ -104,6 +106,7 @@ function fixture(options = {}) {
     isInvisibleCharacter: options.invisible || ((cp, character) => [0x00ad, 0x200b, 0x200d].includes(cp) ||
       /\p{Default_Ignorable_Code_Point}/u.test(character)),
     isSvgModeEnabled: () => svgEnabled,
+    isBrowserFontModeEnabled: () => browserEnabled,
     updateSvgModeProgress: message => progress.push(message),
     async createSvgGlyph(cp, character) {
       svgCalls.push(cp);
@@ -356,6 +359,28 @@ test("SVG timeout terminates loading with 時間切れ and no font calls", async
   expectSvgReason(f, node, "timeout", "時間切れ");
   assert.equal(node.dataset.svgError, "timeout");
   assert.equal(f.progress.at(-1), "");
+});
+
+test("Browser-font mode bypasses site fonts, SVG, emoji routing and missing-glyph checks", async () => {
+  const f = fixture({svg:false,browser:true,
+    selectFont:async()=>{throw Error("site font path must not run");},
+    emojiPlan:async()=>{throw Error("emoji routing must not run");},
+    blank:()=>{throw Error("missing-glyph inspection must not run");},
+    missing:()=>{throw Error("missing-glyph inspection must not run");}});
+  const [node] = await f.convert("1F600");
+  expectGlyph(node,"browser","😀");
+  assert.equal(node.dataset.fontSource,"browser-fallback");
+  assert.equal(node.children[0].style.fontFamily,"sans-serif");
+  assert.deepEqual(f.svgCalls,[]);
+  assert.deepEqual(f.fontCalls,[]);
+  assert.deepEqual(f.normalCalls,[]);
+});
+test("Browser-font mode passes private-use and unassigned scalars literally to the browser", async () => {
+  const f = fixture({svg:false,browser:true});
+  const nodes = await f.convert("E000 0378");
+  assert.equal(nodes.length,2);
+  expectGlyph(nodes[0],"browser",String.fromCodePoint(0xE000));
+  expectGlyph(nodes[1],"browser",String.fromCodePoint(0x0378));
 });
 
 // The new SVG-mode contract must leave the established normal-mode path intact.
