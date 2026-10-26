@@ -199,10 +199,10 @@
   justify-content: center;
 }
 .combining-mark-controls .page-button {
-  min-width: 32px;
-  width: 32px;
-  min-height: 32px;
-  height: 32px;
+  min-width: 40px;
+  width: 40px;
+  min-height: 40px;
+  height: 40px;
   padding: 0;
   border-radius: 8px;
   font-size: 0;
@@ -537,10 +537,10 @@
   }
   .combining-slot-glyph { font-size: 25px; }
   .combining-mark-controls .page-button {
-    min-width: 30px;
-    width: 30px;
-    min-height: 30px;
-    height: 30px;
+    min-width: 40px;
+    width: 40px;
+    min-height: 40px;
+    height: 40px;
   }
 
   .combining-preview-panel {
