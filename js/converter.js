@@ -478,6 +478,7 @@ function createGlyphElement(
 async function convertUnicode(rawOverride = null) {
   const currentRun = ++unicodeRun;
   const svgMode = typeof isSvgModeEnabled === "function" && isSvgModeEnabled();
+  const browserFontMode = typeof isBrowserFontModeEnabled === "function" && isBrowserFontModeEnabled();
   const raw = (rawOverride === null ? unicodeInput.value : String(rawOverride)).trim();
   charOutput.className = "result character-result";
   charOutput.textContent = "";
@@ -488,13 +489,15 @@ async function convertUnicode(rawOverride = null) {
 
   let indexForStatus = null;
   let coverageFailure = null;
-  try {
-    if (typeof getUnicodeCoverageIndex === "function")
-      indexForStatus = await withDisplayTimeout(getUnicodeCoverageIndex());
-  } catch (error) {
-    coverageFailure = error;
+  if (!browserFontMode) {
+    try {
+      if (typeof getUnicodeCoverageIndex === "function")
+        indexForStatus = await withDisplayTimeout(getUnicodeCoverageIndex());
+    } catch (error) {
+      coverageFailure = error;
+    }
+    if (currentRun !== unicodeRun) return;
   }
-  if (currentRun !== unicodeRun) return;
 
   const tokens = raw.split(/[\s,]+/).filter(Boolean);
   let emojiUnavailable = false;
@@ -518,7 +521,28 @@ async function convertUnicode(rawOverride = null) {
     try {
       const character = String.fromCodePoint(codePoint);
       const hex = codePoint.toString(16).toUpperCase();
-      // Classification is shared; SVG and normal rendering remain separate.
+
+      // Literal device/browser mode: pass every valid Unicode scalar directly
+      // to the browser. No site WebFont selection, SVG substitution, emoji
+      // routing or missing-glyph inspection runs in this path.
+      if (browserFontMode) {
+        const wrapper = document.createElement("span");
+        wrapper.className = "character-span browser-font-character";
+        wrapper.dataset.codePoint = hex.padStart(4, "0");
+        wrapper.dataset.displayMode = "browser";
+        wrapper.dataset.fontSource = "browser-fallback";
+        const inner = document.createElement("span");
+        inner.className = "glyph-inner";
+        inner.textContent = character;
+        inner.style.fontFamily = "sans-serif";
+        inner.setAttribute("aria-label", "U+" + hex.padStart(4, "0"));
+        wrapper.appendChild(inner);
+        charOutput.appendChild(wrapper);
+        await yieldToBrowser();
+        continue;
+      }
+
+      // Classification is shared by SVG and site-font rendering.
       const nonGlyphReason = unicodeNonGlyphReason(codePoint, indexForStatus);
       if (nonGlyphReason) {
         charOutput.appendChild(svgMode

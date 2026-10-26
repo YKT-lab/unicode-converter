@@ -6,33 +6,39 @@ const svgModeScriptUrl = document.currentScript?.src ||
     /\/js\/svg-mode\.js(?:[?#]|$)/.test(script.src || ""))?.src;
 const svgDataBaseUrl = svgModeScriptUrl
   ? new URL("../svg-data/", svgModeScriptUrl).href : "./svg-data/";
+const browserFontModeToggle = document.getElementById("browserFontModeToggle");
 const svgModeToggle = document.getElementById("svgModeToggle");
 const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
 const svgModeCurrent = document.getElementById("svgModeCurrent");
 const SVG_MODE_SESSION_KEY = "unicode-converter-svg-display";
-function readSvgModePreference() {
+const DISPLAY_MODES = new Set(["normal", "browser", "svg"]);
+function readUnicodeDisplayModePreference() {
   try {
-    return window.sessionStorage?.getItem(SVG_MODE_SESSION_KEY) === "svg";
+    const stored = window.sessionStorage?.getItem(SVG_MODE_SESSION_KEY);
+    return DISPLAY_MODES.has(stored) ? stored : "normal";
   } catch (_error) {
-    return false;
+    return "normal";
   }
 }
-function saveSvgModePreference() {
+function saveUnicodeDisplayModePreference() {
   try {
     if (!window.sessionStorage) return false;
-    window.sessionStorage.setItem(SVG_MODE_SESSION_KEY, svgModeEnabled ? "svg" : "normal");
+    window.sessionStorage.setItem(SVG_MODE_SESSION_KEY, unicodeDisplayMode);
     return true;
   } catch (_error) {
     return false;
   }
 }
-let svgModeEnabled = readSvgModePreference();
+let unicodeDisplayMode = readUnicodeDisplayModePreference();
+let svgModeEnabled = unicodeDisplayMode === "svg";
 let svgPreviousCustomCount = null;
 let svgParserPromise = null;
 const svgFontCache = new Map();
 
-function isSvgModeEnabled() { return svgModeEnabled; }
+function isSvgModeEnabled() { return unicodeDisplayMode === "svg"; }
+function isBrowserFontModeEnabled() { return unicodeDisplayMode === "browser"; }
+function getUnicodeDisplayMode() { return unicodeDisplayMode; }
 function updateSvgModeProgress(message) {
   if (!svgModeProgress) return;
   svgModeProgress.hidden = !message;
@@ -175,13 +181,18 @@ document.getElementById("randomCustomCount")?.addEventListener("input", () => {
   if (svgModeEnabled) svgPreviousCustomCount = null;
 });
 function refreshSvgModePresentation() {
+  svgModeEnabled = unicodeDisplayMode === "svg";
+  if (browserFontModeToggle)
+    browserFontModeToggle.setAttribute("aria-pressed", String(unicodeDisplayMode === "browser"));
   if (svgModeToggle) {
     svgModeToggle.textContent = svgModeEnabled
       ? "通常表示に戻す" : "SVG表示に切り替える";
     svgModeToggle.setAttribute("aria-pressed", String(svgModeEnabled));
   }
   if (svgModeCurrent) {
-    svgModeCurrent.textContent = svgModeEnabled ? "現在：SVG表示" : "現在：通常表示";
+    const label = unicodeDisplayMode === "browser" ? "端末フォント"
+      : unicodeDisplayMode === "svg" ? "SVG表示" : "通常表示";
+    svgModeCurrent.textContent = "現在：" + label;
   }
 }
 function hasUnicodeInputForModeSwitch() {
@@ -193,19 +204,19 @@ function hasUnicodeInputForModeSwitch() {
     singleEntered
   );
 }
-svgModeToggle?.addEventListener("click", () => {
+function setUnicodeDisplayMode(nextMode) {
+  if (!DISPLAY_MODES.has(nextMode) || nextMode === unicodeDisplayMode) return;
   const hadInput = hasUnicodeInputForModeSwitch();
-  svgModeEnabled = !svgModeEnabled;
-  const saved = saveSvgModePreference();
+  unicodeDisplayMode = nextMode;
+  svgModeEnabled = unicodeDisplayMode === "svg";
+  const saved = saveUnicodeDisplayModePreference();
   refreshSvgModePresentation();
   updateSvgModeProgress("");
   updateSvgRandomOptions();
   hideUnicodeScope();
 
-  // With no entered/result characters, reload the page once to make the
-  // switch perceptible. Save mode first; never reload if storage is blocked.
   if (!hadInput) {
-    unicodeRun++; // Cancel any pending conversion.
+    unicodeRun++;
     if (saved && typeof window.location?.reload === "function") {
       window.location.reload();
     } else {
@@ -214,14 +225,19 @@ svgModeToggle?.addEventListener("click", () => {
     return;
   }
 
-  // Keep user input and history. Re-render only the active output.
   if (lastUnicodeOutputSource === "single" && singleHexDigits.every(Boolean)) {
     convertUnicode("U+" + singleHexDigits.join(""));
   } else if (lastUnicodeOutputSource === "bulk" && unicodeInput.value.trim()) {
     convertUnicode();
   } else {
-    unicodeRun++; // Incomplete input: keep it untouched.
+    unicodeRun++;
   }
+}
+browserFontModeToggle?.addEventListener("click", () => {
+  setUnicodeDisplayMode(unicodeDisplayMode === "browser" ? "normal" : "browser");
+});
+svgModeToggle?.addEventListener("click", () => {
+  setUnicodeDisplayMode(unicodeDisplayMode === "svg" ? "normal" : "svg");
 });
 refreshSvgModePresentation();
 if (svgModeEnabled) updateSvgRandomOptions();

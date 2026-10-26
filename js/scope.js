@@ -1,3 +1,42 @@
+/* User-selectable Scope switch. This is independent from glyph rendering. */
+const scopeModeToggle =
+  typeof document.getElementById === "function"
+    ? document.getElementById("scopeModeToggle")
+    : null;
+const UNICODE_SCOPE_SESSION_KEY = "unicode-converter-scope";
+function readUnicodeScopePreference() {
+  try {
+    return window.sessionStorage?.getItem(UNICODE_SCOPE_SESSION_KEY) !== "off";
+  } catch (_error) {
+    return true;
+  }
+}
+let unicodeScopeEnabled = readUnicodeScopePreference();
+function isUnicodeScopeEnabled() { return unicodeScopeEnabled; }
+function saveUnicodeScopePreference() {
+  try {
+    window.sessionStorage?.setItem(UNICODE_SCOPE_SESSION_KEY, unicodeScopeEnabled ? "on" : "off");
+  } catch (_error) {}
+}
+function refreshUnicodeScopeToggle() {
+  if (!scopeModeToggle) return;
+  scopeModeToggle.setAttribute("aria-pressed", String(!unicodeScopeEnabled));
+  scopeModeToggle.title = unicodeScopeEnabled
+    ? "Unicode Scopeを無効にする"
+    : "Unicode Scopeを有効にする";
+}
+function setUnicodeScopeEnabled(enabled) {
+  unicodeScopeEnabled = Boolean(enabled);
+  saveUnicodeScopePreference();
+  refreshUnicodeScopeToggle();
+  scopePointerStart = null;
+  if (!unicodeScopeEnabled) hideUnicodeScope();
+}
+scopeModeToggle?.addEventListener("click", () => {
+  setUnicodeScopeEnabled(!unicodeScopeEnabled);
+});
+refreshUnicodeScopeToggle();
+
 /* =========================================
    Unicode Scope
 ========================================= */
@@ -660,6 +699,11 @@ function showUnicodeScope(
   result
 ) {
 
+  if (!isUnicodeScopeEnabled()) {
+    hideUnicodeScope();
+    return;
+  }
+
   if (
     !unicodeScope
     ||
@@ -1026,6 +1070,11 @@ document.addEventListener(
   "pointerdown",
   (event) => {
 
+    if (!isUnicodeScopeEnabled()) {
+      scopePointerStart = null;
+      return;
+    }
+
     if (
       event.target.closest(
         "#unicodeScope"
@@ -1065,6 +1114,11 @@ document.addEventListener(
 document.addEventListener(
   "pointerup",
   (event) => {
+
+    if (!isUnicodeScopeEnabled()) {
+      scopePointerStart = null;
+      return;
+    }
 
     if (
       event.target.closest(

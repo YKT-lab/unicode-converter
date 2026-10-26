@@ -26,12 +26,12 @@ function makeEl(value="") {
 function simulate(opts={}) {
   const keys = new Map();
   if (opts.stored) keys.set("unicode-converter-svg-display",opts.stored);
-  const modeToggle=makeEl(), description=makeEl(), current=makeEl();
-  // Mirror the markup: the SVG help link is visible in both modes.
+  const browserToggle=makeEl(), modeToggle=makeEl(), description=makeEl(), current=makeEl();
+  // Mirror the markup: the SVG help link is visible in every display mode.
   description.hidden=false;
   const progress=makeEl(), custom=makeEl("150"), randomLimit=makeEl();
-  const nodes={svgModeToggle:modeToggle,svgModeDescription:description,
-    svgModeCurrent:current,svgModeProgress:progress,
+  const nodes={browserFontModeToggle:browserToggle,svgModeToggle:modeToggle,
+    svgModeDescription:description,svgModeCurrent:current,svgModeProgress:progress,
     randomCustomCount:custom};
   let reloads=0, conversions=[], scopeHides=0;
   const charInput=makeEl(opts.character||"");
@@ -63,7 +63,8 @@ function simulate(opts={}) {
   vm.runInContext(source,ctx,{filename:"svg-mode.js"});
   return {
     ctx,nodes,keys,
-    click(){modeToggle.handlers.click();},
+    clickSvg(){modeToggle.handlers.click();},
+    clickBrowser(){browserToggle.handlers.click();},
     reloadCount(){return reloads;},
     conversions(){return conversions;},
     hides(){return scopeHides;}
@@ -74,7 +75,7 @@ const empty=simulate();
 assert.equal(empty.ctx.isSvgModeEnabled(),false,"Normal must remain the initial mode");
 assert.equal(empty.nodes.svgModeCurrent.textContent,"現在：通常表示");
 assert.equal(empty.nodes.svgModeDescription.hidden,false);
-empty.click();
+empty.clickSvg();
 assert.equal(empty.ctx.isSvgModeEnabled(),true);
 assert.equal(empty.keys.get("unicode-converter-svg-display"),"svg");
 assert.equal(empty.reloadCount(),1,"Empty conversion should trigger a reload");
@@ -88,29 +89,36 @@ assert.equal(afterReload.ctx.isSvgModeEnabled(),true,"Reload must preserve the c
 assert.equal(afterReload.reloadCount(),0,"Loading a stored preference must not reload again");
 assert.equal(afterReload.nodes.svgModeDescription.hidden,false);
 assert.equal(afterReload.nodes.svgModeToggle.textContent,"通常表示に戻す");
-afterReload.click();
+afterReload.clickSvg();
 assert.equal(afterReload.reloadCount(),1,"Returning to normal with empty input should reload");
 assert.equal(afterReload.keys.get("unicode-converter-svg-display"),"normal");
 
+const browserStored=simulate({stored:"browser"});
+assert.equal(browserStored.ctx.isBrowserFontModeEnabled(),true);
+assert.equal(browserStored.ctx.isSvgModeEnabled(),false);
+assert.equal(browserStored.nodes.browserFontModeToggle.attrs["aria-pressed"],"true");
+assert.equal(browserStored.nodes.svgModeCurrent.textContent,"現在：端末フォント");
+
 const single=simulate({lastSource:"single",digits:["0","0","4","1"]});
-single.click();
+single.clickBrowser();
 assert.equal(single.reloadCount(),0,"Do not reload when entered digits exist");
 assert.deepEqual(single.conversions(),["U+0041"],"Re-render input with selected mode");
 
 const bulk=simulate({lastSource:"bulk",unicode:"U+14354 U+0041"});
-bulk.click();
+bulk.clickBrowser();
 assert.equal(bulk.reloadCount(),0);
 assert.deepEqual(bulk.conversions(),["<bulk>"]);
 
 const partial=simulate({digits:["0","","",""]});
-partial.click();
+partial.clickBrowser();
 assert.equal(partial.reloadCount(),0,"Partially-entered digit cells must not reload");
 assert.equal(partial.conversions().length,0,"Do not fabricate incomplete input");
 
-for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
+for(const tag of ['id="browserFontModeToggle"','id="scopeModeToggle"','id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
   assert(home.includes(tag),"Missing mode indicator/control "+tag);
 assert(home.includes('class="unicode-actions unicode-scope-excluded"'));
 assert(home.includes('class="svg-mode-switch"'));
+assert(home.includes('class="home-quick-modes unicode-scope-excluded"'));
 assert(home.includes('<a href="./news/svg-display/">SVG表示とは？</a>'));
 assert(!/id="svgModeDescription"[^>]*\shidden\b/.test(home),"SVG help must always be visible");
 assert(!home.includes("SVG互換モードでは、サイトのフォントから"));

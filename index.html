@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="home-with-quick-modes">
 
 <head>
   <meta charset="UTF-8">
@@ -129,10 +129,10 @@
 
   <link
     rel="stylesheet"
-    href="./style.css?v=20261024-svg-scope1"
+    href="./style.css?v=20261026-browser-font1"
   >
   <link rel="stylesheet" href="./pages.css?v=20261012-1">
-  <link rel="stylesheet" href="./layout.css?v=20261012-shared-header2">
+  <link rel="stylesheet" href="./layout.css?v=20261026-home-modes1">
   <script src="./js/site-header.js?v=20261024-combining1" defer></script>
 
 
@@ -147,13 +147,13 @@
 <script src="./js/font-policy.js?v=20261023-font-metrics1" defer></script>
 <script src="./js/font-coverage.js?v=20261023-font-metrics1" defer></script>
 <script src="./js/svg-precomputed-loader.js?v=20261023-font-trace2" defer></script>
-<script src="./js/svg-mode.js?v=20261023-font-metrics1" defer></script>
+<script src="./js/svg-mode.js?v=20261026-browser-font1" defer></script>
 <script src="./js/glyph-layout.js?v=20261023-font-trace2" defer></script>
-<script src="./js/converter.js?v=20261023-font-trace2" defer></script>
+<script src="./js/converter.js?v=20261026-browser-font1" defer></script>
 <script src="./js/random.js?v=20261014-svg1" defer></script>
 <script src="./js/han-structure.js?v=20261015-han2" defer></script>
   <script src="./js/daily.js?v=20261015-han2" defer></script>
-<script src="./js/scope.js?v=20261024-svg-scope1" defer></script>
+<script src="./js/scope.js?v=20261026-scope-toggle1" defer></script>
 <script src="./js/bulk-input-policy.js?v=20261010-1" defer></script>
 <script src="./js/main.js?v=20261014-svg1" defer></script>
 
@@ -179,6 +179,11 @@
         >
       </a>
     </header>
+
+    <div class="home-quick-modes unicode-scope-excluded" aria-label="表示設定">
+      <button id="browserFontModeToggle" type="button" aria-pressed="false" title="サイトのWebフォントを使わず、端末・ブラウザのフォントに任せる">端末フォント</button>
+      <button id="scopeModeToggle" type="button" aria-pressed="false" title="Unicode Scopeを無効にする">Scope OFF</button>
+    </div>
 
     <nav class="site-nav unicode-scope-excluded" aria-label="サイト内メニュー">
       <a href="./" aria-current="page">トップページ</a>
