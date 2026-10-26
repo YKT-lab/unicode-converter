@@ -167,7 +167,11 @@
 
   panel.append(heading, deviceFont, scopeOff);
   settings.append(settingsToggle, panel);
-  header.append(settings);
+
+  // Keep the settings control visually beside the logo, but not inside the
+  // logo header DOM. iOS Safari snapshots descendants of a long-pressed link
+  // area; making this a sibling prevents the gear from floating with the logo.
+  bar.append(settings);
   existingQuickModes?.remove();
 
   function setSettingsOpen(open) {
@@ -199,11 +203,18 @@
   });
 
   // Avoid obscuring the page with the fixed bar, on desktop and mobile.
+  // Re-measure the logo row too, so the detached settings sibling remains
+  // visually centred beside the logo at every responsive width.
   const adjust = () => {
     const height = Math.ceil(bar.getBoundingClientRect().height);
     if (height > 0) {
       document.documentElement.style.setProperty("--site-topbar-height", height + "px");
     }
+    const barRect = bar.getBoundingClientRect();
+    const headerRect = header.getBoundingClientRect();
+    const centreY = headerRect.top - barRect.top + headerRect.height / 2;
+    if (Number.isFinite(centreY) && centreY > 0)
+      settings.style.top = centreY + "px";
   };
   adjust();
   window.addEventListener("resize", adjust, {passive: true});
