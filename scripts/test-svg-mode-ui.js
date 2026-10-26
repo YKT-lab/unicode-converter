@@ -10,6 +10,8 @@ const news = fs.readFileSync(path.join(root,"news/index.html"),"utf8");
 const article = fs.readFileSync(path.join(root,"news/svg-display/index.html"),"utf8");
 const scope = fs.readFileSync(path.join(root,"js/scope.js"),"utf8");
 const siteDisplay = fs.readFileSync(path.join(root,"js/site-display-mode.js"),"utf8");
+const siteHeader = fs.readFileSync(path.join(root,"js/site-header.js"),"utf8");
+const layout = fs.readFileSync(path.join(root,"layout.css"),"utf8");
 
 function makeEl(value="") {
   return {
@@ -79,7 +81,7 @@ function simulate(opts={}) {
   return {
     ctx,nodes,keys,
     clickSvg(){modeToggle.handlers.click();},
-    clickBrowser(){browserToggle.handlers.click();},
+    setDevice(value){display.setDeviceFontModeEnabled(value);},
     reloadCount(){return reloads;},
     conversions(){return conversions;},
     hides(){return scopeHides;}
@@ -115,26 +117,27 @@ assert.equal(browserStored.nodes.browserFontModeToggle.attrs["aria-pressed"],"tr
 assert.equal(browserStored.nodes.svgModeCurrent.textContent,"現在：端末フォント");
 
 const single=simulate({lastSource:"single",digits:["0","0","4","1"]});
-single.clickBrowser();
+single.setDevice(true);
 assert.equal(single.ctx.isBrowserFontModeEnabled(),true);
 assert.equal(single.reloadCount(),0,"Site-wide mode switches without page reload");
 assert.deepEqual(single.conversions(),["U+0041"],"Re-render input with selected mode");
 
 const bulk=simulate({lastSource:"bulk",unicode:"U+14354 U+0041"});
-bulk.clickBrowser();
+bulk.setDevice(true);
 assert.equal(bulk.reloadCount(),0);
 assert.deepEqual(bulk.conversions(),["<bulk>"]);
 
 const partial=simulate({digits:["0","","",""]});
-partial.clickBrowser();
+partial.setDevice(true);
 assert.equal(partial.reloadCount(),0,"Partially-entered digit cells must not reload");
 assert.equal(partial.conversions().length,0,"Do not fabricate incomplete input");
 
-for(const tag of ['id="browserFontModeToggle"','id="scopeModeToggle"','id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
-  assert(home.includes(tag),"Missing mode indicator/control "+tag);
+for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
+  assert(home.includes(tag),"Missing converter mode indicator/control "+tag);
+for(const tag of ['siteSettingsToggle','siteSettingsPanel','browserFontModeToggle','scopeModeToggle'])
+  assert(siteHeader.includes(tag),"Missing shared header settings control "+tag);
 assert(home.includes('class="unicode-actions unicode-scope-excluded"'));
 assert(home.includes('class="svg-mode-switch"'));
-assert(home.includes('class="home-quick-modes unicode-scope-excluded"'));
 assert(home.includes('<a href="./news/svg-display/">SVG表示とは？</a>'));
 assert(!/id="svgModeDescription"[^>]*\shidden\b/.test(home),"SVG help must always be visible");
 assert(!home.includes("SVG互換モードでは、サイトのフォントから"));
@@ -150,6 +153,11 @@ assert(siteDisplay.includes("site-device-font-mode"));
 assert(siteDisplay.includes("font-family: sans-serif !important"));
 assert(siteDisplay.includes("localStorage"));
 assert.doesNotThrow(() => new vm.Script(siteDisplay), "site-display-mode.js must parse");
+assert.doesNotThrow(() => new vm.Script(siteHeader), "site-header.js must parse");
+assert(!home.includes("home-quick-modes"), "Old inline settings buttons must be removed");
+assert(layout.includes(".site-settings-panel"));
+assert(layout.includes("background: #fff"));
+assert(layout.includes(".site-settings.open .site-settings-toggle"));
 const htmlFiles=[];
 function collectHtml(dir){
   for(const name of fs.readdirSync(dir)){

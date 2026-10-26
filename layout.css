@@ -167,46 +167,103 @@ main > #dailyCharacterBox {
   .page-card { padding: 24px 0; }
 }
 
-
-/* Home quick display controls. On wider screens they occupy the free space
-   to the right of the centered logo; on phones they sit directly below it. */
-.home-quick-modes {
+/* Header settings: one icon beside the centered logo, with an opaque popover.
+   The panel intentionally overlays navigation/content instead of increasing
+   the fixed header height. */
+.site-topbar .site-header {
+  position: relative;
+}
+.site-settings {
   position: absolute;
-  top: 12px;
-  right: max(12px, calc((100vw - 760px) / 2));
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
+  top: 50%;
+  right: 0;
+  z-index: 1020;
+  transform: translateY(-50%);
 }
-.home-quick-modes button {
-  min-height: 30px;
-  margin: 0;
-  padding: 5px 8px;
-  border: 1px solid #d8dde6;
-  border-radius: 999px;
-  background: #f6f7f9;
-  color: #596373;
-  font-size: 10px;
-  font-weight: 680;
+.site-settings-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid #d9dde4;
+  border-radius: 50%;
+  background: #fff;
+  color: #445064;
+  font: inherit;
+  font-size: 21px;
+  font-weight: 520;
   line-height: 1;
-  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-.home-quick-modes button[aria-pressed="true"] {
+.site-settings.open .site-settings-toggle {
+  background: #f1f3f6;
+  color: #1f2938;
+  font-size: 27px;
+  font-weight: 350;
+}
+.site-settings-toggle:focus-visible,
+.site-settings-option:focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 3px;
+}
+.site-settings-panel {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  width: 188px;
+  box-sizing: border-box;
+  padding: 13px;
+  border: 1px solid #dde1e7;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(22, 30, 44, .16);
+  color: #263246;
+}
+.site-settings-panel[hidden] { display: none !important; }
+.site-settings-heading {
+  margin: 0 2px 10px;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.site-settings-option {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid #d8dde6;
+  border-radius: 10px;
+  background: #f6f7f9;
+  color: #4e596b;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 680;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.site-settings-option + .site-settings-option { margin-top: 7px; }
+.site-settings-option[aria-pressed="true"] {
   border-color: #34465f;
   background: #34465f;
   color: #fff;
 }
-.home-quick-modes button:focus-visible {
-  outline: 2px solid #007aff;
-  outline-offset: 2px;
-}
-@media (max-width: 720px) {
-  html.home-with-quick-modes { --site-topbar-height: 145px; }
-  .home-quick-modes {
-    position: static;
-    width: min(100%, 760px);
-    margin: 0 auto 1px;
-    padding: 0 1px;
+@media (max-width: 520px) {
+  .site-settings { right: 1px; }
+  .site-settings-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+  .site-settings.open .site-settings-toggle { font-size: 26px; }
+  .site-settings-panel {
+    width: 176px;
+    top: calc(100% + 7px);
+    padding: 12px;
   }
 }
