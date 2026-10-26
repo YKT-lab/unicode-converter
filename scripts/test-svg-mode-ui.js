@@ -166,6 +166,10 @@ assert(siteHeader.includes("settingsIcon"));
 assert(siteHeader.includes("Original vector gear"));
 assert(siteHeader.includes('document.createElementNS(ns, "polygon")'));
 assert(siteHeader.includes("renderSettingsIcon"));
+assert(siteHeader.includes("bar.append(settings)"), "Settings must be a sibling of the logo header");
+assert(!siteHeader.includes("header.append(settings)"), "Settings must not live inside the long-pressable logo header");
+assert(siteHeader.includes("headerRect.top - barRect.top + headerRect.height / 2"));
+assert(layout.includes("-webkit-touch-callout: none"));
 const htmlFiles=[];
 function collectHtml(dir){
   for(const name of fs.readdirSync(dir)){
