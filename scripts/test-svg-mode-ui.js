@@ -40,22 +40,31 @@ function simulate(opts={}) {
   const unicodeInput=makeEl(opts.unicode||"");
   const charOutput=makeEl();
   charOutput.childNodes=opts.hasResult?[{}]:[];
+  const display={
+    isDeviceFontModeEnabled(){return deviceMode;},
+    setDeviceFontModeEnabled(value){
+      deviceMode=Boolean(value);
+      const handler=windowObj.handlers?.["unicode-site-device-font-change"];
+      if(handler)handler({detail:{enabled:deviceMode}});
+    }
+  };
+  const windowObj={
+    handlers:{},
+    sessionStorage:{
+      getItem(k){return keys.get(k)||null;},
+      setItem(k,v){keys.set(k,v);}
+    },
+    location:{reload(){reloads++;}},
+    UnicodeSiteDisplay:display,
+    addEventListener(k,fn){this.handlers[k]=fn;}
+  };
   const ctx={
     document:{
       getElementById(id){return nodes[id]||null;},
       querySelector(s){return s===".random-limit"?randomLimit:null;}
     },
-    window:{
-      sessionStorage:{
-        getItem(k){return keys.get(k)||null;},
-        setItem(k,v){keys.set(k,v);}
-      },
-      location:{reload(){reloads++;}}
-    },
-    UnicodeSiteDisplay:{
-      isDeviceFontModeEnabled(){return deviceMode;},
-      setDeviceFontModeEnabled(value){deviceMode=Boolean(value);}
-    },
+    window:windowObj,
+    UnicodeSiteDisplay:display,
     charInput,unicodeInput,charOutput,
     lastUnicodeOutputSource:opts.lastSource||null,
     singleHexDigits:opts.digits||["","","",""],
@@ -84,7 +93,7 @@ assert.equal(empty.nodes.svgModeDescription.hidden,false);
 empty.clickSvg();
 assert.equal(empty.ctx.isSvgModeEnabled(),true);
 assert.equal(empty.keys.get("unicode-converter-svg-display"),"svg");
-assert.equal(empty.reloadCount(),1,"Empty conversion should trigger a reload");
+assert.equal(empty.reloadCount(),0,"Mode switches should not reload the page");
 assert.equal(empty.conversions().length,0);
 assert.equal(empty.nodes.svgModeCurrent.textContent,"現在：SVG表示");
 assert.equal(empty.nodes.svgModeDescription.hidden,false);
@@ -96,7 +105,7 @@ assert.equal(afterReload.reloadCount(),0,"Loading a stored preference must not r
 assert.equal(afterReload.nodes.svgModeDescription.hidden,false);
 assert.equal(afterReload.nodes.svgModeToggle.textContent,"通常表示に戻す");
 afterReload.clickSvg();
-assert.equal(afterReload.reloadCount(),1,"Returning to normal with empty input should reload");
+assert.equal(afterReload.reloadCount(),0,"Returning to normal should not reload");
 assert.equal(afterReload.keys.get("unicode-converter-svg-display"),"normal");
 
 const browserStored=simulate({device:true});
@@ -140,4 +149,19 @@ assert(article.includes("最大100文字"));
 assert(siteDisplay.includes("site-device-font-mode"));
 assert(siteDisplay.includes("font-family: sans-serif !important"));
 assert(siteDisplay.includes("localStorage"));
+assert.doesNotThrow(() => new vm.Script(siteDisplay), "site-display-mode.js must parse");
+const htmlFiles=[];
+function collectHtml(dir){
+  for(const name of fs.readdirSync(dir)){
+    const full=path.join(dir,name), stat=fs.statSync(full);
+    if(stat.isDirectory()){
+      if(![".git","node_modules","_site"].includes(name))collectHtml(full);
+    }else if(name.endsWith(".html"))htmlFiles.push(full);
+  }
+}
+collectHtml(root);
+for(const file of htmlFiles){
+  const html=fs.readFileSync(file,"utf8");
+  assert(html.includes("site-display-mode.js"), "Device-font policy missing from "+path.relative(root,file));
+}
 console.log("SVG/device-font mode UI, persistence, Scope exclusion and NEWS link checks passed.");
