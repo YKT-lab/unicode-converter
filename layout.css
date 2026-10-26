@@ -202,7 +202,7 @@ main > #dailyCharacterBox {
   outline-offset: 2px;
 }
 @media (max-width: 720px) {
-  html.home-with-quick-modes { --site-topbar-height: 166px; }
+  html.home-with-quick-modes { --site-topbar-height: 145px; }
   .home-quick-modes {
     position: static;
     width: min(100%, 760px);
