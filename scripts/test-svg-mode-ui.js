@@ -9,6 +9,7 @@ const home = fs.readFileSync(path.join(root,"index.html"),"utf8");
 const news = fs.readFileSync(path.join(root,"news/index.html"),"utf8");
 const article = fs.readFileSync(path.join(root,"news/svg-display/index.html"),"utf8");
 const scope = fs.readFileSync(path.join(root,"js/scope.js"),"utf8");
+const siteDisplay = fs.readFileSync(path.join(root,"js/site-display-mode.js"),"utf8");
 
 function makeEl(value="") {
   return {
@@ -26,6 +27,7 @@ function makeEl(value="") {
 function simulate(opts={}) {
   const keys = new Map();
   if (opts.stored) keys.set("unicode-converter-svg-display",opts.stored);
+  let deviceMode = Boolean(opts.device);
   const browserToggle=makeEl(), modeToggle=makeEl(), description=makeEl(), current=makeEl();
   // Mirror the markup: the SVG help link is visible in every display mode.
   description.hidden=false;
@@ -49,6 +51,10 @@ function simulate(opts={}) {
         setItem(k,v){keys.set(k,v);}
       },
       location:{reload(){reloads++;}}
+    },
+    UnicodeSiteDisplay:{
+      isDeviceFontModeEnabled(){return deviceMode;},
+      setDeviceFontModeEnabled(value){deviceMode=Boolean(value);}
     },
     charInput,unicodeInput,charOutput,
     lastUnicodeOutputSource:opts.lastSource||null,
@@ -93,7 +99,7 @@ afterReload.clickSvg();
 assert.equal(afterReload.reloadCount(),1,"Returning to normal with empty input should reload");
 assert.equal(afterReload.keys.get("unicode-converter-svg-display"),"normal");
 
-const browserStored=simulate({stored:"browser"});
+const browserStored=simulate({device:true});
 assert.equal(browserStored.ctx.isBrowserFontModeEnabled(),true);
 assert.equal(browserStored.ctx.isSvgModeEnabled(),false);
 assert.equal(browserStored.nodes.browserFontModeToggle.attrs["aria-pressed"],"true");
@@ -101,7 +107,8 @@ assert.equal(browserStored.nodes.svgModeCurrent.textContent,"現在：端末フ�
 
 const single=simulate({lastSource:"single",digits:["0","0","4","1"]});
 single.clickBrowser();
-assert.equal(single.reloadCount(),0,"Do not reload when entered digits exist");
+assert.equal(single.ctx.isBrowserFontModeEnabled(),true);
+assert.equal(single.reloadCount(),0,"Site-wide mode switches without page reload");
 assert.deepEqual(single.conversions(),["U+0041"],"Re-render input with selected mode");
 
 const bulk=simulate({lastSource:"bulk",unicode:"U+14354 U+0041"});
@@ -130,4 +137,7 @@ assert(news.includes('SVG表示機能を追加しました'));
 assert(article.includes('datetime="2026-10-14"'));
 assert(article.includes("文字の輪郭"));
 assert(article.includes("最大100文字"));
-console.log("SVG mode UI, persistence, reload, Scope exclusion and NEWS link checks passed.");
+assert(siteDisplay.includes("site-device-font-mode"));
+assert(siteDisplay.includes("font-family: sans-serif !important"));
+assert(siteDisplay.includes("localStorage"));
+console.log("SVG/device-font mode UI, persistence, Scope exclusion and NEWS link checks passed.");
