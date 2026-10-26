@@ -3125,3 +3125,11 @@ body * {
 #dailyInfo > .daily-info-section[hidden] + #dailyDetails {
   margin-top: 0;
 }
+
+
+/* Literal browser/OS font mode: never inherit a site-specific Unicode font. */
+.browser-font-character,
+.browser-font-character .glyph-inner {
+  font-family: sans-serif !important;
+  font-synthesis: none;
+}
