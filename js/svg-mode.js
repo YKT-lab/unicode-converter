@@ -240,21 +240,22 @@ browserFontModeToggle?.addEventListener("click", () => {
     saveUnicodeDisplayModePreference();
   }
   display.setDeviceFontModeEnabled(next);
+});
+svgModeToggle?.addEventListener("click", () => {
+  if (isBrowserFontModeEnabled()) {
+    window.UnicodeSiteDisplay?.setDeviceFontModeEnabled?.(false);
+    setUnicodeDisplayMode("svg");
+    return;
+  }
+  setUnicodeDisplayMode(unicodeDisplayMode === "svg" ? "normal" : "svg");
+});
+window.addEventListener?.("unicode-site-device-font-change", () => {
   refreshSvgModePresentation();
   updateSvgModeProgress("");
   updateSvgRandomOptions();
   hideUnicodeScope();
   rerenderActiveUnicodeForModeSwitch();
   if (typeof loadDailyCharacter === "function") loadDailyCharacter();
-});
-svgModeToggle?.addEventListener("click", () => {
-  if (isBrowserFontModeEnabled())
-    window.UnicodeSiteDisplay?.setDeviceFontModeEnabled?.(false);
-  setUnicodeDisplayMode(unicodeDisplayMode === "svg" ? "normal" : "svg");
-});
-window.addEventListener?.("unicode-site-device-font-change", () => {
-  refreshSvgModePresentation();
-  updateSvgRandomOptions();
 });
 refreshSvgModePresentation();
 if (svgModeEnabled) updateSvgRandomOptions();
