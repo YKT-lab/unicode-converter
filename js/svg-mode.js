@@ -231,16 +231,6 @@ function setUnicodeDisplayMode(nextMode) {
   hideUnicodeScope();
   rerenderActiveUnicodeForModeSwitch();
 }
-browserFontModeToggle?.addEventListener("click", () => {
-  const display = window.UnicodeSiteDisplay;
-  if (!display?.setDeviceFontModeEnabled) return;
-  const next = !display.isDeviceFontModeEnabled();
-  if (next && unicodeDisplayMode === "svg") {
-    unicodeDisplayMode = "normal";
-    saveUnicodeDisplayModePreference();
-  }
-  display.setDeviceFontModeEnabled(next);
-});
 svgModeToggle?.addEventListener("click", () => {
   if (isBrowserFontModeEnabled()) {
     window.UnicodeSiteDisplay?.setDeviceFontModeEnabled?.(false);
@@ -249,7 +239,11 @@ svgModeToggle?.addEventListener("click", () => {
   }
   setUnicodeDisplayMode(unicodeDisplayMode === "svg" ? "normal" : "svg");
 });
-window.addEventListener?.("unicode-site-device-font-change", () => {
+window.addEventListener?.("unicode-site-device-font-change", event => {
+  if (event?.detail?.enabled && unicodeDisplayMode === "svg") {
+    unicodeDisplayMode = "normal";
+    saveUnicodeDisplayModePreference();
+  }
   refreshSvgModePresentation();
   updateSvgModeProgress("");
   updateSvgRandomOptions();
