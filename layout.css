@@ -167,60 +167,57 @@ main > #dailyCharacterBox {
   .page-card { padding: 24px 0; }
 }
 
-/* Header settings: quiet controls aligned to the visual centre of the logo row.
-   The menu uses a translucent glass surface and drops gently from above. */
+/* Header settings: restrained, opaque, editorial UI.
+   The gear is the control; the menu drops from above without glass effects. */
 .site-topbar .site-header {
   position: relative;
 }
 .site-settings {
   position: absolute;
   top: 50%;
-  right: 4px;
+  right: 3px;
   z-index: 1020;
   transform: translateY(-50%);
 }
 .site-settings-toggle {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   padding: 0;
   border: 0;
-  border-radius: 10px;
-  background: rgba(247,248,250,.56);
-  box-shadow: inset 0 0 0 1px rgba(64,76,96,.13);
-  color: #465268;
+  border-radius: 9px;
+  background: transparent;
+  color: #25354b;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition:
-    background-color .18s ease,
-    box-shadow .18s ease,
-    color .18s ease,
-    transform .18s ease;
+    background-color .16s ease,
+    color .16s ease,
+    transform .16s ease;
 }
 .site-settings-toggle:hover {
-  background: rgba(239,242,246,.78);
-  box-shadow: inset 0 0 0 1px rgba(64,76,96,.18);
+  background: #f3f5f7;
+  color: #172338;
 }
 .site-settings.open .site-settings-toggle {
-  background: rgba(235,238,243,.78);
-  color: #263247;
-  box-shadow: inset 0 0 0 1px rgba(55,68,89,.17);
+  background: #eef1f4;
+  color: #172338;
 }
 .site-settings-icon {
-  width: 19px;
-  height: 19px;
+  width: 27px;
+  height: 27px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 2.25;
   stroke-linecap: round;
   stroke-linejoin: round;
   pointer-events: none;
 }
 .site-settings.open .site-settings-icon {
-  width: 18px;
-  height: 18px;
-  stroke-width: 1.65;
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.85;
 }
 .site-settings-toggle:focus-visible,
 .site-settings-option:focus-visible {
@@ -230,101 +227,140 @@ main > #dailyCharacterBox {
 
 .site-settings-panel {
   position: absolute;
-  top: calc(100% + 8px);
+  top: calc(100% + 9px);
   right: 0;
   width: 188px;
   box-sizing: border-box;
-  padding: 13px;
-  border: 1px solid rgba(115,125,142,.22);
-  border-radius: 14px;
-  background: rgba(246,248,251,.82);
-  -webkit-backdrop-filter: blur(18px) saturate(145%);
-  backdrop-filter: blur(18px) saturate(145%);
+  padding: 0 13px 13px;
+  border: 1px solid #d9dee6;
+  border-top: 3px solid #27384f;
+  border-radius: 11px;
+  background: #fff;
   box-shadow:
-    0 16px 38px rgba(25,34,49,.14),
-    0 2px 8px rgba(25,34,49,.06);
+    0 15px 34px rgba(22,31,45,.13),
+    0 3px 9px rgba(22,31,45,.06);
   color: #263246;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(0,-11px,0) scale(.985);
+  transform: translate3d(0,-12px,0);
   transform-origin: top right;
   transition:
-    opacity .19s ease,
-    transform .22s cubic-bezier(.2,.75,.25,1),
-    visibility 0s linear .22s;
+    opacity .17s ease,
+    transform .20s cubic-bezier(.2,.72,.2,1),
+    visibility 0s linear .20s;
 }
 .site-settings.open .site-settings-panel {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translate3d(0,0,0) scale(1);
+  transform: translate3d(0,0,0);
   transition:
-    opacity .19s ease,
-    transform .22s cubic-bezier(.2,.75,.25,1),
+    opacity .17s ease,
+    transform .20s cubic-bezier(.2,.72,.2,1),
     visibility 0s;
 }
 .site-settings-heading {
-  margin: 0 2px 10px;
-  color: #687286;
-  font-size: 11px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 -13px 9px;
+  padding: 10px 13px 8px;
+  border-bottom: 1px solid #e7eaf0;
+  color: #2d394c;
+}
+.site-settings-heading > span:first-child {
+  font-size: 12px;
+  font-weight: 720;
+}
+.site-settings-heading > span:last-child {
+  color: #8a929e;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .045em;
+  letter-spacing: .12em;
 }
 .site-settings-option {
+  position: relative;
   display: flex;
   width: 100%;
-  min-height: 42px;
+  min-height: 40px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0;
-  padding: 9px 11px;
-  border: 1px solid rgba(111,123,142,.18);
-  border-radius: 10px;
-  background: rgba(255,255,255,.55);
-  color: #4b5669;
+  padding: 9px 34px 9px 10px;
+  border: 1px solid #e0e4ea;
+  border-radius: 8px;
+  background: #f8f9fb;
+  color: #465267;
   font: inherit;
   font-size: 12px;
-  font-weight: 680;
+  font-weight: 650;
   line-height: 1.2;
+  text-align: left;
   cursor: pointer;
   transition:
-    background-color .16s ease,
-    border-color .16s ease,
-    color .16s ease,
-    transform .16s ease;
+    background-color .14s ease,
+    border-color .14s ease,
+    color .14s ease,
+    transform .14s ease;
+}
+.site-settings-option::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid #a9b0bb;
+  border-radius: 50%;
+  background: #fff;
+  transform: translateY(-50%);
 }
 .site-settings-option:hover {
-  background: rgba(255,255,255,.82);
-  border-color: rgba(92,106,128,.25);
+  border-color: #cfd5dd;
+  background: #f2f4f7;
+  color: #25344b;
 }
-.site-settings-option:active { transform: scale(.985); }
+.site-settings-option:active { transform: translateY(1px); }
 .site-settings-option + .site-settings-option { margin-top: 7px; }
 .site-settings-option[aria-pressed="true"] {
-  border-color: rgba(43,58,82,.88);
-  background: rgba(43,58,82,.92);
+  border-color: #33465f;
+  background: #33465f;
   color: #fff;
+}
+.site-settings-option[aria-pressed="true"]::after {
+  border-color: #fff;
+  background: #fff;
+  box-shadow: inset 0 0 0 2.5px #33465f;
 }
 
 @media (max-width: 520px) {
   .site-settings {
-    right: 5px;
+    right: 4px;
     top: 50%;
   }
   .site-settings-toggle {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
   }
   .site-settings-icon {
-    width: 18px;
-    height: 18px;
+    width: 26px;
+    height: 26px;
+  }
+  .site-settings.open .site-settings-icon {
+    width: 21px;
+    height: 21px;
   }
   .site-settings-panel {
     width: 176px;
-    top: calc(100% + 7px);
-    padding: 12px;
-    background: rgba(246,248,251,.84);
+    top: calc(100% + 8px);
+    padding: 0 12px 12px;
+  }
+  .site-settings-heading {
+    margin-inline: -12px;
+    padding-inline: 12px;
   }
 }
 

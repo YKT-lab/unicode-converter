@@ -63,31 +63,50 @@
   function settingsIcon(kind) {
     const ns = "http://www.w3.org/2000/svg";
     const svg = document.createElementNS(ns, "svg");
-    svg.setAttribute("viewBox", "0 0 24 24");
+    svg.setAttribute("viewBox", "0 0 32 32");
     svg.setAttribute("aria-hidden", "true");
     svg.setAttribute("focusable", "false");
     svg.classList.add("site-settings-icon");
 
     if (kind === "close") {
       const first = document.createElementNS(ns, "path");
-      first.setAttribute("d", "M6.5 6.5 17.5 17.5");
+      first.setAttribute("d", "M9 9 23 23");
       const second = document.createElementNS(ns, "path");
-      second.setAttribute("d", "M17.5 6.5 6.5 17.5");
+      second.setAttribute("d", "M23 9 9 23");
       svg.append(first, second);
       return svg;
     }
 
-    const ring = document.createElementNS(ns, "circle");
-    ring.setAttribute("cx", "12");
-    ring.setAttribute("cy", "12");
-    ring.setAttribute("r", "3.15");
-    svg.append(ring);
-    for (let angle = 0; angle < 360; angle += 45) {
-      const spoke = document.createElementNS(ns, "path");
-      spoke.setAttribute("d", "M12 3.3v2.25");
-      spoke.setAttribute("transform", "rotate(" + angle + " 12 12)");
-      svg.append(spoke);
+    // Original vector gear: eight broad teeth and a simple centre ring.
+    // Drawn in code so the reference image is never used as an asset.
+    const points = [];
+    const rootRadius = 9.3;
+    const outerRadius = 12.25;
+    const offsets = [
+      [-22.5, rootRadius],
+      [-13.5, rootRadius],
+      [-8.0, outerRadius],
+      [8.0, outerRadius],
+      [13.5, rootRadius],
+      [22.5, rootRadius]
+    ];
+    for (let tooth = 0; tooth < 8; tooth++) {
+      const centerAngle = -90 + tooth * 45;
+      for (const [offset, radius] of offsets) {
+        const radians = (centerAngle + offset) * Math.PI / 180;
+        points.push(
+          (16 + Math.cos(radians) * radius).toFixed(2) + "," +
+          (16 + Math.sin(radians) * radius).toFixed(2)
+        );
+      }
     }
+    const gear = document.createElementNS(ns, "polygon");
+    gear.setAttribute("points", points.join(" "));
+    const ring = document.createElementNS(ns, "circle");
+    ring.setAttribute("cx", "16");
+    ring.setAttribute("cy", "16");
+    ring.setAttribute("r", "4.15");
+    svg.append(gear, ring);
     return svg;
   }
 
@@ -103,7 +122,11 @@
 
   const heading = document.createElement("div");
   heading.className = "site-settings-heading";
-  heading.textContent = "表示設定";
+  const headingMain = document.createElement("span");
+  headingMain.textContent = "表示設定";
+  const headingSub = document.createElement("span");
+  headingSub.textContent = "DISPLAY";
+  heading.append(headingMain, headingSub);
 
   function settingButton(id, label, title) {
     const existing = document.getElementById(id);

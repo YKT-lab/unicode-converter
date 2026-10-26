@@ -156,11 +156,15 @@ assert.doesNotThrow(() => new vm.Script(siteDisplay), "site-display-mode.js must
 assert.doesNotThrow(() => new vm.Script(siteHeader), "site-header.js must parse");
 assert(!home.includes("home-quick-modes"), "Old inline settings buttons must be removed");
 assert(layout.includes(".site-settings-panel"));
-assert(layout.includes("backdrop-filter: blur(18px)"));
-assert(layout.includes("translate3d(0,-11px,0)"));
+assert(!layout.includes("backdrop-filter: blur(18px)"));
+assert(layout.includes("background: #fff"));
+assert(layout.includes("border-top: 3px solid #27384f"));
+assert(layout.includes("translate3d(0,-12px,0)"));
 assert(layout.includes(".site-settings.open .site-settings-panel"));
 assert(layout.includes(".site-settings.open .site-settings-toggle"));
 assert(siteHeader.includes("settingsIcon"));
+assert(siteHeader.includes("Original vector gear"));
+assert(siteHeader.includes('document.createElementNS(ns, "polygon")'));
 assert(siteHeader.includes("renderSettingsIcon"));
 const htmlFiles=[];
 function collectHtml(dir){
