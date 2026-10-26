@@ -80,6 +80,13 @@ html.${ROOT_CLASS} body *::after {
 
   function isEnabled() { return enabled; }
 
+  root.addEventListener?.("storage", event => {
+    if (event.key !== STORAGE_KEY) return;
+    enabled = event.newValue === "on";
+    apply();
+    notify();
+  });
+
   apply();
 
   root.UnicodeSiteDisplay = Object.freeze({
