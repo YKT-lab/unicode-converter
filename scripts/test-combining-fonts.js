@@ -55,7 +55,7 @@ test("site-wide device mode performs no index fetch or FontFace load", async () 
   const result = await context.UnicodeCombiningFonts.prepare("A\u0301");
   assert.equal(result.reason, "site-device-font");
   assert.equal(result.fontFamily, "sans-serif");
-  assert.deepEqual(result.files, []);
+  assert.equal(result.files.length, 0);
   assert.equal(f.requests.length, 0);
   assert.equal(f.created.length, 0);
 });
