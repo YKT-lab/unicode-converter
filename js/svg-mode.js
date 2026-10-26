@@ -12,7 +12,7 @@ const svgModeDescription = document.getElementById("svgModeDescription");
 const svgModeProgress = document.getElementById("svgModeProgress");
 const svgModeCurrent = document.getElementById("svgModeCurrent");
 const SVG_MODE_SESSION_KEY = "unicode-converter-svg-display";
-const DISPLAY_MODES = new Set(["normal", "browser", "svg"]);
+const DISPLAY_MODES = new Set(["normal", "svg"]);
 function readUnicodeDisplayModePreference() {
   try {
     const stored = window.sessionStorage?.getItem(SVG_MODE_SESSION_KEY);
@@ -36,9 +36,15 @@ let svgPreviousCustomCount = null;
 let svgParserPromise = null;
 const svgFontCache = new Map();
 
-function isSvgModeEnabled() { return unicodeDisplayMode === "svg"; }
-function isBrowserFontModeEnabled() { return unicodeDisplayMode === "browser"; }
-function getUnicodeDisplayMode() { return unicodeDisplayMode; }
+function isBrowserFontModeEnabled() {
+  return Boolean(window.UnicodeSiteDisplay?.isDeviceFontModeEnabled?.());
+}
+function isSvgModeEnabled() {
+  return unicodeDisplayMode === "svg" && !isBrowserFontModeEnabled();
+}
+function getUnicodeDisplayMode() {
+  return isBrowserFontModeEnabled() ? "browser" : unicodeDisplayMode;
+}
 function updateSvgModeProgress(message) {
   if (!svgModeProgress) return;
   svgModeProgress.hidden = !message;
@@ -181,17 +187,18 @@ document.getElementById("randomCustomCount")?.addEventListener("input", () => {
   if (svgModeEnabled) svgPreviousCustomCount = null;
 });
 function refreshSvgModePresentation() {
-  svgModeEnabled = unicodeDisplayMode === "svg";
+  const deviceMode = isBrowserFontModeEnabled();
+  svgModeEnabled = unicodeDisplayMode === "svg" && !deviceMode;
   if (browserFontModeToggle)
-    browserFontModeToggle.setAttribute("aria-pressed", String(unicodeDisplayMode === "browser"));
+    browserFontModeToggle.setAttribute("aria-pressed", String(deviceMode));
   if (svgModeToggle) {
     svgModeToggle.textContent = svgModeEnabled
       ? "通常表示に戻す" : "SVG表示に切り替える";
     svgModeToggle.setAttribute("aria-pressed", String(svgModeEnabled));
   }
   if (svgModeCurrent) {
-    const label = unicodeDisplayMode === "browser" ? "端末フォント"
-      : unicodeDisplayMode === "svg" ? "SVG表示" : "通常表示";
+    const label = deviceMode ? "端末フォント"
+      : svgModeEnabled ? "SVG表示" : "通常表示";
     svgModeCurrent.textContent = "現在：" + label;
   }
 }
@@ -204,27 +211,7 @@ function hasUnicodeInputForModeSwitch() {
     singleEntered
   );
 }
-function setUnicodeDisplayMode(nextMode) {
-  if (!DISPLAY_MODES.has(nextMode) || nextMode === unicodeDisplayMode) return;
-  const hadInput = hasUnicodeInputForModeSwitch();
-  unicodeDisplayMode = nextMode;
-  svgModeEnabled = unicodeDisplayMode === "svg";
-  const saved = saveUnicodeDisplayModePreference();
-  refreshSvgModePresentation();
-  updateSvgModeProgress("");
-  updateSvgRandomOptions();
-  hideUnicodeScope();
-
-  if (!hadInput) {
-    unicodeRun++;
-    if (saved && typeof window.location?.reload === "function") {
-      window.location.reload();
-    } else {
-      updateSvgModeProgress("表示方式を切り替えました");
-    }
-    return;
-  }
-
+function rerenderActiveUnicodeForModeSwitch() {
   if (lastUnicodeOutputSource === "single" && singleHexDigits.every(Boolean)) {
     convertUnicode("U+" + singleHexDigits.join(""));
   } else if (lastUnicodeOutputSource === "bulk" && unicodeInput.value.trim()) {
@@ -233,11 +220,41 @@ function setUnicodeDisplayMode(nextMode) {
     unicodeRun++;
   }
 }
+function setUnicodeDisplayMode(nextMode) {
+  if (!DISPLAY_MODES.has(nextMode) || nextMode === unicodeDisplayMode) return;
+  unicodeDisplayMode = nextMode;
+  svgModeEnabled = unicodeDisplayMode === "svg" && !isBrowserFontModeEnabled();
+  saveUnicodeDisplayModePreference();
+  refreshSvgModePresentation();
+  updateSvgModeProgress("");
+  updateSvgRandomOptions();
+  hideUnicodeScope();
+  rerenderActiveUnicodeForModeSwitch();
+}
 browserFontModeToggle?.addEventListener("click", () => {
-  setUnicodeDisplayMode(unicodeDisplayMode === "browser" ? "normal" : "browser");
+  const display = window.UnicodeSiteDisplay;
+  if (!display?.setDeviceFontModeEnabled) return;
+  const next = !display.isDeviceFontModeEnabled();
+  if (next && unicodeDisplayMode === "svg") {
+    unicodeDisplayMode = "normal";
+    saveUnicodeDisplayModePreference();
+  }
+  display.setDeviceFontModeEnabled(next);
+  refreshSvgModePresentation();
+  updateSvgModeProgress("");
+  updateSvgRandomOptions();
+  hideUnicodeScope();
+  rerenderActiveUnicodeForModeSwitch();
+  if (typeof loadDailyCharacter === "function") loadDailyCharacter();
 });
 svgModeToggle?.addEventListener("click", () => {
+  if (isBrowserFontModeEnabled())
+    window.UnicodeSiteDisplay?.setDeviceFontModeEnabled?.(false);
   setUnicodeDisplayMode(unicodeDisplayMode === "svg" ? "normal" : "svg");
+});
+window.addEventListener?.("unicode-site-device-font-change", () => {
+  refreshSvgModePresentation();
+  updateSvgRandomOptions();
 });
 refreshSvgModePresentation();
 if (svgModeEnabled) updateSvgRandomOptions();
