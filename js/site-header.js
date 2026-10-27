@@ -196,9 +196,10 @@
     bar.classList.toggle("menu-open", next);
     menuToggle.setAttribute("aria-expanded", String(next));
     menuToggle.setAttribute("aria-label", next ? "メニューを閉じる" : "メニューを開く");
-    navigation.setAttribute("aria-hidden", String(!next));
+    const desktop = window.matchMedia("(min-width: 900px)").matches;
+    navigation.setAttribute("aria-hidden", String(!next && !desktop));
     navigation.querySelectorAll("a").forEach(link => {
-      link.tabIndex = next ? 0 : -1;
+      link.tabIndex = next || desktop ? 0 : -1;
     });
   }
 
@@ -261,7 +262,7 @@
     if (height > 0) document.documentElement.style.setProperty("--site-topbar-height", height + "px");
   };
   adjust();
-  window.addEventListener("resize", adjust, {passive: true});
+  window.addEventListener("resize", () => { adjust(); setMenuOpen(false); }, {passive: true});
   if (typeof ResizeObserver === "function") {
     const observer = new ResizeObserver(adjust);
     observer.observe(header);
