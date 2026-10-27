@@ -458,27 +458,27 @@ main > #dailyCharacterBox {
   }
 }
 
-/* Desktop: restore the horizontal navigation under the logo. */
+/* Desktop: keep logo and navigation in normal document flow.
+   This makes the fixed bar's measured height equal its visible height and
+   prevents either the navigation or page content from sitting underneath it. */
 @media (min-width: 900px) {
   .site-topbar.site-menu-ready {
     padding-right: max(20px, env(safe-area-inset-right));
-    padding-bottom: 49px;
+    padding-bottom: 7px;
     padding-left: max(20px, env(safe-area-inset-left));
   }
   .site-topbar .site-menu-toggle { display: none; }
   .site-topbar.site-menu-ready .site-nav,
   .site-topbar.site-menu-ready.menu-open .site-nav {
-    position: absolute;
-    top: auto;
-    bottom: 4px;
-    left: 50%;
+    position: static;
     display: flex;
     justify-content: center;
     align-items: center;
     width: min(calc(100% - 36px), 900px);
-    height: 38px;
-    min-height: 0;
+    height: auto;
+    min-height: 38px;
     max-height: none;
+    margin: 3px auto 0 !important;
     padding: 0 !important;
     gap: 4px;
     overflow: visible;
@@ -489,7 +489,7 @@ main > #dailyCharacterBox {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    transform: translateX(-50%);
+    transform: none;
     transition: none;
   }
   .site-topbar .site-nav a {
