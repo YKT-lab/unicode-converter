@@ -97,23 +97,23 @@ body {
 .site-topbar .site-nav {
   /* Backdrop-filter on the header makes fixed descendants relative to it. */
   position: absolute;
-  top: 100%;
+  top: -8px;
   bottom: auto;
-  height: calc(100dvh - var(--site-topbar-height));
+  height: 100dvh;
   box-sizing: border-box;
   z-index: 1001;
   left: 0;
   display: grid;
   align-content: start;
-  width: min(82vw, 320px);
+  width: min(72vw, 260px);
   max-height: none;
   margin: 0 !important;
-  padding: 12px !important;
+  padding: calc(var(--site-topbar-height) + 8px) 12px 18px !important;
   overflow-y: auto;
   gap: 2px;
   border: 0;
   border-right: 1px solid #dfe3e9;
-  border-radius: 0 14px 14px 0;
+  border-radius: 0;
   background: #fff;
   box-shadow: 18px 0 42px rgba(22,31,45,.14), 3px 0 10px rgba(22,31,45,.06);
   opacity: 0;
@@ -421,7 +421,7 @@ main > #dailyCharacterBox {
   .site-settings.open .site-settings-icon { width: 21px; height: 21px; }
   .site-settings-panel { width: 176px; top: calc(100% + 10px); padding: 0 12px 12px; }
   .site-settings-heading { margin-inline: -12px; padding-inline: 12px; }
-  .site-topbar .site-nav { width: min(86vw, 300px); }
+  .site-topbar .site-nav { width: min(72vw, 260px); top: -6px; }
   main > .box.converter-box { padding: 22px 0 26px !important; }
   .page-grid, .page-script-grid { grid-template-columns: 1fr; }
   .page-intro { margin-top: 11px; }
@@ -435,5 +435,45 @@ main > #dailyCharacterBox {
   .site-settings-panel,
   .site-settings-option {
     transition: none;
+  }
+}
+
+/* Desktop: restore the horizontal navigation under the logo. */
+@media (min-width: 900px) {
+  :root { --site-topbar-height: 116px; }
+  .site-topbar { padding: 8px 20px 49px; }
+  .site-topbar .site-header { grid-template-columns: 44px minmax(0,1fr) 44px; }
+  .site-topbar .site-menu-toggle { display: none; }
+  .site-topbar .site-nav,
+  .site-topbar.menu-open .site-nav {
+    position: absolute;
+    top: auto;
+    bottom: 4px;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(calc(100% - 36px), 900px);
+    height: 38px;
+    min-height: 0;
+    max-height: none;
+    padding: 0 !important;
+    gap: 4px;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%);
+    transition: none;
+  }
+  .site-topbar .site-nav a {
+    min-height: 36px;
+    padding: 7px 12px;
+    font-size: 13px;
+    white-space: nowrap;
   }
 }
