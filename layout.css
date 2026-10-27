@@ -95,9 +95,13 @@ body {
 .site-topbar.menu-open .site-menu-icon > span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
 
 .site-topbar .site-nav {
-  position: fixed;
-  top: var(--site-topbar-height);
-  bottom: 0;
+  /* Backdrop-filter on the header makes fixed descendants relative to it. */
+  position: absolute;
+  top: 100%;
+  bottom: auto;
+  height: calc(100dvh - var(--site-topbar-height));
+  box-sizing: border-box;
+  z-index: 1001;
   left: 0;
   display: grid;
   align-content: start;
