@@ -50,14 +50,19 @@
   const hex = cp => "U+" + cp.toString(16).toUpperCase().padStart(4, "0");
 
   function classify(cp, ch) {
-    if ((cp >= 0xFE00 && cp <= 0xFE0F) || (cp >= 0xE0100 && cp <= 0xE01EF)) {
+    // Unicode properties also cover Mongolian free variation selectors and
+    // direction marks, which are not all in the commonly used VS/bidi ranges.
+    if (/\p{Variation_Selector}/u.test(ch)) {
       return {level: "warn", label: "異体字セレクタ"};
     }
-    if ((cp >= 0x202A && cp <= 0x202E) || (cp >= 0x2066 && cp <= 0x2069) || cp === 0x061C) {
+    if (/\p{Bidi_Control}/u.test(ch)) {
       return {level: "warn", label: "表示方向制御文字"};
     }
     if (invisibles.has(cp)) {
       return {level: "warn", label: "不可視文字", detail: invisibles.get(cp)};
+    }
+    if (/\p{Default_Ignorable_Code_Point}/u.test(ch)) {
+      return {level: "warn", label: "不可視文字"};
     }
     if (confusables.has(cp)) {
       return {level: "note", label: "似た形の別文字", detail: "ASCII " + confusables.get(cp) + " に似ています"};

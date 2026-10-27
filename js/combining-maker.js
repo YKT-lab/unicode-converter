@@ -8,6 +8,7 @@
   const siteRoot = new URL("../", scriptURL);
   let catalogue = [], selected = [], matches = [], page = 0, group = "", normalizer = null, policy = null, revision = 0;
   const PAGE_SIZE = 36;
+  let fontEpoch = 0;
   let composing = false;
   let loading = false, catalogueReady = false, normalizationReady = false;
   const versions = {};
@@ -87,7 +88,9 @@
   function currentResult() { return currentBase().valid ? core.compose(base.value, selected) : ""; }
   async function prepareFonts(nodes, text, currentRevision) {
     if (!window.UnicodeCombiningFonts) return;
+    const epoch = fontEpoch;
     const prepared = await window.UnicodeCombiningFonts.prepare(text);
+    if (epoch !== fontEpoch) return;
     for (const node of nodes) {
       if (!node.isConnected || node.textContent !== text || (currentRevision !== undefined && currentRevision !== revision)) continue;
       node.style.fontFamily = prepared.fontFamily;
@@ -316,5 +319,21 @@
   byId("copy-result").addEventListener("click", () => { const result = currentResult(); if (result) copy(result); });
   byId("copy-codes").addEventListener("click", () => { const result = currentResult(); if (result) copy(core.codePoints(result)); });
   byId("retry").addEventListener("click", load);
+  window.addEventListener("unicode-site-device-font-change", () => {
+    // Refresh existing text runs without rebuilding controls or changing the
+    // selected marks, filters, pagination, focus, or normalization results.
+    fontEpoch++;
+    const groups = new Map();
+    for (const node of document.querySelectorAll(".combining-text")) {
+      if (node === base) continue;
+      const text = node.textContent;
+      node.style.fontFamily = "";
+      delete node.dataset.fontFiles; delete node.dataset.fontReason;
+      if (!text) continue;
+      if (!groups.has(text)) groups.set(text, []);
+      groups.get(text).push(node);
+    }
+    for (const [text, nodes] of groups) prepareFonts(nodes, text).catch(() => {});
+  });
   renderSelected(); refreshBase(); load();
 })();

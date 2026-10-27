@@ -1,22 +1,22 @@
 /* Site-wide flat design. Loaded AFTER style.css and pages.css on all pages.
    The original component CSS remains intact; only presentation is overridden. */
-:root { --site-topbar-height: 80px; --content-divider: #e7e9ed; }
+:root { --site-topbar-height: 0px; --content-divider: #e7e9ed; }
 html { scroll-padding-top: calc(var(--site-topbar-height) + 18px); }
 body {
   background: #fff;
   padding-top: calc(var(--site-topbar-height) + 21px) !important;
 }
 .site-topbar {
-  position: fixed;
-  inset: 0 0 auto;
+  position: relative;
   z-index: 1000;
   box-sizing: border-box;
-  padding: 8px max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+  padding: max(8px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
   background: rgba(255,255,255,.98);
   border-bottom: 1px solid var(--content-divider);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
+.site-topbar.site-menu-ready { position: fixed; inset: 0 0 auto; }
 .site-topbar,
 .site-topbar a,
 .site-topbar button,
@@ -51,10 +51,12 @@ body {
   touch-action: manipulation;
 }
 .site-menu-toggle {
+  position: relative;
+  z-index: 1002;
   grid-column: 1;
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   justify-self: start;
   margin: 0;
@@ -94,22 +96,28 @@ body {
 .site-topbar.menu-open .site-menu-icon > span:nth-child(2) { opacity: 0; }
 .site-topbar.menu-open .site-menu-icon > span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
 
-.site-topbar .site-nav {
-  /* Backdrop-filter on the header makes fixed descendants relative to it. */
+.site-topbar.site-menu-ready .site-nav {
+  /* The navigation is a direct child of the topbar, anchored at the viewport top.
+     Absolute positioning avoids backdrop-filter's fixed-containing-block behavior. */
   position: absolute;
-  top: -8px;
+  top: 0;
   bottom: auto;
+  height: 100vh;
   height: 100dvh;
   box-sizing: border-box;
   z-index: 1001;
   left: 0;
   display: grid;
   align-content: start;
+  justify-content: stretch;
+  align-items: stretch;
   width: min(72vw, 260px);
   max-height: none;
   margin: 0 !important;
-  padding: calc(var(--site-topbar-height) + 8px) 12px 18px !important;
+  padding: calc(var(--site-topbar-height) + 8px) 12px max(18px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)) !important;
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
   gap: 2px;
   border: 0;
   border-right: 1px solid #dfe3e9;
@@ -125,7 +133,7 @@ body {
     transform .22s cubic-bezier(.2,.72,.2,1),
     visibility 0s linear .22s;
 }
-.site-topbar.menu-open .site-nav {
+.site-topbar.site-menu-ready.menu-open .site-nav {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -139,6 +147,8 @@ body {
   display: flex;
   min-height: 46px;
   align-items: center;
+  justify-content: flex-start;
+  text-align: left;
   padding: 11px 13px;
   border-radius: 9px;
   color: #4e596a;
@@ -156,6 +166,16 @@ body {
 .site-menu-toggle:focus-visible {
   outline: 2px solid #007aff;
   outline-offset: 2px;
+}
+
+/* Without JavaScript, wrap links in document flow so every focused label is visible. */
+.site-topbar:not(.site-menu-ready) .site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  overflow: visible;
+  margin: 8px 0 0 !important;
+  padding: 0 0 4px !important;
 }
 
 /* Main page: document sections, not floating cards. */
@@ -268,8 +288,8 @@ main > #dailyCharacterBox {
 .site-settings-toggle {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   margin: 0;
   padding: 0;
   border: 0;
@@ -399,10 +419,8 @@ main > #dailyCharacterBox {
 }
 
 @media (max-width: 520px) {
-  :root { --site-topbar-height: 72px; }
-  .site-topbar { padding: 6px 10px; }
+  .site-topbar { padding: max(6px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) 6px max(10px, env(safe-area-inset-left)); }
   .site-topbar .site-header {
-    grid-template-columns: 40px minmax(0,1fr) 40px;
     min-height: 52px;
   }
   .site-topbar .site-logo-link {
@@ -410,18 +428,13 @@ main > #dailyCharacterBox {
     height: 42px;
   }
   .site-menu-toggle,
-  .site-settings-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-  }
+  .site-settings-toggle { border-radius: 8px; }
   .site-menu-icon { width: 22px; }
   .site-menu-icon > span { width: 22px; }
   .site-settings-icon { width: 26px; height: 26px; }
   .site-settings.open .site-settings-icon { width: 21px; height: 21px; }
   .site-settings-panel { width: 176px; top: calc(100% + 10px); padding: 0 12px 12px; }
   .site-settings-heading { margin-inline: -12px; padding-inline: 12px; }
-  .site-topbar .site-nav { width: min(72vw, 260px); top: -6px; }
   main > .box.converter-box { padding: 22px 0 26px !important; }
   .page-grid, .page-script-grid { grid-template-columns: 1fr; }
   .page-intro { margin-top: 11px; }
@@ -430,9 +443,11 @@ main > #dailyCharacterBox {
 
 @media (prefers-reduced-motion: reduce) {
   .site-menu-icon > span,
-  .site-topbar .site-nav,
+  .site-topbar.site-menu-ready .site-nav,
+  .site-topbar.site-menu-ready.menu-open .site-nav,
   .site-settings-toggle,
   .site-settings-panel,
+  .site-settings.open .site-settings-panel,
   .site-settings-option {
     transition: none;
   }
@@ -440,12 +455,14 @@ main > #dailyCharacterBox {
 
 /* Desktop: restore the horizontal navigation under the logo. */
 @media (min-width: 900px) {
-  :root { --site-topbar-height: 116px; }
-  .site-topbar { padding: 8px 20px 49px; }
-  .site-topbar .site-header { grid-template-columns: 44px minmax(0,1fr) 44px; }
+  .site-topbar.site-menu-ready {
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: 49px;
+    padding-left: max(20px, env(safe-area-inset-left));
+  }
   .site-topbar .site-menu-toggle { display: none; }
-  .site-topbar .site-nav,
-  .site-topbar.menu-open .site-nav {
+  .site-topbar.site-menu-ready .site-nav,
+  .site-topbar.site-menu-ready.menu-open .site-nav {
     position: absolute;
     top: auto;
     bottom: 4px;

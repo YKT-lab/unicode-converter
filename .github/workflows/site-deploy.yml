@@ -46,6 +46,10 @@ jobs:
         run: npm install --no-audit --no-fund --package-lock=false
       - name: Validate browser scripts and SVG release guards
         run: |
+          node --check js/site-header.js
+          node --check js/site-display-mode.js
+          node --check js/url-checker.js
+          node scripts/test-url-checker.js
           node --check js/svg-mode.js
           node --check js/svg-precomputed-loader.js
           node --check js/converter.js
@@ -77,6 +81,19 @@ jobs:
           node scripts/test-combining-fonts.js
           # Never ship unverified/stale outline data from the repository.
           test ! -e svg-data/active.json
+      - name: Install a pinned browser for the publication gate
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Validate shared header and navigation before publication
+        run: node scripts/test-site-header-browser.js
+      - name: Retain shared header browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-header-deployment-check
+          path: ${{ runner.temp }}/unicode-site-header
+          if-no-files-found: ignore
       - name: Rebuild local font audit before packaging
         run: |
           node scripts/audit-unicode18-fonts.js
@@ -124,6 +141,10 @@ jobs:
           test -s _site/data/combining-normalization.json
           test -s _site/data/combining-base-properties.json
           test -s _site/js/combining-candidates.js
+          test -s _site/js/site-header.js
+          test -s _site/layout.css
+          test -s _site/url-checker/index.html
+          test -s _site/js/url-checker.js
           test -s _site/data/unicode18_font_coverage_index.json
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

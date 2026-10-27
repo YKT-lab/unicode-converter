@@ -11,6 +11,7 @@
   const logo = bar.querySelector(".site-logo-link");
   const navigation = bar.querySelector(".site-nav");
   if (!header || !logo || !navigation) return;
+  const desktopMedia = window.matchMedia("(min-width: 900px)");
 
   const siteRoot = new URL(logo.getAttribute("href") || "./", window.location.href);
   logo.href = siteRoot.href;
@@ -171,6 +172,25 @@
     "Scope OFF",
     "Unicode Scopeを無効にする"
   );
+  // Pages without a Scope viewer still edit the tab-wide preference. Pages
+  // with the viewer leave this button entirely to scope.js's existing handler.
+  if (!document.getElementById("unicodeScope")) {
+    const scopeStorageKey = "unicode-converter-scope";
+    let scopeEnabled = true;
+    try { scopeEnabled = window.sessionStorage?.getItem(scopeStorageKey) !== "off"; }
+    catch (_) { /* Keep a usable in-memory preference when storage is denied. */ }
+    const refreshScopePreference = () => {
+      scopeOff.setAttribute("aria-pressed", String(!scopeEnabled));
+      scopeOff.title = scopeEnabled ? "Unicode Scopeを無効にする" : "Unicode Scopeを有効にする";
+    };
+    refreshScopePreference();
+    scopeOff.addEventListener("click", () => {
+      scopeEnabled = !scopeEnabled;
+      try { window.sessionStorage?.setItem(scopeStorageKey, scopeEnabled ? "on" : "off"); }
+      catch (_) { /* The current page remains usable without storage. */ }
+      refreshScopePreference();
+    });
+  }
 
   const refreshDeviceFont = () => {
     const enabled = Boolean(window.UnicodeSiteDisplay?.isDeviceFontModeEnabled?.());
@@ -191,28 +211,75 @@
   header.append(settings);
   existingQuickModes?.remove();
 
-  function setMenuOpen(open) {
-    const next = Boolean(open);
+  let scrollLock = null;
+  function setPageScrollLocked(locked) {
+    const body = document.body;
+    if (locked && !scrollLock) {
+      const properties = ["position", "top", "left", "right", "width", "overflow"];
+      scrollLock = {
+        x: window.scrollX,
+        y: window.scrollY,
+        styles: properties.map(name => [name, body.style.getPropertyValue(name), body.style.getPropertyPriority(name)])
+      };
+      // A fixed body also locks the background on iOS, where overflow:hidden
+      // alone can still allow the page behind a scrollable drawer to move.
+      const gutter = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
+      body.style.setProperty("position", "fixed");
+      body.style.setProperty("top", -scrollLock.y + "px");
+      body.style.setProperty("left", -scrollLock.x + "px");
+      body.style.setProperty("right", "auto");
+      body.style.setProperty("width", "calc(100% - " + gutter + "px)");
+      body.style.setProperty("overflow", "hidden");
+    } else if (!locked && scrollLock) {
+      const previous = scrollLock;
+      scrollLock = null;
+      for (const [name, value, priority] of previous.styles) {
+        if (value) body.style.setProperty(name, value, priority);
+        else body.style.removeProperty(name);
+      }
+      const rootStyle = document.documentElement.style;
+      const behavior = rootStyle.getPropertyValue("scroll-behavior");
+      const priority = rootStyle.getPropertyPriority("scroll-behavior");
+      rootStyle.setProperty("scroll-behavior", "auto", "important");
+      window.scrollTo(previous.x, previous.y);
+      if (behavior) rootStyle.setProperty("scroll-behavior", behavior, priority);
+      else rootStyle.removeProperty("scroll-behavior");
+    }
+  }
+
+  function setMenuOpen(open, {focusFirst = false, restoreFocus = false} = {}) {
+    const desktop = desktopMedia.matches;
+    const next = Boolean(open) && !desktop;
     bar.classList.toggle("menu-open", next);
     menuToggle.setAttribute("aria-expanded", String(next));
     menuToggle.setAttribute("aria-label", next ? "メニューを閉じる" : "メニューを開く");
-    const desktop = window.matchMedia("(min-width: 900px)").matches;
-    navigation.setAttribute("aria-hidden", String(!next && !desktop));
+    const hidden = !next && !desktop;
+    navigation.setAttribute("aria-hidden", String(hidden));
+    navigation.toggleAttribute("inert", hidden);
     navigation.querySelectorAll("a").forEach(link => {
-      link.tabIndex = next || desktop ? 0 : -1;
+      link.tabIndex = hidden ? -1 : 0;
     });
+    setPageScrollLocked(next);
+    if (next && focusFirst) navigation.querySelector("a")?.focus({preventScroll: true});
+    if (!next && restoreFocus) (desktop ? logo : menuToggle).focus({preventScroll: true});
   }
 
+  let settingsOpen = null;
   function setSettingsOpen(open) {
     const next = Boolean(open);
+    if (settingsOpen === next) return;
+    const restoreFocus = !next && panel.contains(document.activeElement);
+    settingsOpen = next;
     settingsToggle.setAttribute("aria-expanded", String(next));
     settingsToggle.setAttribute("aria-label", next ? "表示設定を閉じる" : "表示設定を開く");
     settingsToggle.title = next ? "閉じる" : "表示設定";
     panel.setAttribute("aria-hidden", String(!next));
+    panel.toggleAttribute("inert", !next);
     deviceFont.tabIndex = next ? 0 : -1;
     scopeOff.tabIndex = next ? 0 : -1;
     renderSettingsIcon(next);
     settings.classList.toggle("open", next);
+    if (restoreFocus) settingsToggle.focus({preventScroll: true});
   }
 
   bar.classList.add("site-menu-ready");
@@ -223,7 +290,7 @@
     event.stopPropagation();
     const opening = menuToggle.getAttribute("aria-expanded") !== "true";
     if (opening) setSettingsOpen(false);
-    setMenuOpen(opening);
+    setMenuOpen(opening, {focusFirst: opening, restoreFocus: !opening});
   });
 
   settingsToggle.addEventListener("click", event => {
@@ -231,6 +298,7 @@
     const opening = settingsToggle.getAttribute("aria-expanded") !== "true";
     if (opening) setMenuOpen(false);
     setSettingsOpen(opening);
+    if (opening) deviceFont.focus({preventScroll: true});
   });
 
   navigation.addEventListener("click", event => {
@@ -238,10 +306,16 @@
   });
 
   document.addEventListener("click", event => {
-    if (!bar.contains(event.target)) {
-      setMenuOpen(false);
-      setSettingsOpen(false);
-    }
+    if (!navigation.contains(event.target) && !menuToggle.contains(event.target))
+      setMenuOpen(false, {restoreFocus: navigation.contains(document.activeElement)});
+    if (!settings.contains(event.target)) setSettingsOpen(false);
+  });
+
+  // This is a non-modal navigation disclosure: keyboard users can leave it.
+  // Collapse it when focus reaches the page rather than trapping focus there.
+  document.addEventListener("focusin", event => {
+    if (!bar.contains(event.target)) setMenuOpen(false);
+    if (!settings.contains(event.target)) setSettingsOpen(false);
   });
 
   document.addEventListener("keydown", event => {
@@ -258,13 +332,24 @@
   });
 
   const adjust = () => {
-    const height = Math.ceil(header.getBoundingClientRect().height + 16);
-    if (height > 0) document.documentElement.style.setProperty("--site-topbar-height", height + "px");
+    const height = Math.ceil(bar.getBoundingClientRect().height);
+    const value = height + "px";
+    if (height > 0 && document.documentElement.style.getPropertyValue("--site-topbar-height") !== value)
+      document.documentElement.style.setProperty("--site-topbar-height", value);
   };
   adjust();
-  window.addEventListener("resize", () => { adjust(); setMenuOpen(false); }, {passive: true});
+  window.addEventListener("resize", adjust, {passive: true});
+  const breakpointChanged = () => {
+    const focused = document.activeElement;
+    setMenuOpen(false, {restoreFocus: focused === menuToggle || (!desktopMedia.matches && navigation.contains(focused))});
+    setSettingsOpen(false);
+    if (panel.contains(focused)) settingsToggle.focus({preventScroll: true});
+    adjust();
+  };
+  if (typeof desktopMedia.addEventListener === "function") desktopMedia.addEventListener("change", breakpointChanged);
+  else desktopMedia.addListener?.(breakpointChanged);
   if (typeof ResizeObserver === "function") {
     const observer = new ResizeObserver(adjust);
-    observer.observe(header);
+    observer.observe(bar);
   }
 })();

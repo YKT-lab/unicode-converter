@@ -1,0 +1,51 @@
+name: Site Header and URL Checker Checks
+
+on:
+  pull_request:
+    paths:
+      - "**/*.html"
+      - "*.css"
+      - "js/**"
+      - "scripts/test-site-header-browser.js"
+      - "scripts/test-url-checker.js"
+      - ".github/workflows/site-ui-check.yml"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "*.css"
+      - "js/**"
+      - "scripts/test-site-header-browser.js"
+      - "scripts/test-url-checker.js"
+      - ".github/workflows/site-ui-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate every browser script and URL codepoint operations
+        run: |
+          for file in js/*.js; do node --check "$file"; done
+          node scripts/test-url-checker.js
+      - name: Install a pinned browser test runner
+        run: |
+          npm install --no-save --package-lock=false --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check shared header on all pages and viewport boundaries
+        run: node scripts/test-site-header-browser.js
+      - name: Retain browser measurements and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-header-browser
+          path: ${{ runner.temp }}/unicode-site-header
+          if-no-files-found: ignore
