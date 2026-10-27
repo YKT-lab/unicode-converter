@@ -1,8 +1,7 @@
 "use strict";
 /*
- * One canonical header for every route.
- * Existing HTML provides accessible non-JavaScript fallback markup;
- * the shared initializer normalizes it on every page.
+ * Shared site header: centered logo, hamburger navigation, and display settings.
+ * Existing HTML remains as a non-JavaScript fallback; this initializer normalizes it.
  */
 (function () {
   const bar = document.querySelector(".site-topbar");
@@ -16,37 +15,60 @@
   const siteRoot = new URL(logo.getAttribute("href") || "./", window.location.href);
   logo.href = siteRoot.href;
   logo.setAttribute("aria-label", "トップページへ");
+  logo.setAttribute("draggable", "false");
   const logoImage = logo.querySelector("img.site-logo");
-  if (logoImage) logoImage.alt = "文字 ⇄ Unicode";
+  if (logoImage) {
+    logoImage.alt = "文字 ⇄ Unicode";
+    logoImage.draggable = false;
+  }
 
-  const menu = [
+  const menuItems = [
     ["", "トップページ"],
     ["about/", "Unicodeとは"],
     ["emoji/", "絵文字"],
     ["combining/", "結合文字メーカー"],
     ["unicode/", "Unicode一覧"],
+    ["url-checker/", "URLチェッカー"],
     ["news/", "News"]
   ];
+
   const normalizePath = path => path.replace(/\/index\.html$/, "/").replace(/\/?$/, "/");
   const currentPath = normalizePath(window.location.pathname);
 
   navigation.classList.add("unicode-scope-excluded");
   navigation.setAttribute("aria-label", "サイト内メニュー");
   const fragment = document.createDocumentFragment();
-  for (const [path, label] of menu) {
+  for (const [path, label] of menuItems) {
     const address = new URL(path, siteRoot);
     const link = document.createElement("a");
     link.href = address.href;
     link.textContent = label;
-    if (normalizePath(address.pathname) === currentPath || (path === "news/" && currentPath.startsWith(normalizePath(address.pathname)))) {
+    if (
+      normalizePath(address.pathname) === currentPath ||
+      (path === "news/" && currentPath.startsWith(normalizePath(address.pathname)))
+    ) {
       link.setAttribute("aria-current", "page");
     }
     fragment.append(link);
   }
   navigation.replaceChildren(fragment);
 
-  // One compact settings entry point on every route. The actual state owners
-  // remain UnicodeSiteDisplay (device font) and scope.js (Unicode Scope).
+  const menuToggle = document.createElement("button");
+  menuToggle.id = "siteMenuToggle";
+  menuToggle.className = "site-menu-toggle";
+  menuToggle.type = "button";
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-controls", "siteNavigation");
+  menuToggle.setAttribute("aria-label", "メニューを開く");
+  navigation.id = "siteNavigation";
+
+  const menuIcon = document.createElement("span");
+  menuIcon.className = "site-menu-icon";
+  menuIcon.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 3; i++) menuIcon.append(document.createElement("span"));
+  menuToggle.append(menuIcon);
+  header.prepend(menuToggle);
+
   const existingQuickModes = document.querySelector(".home-quick-modes");
   const settings = document.createElement("div");
   settings.className = "site-settings unicode-scope-excluded";
@@ -77,8 +99,6 @@
       return svg;
     }
 
-    // Original vector gear: eight broad teeth and a simple centre ring.
-    // Drawn in code so the reference image is never used as an asset.
     const points = [];
     const rootRadius = 9.3;
     const outerRadius = 12.25;
@@ -170,6 +190,17 @@
   header.append(settings);
   existingQuickModes?.remove();
 
+  function setMenuOpen(open) {
+    const next = Boolean(open);
+    bar.classList.toggle("menu-open", next);
+    menuToggle.setAttribute("aria-expanded", String(next));
+    menuToggle.setAttribute("aria-label", next ? "メニューを閉じる" : "メニューを開く");
+    navigation.setAttribute("aria-hidden", String(!next));
+    navigation.querySelectorAll("a").forEach(link => {
+      link.tabIndex = next ? 0 : -1;
+    });
+  }
+
   function setSettingsOpen(open) {
     const next = Boolean(open);
     settingsToggle.setAttribute("aria-expanded", String(next));
@@ -181,34 +212,57 @@
     renderSettingsIcon(next);
     settings.classList.toggle("open", next);
   }
+
+  bar.classList.add("site-menu-ready");
+  setMenuOpen(false);
   setSettingsOpen(false);
+
+  menuToggle.addEventListener("click", event => {
+    event.stopPropagation();
+    const opening = menuToggle.getAttribute("aria-expanded") !== "true";
+    if (opening) setSettingsOpen(false);
+    setMenuOpen(opening);
+  });
 
   settingsToggle.addEventListener("click", event => {
     event.stopPropagation();
-    setSettingsOpen(settingsToggle.getAttribute("aria-expanded") !== "true");
-  });
-  panel.addEventListener("click", event => event.stopPropagation());
-  document.addEventListener("click", event => {
-    if (settingsToggle.getAttribute("aria-expanded") === "true" && !settings.contains(event.target))
-      setSettingsOpen(false);
-  });
-  document.addEventListener("keydown", event => {
-    if (event.key !== "Escape" || settingsToggle.getAttribute("aria-expanded") !== "true") return;
-    setSettingsOpen(false);
-    settingsToggle.focus();
+    const opening = settingsToggle.getAttribute("aria-expanded") !== "true";
+    if (opening) setMenuOpen(false);
+    setSettingsOpen(opening);
   });
 
-  // Avoid obscuring the page with the fixed bar, on desktop and mobile.
-  const adjust = () => {
-    const height = Math.ceil(bar.getBoundingClientRect().height);
-    if (height > 0) {
-      document.documentElement.style.setProperty("--site-topbar-height", height + "px");
+  navigation.addEventListener("click", event => {
+    if (event.target.closest("a")) setMenuOpen(false);
+  });
+
+  document.addEventListener("click", event => {
+    if (!bar.contains(event.target)) {
+      setMenuOpen(false);
+      setSettingsOpen(false);
     }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key !== "Escape") return;
+    if (settingsToggle.getAttribute("aria-expanded") === "true") {
+      setSettingsOpen(false);
+      settingsToggle.focus();
+      return;
+    }
+    if (menuToggle.getAttribute("aria-expanded") === "true") {
+      setMenuOpen(false);
+      menuToggle.focus();
+    }
+  });
+
+  const adjust = () => {
+    const height = Math.ceil(header.getBoundingClientRect().height + 16);
+    if (height > 0) document.documentElement.style.setProperty("--site-topbar-height", height + "px");
   };
   adjust();
   window.addEventListener("resize", adjust, {passive: true});
   if (typeof ResizeObserver === "function") {
     const observer = new ResizeObserver(adjust);
-    observer.observe(bar);
+    observer.observe(header);
   }
 })();
