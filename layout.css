@@ -447,6 +447,7 @@ main > #dailyCharacterBox {
   .site-topbar.site-menu-ready.menu-open .site-nav,
   .site-settings-toggle,
   .site-settings-panel,
+  .site-settings.open .site-settings-panel,
   .site-settings-option {
     transition: none;
   }

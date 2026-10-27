@@ -251,6 +251,13 @@ async function interactions(browser) {
     await visit(page, "combining/"); await settings(page);
     assert.equal(await page.locator("#scopeModeToggle").getAttribute("aria-pressed"), "false");
     check("Scope preference works on combining page without viewer and survives navigation");
+
+    await page.emulateMedia({reducedMotion:"reduce"});
+    await openMenu(page);
+    assert.equal(await page.locator(".site-nav").evaluate(node => getComputedStyle(node).transitionDuration), "0s");
+    await settings(page);
+    assert.equal(await page.locator("#siteSettingsPanel").evaluate(node => getComputedStyle(node).transitionDuration), "0s");
+    check("reduced-motion disables transitions on both open drawer and settings panel");
   } finally { await context.close(); }
 }
 async function noJavaScript(browser) {
