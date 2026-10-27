@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-27",
-    "category": "ancient",
-    "codePoint": "132F7",
-    "character": "𓋷",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M1084 8Q1084 -2 1074 -2L100 -2L100 18L422 18L422 73L141 73L141 93L422 93L422 161L183 161L183 181L422 181L422 248L247 248L247 268L1074 268Q1084 268 1084 258ZM1064 248L442 248L442 18L1064 18Z",
-      "viewBox": "21.28 -346.72 1141.44 427.44"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH S032",
-      "block": "Egyptian Hieroglyphs",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "5.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの文字体系において特定の音を表すために用いられた象形記号の一つです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "音素文字（Phonemogram）としての機能を持ちます。",
-        "etymology": "",
-        "history": "",
-        "structure": "前面の短い辺に傾斜したフリンジがある、内部装飾のない長方形の布の形状をしています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A rectangular piece of cloth, with sloping fringes on its front short side, without internal decoration.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Phonemogram",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "sꞽꜣ",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "phonemogram : sꞽꜣ",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "S032",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "S-15-055",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-28",
     "category": "kana",
     "codePoint": "31F6",
@@ -225,6 +99,132 @@
         {
           "name": "Unicode NamesList",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-29",
+    "category": "ancient",
+    "codePoint": "13A10",
+    "character": "𓨐",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M599 804Q582 802 571 788.5Q560 775 560 756Q560 748 564 739Q568 730 574.5 722.5Q581 715 588.5 709.5Q596 704 602 704L630 704Q647 704 661 711.5Q675 719 684.5 731.5Q694 744 699 760.5Q704 777 704 794Q704 810 696 827Q688 844 675.5 858Q663 872 647.5 881Q632 890 616 890L588 890Q565 890 547 880Q529 870 517 853.5Q505 837 498.5 815.5Q492 794 492 772L492 0L472 0L472 772Q472 796 479 821Q486 846 500.5 865.5Q515 885 537 897.5Q559 910 588 910L616 910Q637 910 656.5 899Q676 888 691 871Q706 854 715 833.5Q724 813 724 794Q724 774 718 754.5Q712 735 700 719.5Q688 704 670.5 694Q653 684 630 684L602 684Q590 684 579 691.5Q568 699 559 710Q550 721 545 733.5Q540 746 540 756Q540 782 556.5 803Q573 824 602 824Q603 824 605 823Q607 822 608 822L638 800L626 784ZM182 794Q186 808 196.5 816Q207 824 222 824Q250 824 267 802Q284 780 284 756Q284 747 279 734.5Q274 722 265 710.5Q256 699 245 691.5Q234 684 222 684L194 684Q170 684 152.5 693.5Q135 703 123.5 719Q112 735 106 754.5Q100 774 100 794Q100 813 108.5 833.5Q117 854 132 871Q147 888 166 899Q185 910 206 910L234 910Q262 910 284 897.5Q306 885 321 865.5Q336 846 344 821Q352 796 352 772L352 0L332 0L332 772Q332 794 325 815.5Q318 837 305.5 853.5Q293 870 274.5 880Q256 890 234 890L206 890Q190 890 174.5 881Q159 872 147 858Q135 844 127.5 827Q120 810 120 794Q120 776 125 760Q130 744 139.5 731.5Q149 719 162.5 711.5Q176 704 194 704L222 704Q228 704 235.5 709.5Q243 715 249 723Q255 731 259.5 740Q264 749 264 756Q264 774 252.5 788Q241 802 224 804L203 793L202 790Z",
+      "viewBox": "27.200000000000003 -982.8 769.6 1055.6"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-13A10",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプトの聖刻文字（ヒエログリフ）の拡張領域に収録された文字の一つである。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "文字体系において特定の音を表す表音文字（音素文字）として機能する。",
+        "etymology": "",
+        "history": "",
+        "structure": "牝牛の子宮をかたどった字形で、上端がカールした2本の独立した垂直線として描かれる。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "The uterus of a cow, represented as two separate vertical lines with a curl on the top.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Phonemogram",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "wr",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "phonemogram : wr",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "F182",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "D-32-010",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
       ]
     }
