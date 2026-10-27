@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unicode URLチェッカー | 文字 ⇄ Unicode</title>
+<link rel="stylesheet" href="../style.css?v=20261026-browser-font1">
+<link rel="stylesheet" href="../pages.css?v=20261012-1">
+<link rel="stylesheet" href="../layout.css?v=20261027-hamburger1">
+<script src="../js/site-display-mode.js?v=20261026-sitewide1"></script>
+<script src="../js/site-header.js?v=20261027-hamburger1" defer></script>
+<style>
+.url-checker-input {
+  min-height: 112px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+.url-checker-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 13px 0 0;
+}
+.url-checker-examples .page-button { margin: 0; }
+.url-checker-result-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+.url-checker-result-head h2 { margin-bottom: 0; }
+.url-checker-count {
+  flex: 0 0 auto;
+  color: #747983;
+  font-size: 12px;
+}
+.url-checker-status {
+  margin: 14px 0 0;
+  color: #555d68;
+  font-size: 15px;
+  font-weight: 680;
+}
+.url-checker-status.safe { color: #315d42; }
+.url-checker-status.warning { color: #85352f; }
+.url-checker-preview-label {
+  margin: 21px 0 7px;
+  color: #747983;
+  font-size: 12px;
+}
+.url-checker-preview {
+  min-height: 50px;
+  padding: 13px 0;
+  border-top: 1px solid #e7e9ed;
+  border-bottom: 1px solid #e7e9ed;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+.url-checker-mark {
+  display: inline;
+  padding: 2px 3px;
+  border-radius: 4px;
+}
+.url-checker-mark.warning { background: #f7e7df; color: #74342e; }
+.url-checker-mark.notice { background: #eef1f5; color: #32445f; }
+.url-checker-findings {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.url-checker-findings li {
+  display: grid;
+  grid-template-columns: auto minmax(0,1fr);
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #eceef2;
+  color: #515966;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.url-checker-findings li:last-child { border-bottom: 0; }
+.url-checker-findings code {
+  color: #263b58;
+  font-size: 12px;
+}
+.url-checker-copy {
+  margin-top: 15px;
+}
+.url-checker-note {
+  margin-top: 14px;
+}
+</style>
+</head>
+<body>
+<main>
+<div class="site-topbar">
+<header class="site-header unicode-scope-excluded">
+<a class="site-logo-link" href="../" aria-label="トップページに戻る"><img class="site-logo" src="../logo.png" alt="Unicode Converter" draggable="false"></a>
+</header>
+<nav class="site-nav" aria-label="サイト内メニュー">
+<a href="../">トップページ</a>
+<a href="../about/">Unicodeとは</a>
+<a href="../emoji/">絵文字</a>
+<a href="../combining/">結合文字メーカー</a>
+<a href="../unicode/">Unicode一覧</a>
+<a href="./" aria-current="page">URLチェッカー</a>
+<a href="../news/">News</a>
+</nav>
+</div>
+
+<section class="page-intro">
+<p class="page-eyebrow">UNICODE URL CHECKER</p>
+<h1 class="page-title">URLチェッカー</h1>
+<p class="page-lead">見た目では気づきにくい不可視文字・異体字セレクタ・似た形の別文字などを、コードポイントで確認できます。</p>
+</section>
+
+<section class="page-card">
+<h2>検査する文字列</h2>
+<textarea id="urlCheckerInput" class="page-input url-checker-input unicode-scope-excluded" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="検査するURLまたは文字列"></textarea>
+<div class="url-checker-examples unicode-scope-excluded" aria-label="テスト用の文字列">
+<button class="page-button" type="button" data-url-checker-example="normal">通常</button>
+<button class="page-button" type="button" data-url-checker-example="variation">異体字セレクタ</button>
+<button class="page-button" type="button" data-url-checker-example="zeroWidth">ゼロ幅</button>
+<button class="page-button" type="button" data-url-checker-example="confusable">類似文字</button>
+<button class="page-button" type="button" data-url-checker-example="bidi">表示方向</button>
+</div>
+</section>
+
+<section class="page-card">
+<div class="url-checker-result-head">
+<h2>検査結果</h2>
+<span id="urlCheckerCount" class="url-checker-count"></span>
+</div>
+<p id="urlCheckerStatus" class="url-checker-status" role="status" aria-live="polite"></p>
+<p class="url-checker-preview-label">特殊文字をコードポイントに置換</p>
+<div id="urlCheckerPreview" class="url-checker-preview unicode-scope-excluded"></div>
+<ul id="urlCheckerFindings" class="url-checker-findings unicode-scope-excluded"></ul>
+<button id="urlCheckerCopy" class="page-button url-checker-copy unicode-scope-excluded" type="button">解析表示をコピー</button>
+<p class="page-muted url-checker-note">文字列だけを端末上で解析します。リンク先にはアクセスしません。検出がない場合でも、URL自体の安全性を保証するものではありません。</p>
+</section>
+
+<p class="page-home-link"><a href="../">← トップページに戻る</a></p>
+</main>
+
+<div id="unicodeScope" aria-hidden="true">
+<div id="unicodeScopeRing"><span id="unicodeScopeGlyph"></span></div>
+<button id="unicodeScopeCode" type="button" aria-label="Unicodeコードをコピー"></button>
+</div>
+<script src="../js/config.js?v=20261012-sitewide13" defer></script>
+<script src="../js/glyph-check.js?v=20261012-sitewide13" defer></script>
+<script src="../js/scope.js?v=20261013-input-exclusion18" defer></script>
+<script src="../js/url-checker.js?v=20261027-1" defer></script>
+</body>
+</html>
