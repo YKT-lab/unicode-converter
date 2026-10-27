@@ -168,11 +168,12 @@ body {
   outline-offset: 2px;
 }
 
-/* Without JavaScript, keep the original navigation visible in document flow. */
+/* Without JavaScript, wrap links in document flow so every focused label is visible. */
 .site-topbar:not(.site-menu-ready) .site-nav {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
-  overflow-x: auto;
+  overflow: visible;
   margin: 8px 0 0 !important;
   padding: 0 0 4px !important;
 }
