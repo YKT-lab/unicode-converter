@@ -247,22 +247,6 @@ main > #dailyCharacterBox {
   .daily-character-frame { padding: 10px 7px; }
   #dailyInfo { padding: 0 !important; }
 }
-@media (max-width: 520px) {
-  :root { --site-topbar-height: 109px; }
-  .site-topbar { padding: 6px 11px 6px; }
-  .site-topbar .site-header { margin-bottom: 4px !important; }
-  .site-topbar .site-nav {
-    justify-content: flex-start;
-    gap: 10px;
-    padding: 2px 0 1px !important;
-  }
-  .site-topbar .site-nav a { padding: 9px 5px 8px; font-size: 12px; }
-  main > .box.converter-box { padding: 22px 0 26px !important; }
-  .page-grid, .page-script-grid { grid-template-columns: 1fr; }
-  .page-intro { margin-top: 11px; }
-  .page-card { padding: 24px 0; }
-}
-
 /* Header settings */
 .site-settings {
   position: relative;
