@@ -99,6 +99,7 @@
       return svg;
     }
 
+    // Original vector gear: generated in code; no image asset is used.
     const points = [];
     const rootRadius = 9.3;
     const outerRadius = 12.25;
