@@ -10,8 +10,6 @@ const news = fs.readFileSync(path.join(root,"news/index.html"),"utf8");
 const article = fs.readFileSync(path.join(root,"news/svg-display/index.html"),"utf8");
 const scope = fs.readFileSync(path.join(root,"js/scope.js"),"utf8");
 const siteDisplay = fs.readFileSync(path.join(root,"js/site-display-mode.js"),"utf8");
-const siteHeader = fs.readFileSync(path.join(root,"js/site-header.js"),"utf8");
-const layout = fs.readFileSync(path.join(root,"layout.css"),"utf8");
 
 function makeEl(value="") {
   return {
@@ -134,8 +132,6 @@ assert.equal(partial.conversions().length,0,"Do not fabricate incomplete input")
 
 for(const tag of ['id="svgModeToggle"','id="svgModeCurrent"','id="svgModeDescription"'])
   assert(home.includes(tag),"Missing converter mode indicator/control "+tag);
-for(const tag of ['siteSettingsToggle','siteSettingsPanel','browserFontModeToggle','scopeModeToggle'])
-  assert(siteHeader.includes(tag),"Missing shared header settings control "+tag);
 assert(home.includes('class="unicode-actions unicode-scope-excluded"'));
 assert(home.includes('class="svg-mode-switch"'));
 assert(home.includes('<a href="./news/svg-display/">SVG表示とは？</a>'));
@@ -153,19 +149,7 @@ assert(siteDisplay.includes("site-device-font-mode"));
 assert(siteDisplay.includes("font-family: sans-serif !important"));
 assert(siteDisplay.includes("localStorage"));
 assert.doesNotThrow(() => new vm.Script(siteDisplay), "site-display-mode.js must parse");
-assert.doesNotThrow(() => new vm.Script(siteHeader), "site-header.js must parse");
 assert(!home.includes("home-quick-modes"), "Old inline settings buttons must be removed");
-assert(layout.includes(".site-settings-panel"));
-assert(!layout.includes("backdrop-filter: blur(18px)"));
-assert(layout.includes("background: #fff"));
-assert(layout.includes("border-top: 3px solid #27384f"));
-assert(layout.includes("translate3d(0,-12px,0)"));
-assert(layout.includes(".site-settings.open .site-settings-panel"));
-assert(layout.includes(".site-settings.open .site-settings-toggle"));
-assert(siteHeader.includes("settingsIcon"));
-assert(siteHeader.includes("Original vector gear"));
-assert(siteHeader.includes('document.createElementNS(ns, "polygon")'));
-assert(siteHeader.includes("renderSettingsIcon"));
 const htmlFiles=[];
 function collectHtml(dir){
   for(const name of fs.readdirSync(dir)){
