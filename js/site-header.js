@@ -208,7 +208,10 @@
 
   panel.append(heading, deviceFont, scopeOff);
   settings.append(settingsToggle, panel);
-  header.append(settings);
+
+  // Keep settings visually in the header row without making it a descendant
+  // of the long-pressable logo/header area on iOS Safari.
+  bar.append(settings);
   existingQuickModes?.remove();
 
   let scrollLock = null;
@@ -332,10 +335,19 @@
   });
 
   const adjust = () => {
-    const height = Math.ceil(bar.getBoundingClientRect().height);
+    const barRect = bar.getBoundingClientRect();
+    const headerRect = header.getBoundingClientRect();
+    const height = Math.ceil(barRect.height);
     const value = height + "px";
     if (height > 0 && document.documentElement.style.getPropertyValue("--site-topbar-height") !== value)
       document.documentElement.style.setProperty("--site-topbar-height", value);
+
+    // The settings control is a sibling of .site-header. Position it over the
+    // empty third grid column so the logo remains perfectly centred.
+    const centreY = headerRect.top - barRect.top + headerRect.height / 2;
+    const right = Math.max(0, barRect.right - headerRect.right);
+    if (Number.isFinite(centreY) && centreY > 0) settings.style.top = centreY + "px";
+    if (Number.isFinite(right)) settings.style.right = right + "px";
   };
   adjust();
   window.addEventListener("resize", adjust, {passive: true});
