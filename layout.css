@@ -1,6 +1,6 @@
 /* Site-wide flat design. Loaded AFTER style.css and pages.css on all pages.
    The original component CSS remains intact; only presentation is overridden. */
-:root { --site-topbar-height: 132px; --content-divider: #e7e9ed; }
+:root { --site-topbar-height: 80px; --content-divider: #e7e9ed; }
 html { scroll-padding-top: calc(var(--site-topbar-height) + 18px); }
 body {
   background: #fff;
@@ -11,45 +11,141 @@ body {
   inset: 0 0 auto;
   z-index: 1000;
   box-sizing: border-box;
-  padding: 9px max(12px, env(safe-area-inset-right)) 7px max(12px, env(safe-area-inset-left));
-  background: rgba(255,255,255,.97);
+  padding: 8px max(12px, env(safe-area-inset-right)) 8px max(12px, env(safe-area-inset-left));
+  background: rgba(255,255,255,.98);
   border-bottom: 1px solid var(--content-divider);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
-.site-topbar .site-header {
-  max-width: 760px;
-  margin: 0 auto 4px !important;
+.site-topbar,
+.site-topbar a,
+.site-topbar button,
+.site-topbar img,
+.site-topbar svg {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
-.site-topbar .site-logo-link { margin-inline: auto; }
-.site-topbar .site-nav {
+.site-topbar a,
+.site-topbar img {
+  -webkit-user-drag: none;
+}
+.site-topbar .site-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0,1fr) 44px;
+  align-items: center;
   width: min(100%, 760px);
-  max-width: 760px;
-  box-sizing: border-box;
+  min-height: 56px;
   margin: 0 auto !important;
-  padding: 2px 0 !important;
-  gap: clamp(5px, 1.1vw, 15px);
-  justify-content: center;
+}
+.site-topbar .site-logo-link {
+  grid-column: 2;
+  justify-self: center;
+  width: min(100%, 430px);
+  height: 50px;
+  margin: 0;
+}
+.site-menu-toggle,
+.site-settings-toggle {
+  touch-action: manipulation;
+}
+.site-menu-toggle {
+  grid-column: 1;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  justify-self: start;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
   background: transparent;
+  color: #25354b;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.site-menu-toggle:hover,
+.site-topbar.menu-open .site-menu-toggle {
+  background: #f2f4f7;
+}
+.site-menu-icon {
+  position: relative;
+  display: block;
+  width: 23px;
+  height: 18px;
+}
+.site-menu-icon > span {
+  position: absolute;
+  left: 0;
+  display: block;
+  width: 23px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform-origin: center;
+  transition: top .18s ease, transform .18s ease, opacity .14s ease;
+}
+.site-menu-icon > span:nth-child(1) { top: 1px; }
+.site-menu-icon > span:nth-child(2) { top: 8px; }
+.site-menu-icon > span:nth-child(3) { top: 15px; }
+.site-topbar.menu-open .site-menu-icon > span:nth-child(1) { top: 8px; transform: rotate(45deg); }
+.site-topbar.menu-open .site-menu-icon > span:nth-child(2) { opacity: 0; }
+.site-topbar.menu-open .site-menu-icon > span:nth-child(3) { top: 8px; transform: rotate(-45deg); }
+
+.site-topbar .site-nav {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  display: grid;
+  width: min(calc(100% - 24px), 760px);
+  max-height: calc(100vh - var(--site-topbar-height) - 18px);
+  margin: 0 !important;
+  padding: 8px !important;
+  overflow-y: auto;
+  gap: 0;
+  border: 1px solid #dfe3e9;
+  border-top: 3px solid #27384f;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 18px 42px rgba(22,31,45,.14), 0 3px 10px rgba(22,31,45,.06);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%,-10px);
+  transform-origin: top center;
+  transition: opacity .16s ease, transform .18s ease, visibility 0s linear .18s;
+}
+.site-topbar.menu-open .site-nav {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%,0);
+  transition: opacity .16s ease, transform .18s ease, visibility 0s;
 }
 .site-topbar .site-nav a {
-  border-radius: 0;
-  background: transparent;
-  border-bottom: 2px solid transparent;
-  padding: 10px 7px 8px;
-  color: #646a73;
-  font-size: 12.5px;
-  font-weight: 600;
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 10px 13px;
+  border-radius: 8px;
+  color: #4e596a;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
 }
-.site-topbar .site-nav a:hover { background: transparent; color: #22262e; }
+.site-topbar .site-nav a:hover { background: #f3f5f7; color: #1d2b3f; }
 .site-topbar .site-nav a[aria-current="page"] {
-  background: transparent;
-  border-bottom-color: #27354c;
+  background: #eef1f5;
   color: #1c293e;
-  font-weight: 720;
+  font-weight: 760;
 }
-.site-topbar .site-nav a[aria-current="page"]:hover { background: transparent; }
-.site-topbar .site-nav a:focus-visible { outline-offset: -2px; }
+.site-topbar .site-nav a:focus-visible,
+.site-menu-toggle:focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 2px;
+}
 
 /* Main page: document sections, not floating cards. */
 main { max-width: 760px; }
@@ -167,23 +263,19 @@ main > #dailyCharacterBox {
   .page-card { padding: 24px 0; }
 }
 
-/* Header settings: restrained, opaque, editorial UI.
-   The gear is the control; the menu drops from above without glass effects. */
-.site-topbar .site-header {
-  position: relative;
-}
+/* Header settings */
 .site-settings {
-  position: absolute;
-  top: 50%;
-  right: 3px;
+  position: relative;
+  grid-column: 3;
+  justify-self: end;
   z-index: 1020;
-  transform: translateY(-50%);
 }
 .site-settings-toggle {
   display: grid;
   place-items: center;
   width: 38px;
   height: 38px;
+  margin: 0;
   padding: 0;
   border: 0;
   border-radius: 9px;
@@ -191,17 +283,11 @@ main > #dailyCharacterBox {
   color: #25354b;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition:
-    background-color .16s ease,
-    color .16s ease,
-    transform .16s ease;
+  transition: background-color .16s ease, color .16s ease;
 }
-.site-settings-toggle:hover {
-  background: #f3f5f7;
-  color: #172338;
-}
+.site-settings-toggle:hover,
 .site-settings.open .site-settings-toggle {
-  background: #eef1f4;
+  background: #f2f4f7;
   color: #172338;
 }
 .site-settings-icon {
@@ -224,10 +310,9 @@ main > #dailyCharacterBox {
   outline: 2px solid #007aff;
   outline-offset: 3px;
 }
-
 .site-settings-panel {
   position: absolute;
-  top: calc(100% + 9px);
+  top: calc(100% + 11px);
   right: 0;
   width: 188px;
   box-sizing: border-box;
@@ -236,29 +321,21 @@ main > #dailyCharacterBox {
   border-top: 3px solid #27384f;
   border-radius: 11px;
   background: #fff;
-  box-shadow:
-    0 15px 34px rgba(22,31,45,.13),
-    0 3px 9px rgba(22,31,45,.06);
+  box-shadow: 0 15px 34px rgba(22,31,45,.13), 0 3px 9px rgba(22,31,45,.06);
   color: #263246;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translate3d(0,-12px,0);
+  transform: translate3d(0,-10px,0);
   transform-origin: top right;
-  transition:
-    opacity .17s ease,
-    transform .20s cubic-bezier(.2,.72,.2,1),
-    visibility 0s linear .20s;
+  transition: opacity .17s ease, transform .20s cubic-bezier(.2,.72,.2,1), visibility 0s linear .20s;
 }
 .site-settings.open .site-settings-panel {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: translate3d(0,0,0);
-  transition:
-    opacity .17s ease,
-    transform .20s cubic-bezier(.2,.72,.2,1),
-    visibility 0s;
+  transition: opacity .17s ease, transform .20s cubic-bezier(.2,.72,.2,1), visibility 0s;
 }
 .site-settings-heading {
   display: flex;
@@ -270,10 +347,7 @@ main > #dailyCharacterBox {
   border-bottom: 1px solid #e7eaf0;
   color: #2d394c;
 }
-.site-settings-heading > span:first-child {
-  font-size: 12px;
-  font-weight: 720;
-}
+.site-settings-heading > span:first-child { font-size: 12px; font-weight: 720; }
 .site-settings-heading > span:last-child {
   color: #8a929e;
   font-size: 9px;
@@ -299,11 +373,6 @@ main > #dailyCharacterBox {
   line-height: 1.2;
   text-align: left;
   cursor: pointer;
-  transition:
-    background-color .14s ease,
-    border-color .14s ease,
-    color .14s ease,
-    transform .14s ease;
 }
 .site-settings-option::after {
   content: "";
@@ -322,7 +391,6 @@ main > #dailyCharacterBox {
   background: #f2f4f7;
   color: #25344b;
 }
-.site-settings-option:active { transform: translateY(1px); }
 .site-settings-option + .site-settings-option { margin-top: 7px; }
 .site-settings-option[aria-pressed="true"] {
   border-color: #33465f;
@@ -336,35 +404,38 @@ main > #dailyCharacterBox {
 }
 
 @media (max-width: 520px) {
-  .site-settings {
-    right: 4px;
-    top: 50%;
+  :root { --site-topbar-height: 72px; }
+  .site-topbar { padding: 6px 10px; }
+  .site-topbar .site-header {
+    grid-template-columns: 40px minmax(0,1fr) 40px;
+    min-height: 52px;
   }
+  .site-topbar .site-logo-link {
+    width: min(100%, 320px);
+    height: 42px;
+  }
+  .site-menu-toggle,
   .site-settings-toggle {
     width: 36px;
     height: 36px;
     border-radius: 8px;
   }
-  .site-settings-icon {
-    width: 26px;
-    height: 26px;
-  }
-  .site-settings.open .site-settings-icon {
-    width: 21px;
-    height: 21px;
-  }
-  .site-settings-panel {
-    width: 176px;
-    top: calc(100% + 8px);
-    padding: 0 12px 12px;
-  }
-  .site-settings-heading {
-    margin-inline: -12px;
-    padding-inline: 12px;
-  }
+  .site-menu-icon { width: 22px; }
+  .site-menu-icon > span { width: 22px; }
+  .site-settings-icon { width: 26px; height: 26px; }
+  .site-settings.open .site-settings-icon { width: 21px; height: 21px; }
+  .site-settings-panel { width: 176px; top: calc(100% + 10px); padding: 0 12px 12px; }
+  .site-settings-heading { margin-inline: -12px; padding-inline: 12px; }
+  .site-topbar .site-nav { width: calc(100% - 20px); }
+  main > .box.converter-box { padding: 22px 0 26px !important; }
+  .page-grid, .page-script-grid { grid-template-columns: 1fr; }
+  .page-intro { margin-top: 11px; }
+  .page-card { padding: 24px 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .site-menu-icon > span,
+  .site-topbar .site-nav,
   .site-settings-toggle,
   .site-settings-panel,
   .site-settings-option {
