@@ -1,109 +1,5 @@
 {
   "current": {
-    "date": "2026-10-28",
-    "category": "kana",
-    "codePoint": "31F6",
-    "character": "ㇶ",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M351 622Q349 607 347.5 589.5Q346 572 346 555Q346 544 346 512.5Q346 481 346 438Q346 395 346 347Q346 299 346 254.5Q346 210 346 176Q346 142 346 127Q346 93 357.5 81.5Q369 70 398 64Q417 60 444.5 58.5Q472 57 503 57Q536 57 575 58.5Q614 60 653.5 63Q693 66 728 71Q763 76 789 83L789 2Q753 -3 703.5 -7Q654 -11 601.5 -13Q549 -15 503 -15Q465 -15 431 -12.5Q397 -10 371 -6Q320 3 297 28.5Q274 54 274 106Q274 126 274 163Q274 200 274 247Q274 294 274 343.5Q274 393 274 437Q274 481 274 512.5Q274 544 274 555Q274 570 272 588.5Q270 607 268 622ZM313 354Q348 362 394.5 375Q441 388 490.5 403.5Q540 419 585 435.5Q630 452 662 466Q681 474 699.5 483Q718 492 735 503L767 431Q748 425 729.5 416.5Q711 408 692 401Q651 385 600.5 367.5Q550 350 498 334Q446 318 398 305.5Q350 293 313 284Z",
-      "viewBox": "217.04 -672.96 622.92 738.92"
-    },
-    "info": {
-      "category": "kana",
-      "unicodeName": "KATAKANA LETTER SMALL HI",
-      "block": "Katakana Phonetic Extensions",
-      "script": "Katakana",
-      "age": "3.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "カタカナ拡張ブロックに収録されている、小書きの「ヒ」の文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "アイヌ語やその他の言語における音声転写の表記に用いられます。",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "JIS X 0213:2000の規格に基づいて制定されました。",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "registered:usage",
-          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:supplementalInfo",
-          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-29",
     "category": "ancient",
     "codePoint": "13A10",
@@ -189,6 +85,163 @@
         {
           "kind": "taxonomyIndex",
           "text": "D-32-010",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-30",
+    "category": "ancient",
+    "codePoint": "13321",
+    "character": "𓌡",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M176 104Q172 109 177.5 119Q183 129 190 129L343 129Q353 129 353 119L353 82L715 82Q715 89 715 97Q715 105 715.5 112Q716 119 718.5 124Q721 129 727 129L1073 129L1073 138L725 138Q715 138 715 148L715 181L355 181L355 148Q355 138 345 138L122 138L119 133L123 119Q145 105 166 90.5Q187 76 207 61Q199 72 191.5 82.5Q184 93 176 104ZM582 201L725 201Q735 201 735 191L735 158L1083 158Q1093 158 1093 148L1093 119Q1093 109 1083 109L736 109Q736 102 736 94Q736 86 735.5 79Q735 72 733 67Q731 62 725 62L343 62Q333 62 333 72L333 109L198 109Q213 87 228 66Q243 45 257 23Q262 15 256.5 9.5Q251 4 243 10Q210 34 177 58Q144 82 109 104Q107 105 104.5 110Q102 115 100.5 121Q99 127 98.5 132.5Q98 138 100 140Q102 143 106 150.5Q110 158 117 158L335 158L335 191Q335 201 345 201L552 201L685 319L683 325L680 333Q679 336 679 340Q679 358 687 371Q695 384 707 392.5Q719 401 733.5 405Q748 409 762 409Q776 409 784.5 404Q793 399 797.5 391.5Q802 384 803 375Q804 366 804 357Q804 347 796.5 336.5Q789 326 778.5 318Q768 310 756.5 304.5Q745 299 737 299Q720 299 714.5 299Q709 299 699 305ZM713 320Q719 319 725 319Q731 319 737 319Q742 319 750 323Q758 327 765.5 333Q773 339 778.5 345.5Q784 352 784 357Q784 374 780 381.5Q776 389 762 389Q738 389 718.5 376Q699 363 699 340Q699 338 700 335.5Q701 333 702 331L704 326Z",
+      "viewBox": "18.832000000000022 -488.568 1153.736 561.261"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH T021",
+      "block": "Egyptian Hieroglyphs",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "5.2",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [
+        {
+          "sequence": [
+            "13321",
+            "FE01"
+          ],
+          "variationSelector": "FE01",
+          "description": "rotated 180 degrees",
+          "condition": ""
+        },
+        {
+          "sequence": [
+            "13321",
+            "FE02"
+          ],
+          "variationSelector": "FE02",
+          "description": "rotated 270 degrees",
+          "condition": ""
+        }
+      ],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプトで用いられたヒエログリフの一つで、ガーディナーの記号表において武器や漁猟具の部類に属します。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "表語文字として機能し、「1つ」あるいは「唯一の」という意味を表します。",
+        "etymology": "",
+        "history": "",
+        "structure": "柄が付いた一本鉤の銛が水平に置かれた姿を模しています。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "An one-barbed harpoon, with handle, written horizontally.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Logogram (one, sole)",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "wꜥ",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "logogram (one, sole) : wꜥ",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:variation",
+          "text": "13321 FE01 rotated 180 degrees",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:variation",
+          "text": "13321 FE02 rotated 270 degrees",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "T021",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "T-13-031",
           "source": "Unicode Unikemet",
           "strength": "supporting"
         }
