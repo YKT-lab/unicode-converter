@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-10-29",
-    "category": "ancient",
-    "codePoint": "13A10",
-    "character": "𓨐",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M599 804Q582 802 571 788.5Q560 775 560 756Q560 748 564 739Q568 730 574.5 722.5Q581 715 588.5 709.5Q596 704 602 704L630 704Q647 704 661 711.5Q675 719 684.5 731.5Q694 744 699 760.5Q704 777 704 794Q704 810 696 827Q688 844 675.5 858Q663 872 647.5 881Q632 890 616 890L588 890Q565 890 547 880Q529 870 517 853.5Q505 837 498.5 815.5Q492 794 492 772L492 0L472 0L472 772Q472 796 479 821Q486 846 500.5 865.5Q515 885 537 897.5Q559 910 588 910L616 910Q637 910 656.5 899Q676 888 691 871Q706 854 715 833.5Q724 813 724 794Q724 774 718 754.5Q712 735 700 719.5Q688 704 670.5 694Q653 684 630 684L602 684Q590 684 579 691.5Q568 699 559 710Q550 721 545 733.5Q540 746 540 756Q540 782 556.5 803Q573 824 602 824Q603 824 605 823Q607 822 608 822L638 800L626 784ZM182 794Q186 808 196.5 816Q207 824 222 824Q250 824 267 802Q284 780 284 756Q284 747 279 734.5Q274 722 265 710.5Q256 699 245 691.5Q234 684 222 684L194 684Q170 684 152.5 693.5Q135 703 123.5 719Q112 735 106 754.5Q100 774 100 794Q100 813 108.5 833.5Q117 854 132 871Q147 888 166 899Q185 910 206 910L234 910Q262 910 284 897.5Q306 885 321 865.5Q336 846 344 821Q352 796 352 772L352 0L332 0L332 772Q332 794 325 815.5Q318 837 305.5 853.5Q293 870 274.5 880Q256 890 234 890L206 890Q190 890 174.5 881Q159 872 147 858Q135 844 127.5 827Q120 810 120 794Q120 776 125 760Q130 744 139.5 731.5Q149 719 162.5 711.5Q176 704 194 704L222 704Q228 704 235.5 709.5Q243 715 249 723Q255 731 259.5 740Q264 749 264 756Q264 774 252.5 788Q241 802 224 804L203 793L202 790Z",
-      "viewBox": "27.200000000000003 -982.8 769.6 1055.6"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-13A10",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの聖刻文字（ヒエログリフ）の拡張領域に収録された文字の一つである。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "文字体系において特定の音を表す表音文字（音素文字）として機能する。",
-        "etymology": "",
-        "history": "",
-        "structure": "牝牛の子宮をかたどった字形で、上端がカールした2本の独立した垂直線として描かれる。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "The uterus of a cow, represented as two separate vertical lines with a curl on the top.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Phonemogram",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "wr",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "phonemogram : wr",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "F182",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "D-32-010",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-30",
     "category": "ancient",
     "codePoint": "13321",
@@ -278,6 +152,125 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-10-31",
+    "category": "music",
+    "codePoint": "1D124",
+    "character": "𝄤",
+    "font": "Noto Music",
+    "svg": {
+      "path": "M50 123Q216 231 288 301Q336 348 373 408.5Q410 469 431.5 536Q453 603 453 669Q453 728 435 773.5Q417 819 383 845Q349 871 302 871Q284 871 264.5 867Q245 863 224 855Q181 839 158 813.5Q135 788 135 765Q135 756 143 752Q151 748 158 748Q168 748 183 752Q190 754 196.5 755Q203 756 210 756Q248 756 272 733.5Q296 711 296 674Q296 638 266 612Q236 586 195 586Q146 586 111 617Q76 648 76 697Q76 756 109 802Q142 848 198.5 874Q255 900 324 900Q400 900 460 867Q520 834 555.5 776.5Q591 719 591 646Q591 551 538 464Q511 419 476.5 379Q442 339 389 297.5Q336 256 256 208Q176 160 57 101ZM686 809Q709 809 725 793Q741 777 741 754Q741 731 725 715.5Q709 700 686 700Q663 700 647.5 715.5Q632 731 632 754Q632 777 647.5 793Q663 809 686 809ZM686 589Q709 589 725 573Q741 557 741 534Q741 511 725 495.5Q709 480 686 480Q663 480 647.5 495.5Q632 511 632 534Q632 557 647.5 573Q663 589 686 589ZM280 20Q260 31 248 48.5Q236 66 236 89Q236 121 261 141Q286 161 335 161Q377 161 403 145.5Q429 130 429 98Q429 83 417.5 66.5Q406 50 387 38Q412 26 425.5 9.5Q439 -7 439 -34Q439 -69 409 -93.5Q379 -118 334 -118Q287 -118 258.5 -98.5Q230 -79 230 -45Q230 -6 280 20ZM364 48Q379 59 385 71.5Q391 84 391 96Q391 119 373.5 130Q356 141 336 141Q313 141 301 131.5Q289 122 289 107Q289 91 305 77Q321 63 343 56ZM302 8Q269 -14 269 -44Q269 -69 288 -83.5Q307 -98 333 -98Q351 -98 367.5 -88Q384 -78 384 -57Q384 -34 362 -21Q340 -8 302 8Z",
+      "viewBox": "-31.439999999999998 -981.44 853.88 1180.88"
+    },
+    "info": {
+      "category": "music",
+      "unicodeName": "MUSICAL SYMBOL F CLEF OTTAVA BASSA",
+      "block": "Musical Symbols",
+      "script": "Common",
+      "age": "3.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": {
+        "matches": [
+          {
+            "glyphName": "fClef8vb",
+            "smuflCodepoint": "U+E064",
+            "unicodeCodepoint": "U+1D124",
+            "description": "F clef ottava bassa",
+            "classes": [
+              "clefs",
+              "clefsF"
+            ]
+          }
+        ]
+      },
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "西洋音楽の楽譜で特定の音域を指定するために使用される楽譜記号の一種です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "1オクターブ低い音域を表すヘ音記号（F clef ottava bassa）として定義されています。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "SMuFL規格の分類体系において、音符記号全般を指す「clefs」およびヘ音記号類を指す「clefsF」のカテゴリに割り当てられています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "smufl:glyph",
+          "text": "fClef8vb: F clef ottava bassa",
+          "source": "SMuFL",
+          "strength": "strong"
+        },
+        {
+          "kind": "smufl:classes",
+          "text": "clefs, clefsF",
+          "source": "SMuFL",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
+          "url": "https://www.w3.org/community/music-notation/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "SMuFL glyphnames",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
+        },
+        {
+          "name": "SMuFL classes",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
         }
       ]
     }
