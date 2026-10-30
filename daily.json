@@ -1,162 +1,5 @@
 {
   "current": {
-    "date": "2026-10-30",
-    "category": "ancient",
-    "codePoint": "13321",
-    "character": "𓌡",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M176 104Q172 109 177.5 119Q183 129 190 129L343 129Q353 129 353 119L353 82L715 82Q715 89 715 97Q715 105 715.5 112Q716 119 718.5 124Q721 129 727 129L1073 129L1073 138L725 138Q715 138 715 148L715 181L355 181L355 148Q355 138 345 138L122 138L119 133L123 119Q145 105 166 90.5Q187 76 207 61Q199 72 191.5 82.5Q184 93 176 104ZM582 201L725 201Q735 201 735 191L735 158L1083 158Q1093 158 1093 148L1093 119Q1093 109 1083 109L736 109Q736 102 736 94Q736 86 735.5 79Q735 72 733 67Q731 62 725 62L343 62Q333 62 333 72L333 109L198 109Q213 87 228 66Q243 45 257 23Q262 15 256.5 9.5Q251 4 243 10Q210 34 177 58Q144 82 109 104Q107 105 104.5 110Q102 115 100.5 121Q99 127 98.5 132.5Q98 138 100 140Q102 143 106 150.5Q110 158 117 158L335 158L335 191Q335 201 345 201L552 201L685 319L683 325L680 333Q679 336 679 340Q679 358 687 371Q695 384 707 392.5Q719 401 733.5 405Q748 409 762 409Q776 409 784.5 404Q793 399 797.5 391.5Q802 384 803 375Q804 366 804 357Q804 347 796.5 336.5Q789 326 778.5 318Q768 310 756.5 304.5Q745 299 737 299Q720 299 714.5 299Q709 299 699 305ZM713 320Q719 319 725 319Q731 319 737 319Q742 319 750 323Q758 327 765.5 333Q773 339 778.5 345.5Q784 352 784 357Q784 374 780 381.5Q776 389 762 389Q738 389 718.5 376Q699 363 699 340Q699 338 700 335.5Q701 333 702 331L704 326Z",
-      "viewBox": "18.832000000000022 -488.568 1153.736 561.261"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH T021",
-      "block": "Egyptian Hieroglyphs",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "5.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [
-        {
-          "sequence": [
-            "13321",
-            "FE01"
-          ],
-          "variationSelector": "FE01",
-          "description": "rotated 180 degrees",
-          "condition": ""
-        },
-        {
-          "sequence": [
-            "13321",
-            "FE02"
-          ],
-          "variationSelector": "FE02",
-          "description": "rotated 270 degrees",
-          "condition": ""
-        }
-      ],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトで用いられたヒエログリフの一つで、ガーディナーの記号表において武器や漁猟具の部類に属します。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "表語文字として機能し、「1つ」あるいは「唯一の」という意味を表します。",
-        "etymology": "",
-        "history": "",
-        "structure": "柄が付いた一本鉤の銛が水平に置かれた姿を模しています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "An one-barbed harpoon, with handle, written horizontally.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram (one, sole)",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "wꜥ",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram (one, sole) : wꜥ",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:variation",
-          "text": "13321 FE01 rotated 180 degrees",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:variation",
-          "text": "13321 FE02 rotated 270 degrees",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "T021",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "T-13-031",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-10-31",
     "category": "music",
     "codePoint": "1D124",
@@ -271,6 +114,132 @@
         {
           "name": "SMuFL classes",
           "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-01",
+    "category": "ancient",
+    "codePoint": "139EC",
+    "character": "𓧬",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M312 480L312 499Q312 503 315.5 509.5Q319 516 324 520.5Q329 525 334 525.5Q339 526 341 517Q345 504 352 490.5Q359 477 367 466L423 546Q427 551 433.5 549.5Q440 548 445.5 543.5Q451 539 454 532.5Q457 526 454 522L391 436Q393 433 396.5 426Q400 419 403.5 412Q407 405 409.5 398Q412 391 412 388L411 370Q418 362 426 355.5Q434 349 442 342Q466 321 492 302Q518 283 543.5 264Q569 245 594 225Q619 205 641 182Q655 168 668.5 153Q682 138 698 125L705 125Q728 140 750 172Q772 204 794 242.5Q816 281 837.5 321.5Q859 362 883 394.5Q907 427 932.5 447.5Q958 468 988 466Q1006 465 1013.5 465Q1021 465 1026 462.5Q1031 460 1037 455Q1043 450 1058 438Q1059 437 1061.5 432.5Q1064 428 1065.5 423Q1067 418 1068.5 413Q1070 408 1070 406Q1070 388 1053.5 359Q1037 330 1010.5 294.5Q984 259 952.5 220.5Q921 182 891 145Q861 108 836.5 75Q812 42 801 18Q800 16 795.5 13Q791 10 785.5 7Q780 4 774.5 1.5Q769 -1 767 -2Q759 -6 751 -8Q743 -10 730 -10Q722 -10 709 -10.5Q696 -11 688 -9Q670 -6 644.5 14Q619 34 590 63Q561 92 529.5 127Q498 162 468 195.5Q438 229 411 257Q384 285 364 301Q352 310 341 312Q330 314 318 322L132 58Q128 53 121.5 54.5Q115 56 109.5 61Q104 66 101 72Q98 78 101 83L291 348Q285 355 278.5 364.5Q272 374 266.5 383Q261 392 257.5 400.5Q254 409 254 414L254 427Q254 432 260.5 440.5Q267 449 276 457.5Q285 466 295 472Q305 478 312 478ZM354 408Q337 426 324 451L311 457Q300 452 291 443.5Q282 435 274 424L274 414Q275 408 280.5 398.5Q286 389 292.5 379Q299 369 306 360.5Q313 352 316 349Q328 335 345 331.5Q362 328 376 317Q395 303 421.5 275.5Q448 248 478 215Q508 182 539.5 147Q571 112 599.5 82.5Q628 53 652 33.5Q676 14 691 11Q699 10 710.5 10Q722 10 730 10Q740 10 746.5 11.5Q753 13 758.5 16Q764 19 770 22.5Q776 26 784 30Q795 51 819 83.5Q843 116 873 153Q903 190 934 229Q965 268 991 302.5Q1017 337 1033.5 364.5Q1050 392 1050 406L1049 408Q1048 410 1048 411Q1048 412 1047 414L1043 424L1018 444L987 446Q970 447 953 436.5Q936 426 919 407Q902 388 885 361.5Q868 335 850 304Q846 296 836.5 278.5Q827 261 814 239Q801 217 786.5 193Q772 169 757.5 149.5Q743 130 730 117.5Q717 105 708 105L695 105Q690 105 678.5 116Q667 127 653 141Q639 155 626 168.5Q613 182 607 187Q560 229 509.5 265Q459 301 411 342Q402 349 398 353.5Q394 358 392.5 362Q391 366 391 371.5Q391 377 392 388Q390 396 386 403.5Q382 411 378 418L373 411L364 417ZM332 483Q335 478 336.5 473Q338 468 341 463Q343 458 345.5 453.5Q348 449 352 444L355 449Q341 466 332 486Z",
+      "viewBox": "21.86 -627.4861538461538 1125.78 715.7261538461538"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-139EC",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプトの文字体系で用いられたヒエログリフ記号の一種です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "「書く」や「刻む」といった行為を表す単語において決定詞として機能します。",
+        "etymology": "",
+        "history": "",
+        "structure": "肘のところでV字状に曲げられた腕の姿を描いており、上部の手で棒を握った形状をしています。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "An arm, bent at the elbow, in a V shape, hand holding a stick at the top.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Classifier to write, to inscribe",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "spẖr",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "classifier to write, to inscribe : spẖr",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "D245",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "D-26-032",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
       ]
     }
