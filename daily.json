@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-11-02",
-    "category": "ancient",
-    "codePoint": "14106",
-    "character": "𔄆",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M424 48L444 48L444 890L424 890ZM404 890Q375 889 346 884.5Q317 880 288 874.5Q259 869 230 864.5Q201 860 172 860Q159 860 146 861.5Q133 863 120 865L120 720Q133 722 145.5 724Q158 726 172 726Q231 726 289 718.5Q347 711 404 692ZM404 388L318 388L241 48L404 48ZM414 28L120 28L120 10L730 10L730 28L454 28ZM464 48L614 48L540 388L464 388ZM115 886Q129 884 143.5 882Q158 880 172 880Q203 880 233 884.5Q263 889 293 895Q323 901 353.5 905.5Q384 910 414 910L454 910Q464 910 464 900L464 408L548 408L548 398L558 400L634 48L740 48Q750 48 750 38L750 0Q750 -10 740 -10L110 -10Q100 -10 100 0L100 38Q100 48 110 48L220 48L300 400Q302 408 310 408L404 408L404 671Q348 690 290 698Q232 706 172 706Q157 706 142 703Q127 700 111 698Q106 697 103 700Q100 703 100 708L100 876L114 876Z",
-      "viewBox": "26.39999999999999 -983.6 797.2 1067.2"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-14106",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの聖刻文字の拡張規格に収録された複合記号のひとつです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "「ネクロポリス（墓地）」を表す表語文字として機能します。",
-        "etymology": "",
-        "history": "",
-        "structure": "神性を象徴する布を巻きつけた竿の記号を、底の広い肉切り台の上に重ねた配置で描かれています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A cloth wound on a pole, an emblem of divinity (R8), written over a butcher's block with a broad base, with the pole at the bottom of the block.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram (necropolis)",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "ẖr.t-nṯr",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram (necropolis) : ẖr.t-nṯr",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "R050",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "R-07-031",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-03",
     "category": "math",
     "codePoint": "2241",
@@ -239,6 +113,143 @@
         {
           "name": "Unicode UTR #25",
           "url": "https://www.unicode.org/reports/tr25/"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-04",
+    "category": "emoji",
+    "codePoint": "1F324",
+    "character": "🌤",
+    "font": "Noto Sans Symbols 2",
+    "svg": {
+      "path": "M380 708Q371 708 371 719L371 721L406 816Q409 823 415 823Q421 823 424 816L459 721L459 719Q459 708 450 708ZM207 606Q200 606 198 612L156 703Q154 705 154 708Q154 713 157.5 715.5Q161 718 165 718Q166 718 167 717.5Q168 717 169 717L260 674Q266 672 266 666Q266 661 263 658L214 609Q211 606 207 606ZM626 606Q623 606 620.5 607Q618 608 616 609L567 658Q564 661 564 666Q564 671 570 674L662 717Q663 717 664 717.5Q665 718 666 718Q669 718 672.5 715Q676 712 676 708Q676 706 675 706L674 703L632 612Q631 608 626 606ZM415 92Q408 92 406 99L371 193L371 196Q371 206 380 207L422 207Q409 223 401 242Q345 246 299.5 275.5Q254 305 227 352.5Q200 400 200 457Q200 517 229 566Q258 615 306.5 644Q355 673 415 673Q486 673 542 632Q598 591 620 526Q626 527 633 527Q648 527 662 523Q676 519 688 513Q707 537 734.5 551Q762 565 795 565Q837 565 872 541Q907 517 923 479Q927 481 931.5 481Q936 481 943 481Q971 481 994.5 467Q1018 453 1032.5 429.5Q1047 406 1047 377Q1090 377 1121 346.5Q1152 316 1152 272Q1152 229 1121 198.5Q1090 168 1047 168Q1038 168 1030 169Q1022 170 1014 173Q1001 129 965 101.5Q929 74 883 74Q838 74 801 101Q756 62 693 62Q642 62 599.5 89Q557 116 536 161L525 161Q486 161 454 180L424 99Q422 92 415 92ZM254 457Q254 416 272.5 382Q291 348 322 325Q353 302 392 297Q394 329 411 356.5Q428 384 455 400.5Q482 417 514 418Q517 446 532 469.5Q547 493 569 508Q553 556 511 587.5Q469 619 415 619Q371 619 334 597.5Q297 576 275.5 539Q254 502 254 457ZM152 413L58 448Q51 451 51 457Q51 465 58 466L154 502L155 502Q165 502 165 492L165 423Q165 413 155 413ZM165 196Q154 196 154 206L155 208Q155 210 156 211L198 302Q200 308 206 308Q211 308 214 305L263 256Q266 253 266 248Q266 242 260 240L169 198Q165 196 165 196Z",
+      "viewBox": "-37.08 -911.08 1277.16 937.16"
+    },
+    "info": {
+      "category": "emoji",
+      "unicodeName": "WHITE SUN WITH SMALL CLOUD",
+      "block": "Miscellaneous Symbols and Pictographs",
+      "script": "Common",
+      "age": "7.0",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": {
+        "shortName": "晴れ時々曇り",
+        "keywords": [
+          "天気",
+          "太陽",
+          "晴れ",
+          "晴れ時々曇り",
+          "雲"
+        ],
+        "properties": [
+          "Emoji",
+          "Extended_Pictographic"
+        ]
+      },
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "気象状態や天候を表す際に用いられる絵文字。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "日本語の標準名称として「晴れ時々曇り」が割り当てられている。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "Unicodeの標準リストでは「雲の後ろの太陽（U+26C5）」が関連文字として指定されている。",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:alias",
+          "text": "mostly sunny",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(sun behind cloud - 26C5)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "emoji:jaName",
+          "text": "晴れ時々曇り",
+          "source": "CLDR Japanese annotations",
+          "strength": "strong"
+        },
+        {
+          "kind": "emoji:jaKeywords",
+          "text": "天気, 太陽, 晴れ, 晴れ時々曇り, 雲",
+          "source": "CLDR Japanese annotations",
+          "strength": "supporting"
+        },
+        {
+          "kind": "emoji:properties",
+          "text": "Emoji, Extended_Pictographic",
+          "source": "Unicode Emoji data",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode CLDR Japanese Emoji Annotations",
+          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Emoji data",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt"
+        },
+        {
+          "name": "CLDR Japanese annotations",
+          "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-annotations-full/annotations/ja/annotations.json"
         }
       ]
     }
