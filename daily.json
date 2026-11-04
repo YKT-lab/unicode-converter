@@ -1,142 +1,5 @@
 {
   "current": {
-    "date": "2026-11-04",
-    "category": "emoji",
-    "codePoint": "1F324",
-    "character": "🌤",
-    "font": "Noto Sans Symbols 2",
-    "svg": {
-      "path": "M380 708Q371 708 371 719L371 721L406 816Q409 823 415 823Q421 823 424 816L459 721L459 719Q459 708 450 708ZM207 606Q200 606 198 612L156 703Q154 705 154 708Q154 713 157.5 715.5Q161 718 165 718Q166 718 167 717.5Q168 717 169 717L260 674Q266 672 266 666Q266 661 263 658L214 609Q211 606 207 606ZM626 606Q623 606 620.5 607Q618 608 616 609L567 658Q564 661 564 666Q564 671 570 674L662 717Q663 717 664 717.5Q665 718 666 718Q669 718 672.5 715Q676 712 676 708Q676 706 675 706L674 703L632 612Q631 608 626 606ZM415 92Q408 92 406 99L371 193L371 196Q371 206 380 207L422 207Q409 223 401 242Q345 246 299.5 275.5Q254 305 227 352.5Q200 400 200 457Q200 517 229 566Q258 615 306.5 644Q355 673 415 673Q486 673 542 632Q598 591 620 526Q626 527 633 527Q648 527 662 523Q676 519 688 513Q707 537 734.5 551Q762 565 795 565Q837 565 872 541Q907 517 923 479Q927 481 931.5 481Q936 481 943 481Q971 481 994.5 467Q1018 453 1032.5 429.5Q1047 406 1047 377Q1090 377 1121 346.5Q1152 316 1152 272Q1152 229 1121 198.5Q1090 168 1047 168Q1038 168 1030 169Q1022 170 1014 173Q1001 129 965 101.5Q929 74 883 74Q838 74 801 101Q756 62 693 62Q642 62 599.5 89Q557 116 536 161L525 161Q486 161 454 180L424 99Q422 92 415 92ZM254 457Q254 416 272.5 382Q291 348 322 325Q353 302 392 297Q394 329 411 356.5Q428 384 455 400.5Q482 417 514 418Q517 446 532 469.5Q547 493 569 508Q553 556 511 587.5Q469 619 415 619Q371 619 334 597.5Q297 576 275.5 539Q254 502 254 457ZM152 413L58 448Q51 451 51 457Q51 465 58 466L154 502L155 502Q165 502 165 492L165 423Q165 413 155 413ZM165 196Q154 196 154 206L155 208Q155 210 156 211L198 302Q200 308 206 308Q211 308 214 305L263 256Q266 253 266 248Q266 242 260 240L169 198Q165 196 165 196Z",
-      "viewBox": "-37.08 -911.08 1277.16 937.16"
-    },
-    "info": {
-      "category": "emoji",
-      "unicodeName": "WHITE SUN WITH SMALL CLOUD",
-      "block": "Miscellaneous Symbols and Pictographs",
-      "script": "Common",
-      "age": "7.0",
-      "generalCategory": "So",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": {
-        "shortName": "晴れ時々曇り",
-        "keywords": [
-          "天気",
-          "太陽",
-          "晴れ",
-          "晴れ時々曇り",
-          "雲"
-        ],
-        "properties": [
-          "Emoji",
-          "Extended_Pictographic"
-        ]
-      },
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "気象状態や天候を表す際に用いられる絵文字。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "日本語の標準名称として「晴れ時々曇り」が割り当てられている。",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "Unicodeの標準リストでは「雲の後ろの太陽（U+26C5）」が関連文字として指定されている。",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "namesList:alias",
-          "text": "mostly sunny",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(sun behind cloud - 26C5)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "emoji:jaName",
-          "text": "晴れ時々曇り",
-          "source": "CLDR Japanese annotations",
-          "strength": "strong"
-        },
-        {
-          "kind": "emoji:jaKeywords",
-          "text": "天気, 太陽, 晴れ, 晴れ時々曇り, 雲",
-          "source": "CLDR Japanese annotations",
-          "strength": "supporting"
-        },
-        {
-          "kind": "emoji:properties",
-          "text": "Emoji, Extended_Pictographic",
-          "source": "Unicode Emoji data",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode CLDR Japanese Emoji Annotations",
-          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Emoji data",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt"
-        },
-        {
-          "name": "CLDR Japanese annotations",
-          "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-annotations-full/annotations/ja/annotations.json"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-05",
     "category": "punctuation",
     "codePoint": "2308",
@@ -277,6 +140,125 @@
         {
           "name": "Unicode UTR #25",
           "url": "https://www.unicode.org/reports/tr25/"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-06",
+    "category": "music",
+    "codePoint": "1D124",
+    "character": "𝄤",
+    "font": "Noto Music",
+    "svg": {
+      "path": "M50 123Q216 231 288 301Q336 348 373 408.5Q410 469 431.5 536Q453 603 453 669Q453 728 435 773.5Q417 819 383 845Q349 871 302 871Q284 871 264.5 867Q245 863 224 855Q181 839 158 813.5Q135 788 135 765Q135 756 143 752Q151 748 158 748Q168 748 183 752Q190 754 196.5 755Q203 756 210 756Q248 756 272 733.5Q296 711 296 674Q296 638 266 612Q236 586 195 586Q146 586 111 617Q76 648 76 697Q76 756 109 802Q142 848 198.5 874Q255 900 324 900Q400 900 460 867Q520 834 555.5 776.5Q591 719 591 646Q591 551 538 464Q511 419 476.5 379Q442 339 389 297.5Q336 256 256 208Q176 160 57 101ZM686 809Q709 809 725 793Q741 777 741 754Q741 731 725 715.5Q709 700 686 700Q663 700 647.5 715.5Q632 731 632 754Q632 777 647.5 793Q663 809 686 809ZM686 589Q709 589 725 573Q741 557 741 534Q741 511 725 495.5Q709 480 686 480Q663 480 647.5 495.5Q632 511 632 534Q632 557 647.5 573Q663 589 686 589ZM280 20Q260 31 248 48.5Q236 66 236 89Q236 121 261 141Q286 161 335 161Q377 161 403 145.5Q429 130 429 98Q429 83 417.5 66.5Q406 50 387 38Q412 26 425.5 9.5Q439 -7 439 -34Q439 -69 409 -93.5Q379 -118 334 -118Q287 -118 258.5 -98.5Q230 -79 230 -45Q230 -6 280 20ZM364 48Q379 59 385 71.5Q391 84 391 96Q391 119 373.5 130Q356 141 336 141Q313 141 301 131.5Q289 122 289 107Q289 91 305 77Q321 63 343 56ZM302 8Q269 -14 269 -44Q269 -69 288 -83.5Q307 -98 333 -98Q351 -98 367.5 -88Q384 -78 384 -57Q384 -34 362 -21Q340 -8 302 8Z",
+      "viewBox": "-31.439999999999998 -981.44 853.88 1180.88"
+    },
+    "info": {
+      "category": "music",
+      "unicodeName": "MUSICAL SYMBOL F CLEF OTTAVA BASSA",
+      "block": "Musical Symbols",
+      "script": "Common",
+      "age": "3.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": {
+        "matches": [
+          {
+            "glyphName": "fClef8vb",
+            "smuflCodepoint": "U+E064",
+            "unicodeCodepoint": "U+1D124",
+            "description": "F clef ottava bassa",
+            "classes": [
+              "clefs",
+              "clefsF"
+            ]
+          }
+        ]
+      },
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "楽譜上で用いられる音楽用の表記記号の一種。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "1オクターヴ低い音域を示すヘ音記号（F clef ottava bassa）を表現する。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "SMuFL（Standard Music Font Layout）規格における音記号（clefs）およびヘ音記号（clefsF）の分類に属する。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "smufl:glyph",
+          "text": "fClef8vb: F clef ottava bassa",
+          "source": "SMuFL",
+          "strength": "strong"
+        },
+        {
+          "kind": "smufl:classes",
+          "text": "clefs, clefsF",
+          "source": "SMuFL",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
+          "url": "https://www.w3.org/community/music-notation/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "SMuFL glyphnames",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
+        },
+        {
+          "name": "SMuFL classes",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
         }
       ]
     }
