@@ -1,150 +1,5 @@
 {
   "current": {
-    "date": "2026-11-05",
-    "category": "punctuation",
-    "codePoint": "2308",
-    "character": "⌈",
-    "font": "Noto Sans Symbols",
-    "svg": {
-      "path": "M51 -80L51 794L353 794L353 730L122 730L122 -80Z",
-      "viewBox": "-18.92 -863.92 441.84000000000003 1013.84"
-    },
-    "info": {
-      "category": "punctuation",
-      "unicodeName": "LEFT CEILING",
-      "block": "Miscellaneous Technical",
-      "script": "Common",
-      "age": "1.1",
-      "generalCategory": "Ps",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": {
-        "isMath": true,
-        "bracket": {
-          "pairedCodePoint": "2309",
-          "type": "o"
-        },
-        "mirroredCodePoint": "2309"
-      },
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": true,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "技術文書や数式などで左側の境界を示すために用いられる開き記号です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "対となる閉じ括弧としてU+2309が割り当てられているほか、類似の角付き記号としてU+2E22やU+300Cが関連参照されています。",
-        "culture": "",
-        "unicodeInfo": "Unicodeの属性定義において、数学的性質を持つ記号であることを示すMathプロパティが指定されています。",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "namesList:alias",
-          "text": "APL upstile",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(top left half bracket - 2E22)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(left corner bracket - 300C)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:property",
-          "text": "Math",
-          "source": "Unicode DerivedCoreProperties",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiBracket",
-          "text": "paired U+2309 (o)",
-          "source": "Unicode BidiBrackets",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiMirror",
-          "text": "mirrored U+2309",
-          "source": "Unicode BidiMirroring",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode CLDR Japanese Emoji Annotations",
-          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode DerivedCoreProperties",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
-        },
-        {
-          "name": "Unicode BidiBrackets",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
-        },
-        {
-          "name": "Unicode BidiMirroring",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
-        },
-        {
-          "name": "Unicode UTR #25",
-          "url": "https://www.unicode.org/reports/tr25/"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-06",
     "category": "music",
     "codePoint": "1D124",
@@ -259,6 +114,132 @@
         {
           "name": "SMuFL classes",
           "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-07",
+    "category": "ancient",
+    "codePoint": "1406E",
+    "character": "𔁮",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M1353 464Q1339 405 1309.5 354.5Q1280 304 1239 262L1269 226Q1280 230 1283.5 225.5Q1287 221 1295 212Q1297 210 1298.5 204Q1300 198 1300 192Q1300 186 1297.5 181.5Q1295 177 1290 176Q1279 174 1275.5 174Q1272 174 1267 177L1267 176L1267 162Q1267 155 1256.5 150.5Q1246 146 1241 150Q1242 143 1239 134.5Q1236 126 1229 126L1221 126Q1216 126 1208 132.5Q1200 139 1198 144Q1196 147 1194.5 150Q1193 153 1191 156Q1183 167 1175 176Q1167 185 1159 194Q1111 160 1057 135.5Q1003 111 947 96L1325 96L1325 86L1337 86L1337 0Q1337 -10 1327 -10L165 -10Q155 -10 155 0L155 86Q155 96 165 96L627 96Q558 115 490.5 152.5Q423 190 367.5 240.5Q312 291 273.5 352.5Q235 414 222 482Q217 486 216 491Q214 495 209 508.5Q204 522 205 527Q207 534 209.5 540.5Q212 547 215 554Q206 557 198 557Q190 557 181 559Q172 561 162.5 567Q153 573 142 589Q141 590 138 594.5Q135 599 131.5 603.5Q128 608 125.5 612Q123 616 123 618L123 624Q123 630 127.5 632Q132 634 137 634Q163 635 183.5 627Q204 619 222 607Q196 654 166.5 698Q137 742 103 784Q97 791 101.5 797Q106 803 115 799Q121 797 127.5 792.5Q134 788 141 783Q133 795 125.5 807.5Q118 820 110 833Q105 842 111.5 847Q118 852 126 846Q152 823 178.5 793Q205 763 230 730Q255 697 276 662.5Q297 628 311 596Q327 587 340.5 574.5Q354 562 361 550Q367 538 371 531Q375 524 379.5 519Q384 514 389.5 507.5Q395 501 404 491Q412 483 421.5 471Q431 459 431 448Q431 440 428 429Q425 418 415 418L404 418Q398 414 393 414Q379 414 368.5 421.5Q358 429 344 431Q327 432 313 432Q299 432 285 447Q283 449 281.5 451Q280 453 278 455Q326 370 393 306.5Q460 243 543 205Q565 255 592 296Q619 337 661 363L660 364Q666 378 671.5 386.5Q677 395 684.5 400.5Q692 406 701.5 408.5Q711 411 723 413Q725 421 729 433Q733 445 733 454L733 482Q733 497 728.5 515.5Q724 534 717.5 553Q711 572 703 590.5Q695 609 688 624Q674 639 662 654.5Q650 670 641 685Q632 699 629.5 717.5Q627 736 626.5 754Q626 772 624 787Q622 802 614 808L609 812L597 812L592 802Q587 793 580.5 794.5Q574 796 573 805L571 823L571 824Q570 841 582.5 853Q595 865 607 870Q618 894 637 902Q656 910 679 910Q702 910 718.5 905Q735 900 746.5 890.5Q758 881 766 867Q774 853 782 834Q811 824 842 790.5Q873 757 903.5 716Q934 675 963 635Q992 595 1018 572Q1025 566 1043 551Q1061 536 1078.5 519Q1096 502 1107.5 487Q1119 472 1112 465Q1109 461 1103.5 456Q1098 451 1091 456Q1085 461 1075 466Q1065 471 1052 478L1083 434Q1088 426 1075 412.5Q1062 399 1043 387Q1024 375 1006 369Q988 363 984 371L926 483Q918 500 907 509.5Q896 519 879 525L879 434Q879 425 873 423Q867 421 862 427Q854 437 838 442L836 413Q845 413 855.5 412.5Q866 412 876 408.5Q886 405 893.5 398.5Q901 392 903 380Q904 370 900 367Q948 342 980.5 299Q1013 256 1039 201Q1059 210 1078.5 220.5Q1098 231 1116 244Q1110 251 1102 259.5Q1094 268 1088 276Q1082 284 1080 291Q1078 298 1083 302Q1087 305 1094 310.5Q1101 316 1107 309L1144 265L1147 267Q1141 275 1133 283.5Q1125 292 1119.5 300.5Q1114 309 1112 315.5Q1110 322 1115 326Q1119 329 1125 332.5Q1131 336 1136 331L1137 330Q1130 341 1136 347Q1140 351 1147 357.5Q1154 364 1161 357L1198 314Q1231 349 1262 390.5Q1293 432 1325 483Q1329 489 1334 488Q1339 487 1343.5 482.5Q1348 478 1351 472.5Q1354 467 1353 464ZM1084 484Q1059 513 1028 536.5Q997 560 973 590Q959 608 933.5 643.5Q908 679 879 715.5Q850 752 821.5 781.5Q793 811 773 816Q771 817 768.5 819Q766 821 766 822Q758 840 751 853Q744 866 734.5 874.5Q725 883 711.5 886.5Q698 890 679 890Q648 890 634 875Q637 877 642 875Q645 873 652 869.5Q659 866 659 860L659 854Q659 850 656.5 845Q654 840 650 838Q651 833 650.5 825.5Q650 818 641 818L637 818L633 819L632 819L634 817Q641 810 642.5 798.5Q644 787 645 773Q652 784 664 791.5Q676 799 689.5 803.5Q703 808 717 810.5Q731 813 742 814L744 794Q736 793 721.5 790.5Q707 788 693 783Q679 778 669 770Q659 762 659 750Q659 737 676.5 720Q694 703 723 682.5Q752 662 789.5 640.5Q827 619 866.5 597.5Q906 576 945 556Q984 536 1016 520L1021 524L1028 513Q1046 504 1060 496.5Q1074 489 1084 484ZM1277 202L1274 206Q1272 206 1270.5 205.5Q1269 205 1267 205L1268 200L1277 194ZM626 843Q624 845 622.5 847.5Q621 850 621 852L621 855Q616 851 609 847.5Q602 844 597 839Q610 844 613.5 845.5Q617 847 626 843ZM1214 238Q1222 228 1231 217.5Q1240 207 1248 201ZM1247 173L1243 181L1242 181L1243 179L1244 174L1247 171ZM1014 498L992 510Q975 518 946.5 532.5Q918 547 884 564.5Q850 582 813.5 602.5Q777 623 744 644Q711 665 685.5 686Q660 707 648 725Q650 717 651.5 709Q653 701 658 695Q677 665 703 637Q729 609 752.5 579Q776 549 792.5 516.5Q809 484 809 446Q809 443 809.5 434.5Q810 426 809.5 417Q809 408 806.5 401Q804 394 799 394L794 394L821 391Q832 391 842 391Q852 391 863 389L866 381Q868 380 871 379.5Q874 379 877 377L873 388Q867 391 857 391.5Q847 392 837.5 392.5Q828 393 821.5 395.5Q815 398 815 405Q816 421 816 434.5Q816 448 819.5 456Q823 464 831.5 464.5Q840 465 859 454L859 538Q859 550 872 548Q897 541 914 529Q931 517 944 493L997 390L1061 431ZM1223 174Q1223 178 1222 179Q1216 190 1206.5 199Q1197 208 1189 216L1186 214L1217 175Q1220 174 1224 172ZM1217 154L1215 154L1215 153L1217 152L1219 150ZM793 439Q788 444 780 448L772 411L790 414Q791 420 792 426.5Q793 433 793 439ZM1329 453Q1276 371 1222 311Q1168 251 1103 211.5Q1038 172 958 153Q878 134 775 134Q689 134 611.5 157.5Q534 181 467 224Q400 267 345.5 327.5Q291 388 251 462L246 465Q259 415 287.5 368Q316 321 355.5 280.5Q395 240 443 206.5Q491 173 542.5 148.5Q594 124 647.5 111Q701 98 751 98L829 98Q843 98 856 101Q869 104 883 106L885 96L891 96L889 104Q960 116 1030 145.5Q1100 175 1160 219.5Q1220 264 1264.5 323Q1309 382 1329 453ZM1021 193Q1003 230 983 261Q963 292 938 315.5Q913 339 881.5 353.5Q850 368 811 372Q790 373 769 372Q748 371 727 369Q695 362 670.5 346.5Q646 331 626.5 308.5Q607 286 591 257.5Q575 229 561 197Q661 154 775 154Q848 154 908.5 163.5Q969 173 1021 193ZM283 608Q264 646 237.5 685.5Q211 725 181 760Q200 732 218 705Q236 678 252 649L251 648Q266 625 274 610Q277 610 283 608ZM411 448Q411 451 404.5 459.5Q398 468 389.5 477.5Q381 487 373.5 495Q366 503 364 505Q354 516 349.5 527.5Q345 539 337 550Q333 555 326 561.5Q319 568 310.5 573.5Q302 579 293 583Q284 587 277 589L266 583Q255 604 233.5 638Q212 672 186 705Q206 675 223.5 645Q241 615 258 583Q262 575 260 572.5Q258 570 254 569L246 561Q241 564 231.5 571.5Q222 579 211.5 587Q201 595 191.5 601Q182 607 178 607Q166 612 149 614Q156 603 160.5 596.5Q165 590 170 586Q175 582 182.5 579.5Q190 577 203 576L208 576Q223 564 229.5 561.5Q236 559 237 557Q238 555 234.5 549Q231 543 225 524L234 497Q235 495 241 491.5Q247 488 255 484Q264 480 274 474Q283 468 293 463Q301 458 310.5 454.5Q320 451 329 451Q347 451 354 449.5Q361 448 374 441L376 448Q378 447 382.5 445.5Q387 444 393 442L402 439Q403 439 403 438L409 438Q410 440 410 442L411 446ZM1317 76L175 76L175 10L1317 10ZM302 530Q304 529 306 530.5Q308 532 309 530L311 534L304 539L294 533ZM281 540Q283 545 287.5 547.5Q292 550 297 550L303 550Q310 550 317.5 544.5Q325 539 326 532Q320 522 312.5 522Q305 522 291 522L277 534ZM750 409Q752 417 753.5 428Q755 439 758 448.5Q761 458 765 464.5Q769 471 775 470Q784 469 792 461Q787 491 770 519Q753 547 731 574Q740 551 746.5 526.5Q753 502 753 482L753 454Q753 449 750.5 434.5Q748 420 743 408Z",
+      "viewBox": "-0.7228571428571229 -1010.2942857142857 1454.2671428571427 1120.5885714285714"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-1406E",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "エジプト・ヒエログリフの拡張規格に含まれる、神聖な聖船を描写した記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "冥界の神ソカルの聖船（ヘヌ船）を指示する表語文字として機能します。",
+        "etymology": "",
+        "history": "",
+        "structure": "水面を表す長方形の上に三日月型の舟が位置し、舳先のレイヨウの頭部、船内の低い円錐に乗るハヤブサ、後部の舵櫂で構成されます。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "A moon-sickle shaped boat with a higher prow than stern, with the head of an antelope (F81) on top of the prow, on top of a rectangle representing water, with a falcon (G5) standing on top of a low cone shape inside the boat/ship, with an oar/rudder at the back.",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Logogram (Henu-bark of Sokar)",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "ḥnw",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "logogram (Henu-bark of Sokar) : ḥnw",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "P066A",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "P-03-100",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
       ]
     }
