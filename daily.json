@@ -1,124 +1,5 @@
 {
   "current": {
-    "date": "2026-11-06",
-    "category": "music",
-    "codePoint": "1D124",
-    "character": "𝄤",
-    "font": "Noto Music",
-    "svg": {
-      "path": "M50 123Q216 231 288 301Q336 348 373 408.5Q410 469 431.5 536Q453 603 453 669Q453 728 435 773.5Q417 819 383 845Q349 871 302 871Q284 871 264.5 867Q245 863 224 855Q181 839 158 813.5Q135 788 135 765Q135 756 143 752Q151 748 158 748Q168 748 183 752Q190 754 196.5 755Q203 756 210 756Q248 756 272 733.5Q296 711 296 674Q296 638 266 612Q236 586 195 586Q146 586 111 617Q76 648 76 697Q76 756 109 802Q142 848 198.5 874Q255 900 324 900Q400 900 460 867Q520 834 555.5 776.5Q591 719 591 646Q591 551 538 464Q511 419 476.5 379Q442 339 389 297.5Q336 256 256 208Q176 160 57 101ZM686 809Q709 809 725 793Q741 777 741 754Q741 731 725 715.5Q709 700 686 700Q663 700 647.5 715.5Q632 731 632 754Q632 777 647.5 793Q663 809 686 809ZM686 589Q709 589 725 573Q741 557 741 534Q741 511 725 495.5Q709 480 686 480Q663 480 647.5 495.5Q632 511 632 534Q632 557 647.5 573Q663 589 686 589ZM280 20Q260 31 248 48.5Q236 66 236 89Q236 121 261 141Q286 161 335 161Q377 161 403 145.5Q429 130 429 98Q429 83 417.5 66.5Q406 50 387 38Q412 26 425.5 9.5Q439 -7 439 -34Q439 -69 409 -93.5Q379 -118 334 -118Q287 -118 258.5 -98.5Q230 -79 230 -45Q230 -6 280 20ZM364 48Q379 59 385 71.5Q391 84 391 96Q391 119 373.5 130Q356 141 336 141Q313 141 301 131.5Q289 122 289 107Q289 91 305 77Q321 63 343 56ZM302 8Q269 -14 269 -44Q269 -69 288 -83.5Q307 -98 333 -98Q351 -98 367.5 -88Q384 -78 384 -57Q384 -34 362 -21Q340 -8 302 8Z",
-      "viewBox": "-31.439999999999998 -981.44 853.88 1180.88"
-    },
-    "info": {
-      "category": "music",
-      "unicodeName": "MUSICAL SYMBOL F CLEF OTTAVA BASSA",
-      "block": "Musical Symbols",
-      "script": "Common",
-      "age": "3.1",
-      "generalCategory": "So",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": {
-        "matches": [
-          {
-            "glyphName": "fClef8vb",
-            "smuflCodepoint": "U+E064",
-            "unicodeCodepoint": "U+1D124",
-            "description": "F clef ottava bassa",
-            "classes": [
-              "clefs",
-              "clefsF"
-            ]
-          }
-        ]
-      },
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "楽譜上で用いられる音楽用の表記記号の一種。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "1オクターヴ低い音域を示すヘ音記号（F clef ottava bassa）を表現する。",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "SMuFL（Standard Music Font Layout）規格における音記号（clefs）およびヘ音記号（clefsF）の分類に属する。",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "smufl:glyph",
-          "text": "fClef8vb: F clef ottava bassa",
-          "source": "SMuFL",
-          "strength": "strong"
-        },
-        {
-          "kind": "smufl:classes",
-          "text": "clefs, clefsF",
-          "source": "SMuFL",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
-          "url": "https://www.w3.org/community/music-notation/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "SMuFL glyphnames",
-          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
-        },
-        {
-          "name": "SMuFL classes",
-          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-07",
     "category": "ancient",
     "codePoint": "1406E",
@@ -240,6 +121,151 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-08",
+    "category": "punctuation",
+    "codePoint": "2308",
+    "character": "⌈",
+    "font": "Noto Sans Symbols",
+    "svg": {
+      "path": "M51 -80L51 794L353 794L353 730L122 730L122 -80Z",
+      "viewBox": "-18.92 -863.92 441.84000000000003 1013.84"
+    },
+    "info": {
+      "category": "punctuation",
+      "unicodeName": "LEFT CEILING",
+      "block": "Miscellaneous Technical",
+      "script": "Common",
+      "age": "1.1",
+      "generalCategory": "Ps",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": {
+        "isMath": true,
+        "bracket": {
+          "pairedCodePoint": "2309",
+          "type": "o"
+        },
+        "mirroredCodePoint": "2309"
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": true,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "特殊な表記に用いられる開き記号の一種です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "対となる閉じ記号U+2309のほか、U+2E22や鍵括弧U+300Cが関連文字として参照されています。",
+        "culture": "",
+        "unicodeInfo": "Unicodeの DerivedCoreProperties において、数学用記号であることを示す Math プロパティが指定されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:alias",
+          "text": "APL upstile",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(top left half bracket - 2E22)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(left corner bracket - 300C)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:property",
+          "text": "Math",
+          "source": "Unicode DerivedCoreProperties",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiBracket",
+          "text": "paired U+2309 (o)",
+          "source": "Unicode BidiBrackets",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiMirror",
+          "text": "mirrored U+2309",
+          "source": "Unicode BidiMirroring",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode CLDR Japanese Emoji Annotations",
+          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
