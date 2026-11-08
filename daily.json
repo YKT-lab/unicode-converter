@@ -1,150 +1,5 @@
 {
   "current": {
-    "date": "2026-11-08",
-    "category": "punctuation",
-    "codePoint": "2308",
-    "character": "⌈",
-    "font": "Noto Sans Symbols",
-    "svg": {
-      "path": "M51 -80L51 794L353 794L353 730L122 730L122 -80Z",
-      "viewBox": "-18.92 -863.92 441.84000000000003 1013.84"
-    },
-    "info": {
-      "category": "punctuation",
-      "unicodeName": "LEFT CEILING",
-      "block": "Miscellaneous Technical",
-      "script": "Common",
-      "age": "1.1",
-      "generalCategory": "Ps",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": {
-        "isMath": true,
-        "bracket": {
-          "pairedCodePoint": "2309",
-          "type": "o"
-        },
-        "mirroredCodePoint": "2309"
-      },
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": true,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "特殊な表記に用いられる開き記号の一種です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "対となる閉じ記号U+2309のほか、U+2E22や鍵括弧U+300Cが関連文字として参照されています。",
-        "culture": "",
-        "unicodeInfo": "Unicodeの DerivedCoreProperties において、数学用記号であることを示す Math プロパティが指定されています。",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "namesList:alias",
-          "text": "APL upstile",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(top left half bracket - 2E22)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(left corner bracket - 300C)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:property",
-          "text": "Math",
-          "source": "Unicode DerivedCoreProperties",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiBracket",
-          "text": "paired U+2309 (o)",
-          "source": "Unicode BidiBrackets",
-          "strength": "supporting"
-        },
-        {
-          "kind": "math:bidiMirror",
-          "text": "mirrored U+2309",
-          "source": "Unicode BidiMirroring",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode CLDR Japanese Emoji Annotations",
-          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode DerivedCoreProperties",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
-        },
-        {
-          "name": "Unicode BidiBrackets",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
-        },
-        {
-          "name": "Unicode BidiMirroring",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
-        },
-        {
-          "name": "Unicode UTR #25",
-          "url": "https://www.unicode.org/reports/tr25/"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-09",
     "category": "ancient",
     "codePoint": "136C2",
@@ -266,6 +121,145 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-10",
+    "category": "punctuation",
+    "codePoint": "2309",
+    "character": "⌉",
+    "font": "Noto Sans Symbols",
+    "svg": {
+      "path": "M282 -80L282 730L51 730L51 794L353 794L353 -80Z",
+      "viewBox": "-18.92 -863.92 441.84000000000003 1013.84"
+    },
+    "info": {
+      "category": "punctuation",
+      "unicodeName": "RIGHT CEILING",
+      "block": "Miscellaneous Technical",
+      "script": "Common",
+      "age": "1.1",
+      "generalCategory": "Pe",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": {
+        "isMath": true,
+        "bracket": {
+          "pairedCodePoint": "2308",
+          "type": "c"
+        },
+        "mirroredCodePoint": "2308"
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": true,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "数理的な記述などで用いられる閉じ括弧形状の記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "対をなす左天井記号（U+2308）のほか、結合年金記号（U+20E7）や右上半角括弧（U+2E23）が関連記号として挙げられています。",
+        "culture": "",
+        "unicodeInfo": "Unicodeの DerivedCoreProperties で数学用記号（Math）の属性が定義されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:crossReference",
+          "text": "(combining annuity symbol - 20E7)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(top right half bracket - 2E23)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:property",
+          "text": "Math",
+          "source": "Unicode DerivedCoreProperties",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiBracket",
+          "text": "paired U+2308 (c)",
+          "source": "Unicode BidiBrackets",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiMirror",
+          "text": "mirrored U+2308",
+          "source": "Unicode BidiMirroring",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode CLDR Japanese Emoji Annotations",
+          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
