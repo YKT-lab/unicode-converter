@@ -1,123 +1,5 @@
 {
   "current": {
-    "date": "2026-11-12",
-    "category": "music",
-    "codePoint": "1D1A9",
-    "character": "𝆩",
-    "font": "Noto Music",
-    "svg": {
-      "path": "M91 460Q79 477 79 499Q79 525 97.5 544Q116 563 142 563Q163 563 180 549L221 590L231 579L191 539Q206 521 206 499Q206 473 187 454.5Q168 436 142 436Q119 436 102 450L60 408L50 419ZM104 473L168 537Q158 546 142 546Q123 546 109.5 532Q96 518 96 499Q96 484 104 473ZM179 527L114 462Q126 453 142 453Q161 453 175 466.5Q189 480 189 499Q189 516 179 527Z",
-      "viewBox": "35.44 -604.56 210.12 211.12"
-    },
-    "info": {
-      "category": "music",
-      "unicodeName": "MUSICAL SYMBOL DEGREE SLASH",
-      "block": "Musical Symbols",
-      "script": "Common",
-      "age": "3.1",
-      "generalCategory": "So",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": {
-        "matches": [
-          {
-            "glyphName": "csymDiminished",
-            "smuflCodepoint": "U+E870",
-            "unicodeCodepoint": "U+1D1A9",
-            "description": "Diminished",
-            "classes": [
-              "tf_chordSymbols"
-            ]
-          }
-        ]
-      },
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "西洋音楽の楽譜で使用される音楽記号のひとつです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "コード表記において減三和音（ディミニッシュ）を示す役割を持ちます。",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "SMuFL規格の分類ではコードシンボル（tf_chordSymbols）に属しています。",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "smufl:glyph",
-          "text": "csymDiminished: Diminished",
-          "source": "SMuFL",
-          "strength": "strong"
-        },
-        {
-          "kind": "smufl:classes",
-          "text": "tf_chordSymbols",
-          "source": "SMuFL",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
-          "url": "https://www.w3.org/community/music-notation/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "SMuFL glyphnames",
-          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
-        },
-        {
-          "name": "SMuFL classes",
-          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-13",
     "category": "symbol",
     "codePoint": "1F773",
@@ -217,6 +99,132 @@
         {
           "name": "Unicode NamesList",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-14",
+    "category": "ancient",
+    "codePoint": "13F8C",
+    "character": "𓾌",
+    "font": "UniHieroglyphica",
+    "svg": {
+      "path": "M152 40L152 10L744 10L744 40ZM210 692L210 60L244 60L244 634Q244 644 254 644L640 644Q650 644 650 634L650 60L684 60L684 692ZM188 732L183 722L187 712L712 712L717 722L710 732ZM774 890L120 890L120 878L774 878ZM688 752Q686 790 704.5 815Q723 840 749 858L147 858Q162 848 171.5 838Q181 828 187.5 816Q194 804 198.5 788.5Q203 773 208 752ZM100 900Q100 910 110 910L784 910Q794 910 794 900L794 868Q794 860 780 852.5Q766 845 749.5 833Q733 821 720 802Q707 783 708 752L716 752Q719 752 723.5 748Q728 744 731.5 738Q735 732 736.5 726.5Q738 721 737 718Q737 717 735 712.5Q733 708 730.5 703.5Q728 699 725 695.5Q722 692 718 692L704 692L704 60L754 60Q764 60 764 50L764 0Q764 -10 754 -10L142 -10Q132 -10 132 0L132 50Q132 60 142 60L190 60L190 692L180 692Q176 692 172.5 696.5Q169 701 166.5 706.5Q164 712 162.5 717.5Q161 723 163 726Q163 727 165 731.5Q167 736 169.5 740.5Q172 745 175 748.5Q178 752 182 752L187 752Q182 775 177 790Q172 805 164 816.5Q156 828 142 837.5Q128 847 105 859Q95 865 100 874ZM452 358Q452 368 462 368L630 368L630 624L264 624L264 60L452 60ZM494 318Q494 328 504 328L630 328L630 348L472 348L472 60L494 60ZM514 308L514 60L630 60L630 308Z",
+      "viewBox": "24.733333333333306 -983.6 842.8666666666668 1067.2"
+    },
+    "info": {
+      "category": "ancient",
+      "unicodeName": "EGYPTIAN HIEROGLYPH-13F8C",
+      "block": "Egyptian Hieroglyphs Extended-A",
+      "script": "Egyptian_Hieroglyphs",
+      "age": "16.0",
+      "generalCategory": "Lo",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "古代エジプトの文字体系において用いられるヒエログリフ拡張文字である。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "表語文字として機能する。",
+        "etymology": "",
+        "history": "",
+        "structure": "平らな屋根と垂直な側面を持つ神殿のファサードの上に描かれ、読みの方向とは反対側の底隅に小さな長方形が配置されている。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "appearance",
+          "text": "written over a façade of a shrine with a flat roof, with vertical sides, with a small rectangle in the bottom corner away from the reading direction (O21D).",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "function",
+          "text": "Logogram",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "functionValue",
+          "text": "ḥw.t",
+          "source": "Unicode Unikemet",
+          "strength": "strong"
+        },
+        {
+          "kind": "namesList:comment",
+          "text": "logogram : ḥw.t",
+          "source": "Unicode NamesList",
+          "strength": "strong"
+        },
+        {
+          "kind": "catalogIndex",
+          "text": "O021D",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        },
+        {
+          "kind": "taxonomyIndex",
+          "text": "O-07-010",
+          "source": "Unicode Unikemet",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
+          "url": "https://www.unicode.org/reports/tr57/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Unikemet",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
         }
       ]
     }
