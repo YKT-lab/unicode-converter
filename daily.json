@@ -1,109 +1,5 @@
 {
   "current": {
-    "date": "2026-11-13",
-    "category": "symbol",
-    "codePoint": "1F773",
-    "character": "🝳",
-    "font": "Noto Sans Symbols",
-    "svg": {
-      "path": "M242 -217Q194 -217 168.5 -193.5Q143 -170 143 -130Q143 -77 171.5 -20.5Q200 36 246.5 95Q293 154 346 213Q304 268 213 268L154 268L154 329L286 462L50 462L50 505L250 651L50 651L50 719L389 719L389 678L195 536L389 536L389 472L257 338Q355 332 407 270Q424 284 445.5 300.5Q467 317 492 335Q495 433 520 526.5Q545 620 589 698.5Q633 777 691 830Q780 911 868 911Q924 911 957 885Q990 859 990 813Q990 759 957 714.5Q924 670 865 644Q910 599 910 539Q910 475 871 434.5Q832 394 772 394Q738 394 706.5 413Q675 432 653 462.5Q631 493 622 528L674 557Q690 519 710.5 490.5Q731 462 761 462Q788 462 805.5 485.5Q823 509 823 548Q823 598 793 628Q780 625 757.5 622Q735 619 703 617L700 658Q801 676 856 714.5Q911 753 911 800Q911 819 896.5 832Q882 845 856 845Q831 845 799.5 825Q768 805 735 769.5Q702 734 671.5 687.5Q641 641 618 589Q571 484 562 372Q585 386 615 386Q656 386 679 362Q702 338 702 301Q702 258 675 230Q648 202 606 202Q541 202 509 261Q494 248 478.5 234Q463 220 448 206Q483 138 483 66Q483 17 463 -33Q443 -83 408.5 -125Q374 -167 331 -192Q288 -217 242 -217ZM610 265Q624 265 632.5 274Q641 283 641 296Q641 324 611 324Q589 324 570 305Q580 265 610 265ZM247 -144Q283 -144 319 -114.5Q355 -85 378.5 -36.5Q402 12 402 69Q402 119 385 151Q357 122 328 84.5Q299 47 275.5 8.5Q252 -30 237.5 -63.5Q223 -97 223 -119Q223 -144 247 -144Z",
-      "viewBox": "-40.239999999999995 -1001.24 1120.48 1308.48"
-    },
-    "info": {
-      "category": "symbol",
-      "unicodeName": "ALCHEMICAL SYMBOL FOR HALF OUNCE",
-      "block": "Alchemical Symbols",
-      "script": "Common",
-      "age": "6.0",
-      "generalCategory": "So",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "ON",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "西洋の伝統的な錬金術や薬術の文献などで用いられた度量衡に関する記号の一つです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "",
-        "structure": "",
-        "related": "関連する記号として、オンスを表すオンス記号（U+2125）が挙げられます。",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": "オンス記号（U+2125）と小文字のエスツェット（U+00DF）の手書きによる合字であり、通常は「℥ss」と綴り下されます。"
-      },
-      "facts": [
-        {
-          "kind": "namesList:alias",
-          "text": "uncia semis",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "handwritten ligature of 2125 + 00DF, typically spelled out as 2125 ss",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:crossReference",
-          "text": "(ounce sign - 2125)",
-          "source": "Unicode NamesList",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode CLDR Japanese Emoji Annotations",
-          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-14",
     "category": "ancient",
     "codePoint": "13F8C",
@@ -225,6 +121,124 @@
         {
           "name": "Unicode Unikemet",
           "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-15",
+    "category": "music",
+    "codePoint": "1D1A9",
+    "character": "𝆩",
+    "font": "Noto Music",
+    "svg": {
+      "path": "M91 460Q79 477 79 499Q79 525 97.5 544Q116 563 142 563Q163 563 180 549L221 590L231 579L191 539Q206 521 206 499Q206 473 187 454.5Q168 436 142 436Q119 436 102 450L60 408L50 419ZM104 473L168 537Q158 546 142 546Q123 546 109.5 532Q96 518 96 499Q96 484 104 473ZM179 527L114 462Q126 453 142 453Q161 453 175 466.5Q189 480 189 499Q189 516 179 527Z",
+      "viewBox": "35.44 -604.56 210.12 211.12"
+    },
+    "info": {
+      "category": "music",
+      "unicodeName": "MUSICAL SYMBOL DEGREE SLASH",
+      "block": "Musical Symbols",
+      "script": "Common",
+      "age": "3.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": {
+        "matches": [
+          {
+            "glyphName": "csymDiminished",
+            "smuflCodepoint": "U+E870",
+            "unicodeCodepoint": "U+1D1A9",
+            "description": "Diminished",
+            "classes": [
+              "tf_chordSymbols"
+            ]
+          }
+        ]
+      },
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "西洋音楽の楽譜で使用される音楽記号の一つです。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "コード表記においてディミニッシュ（減和音）であることを表します。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "SMuFL（標準音楽フォントレイアウト）では、コードシンボルのクラス（tf_chordSymbols）に分類されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "smufl:glyph",
+          "text": "csymDiminished: Diminished",
+          "source": "SMuFL",
+          "strength": "strong"
+        },
+        {
+          "kind": "smufl:classes",
+          "text": "tf_chordSymbols",
+          "source": "SMuFL",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
+          "url": "https://www.w3.org/community/music-notation/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "SMuFL glyphnames",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
+        },
+        {
+          "name": "SMuFL classes",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
         }
       ]
     }
