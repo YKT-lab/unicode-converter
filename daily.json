@@ -1,131 +1,5 @@
 {
   "current": {
-    "date": "2026-11-14",
-    "category": "ancient",
-    "codePoint": "13F8C",
-    "character": "𓾌",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M152 40L152 10L744 10L744 40ZM210 692L210 60L244 60L244 634Q244 644 254 644L640 644Q650 644 650 634L650 60L684 60L684 692ZM188 732L183 722L187 712L712 712L717 722L710 732ZM774 890L120 890L120 878L774 878ZM688 752Q686 790 704.5 815Q723 840 749 858L147 858Q162 848 171.5 838Q181 828 187.5 816Q194 804 198.5 788.5Q203 773 208 752ZM100 900Q100 910 110 910L784 910Q794 910 794 900L794 868Q794 860 780 852.5Q766 845 749.5 833Q733 821 720 802Q707 783 708 752L716 752Q719 752 723.5 748Q728 744 731.5 738Q735 732 736.5 726.5Q738 721 737 718Q737 717 735 712.5Q733 708 730.5 703.5Q728 699 725 695.5Q722 692 718 692L704 692L704 60L754 60Q764 60 764 50L764 0Q764 -10 754 -10L142 -10Q132 -10 132 0L132 50Q132 60 142 60L190 60L190 692L180 692Q176 692 172.5 696.5Q169 701 166.5 706.5Q164 712 162.5 717.5Q161 723 163 726Q163 727 165 731.5Q167 736 169.5 740.5Q172 745 175 748.5Q178 752 182 752L187 752Q182 775 177 790Q172 805 164 816.5Q156 828 142 837.5Q128 847 105 859Q95 865 100 874ZM452 358Q452 368 462 368L630 368L630 624L264 624L264 60L452 60ZM494 318Q494 328 504 328L630 328L630 348L472 348L472 60L494 60ZM514 308L514 60L630 60L630 308Z",
-      "viewBox": "24.733333333333306 -983.6 842.8666666666668 1067.2"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH-13F8C",
-      "block": "Egyptian Hieroglyphs Extended-A",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "16.0",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "古代エジプトの文字体系において用いられるヒエログリフ拡張文字である。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "表語文字として機能する。",
-        "etymology": "",
-        "history": "",
-        "structure": "平らな屋根と垂直な側面を持つ神殿のファサードの上に描かれ、読みの方向とは反対側の底隅に小さな長方形が配置されている。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "written over a façade of a shrine with a flat roof, with vertical sides, with a small rectangle in the bottom corner away from the reading direction (O21D).",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "ḥw.t",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram : ḥw.t",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "O021D",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "O-07-010",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-15",
     "category": "music",
     "codePoint": "1D1A9",
@@ -239,6 +113,151 @@
         {
           "name": "SMuFL classes",
           "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-16",
+    "category": "punctuation",
+    "codePoint": "2308",
+    "character": "⌈",
+    "font": "Noto Sans Symbols",
+    "svg": {
+      "path": "M51 -80L51 794L353 794L353 730L122 730L122 -80Z",
+      "viewBox": "-18.92 -863.92 441.84000000000003 1013.84"
+    },
+    "info": {
+      "category": "punctuation",
+      "unicodeName": "LEFT CEILING",
+      "block": "Miscellaneous Technical",
+      "script": "Common",
+      "age": "1.1",
+      "generalCategory": "Ps",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": null,
+      "historical": null,
+      "math": {
+        "isMath": true,
+        "bracket": {
+          "pairedCodePoint": "2309",
+          "type": "o"
+        },
+        "mirroredCodePoint": "2309"
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": true,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "技術文書や数式で囲み記号として用いられる開き側の特殊記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "対となる閉じ記号U+2309と鏡像関係にあるほか、参照記号として左上半括弧（U+2E22）や鉤括弧（U+300C）が挙げられています。",
+        "culture": "",
+        "unicodeInfo": "Unicodeの派生プロパティにおいて数学用記号であることを示すMath属性が定義されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:alias",
+          "text": "APL upstile",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(top left half bracket - 2E22)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:crossReference",
+          "text": "(left corner bracket - 300C)",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:property",
+          "text": "Math",
+          "source": "Unicode DerivedCoreProperties",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiBracket",
+          "text": "paired U+2309 (o)",
+          "source": "Unicode BidiBrackets",
+          "strength": "supporting"
+        },
+        {
+          "kind": "math:bidiMirror",
+          "text": "mirrored U+2309",
+          "source": "Unicode BidiMirroring",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode CLDR Japanese Emoji Annotations",
+          "url": "https://cldr.unicode.org/translation/characters/emoji-annotations"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
