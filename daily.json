@@ -1,109 +1,5 @@
 {
   "current": {
-    "date": "2026-11-17",
-    "category": "kana",
-    "codePoint": "31F8",
-    "character": "ㇸ",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M144 214Q161 228 174 240Q187 252 203 268Q222 287 250 320.5Q278 354 308 391Q338 428 363 458Q395 497 426 501.5Q457 506 502 468Q528 447 556.5 418Q585 389 615 358Q645 327 672 298Q700 269 733.5 232Q767 195 802 156.5Q837 118 868 83L809 20Q780 56 748 93.5Q716 131 686 166Q656 201 629 230Q601 262 571 295Q541 328 513.5 356Q486 384 468 399Q453 413 443 416.5Q433 420 424.5 413.5Q416 407 401 390Q382 367 355 333Q328 299 302 265.5Q276 232 257 209Q245 193 232.5 176Q220 159 211 146Z",
-      "viewBox": "86.08 -559.8964705882353 839.84 597.8164705882353"
-    },
-    "info": {
-      "category": "kana",
-      "unicodeName": "KATAKANA LETTER SMALL HE",
-      "block": "Katakana Phonetic Extensions",
-      "script": "Katakana",
-      "age": "3.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "片仮名の「ヘ」を小書きにした特殊な仮名文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "アイヌ語やその他の言語の音声転写に用いられます。",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "この文字を含む範囲はJIS X 0213:2000に基づいて制定されました。",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "registered:usage",
-          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:supplementalInfo",
-          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-18",
     "category": "punctuation",
     "codePoint": "2308",
@@ -244,6 +140,137 @@
         {
           "name": "Unicode UTR #25",
           "url": "https://www.unicode.org/reports/tr25/"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-19",
+    "category": "music",
+    "codePoint": "1D162",
+    "character": "𝅘𝅥𝅰",
+    "font": "Noto Music",
+    "svg": {
+      "path": "M321 1154L347 1154Q350 1117 363.5 1089Q377 1061 405.5 1031Q434 1001 480 956Q527 911 552 871Q577 831 586 793.5Q595 756 595 716Q595 672 583 628Q595 591 595 548Q595 531 592.5 512Q590 493 585 472Q609 441 609 374Q609 328 596.5 279.5Q584 231 558 193L542 193Q587 286 587 355Q587 418 551.5 466.5Q516 515 446 559L347 622L347 171Q347 129 318.5 92.5Q290 56 245 33.5Q200 11 152 11Q104 11 77 31Q50 51 50 99Q50 131 68 160Q86 189 115 212Q144 235 178.5 248.5Q213 262 247 262Q271 262 290 256Q309 250 321 236ZM351 972Q351 935 368 903Q379 882 401 859Q423 836 449 813Q481 784 513.5 747Q546 710 568 665Q571 683 571 699Q571 762 538 813Q504 865 453 902.5Q402 940 351 972ZM349 798Q352 750 376 712.5Q400 675 436 641L512 570Q533 551 547 534Q561 517 568 503Q569 511 569 516Q569 521 569 527Q569 678 349 798Z",
+      "viewBox": "-41.44 -1245.44 741.88 1325.88"
+    },
+    "info": {
+      "category": "music",
+      "unicodeName": "MUSICAL SYMBOL THIRTY-SECOND NOTE",
+      "block": "Musical Symbols",
+      "script": "Common",
+      "age": "3.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": {
+        "matches": [
+          {
+            "glyphName": "note32ndUp",
+            "smuflCodepoint": "U+E1DB",
+            "unicodeCodepoint": "U+1D162",
+            "description": "32nd note (demisemiquaver) stem up",
+            "classes": [
+              "combiningStaffPositions",
+              "forTextBasedApplications"
+            ]
+          }
+        ]
+      },
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": "1D15F 1D170",
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "西洋音楽の楽譜表記をコンピュータ上で再現するための音楽記号の1つです。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "上向きの符幹を持つ32分音符を表します。",
+        "etymology": "",
+        "history": "",
+        "structure": "Unicodeの文字データ上では複数の構成要素の組み合わせとして定義されています。",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:alias",
+          "text": "demisemiquaver",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "namesList:decomposition",
+          "text": "1D15F 1D170",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "smufl:glyph",
+          "text": "note32ndUp: 32nd note (demisemiquaver) stem up",
+          "source": "SMuFL",
+          "strength": "strong"
+        },
+        {
+          "kind": "smufl:classes",
+          "text": "combiningStaffPositions, forTextBasedApplications",
+          "source": "SMuFL",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
+          "url": "https://www.w3.org/community/music-notation/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "SMuFL glyphnames",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
+        },
+        {
+          "name": "SMuFL classes",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
         }
       ]
     }
