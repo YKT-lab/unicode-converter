@@ -1,109 +1,5 @@
 {
   "current": {
-    "date": "2026-11-23",
-    "category": "kana",
-    "codePoint": "31F9",
-    "character": "ㇹ",
-    "font": "Noto Sans JP",
-    "svg": {
-      "path": "M539 652Q538 647 536.5 636Q535 625 534 613.5Q533 602 533 593Q533 571 533 542.5Q533 514 533 486Q533 458 533 438Q533 418 533 377.5Q533 337 533 287.5Q533 238 533 189Q533 140 533 101.5Q533 63 533 45Q533 13 514.5 -5Q496 -23 459 -23Q433 -23 399.5 -21Q366 -19 341 -17L335 56Q362 52 388 49.5Q414 47 431 47Q447 47 453.5 54.5Q460 62 460 78Q460 92 460 128.5Q460 165 460 212.5Q460 260 460 307Q460 354 460 390Q460 426 460 438Q460 452 460 480.5Q460 509 460 540.5Q460 572 460 594Q460 607 458.5 625.5Q457 644 455 652ZM162 516Q179 514 195.5 512.5Q212 511 232 511Q244 511 283 511Q322 511 376.5 511Q431 511 490.5 511Q550 511 604.5 511Q659 511 698 511Q737 511 749 511Q764 511 783 512.5Q802 514 817 516L817 441Q801 442 783 442Q765 442 750 442Q738 442 699 442Q660 442 606 442Q552 442 492 442Q432 442 378 442Q324 442 284.5 442Q245 442 233 442Q214 442 196 441.5Q178 441 162 439ZM355 316Q337 281 308.5 237.5Q280 194 249.5 154Q219 114 195 88L133 130Q161 156 191.5 194Q222 232 249 272.5Q276 313 292 347ZM702 346Q724 320 751 280Q778 240 803.5 199.5Q829 159 845 129L780 92Q764 125 739.5 166.5Q715 208 689 247.5Q663 287 641 313Z",
-      "viewBox": "76.03999999999999 -708.96 825.92 788.92"
-    },
-    "info": {
-      "category": "kana",
-      "unicodeName": "KATAKANA LETTER SMALL HO",
-      "block": "Katakana Phonetic Extensions",
-      "script": "Katakana",
-      "age": "3.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "特殊な音声表記に対応するために定義された小字体のカタカナです。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "アイヌ語などの言語において音声転写を行うために用いられます。",
-        "examples": "",
-        "meaning": "",
-        "etymology": "",
-        "history": "本文字が含まれる領域はJIS X 0213:2000の規格を元に制定されました。",
-        "structure": "",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "registered:usage",
-          "text": "アイヌ語やその他の言語の音声転写に用いる小書きカタカナです。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:supplementalInfo",
-          "text": "この文字範囲は JIS X 0213:2000 に基づいて制定されました。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        },
-        {
-          "kind": "registered:fact",
-          "text": "この範囲の小書きカタカナには、結合濁点・結合半濁点を添えて音を修飾できるものがあります。",
-          "source": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "strength": "strong"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Standard 18.4.3 — Katakana Phonetic Extensions",
-          "url": "https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-18/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-24",
     "category": "music",
     "codePoint": "1D1CB",
@@ -217,6 +113,138 @@
         {
           "name": "SMuFL classes",
           "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-25",
+    "category": "arrows",
+    "codePoint": "21D0",
+    "character": "⇐",
+    "font": "Noto Sans JP",
+    "svg": {
+      "path": "M139 376Q166 356 196.5 329Q227 302 257 271L960 271L960 203L317 203Q344 172 368 140Q392 108 410 79L351 45Q313 106 259 168Q205 230 144.5 284Q84 338 24 376Q84 414 144.5 468.5Q205 523 259 585Q313 647 351 708L410 673Q392 644 368 612Q344 580 317 550L960 550L960 481L257 481Q227 450 196.5 423Q166 396 139 376Z",
+      "viewBox": "-50.879999999999995 -782.88 1085.76 812.76"
+    },
+    "info": {
+      "category": "arrows",
+      "unicodeName": "LEFTWARDS DOUBLE ARROW",
+      "block": "Arrows",
+      "script": "Common",
+      "age": "1.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": null,
+      "emoji": {
+        "shortName": "左向き二重矢印",
+        "keywords": [
+          "左向き二重矢印"
+        ],
+        "properties": []
+      },
+      "historical": null,
+      "math": {
+        "isMath": true,
+        "bracket": null,
+        "mirroredCodePoint": null
+      },
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "ON",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": "LEFT DOUBLE ARROW",
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "矢印ブロックに収録されている、左方を指し示す記号です。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "日本語の文字情報（CLDR）において「左向き二重矢印」の名称が割り当てられています。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "Unicodeの派生コア特性データにおいて、数学用記号であることを示す「Math」プロパティが付与されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "emoji:jaName",
+          "text": "左向き二重矢印",
+          "source": "CLDR Japanese annotations",
+          "strength": "strong"
+        },
+        {
+          "kind": "math:property",
+          "text": "Math",
+          "source": "Unicode DerivedCoreProperties",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "Unicode NamesList — Arrows",
+          "url": "https://www.unicode.org/charts/nameslist/n_2190.html"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "Unicode Emoji data",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/emoji/emoji-data.txt"
+        },
+        {
+          "name": "CLDR Japanese annotations",
+          "url": "https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-annotations-full/annotations/ja/annotations.json"
+        },
+        {
+          "name": "Unicode DerivedCoreProperties",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/DerivedCoreProperties.txt"
+        },
+        {
+          "name": "Unicode BidiBrackets",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiBrackets.txt"
+        },
+        {
+          "name": "Unicode BidiMirroring",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/BidiMirroring.txt"
+        },
+        {
+          "name": "Unicode UTR #25",
+          "url": "https://www.unicode.org/reports/tr25/"
         }
       ]
     }
