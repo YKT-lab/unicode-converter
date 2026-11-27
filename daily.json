@@ -1,137 +1,5 @@
 {
   "current": {
-    "date": "2026-11-27",
-    "category": "ancient",
-    "codePoint": "1332E",
-    "character": "𓌮",
-    "font": "UniHieroglyphica",
-    "svg": {
-      "path": "M1018 337Q1027 318 1038 298.5Q1049 279 1058 258.5Q1067 238 1073.5 217.5Q1080 197 1080 175Q1080 147 1077 123Q1074 99 1065.5 78.5Q1057 58 1041.5 39.5Q1026 21 1002 3Q997 0 982 -1Q967 -2 950.5 -1Q934 0 919.5 1Q905 2 901 3Q886 4 871 16Q856 28 844 44.5Q832 61 824.5 79Q817 97 817 110Q817 155 830 198.5Q843 242 860 283Q825 277 789.5 273Q754 269 722 267.5Q690 266 663 265.5Q636 265 618 265Q598 265 551.5 272.5Q505 280 447.5 292.5Q390 305 328.5 322.5Q267 340 216 361Q165 382 132.5 404.5Q100 427 100 451Q100 455 103 466.5Q106 478 110 481L126 492L138 475L125 466L122 458Q120 452 120 451Q120 433 151.5 413.5Q183 394 232 376Q281 358 340.5 341Q400 324 455 312Q510 300 554.5 292.5Q599 285 618 285Q641 285 682.5 286Q724 287 773 291.5Q822 296 872 305.5Q922 315 963 331.5Q1004 348 1030 373.5Q1056 399 1056 435L1056 474Q1056 500 1034.5 519.5Q1013 539 986 539Q957 539 942 530Q927 521 918 507Q909 493 902 475.5Q895 458 882 441Q871 427 853 415Q835 403 805.5 394Q776 385 732.5 380Q689 375 626 375Q499 375 377.5 405Q256 435 138 474L144 493Q262 454 382 424.5Q502 395 626 395Q688 395 730 400Q772 405 799.5 413Q827 421 842 431.5Q857 442 866 453Q877 467 882.5 480.5Q888 494 894.5 507Q901 520 911.5 531.5Q922 543 942 552Q944 553 950.5 554Q957 555 964 556Q971 557 977 558Q983 559 986 559Q1003 559 1019 552.5Q1035 546 1048 534.5Q1061 523 1068.5 507.5Q1076 492 1076 474L1076 435Q1076 403 1060 379Q1044 355 1018 337ZM935 296Q930 287 922.5 266Q915 245 907 221.5Q899 198 893.5 178Q888 158 888 150Q888 127 889.5 111.5Q891 96 897 86Q903 76 916 71.5Q929 67 952 67Q972 67 985 75Q998 83 1005.5 96.5Q1013 110 1015.5 128.5Q1018 147 1018 167Q1018 177 1012 196.5Q1006 216 997 237Q988 258 978.5 278Q969 298 962 310Q954 307 946 304Q938 301 930 299ZM981 317Q988 304 998 283.5Q1008 263 1017 241Q1026 219 1032 199Q1038 179 1038 167Q1038 147 1035 126Q1032 105 1023 87.5Q1014 70 997 58.5Q980 47 952 47Q922 47 905 54.5Q888 62 880 75.5Q872 89 870 108Q868 127 868 150Q868 159 873 177.5Q878 196 884.5 217.5Q891 239 898.5 259.5Q906 280 912 294Q905 292 898 290.5Q891 289 883 287Q865 244 851 199.5Q837 155 837 110Q837 99 843.5 84.5Q850 70 860 56.5Q870 43 881.5 33Q893 23 903 22Q926 20 947.5 19.5Q969 19 992 21Q1013 36 1026 52.5Q1039 69 1046.5 87.5Q1054 106 1057 127.5Q1060 149 1060 175Q1060 194 1054 214Q1048 234 1039 253Q1030 272 1019.5 290.5Q1009 309 1000 327Q995 325 990.5 322Q986 319 981 317ZM846 362Q869 369 883 376.5Q897 384 904.5 391.5Q912 399 914.5 406Q917 413 918 420Q919 432 919.5 441.5Q920 451 921.5 460.5Q923 470 927 479Q931 488 940 498Q948 506 963 510.5Q978 515 986 515Q990 515 996.5 512Q1003 509 1009.5 505Q1016 501 1021 496.5Q1026 492 1027 489Q1035 467 1035 445Q1035 441 1034 438L1031 429L1027 415Q1019 389 999 374Q979 359 953 351.5Q927 344 899.5 342.5Q872 341 850 341L850 349ZM897 362Q914 363 932 366.5Q950 370 965.5 376.5Q981 383 992 394Q1003 405 1008 421L1012 434L1014 443Q1015 444 1015 445Q1015 462 1009 480Q1006 482 998.5 488.5Q991 495 986 495Q966 495 954 484Q942 473 940 453Q938 444 938.5 435Q939 426 938 417Q936 402 927.5 388Q919 374 897 362Z",
-      "viewBox": "21.599999999999994 -637.4 1136.8 717.3"
-    },
-    "info": {
-      "category": "ancient",
-      "unicodeName": "EGYPTIAN HIEROGLYPH T033",
-      "block": "Egyptian Hieroglyphs",
-      "script": "Egyptian_Hieroglyphs",
-      "age": "5.2",
-      "generalCategory": "Lo",
-      "aliases": [],
-      "scriptExtensions": [],
-      "standardizedVariants": [],
-      "music": null,
-      "emoji": null,
-      "historical": null,
-      "math": null,
-      "han": null,
-      "unicodeData": {
-        "combiningClass": "0",
-        "bidiClass": "L",
-        "decomposition": null,
-        "decimalValue": null,
-        "digitValue": null,
-        "numericValue": null,
-        "bidiMirrored": false,
-        "unicode1Name": null,
-        "simpleUppercase": null,
-        "simpleLowercase": null,
-        "simpleTitlecase": null
-      },
-      "summary": "武具や刃物類を分類するガーディナー記号表のグループTに属する古代エジプトの文字です。",
-      "descriptionSchema": 4,
-      "sections": {
-        "usage": "",
-        "examples": "",
-        "meaning": "「肉屋」を意味する表語文字として用いられます。",
-        "etymology": "",
-        "history": "",
-        "structure": "端に輪が付いた細く湾曲したナイフ研ぎ器の姿を象っています。",
-        "related": "",
-        "culture": "",
-        "unicodeInfo": "",
-        "trivia": ""
-      },
-      "facts": [
-        {
-          "kind": "appearance",
-          "text": "A knife sharpener, with a thin, curved body, and a loop at the end.",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "function",
-          "text": "Logogram (butcher)",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "functionValue",
-          "text": "sšm",
-          "source": "Unicode Unikemet",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "older variant of 13326",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "namesList:comment",
-          "text": "logogram (butcher) : sšm",
-          "source": "Unicode NamesList",
-          "strength": "strong"
-        },
-        {
-          "kind": "catalogIndex",
-          "text": "T033",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        },
-        {
-          "kind": "taxonomyIndex",
-          "text": "T-19-004",
-          "source": "Unicode Unikemet",
-          "strength": "supporting"
-        }
-      ],
-      "sources": [
-        {
-          "name": "Unicode Egyptian Hieroglyph Database (Unikemet)",
-          "url": "https://www.unicode.org/reports/tr57/"
-        },
-        {
-          "name": "Unicode DerivedName",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
-        },
-        {
-          "name": "Unicode UnicodeData",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
-        },
-        {
-          "name": "Unicode NameAliases",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
-        },
-        {
-          "name": "Unicode ScriptExtensions",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
-        },
-        {
-          "name": "Unicode StandardizedVariants",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
-        },
-        {
-          "name": "Unicode NamesList",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
-        },
-        {
-          "name": "Unicode Unikemet",
-          "url": "https://www.unicode.org/Public/UCD/latest/ucd/Unikemet.txt"
-        }
-      ]
-    }
-  },
-  "next": {
     "date": "2026-11-28",
     "category": "math",
     "codePoint": "22B2",
@@ -251,6 +119,131 @@
         {
           "name": "Unicode UTR #25",
           "url": "https://www.unicode.org/reports/tr25/"
+        }
+      ]
+    }
+  },
+  "next": {
+    "date": "2026-11-29",
+    "category": "music",
+    "codePoint": "1D140",
+    "character": "𝅀",
+    "font": "Noto Music",
+    "svg": {
+      "path": "M155 -4L251 336Q230 317 203.5 309Q177 301 151 301Q108 301 79 324Q50 347 50 390Q50 417 70 437Q90 457 121 457Q150 457 168.5 438.5Q187 420 187 389Q187 367 177 350Q177 344 189 344Q230 344 267 390L319 580Q298 561 271.5 553Q245 545 219 545Q176 545 147 568Q118 591 118 634Q118 663 138 682Q158 701 189 701Q219 701 237 682Q255 663 255 633Q255 623 252 612.5Q249 602 245 594Q245 588 257 588Q298 588 334 633L390 834Q369 815 342.5 807Q316 799 290 799Q247 799 218 822Q189 845 189 888Q189 917 209 936Q229 955 260 955Q290 955 308 936Q326 917 326 887Q326 877 323 866.5Q320 856 316 848Q316 842 328 842Q382 842 433 928L451 928L191 -4Z",
+      "viewBox": "-26.72 -1031.72 554.44 1112.44"
+    },
+    "info": {
+      "category": "music",
+      "unicodeName": "MUSICAL SYMBOL THIRTY-SECOND REST",
+      "block": "Musical Symbols",
+      "script": "Common",
+      "age": "3.1",
+      "generalCategory": "So",
+      "aliases": [],
+      "scriptExtensions": [],
+      "standardizedVariants": [],
+      "music": {
+        "matches": [
+          {
+            "glyphName": "rest32nd",
+            "smuflCodepoint": "U+E4E8",
+            "unicodeCodepoint": "U+1D140",
+            "description": "32nd (demisemiquaver) rest",
+            "classes": [
+              "combiningStaffPositions",
+              "rests"
+            ]
+          }
+        ]
+      },
+      "emoji": null,
+      "historical": null,
+      "math": null,
+      "han": null,
+      "unicodeData": {
+        "combiningClass": "0",
+        "bidiClass": "L",
+        "decomposition": null,
+        "decimalValue": null,
+        "digitValue": null,
+        "numericValue": null,
+        "bidiMirrored": false,
+        "unicode1Name": null,
+        "simpleUppercase": null,
+        "simpleLowercase": null,
+        "simpleTitlecase": null
+      },
+      "summary": "西洋楽譜において演奏のタイミングや休止を指示する音楽記号の一つです。",
+      "descriptionSchema": 4,
+      "sections": {
+        "usage": "",
+        "examples": "",
+        "meaning": "32分音符と同等の長さを表す32分休符（demisemiquaver rest）を意味します。",
+        "etymology": "",
+        "history": "",
+        "structure": "",
+        "related": "",
+        "culture": "",
+        "unicodeInfo": "標準音楽記号フォント仕様（SMuFL）では、休符群（rests）および五線譜位置結合群（combiningStaffPositions）のカテゴリに分類されています。",
+        "trivia": ""
+      },
+      "facts": [
+        {
+          "kind": "namesList:alias",
+          "text": "demisemiquaver rest",
+          "source": "Unicode NamesList",
+          "strength": "supporting"
+        },
+        {
+          "kind": "smufl:glyph",
+          "text": "rest32nd: 32nd (demisemiquaver) rest",
+          "source": "SMuFL",
+          "strength": "strong"
+        },
+        {
+          "kind": "smufl:classes",
+          "text": "combiningStaffPositions, rests",
+          "source": "SMuFL",
+          "strength": "supporting"
+        }
+      ],
+      "sources": [
+        {
+          "name": "W3C Community Group Standard Music Font Layout (SMuFL)",
+          "url": "https://www.w3.org/community/music-notation/"
+        },
+        {
+          "name": "Unicode DerivedName",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/extracted/DerivedName.txt"
+        },
+        {
+          "name": "Unicode UnicodeData",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/UnicodeData.txt"
+        },
+        {
+          "name": "Unicode NameAliases",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt"
+        },
+        {
+          "name": "Unicode ScriptExtensions",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/ScriptExtensions.txt"
+        },
+        {
+          "name": "Unicode StandardizedVariants",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/StandardizedVariants.txt"
+        },
+        {
+          "name": "Unicode NamesList",
+          "url": "https://www.unicode.org/Public/UCD/latest/ucd/NamesList.txt"
+        },
+        {
+          "name": "SMuFL glyphnames",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/glyphnames.json"
+        },
+        {
+          "name": "SMuFL classes",
+          "url": "https://raw.githubusercontent.com/w3c-cg/smufl/gh-pages/metadata/classes.json"
         }
       ]
     }
